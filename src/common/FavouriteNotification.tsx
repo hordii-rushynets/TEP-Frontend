@@ -7,11 +7,13 @@ import { UserUrl } from "route-urls";
 
 import { ButtonBase } from "common/ui";
 import { useFavouriteContext } from "contexts/FavouriteContext";
+import { Fragment } from "react";
 
 export function FavouriteNotification() {
   const { isOpen, title, setIsOpen, setTitle } = useFavouriteContext();
   return (
     <Transition
+      as={Fragment}
       show={isOpen}
       enter={"transition duration-100 ease-out"}
       enterFrom={"transform scale-95 opacity-0"}
