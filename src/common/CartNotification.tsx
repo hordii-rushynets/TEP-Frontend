@@ -7,11 +7,13 @@ import { UserUrl } from "route-urls";
 
 import { ButtonBase } from "common/ui";
 import { useCartContext } from "contexts/CartContext";
+import { Fragment } from "react";
 
 export function CartNotification() {
   const { isOpen, title, setIsOpen, setTitle } = useCartContext();
   return (
     <Transition
+      as={Fragment}
       show={isOpen}
       enter={"transition duration-100 ease-out"}
       enterFrom={"transform scale-95 opacity-0"}
