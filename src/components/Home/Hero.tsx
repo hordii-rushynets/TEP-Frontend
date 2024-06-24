@@ -31,7 +31,7 @@ export function Hero() {
           </Title>
           <Link href={CompanyUrl.getAbout()}>
             <Button size={"large"} colorVariant={"white"}>
-              Дізнайся більше
+              Переглянути товари
             </Button>
           </Link>
         </div>
