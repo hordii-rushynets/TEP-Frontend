@@ -57,13 +57,13 @@ export default function Page() {
                 <p>
                   Або напиши нам листа на адресу{" "}
                   <Link
-                    href={"mailto:help@tep.ua"}
+                    href={"mailto:info@tep.ua"}
                     target={"_blank"}
                     className={
                       "underline-offset-[3px] transition-all hover:text-tep_blue-500 hover:underline"
                     }
                   >
-                    help@tep.ua
+                    info@tep.ua
                   </Link>
                 </p>
               </div>
