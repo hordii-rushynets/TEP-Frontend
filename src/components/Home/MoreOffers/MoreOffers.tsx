@@ -26,7 +26,7 @@ export function MoreOffers() {
               bg={IMG1}
             />
             <InfoCard
-              url={MainUrl.getSales()}
+              url={MainUrl.getGoods()}
               title={"Каталоги ТЕП"}
               description={
                 "В нашому магазині можна придбати товари за акційною пропозицією..."
