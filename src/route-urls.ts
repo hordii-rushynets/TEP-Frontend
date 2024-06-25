@@ -84,3 +84,12 @@ export const InfoUrl = {
   getLeaveFeedback: () => `${InfoUrl.getFeedbacks()}/leave-feedback`,
   getCare: () => `${MainUrl.getInfoForBuyers()}/care`,
 };
+
+export const SocialMediaUrl = {
+  getInstagram: () => "https://www.instagram.com/tepuaofficial/?hl=en",
+  getPinterest: () => "https://id.pinterest.com/tepuaofficial/",
+  getFacebook: () => "https://www.facebook.com/tepofficialua",
+  getThreads: () => "https://www.threads.net/@tepuaofficial",
+  getTikTok: () => "https://www.tiktok.com/@tepuaofficial",
+  getYouTube: () => "https://www.youtube.com/@balakkom8715",
+};
