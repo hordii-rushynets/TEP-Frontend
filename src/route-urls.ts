@@ -23,6 +23,7 @@ export const AuthUrl = {
   getResetPassword: () => "/reset-password",
   getResetSuccess: () => `${AuthUrl.getResetPassword()}/success`,
   getAccount: () => `/account`,
+  getEmailConfirmation: () => "email-confirmation"
 };
 
 export const PurchaseUrl = {

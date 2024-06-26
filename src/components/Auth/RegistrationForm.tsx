@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { MainUrl } from "route-urls";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
+import { useRouter } from 'next/navigation';
 
 import {
   Button,
@@ -35,11 +36,14 @@ export function RegistrationForm() {
     defaultValues: getDefaults(formSchema),
   });
 
+  const router = useRouter();
+
   function onSubmit(data: Form) {
     data;
     // TODO
     // ...
     form.reset();
+    router.push('/email-confirmation');
   }
 
   return (

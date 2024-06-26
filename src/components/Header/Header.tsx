@@ -10,7 +10,7 @@ import {
   FiUser,
   FiX,
 } from "react-icons/fi";
-import { MainUrl, ServicesUrl, UserUrl } from "route-urls";
+import { MainUrl, ServicesUrl, UserUrl, AuthUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { ButtonBase, Container } from "common/ui";
@@ -71,7 +71,7 @@ export function Header() {
                 />
               </ButtonBase>
             </Link>
-            <Link href={UserUrl._getRoot()}>
+            <Link href={AuthUrl.getSignIn()}>
               <ButtonBase>
                 <FiUser
                   className={"size-6 transition-colors hover:text-tep_blue-500"}
