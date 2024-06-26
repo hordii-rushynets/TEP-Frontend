@@ -2,7 +2,7 @@ import { Disclosure as BaseDisclosure, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FiChevronDown, FiMapPin, FiPhone } from "react-icons/fi";
-import { InfoUrl, MainUrl } from "route-urls";
+import { InfoUrl, MainUrl, SocialMediaUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { Disclosure } from "common/Disclosure";
@@ -143,12 +143,12 @@ export function Footer() {
               </div>
               <Socials
                 links={{
-                  facebook: "#",
-                  instagram: "#",
+                  facebook: SocialMediaUrl.getFacebook(),
+                  instagram: SocialMediaUrl.getInstagram(),
                   linkedin: "#",
-                  pinterest: "#",
-                  tiktok: "#",
-                  youtube: "#",
+                  pinterest: SocialMediaUrl.getPinterest(),
+                  tiktok: SocialMediaUrl.getTikTok(),
+                  youtube: SocialMediaUrl.getYouTube(),
                 }}
               />
             </div>
