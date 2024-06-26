@@ -91,5 +91,5 @@ export const SocialMediaUrl = {
   getFacebook: () => "https://www.facebook.com/tepofficialua",
   getThreads: () => "https://www.threads.net/@tepuaofficial",
   getTikTok: () => "https://www.tiktok.com/@tepuaofficial",
-  getYouTube: () => "https://www.youtube.com/@balakkom8715",
+  getYouTube: () => "https://www.youtube.com/@balakkom_tep",
 };
