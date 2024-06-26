@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CompanyUrl } from "route-urls";
+import { MainUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 
@@ -29,9 +29,9 @@ export function Hero() {
           >
             Тепло твого дому із ТЕП
           </Title>
-          <Link href={CompanyUrl.getAbout()}>
+          <Link href={MainUrl.getGoods()}>
             <Button size={"large"} colorVariant={"white"}>
-              Дізнайся більше
+              Переглянути товари
             </Button>
           </Link>
         </div>
