@@ -39,6 +39,7 @@ export default function SalesPage() {
           <div>
             <Title className={"mb-[38px] text-3xl"}>Акції</Title>
             <div className={"border-b border-tep_gray-200 pb-6"}>
+              
               <CategoriesFilter />
             </div>
           </div>

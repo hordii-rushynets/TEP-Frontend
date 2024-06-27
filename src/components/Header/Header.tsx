@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   FiHeart,
@@ -18,15 +17,17 @@ import { AutocompleteInput } from "common/ui/Inputs/AutocompleteInput";
 import { ChangeLanguage } from "components/ChangeLanguage";
 
 import { CompanyMenu } from "./CompanyMenu";
-import { GoodsMenu, categories } from "./GoodsMenu";
+import { GoodsMenu } from "./GoodsMenu";
+import LeftNavigation from "./LeftNavigation";
 import { InfoMenu } from "./InfoMenu";
+
+import { CategoriesProvider } from 'contexts/CategoriesContext';
 
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
 
 export function Header() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -54,7 +55,9 @@ export function Header() {
               "order-3 hidden basis-[350px] items-center justify-between gap-x-2 text-center text-sm font-bold lg:flex"
             }
           >
-            <GoodsMenu />
+            <CategoriesProvider>
+              <GoodsMenu />
+            </CategoriesProvider>
             <CompanyMenu />
             {/* <ServicesMenu /> */}
             <InfoMenu />
@@ -128,91 +131,9 @@ export function Header() {
                 />
               </ButtonBase>
             </div>
-            <nav className={"flex flex-col gap-y-[30px]"}>
-              <ul className={"flex flex-col gap-y-[18px] text-2xl font-bold"}>
-                {categories.map((category) => (
-                  <li key={category.id}>
-                    <Link
-                      href={`${MainUrl.getGoods()}/${category.name}`}
-                      onClick={() => setMenuIsOpen(false)}
-                      className={cn(
-                        "transition-colors duration-200 hover:text-tep_blue-500",
-                        {
-                          "text-tep_blue-500":
-                            pathname ===
-                            `${MainUrl.getGoods()}/${category.name}`,
-                        },
-                      )}
-                    >
-                      {category.title}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link
-                    href={MainUrl.getSales()}
-                    onClick={() => setMenuIsOpen(false)}
-                    className={cn(
-                      "transition-colors duration-200 hover:text-tep_blue-500",
-                      {
-                        "text-tep_blue-500":
-                          pathname === `${MainUrl.getHome()}/sales`,
-                      },
-                    )}
-                  >
-                    Акції
-                  </Link>
-                </li>
-              </ul>
-              <ul
-                className={
-                  "flex flex-col items-start gap-y-[18px] text-sm font-light"
-                }
-              >
-                <li
-                  className={cn("transition-colors duration-200", {
-                    "font-semibold": pathname === MainUrl.getCompany(),
-                    "hover:text-tep_blue-500":
-                      pathname !== MainUrl.getCompany(),
-                  })}
-                >
-                  <Link
-                    onClick={() => setMenuIsOpen(false)}
-                    href={MainUrl.getCompany()}
-                  >
-                    Компанія
-                  </Link>
-                </li>
-                <li
-                  className={cn("transition-colors duration-200", {
-                    "font-semibold": pathname === MainUrl.getInfoForBuyers(),
-                    "hover:text-tep_blue-500":
-                      pathname !== MainUrl.getInfoForBuyers(),
-                  })}
-                >
-                  <Link
-                    onClick={() => setMenuIsOpen(false)}
-                    href={MainUrl.getInfoForBuyers()}
-                  >
-                    Інформація для покупців
-                  </Link>
-                </li>
-                <li
-                  className={cn("transition-colors duration-200", {
-                    "font-semibold": pathname === MainUrl.getServices(),
-                    "hover:text-tep_blue-500":
-                      pathname !== MainUrl.getServices(),
-                  })}
-                >
-                  <Link
-                    onClick={() => setMenuIsOpen(false)}
-                    href={MainUrl.getServices()}
-                  >
-                    Послуги
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            <CategoriesProvider>
+              <LeftNavigation setMenuIsOpen={setMenuIsOpen}/>
+            </CategoriesProvider>
             <ChangeLanguage />
           </div>
           {menuIsOpen && (
