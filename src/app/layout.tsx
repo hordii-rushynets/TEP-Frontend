@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Banner } from "common/Banner";
 import { CartNotification } from "common/CartNotification";
 import { FavouriteNotification } from "common/FavouriteNotification";
+import { AuthorizationNotification } from "common/AuthorizationNotification";
 import { Footer } from "components/Footer";
 import { Header } from "components/Header";
 import { Providers } from "components/Providers";
@@ -14,6 +15,7 @@ import { Wholesale100K } from "components/Purchase/Wholesale100K";
 import "@smastrom/react-rating/style.css";
 
 import "../styles/globals.css";
+import { AuthNotificationProvider } from "contexts/AuthNotificationContext";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +72,7 @@ export default function RootLayout({
       <body className={"relative h-full"}>
         <Providers>
           <Banner />
+          <AuthorizationNotification />
           <CartNotification />
           <FavouriteNotification />
           <Wholesale10K />
