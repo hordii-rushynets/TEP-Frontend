@@ -19,7 +19,7 @@ import MastercardIMG from "./static/mastercard.svg";
 import VisaIMG from "./static/visa.svg";
 
 const companyFooterLinks = companyLinks.map((link) => ({
-  name: link.name,
+  name: link.slug,
   title: link.title,
 }));
 companyFooterLinks.splice(3, 0, {
@@ -28,7 +28,7 @@ companyFooterLinks.splice(3, 0, {
 });
 
 const servicesFooterLinks = servicesLinks
-  .map((link) => ({ name: link.name, title: link.title }))
+  .map((link) => ({ name: link.slug, title: link.title }))
   .reverse();
 
 const infoFooterLinks = [

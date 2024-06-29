@@ -11,24 +11,21 @@ import MainCompanyIMG from "./static/Logo.svg";
 import ServicesIMG from "./static/info.jpg";
 
 const baseInfo = {
-  id: "",
-  name: "/",
+  slug: "/",
   title: "ТЕП",
   image: MainCompanyIMG,
   description: "Раді вітати Вас у ТЕП",
 };
 export const servicesLinks = [
   {
-    id: "1",
-    name: "gifts",
+    slug: "gifts",
     title: "Подарункові картки",
     image: ServicesIMG,
     description:
       "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке ... ",
   },
   {
-    id: "2",
-    name: "delivery",
+    slug: "delivery",
     title: "Послуги доставки",
 
     image: ServicesIMG,
@@ -36,8 +33,7 @@ export const servicesLinks = [
       "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке ... ",
   },
   {
-    id: "3",
-    name: "tracking",
+    slug: "tracking",
     title: "Відстежити замовлення",
     image: ServicesIMG,
     description:
@@ -59,8 +55,8 @@ export function ServicesMenu() {
           return (
             <Link
               onMouseOver={() => setCardInfo(link)}
-              key={link.id}
-              href={`${MainUrl.getServices()}/${link.name}`}
+              key={link.slug}
+              href={`${MainUrl.getServices()}/${link.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }

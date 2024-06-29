@@ -11,24 +11,21 @@ import MainCompanyIMG from "./static/Logo.svg";
 import InfoIMG from "./static/info.jpg";
 
 const baseInfo = {
-  id: "",
-  name: "/",
+  slug: "/",
   title: "ТЕП",
   image: MainCompanyIMG,
   description: "Раді вітати Вас у ТЕП",
 };
 export const infoLinks = [
   {
-    id: "1",
-    name: "questions-and-answers",
+    slug: "questions-and-answers",
     title: "Питання та відповіді",
     image: InfoIMG,
     description:
       "Тут ви зможете знайти усі відповіді на запитання або ж задати своє персоналізоване запитання ... ",
   },
   {
-    id: "2",
-    name: "product-return",
+    slug: "product-return",
     title: "Повернення товару",
 
     image: InfoIMG,
@@ -36,24 +33,21 @@ export const infoLinks = [
       "Тут ви зможете знайти усі відповіді на запитання або ж задати своє персоналізоване запитання ... ",
   },
   {
-    id: "3",
-    name: "contact-us",
+    slug: "contact-us",
     title: "Зв’язатись з нами",
     image: InfoIMG,
     description:
       "Тут ви зможете знайти усі відповіді на запитання або ж задати своє персоналізоване запитання ... ",
   },
   {
-    id: "4",
-    name: "feedbacks",
+    slug: "feedbacks",
     title: "Ваші відгуки",
     image: InfoIMG,
     description:
       "Тут ви зможете знайти усі відповіді на запитання або ж задати своє персоналізоване запитання ... ",
   },
   {
-    id: "5",
-    name: "care",
+    slug: "care",
     title: "Догляд",
     image: InfoIMG,
     description:
@@ -75,8 +69,8 @@ export function InfoMenu() {
           return (
             <Link
               onMouseOver={() => setCardInfo(link)}
-              key={link.id}
-              href={`${MainUrl.getInfoForBuyers()}/${link.name}`}
+              key={link.slug}
+              href={`${MainUrl.getInfoForBuyers()}/${link.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }

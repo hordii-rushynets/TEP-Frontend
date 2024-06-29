@@ -4,7 +4,7 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 import { cn } from "utils/cn";
 
 import { Button } from "common/ui";
-import { CategoriesProvider, useCategories, Category } from "contexts/CategoriesContext";
+import { CategoriesProvider, useCategories} from "contexts/CategoriesContext";
 
 export default function CategoriesFilter() {
   const [filter, setFilter] = useQueryParams(
