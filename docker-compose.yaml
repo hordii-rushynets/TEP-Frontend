@@ -11,3 +11,11 @@ services:
     environment:
       - NODE_ENV=development
     command: npm run dev
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins_home:/var/jenkins_home
+volumes:
+  jenkins_home:
