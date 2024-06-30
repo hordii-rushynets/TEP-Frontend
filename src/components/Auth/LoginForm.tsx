@@ -34,10 +34,10 @@ export function LoginForm() {
 
   const router = useRouter();
 
-  function onSubmit(data: Form) {
+  function onSubmit(dataToSend: Form) {
     fetch(`${APIurl}/api/account/login/`, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(dataToSend),
       headers: {
         "Content-Type": "application/json"
       }
@@ -51,9 +51,9 @@ export function LoginForm() {
         }
       })
       .then(data => {
-        localStorage.setItem("TEPtoken", data.token.access);
-        localStorage.setItem("TEPid", data.data.id);
-        setTitle(data.data.email);
+        localStorage.setItem("TEPAccessToken", data.access_token);
+        localStorage.setItem("TEPRefreshToken", data.refresh_token);
+        setTitle(dataToSend.email);
         setIsOpen(true);
         router.push('/account');
       })

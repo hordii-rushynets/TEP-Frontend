@@ -7,37 +7,40 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
-import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
+import { useNotificationContext } from "contexts/NotificationContext";
 
 import {
   Button,
   FormTextInput,
+  FormPasswordInput
 } from "common/ui";
 
 const formSchema = z.object({
-  verificationCode: z.string()
+  verificationCode: z.string(),
+  new_password: z.string()
 });
   
 type Form = z.infer<typeof formSchema>;
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
-export function EmailConfirmationForm() {
+export function ResetPasswordConfirmationForm() {
   const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
 
-  const { setIsOpen, setTitle } = useAuthNotificationContext();
+  const { setIsOpen, setText } = useNotificationContext();
 
   function onSubmit(data: Form) {
     const dataToSend = {
       "otp": data.verificationCode,
-      "email": localStorage.getItem("TEPemail")
+      "email": localStorage.getItem("TEPemail"),
+      "new_password": data.new_password
     }
 
-    fetch(`${APIurl}/api/account/verify-otp/`, {
+    fetch(`${APIurl}/api/account/password/reset/confirm/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -46,18 +49,14 @@ export function EmailConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-            return response.json()
+            setText("Ваш пароль успішно змінено!");
+            setIsOpen(true);
+            localStorage.removeItem("TEPemail");
+            router.push(AuthUrl.getSignIn());
         }
         else {
             return;
         }
-      })
-      .then(data => {
-        localStorage.setItem("TEPAccessToken", data.token);
-        setTitle(localStorage.getItem("TEPemail") || "");
-        setIsOpen(true);
-        localStorage.removeItem("TEPemail");
-        router.push(AuthUrl.getAccount());
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -69,11 +68,16 @@ export function EmailConfirmationForm() {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className={"flex flex-col gap-y-12 lg:gap-y-[72px]"}>
+        <div className={"flex flex-col gap-y-12 lg:gap-y-[45px]"}>
           <FormTextInput<Form>
             fieldName={"verificationCode"}
             label={"Верифікаційний код"}
             placeholder={"Введіть код"}
+          />
+          <FormPasswordInput<Form>
+            fieldName={"new_password"}
+            label={"Новий пароль"}
+            placeholder={"Введіть новий пароль"}
           />
           <Button
             type={"submit"}

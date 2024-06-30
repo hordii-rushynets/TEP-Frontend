@@ -15,6 +15,8 @@ const formSchema = z.object({
 
 type Form = z.infer<typeof formSchema>;
 
+const APIurl = process.env.NEXT_PUBLIC_API_URL
+
 export function ResetPasswordForm() {
   const router = useRouter();
   const form = useForm<Form>({
@@ -22,11 +24,26 @@ export function ResetPasswordForm() {
     defaultValues: getDefaults(formSchema),
   });
 
-  function onSubmit(data: Form) {
-    data;
-    // TODO
-    // ...
-    router.push(AuthUrl.getResetSuccess());
+  function onSubmit(dataToSend: Form) {
+    fetch(`${APIurl}/api/account/password/reset/`, {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          localStorage.setItem("TEPemail", dataToSend.email);
+          router.push(AuthUrl.getResetSuccess());
+        }
+        else {
+            return;
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     form.reset();
   }
 

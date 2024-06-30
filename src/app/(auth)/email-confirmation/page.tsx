@@ -1,8 +1,14 @@
+"use client"
+
 import Link from "next/link";
 import { AuthUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
+
+function SendCode() {
+
+}
 
 export default function EmailConfirmationPage() {
   return (
@@ -18,9 +24,7 @@ export default function EmailConfirmationPage() {
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
               Ми надіслали вам верифікаційний код на вашу електронну пошту
             </p>
-            <Link href={AuthUrl.getSignIn()} className={"inline-block"}>
-              <Button size={"large"}>Надіслати код повторно</Button>
-            </Link>
+            <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
           </div>
           <div
             className={
@@ -32,17 +36,9 @@ export default function EmailConfirmationPage() {
                 Підтвердження емейлу
               </Title>
               <p className={"mb-2 text-sm"}>
-                Введіть свою адресу електронної пошти і ми надішлемо тобі новий
-                пароль.
+              Ми надіслали вам верифікаційний код на вашу електронну пошту
               </p>
-              <Link
-                href={AuthUrl.getSignIn()}
-                className={
-                  "inline-block text-sm font-bold underline underline-offset-2"
-                }
-              >
-                Повернутись до входу
-              </Link>
+              <Button size={"large"}>Надіслати код повторно</Button>
             </div>
             <EmailConfirmationForm />
           </div>

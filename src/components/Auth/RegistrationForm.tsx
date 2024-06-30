@@ -8,8 +8,6 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
-import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
-
 import {
   Button,
   FormCheckbox,
@@ -35,7 +33,6 @@ type Form = z.infer<typeof formSchema>;
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function RegistrationForm() {
-  const { setIsOpen, setTitle } = useAuthNotificationContext();
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -44,28 +41,22 @@ export function RegistrationForm() {
 
   const router = useRouter();
 
-  function onSubmit(data: Form) {
+  function onSubmit(dataToSend: Form) {
     fetch(`${APIurl}/api/account/register/`, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(dataToSend),
       headers: {
         "Content-Type": "application/json"
       }
     })
       .then(response => {
         if (response.status === 201) {
-            return response.json()
+          localStorage.setItem("TEPemail", dataToSend.email);
+          router.push('/email-confirmation');
         }
         else {
             return;
         }
-      })
-      .then(data => {
-        localStorage.setItem("TEPtoken", data.token.access);
-        localStorage.setItem("TEPid", data.data.id);
-        setTitle(data.data.email);
-        setIsOpen(true);
-        router.push('/account');
       })
       .catch((error) => {
         console.error('Error:', error);
