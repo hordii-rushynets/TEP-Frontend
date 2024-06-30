@@ -1,0 +1,7 @@
+.swiper :global(.swiper-pagination-bullet) {
+  background: white;
+  opacity: 60%;
+}
+.swiper :global(.swiper-pagination-bullet-active) {
+  opacity: 1;
+}

@@ -1,0 +1,83 @@
+# Node.js
+node_modules
+/.pnp
+.pnp.js
+
+# Next.js build output
+.next
+out
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel / netlify deployment
+.vercel
+output
+.netlify
+
+# MacOS metadata
+.DS_Store
+
+# Idea and VSCode folders
+.idea
+.vscode
+*.code-workspace
+
+# Optional: local env files
+.env.local
+.env.*.local
+
+# Optional: custom environment config
+.env
+
+# Next.js cache
+.next/cache
+
+# Test coverage
+coverage
+
+# Additional linting cache
+eslintcache
+
+# Storybook
+storybook-static
+
+# IDE specific
+/.idea
+/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+*.tmp
+*.temp
+
+# Other optional exclusions
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/.editorconfig
+
+# Public folder generated during builds
+/public
+
+# Any other files you don't want to include in your repository
