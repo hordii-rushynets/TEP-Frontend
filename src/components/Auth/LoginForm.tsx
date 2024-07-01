@@ -46,6 +46,16 @@ export function LoginForm() {
         if (response.status === 200) {
             return response.json()
         }
+        else if (response.status === 401) {
+          form.setError("email", {
+            type: "manual",
+            message: "Неправильна адреса електронної пошти або пароль",
+          });
+          form.setError("password", {
+            type: "manual",
+            message: "Неправильна адреса електронної пошти або пароль",
+          });
+        }
         else {
             return;
         }
@@ -60,8 +70,6 @@ export function LoginForm() {
       .catch((error) => {
         console.error('Error:', error);
       });
-
-    form.reset();
   }
 
   return (

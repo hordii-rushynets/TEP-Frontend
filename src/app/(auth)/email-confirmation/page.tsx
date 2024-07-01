@@ -5,12 +5,35 @@ import { AuthUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
+import { useNotificationContext } from "contexts/NotificationContext";
 
-function SendCode() {
-
-}
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
+  const { setIsOpen, setText } = useNotificationContext();
+
+  function SendCode() {
+    fetch(`${APIurl}/api/account/new_otp/`, {
+      method: 'POST',
+      body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+            setText("Верифікаційний код надіслано!");
+            setIsOpen(true);
+        }
+        else {
+            return;
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   return (
     <Section className={"overflow-hidden"}>
       <Container>

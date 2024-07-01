@@ -48,6 +48,9 @@ export function EmailConfirmationForm() {
         if (response.status === 200) {
             return response.json()
         }
+        else if (response.status === 401) {
+          form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
+        }
         else {
             return;
         }
@@ -62,8 +65,6 @@ export function EmailConfirmationForm() {
       .catch((error) => {
         console.error('Error:', error);
       });
-
-    form.reset();
   }
 
   return (

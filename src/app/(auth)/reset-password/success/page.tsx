@@ -2,12 +2,35 @@
 
 import { Button, Container, Section, Title } from "common/ui";
 import { ResetPasswordConfirmationForm } from "components/Auth/ResetPasswordConfirmationForm";
+import { useNotificationContext } from "contexts/NotificationContext";
 
-function SendCode() {
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
-}
+export default function ResetPasswordConfirmationPage() {
+  const { setIsOpen, setText } = useNotificationContext();
 
-export default function EmailConfirmationPage() {
+  function SendCode() {
+    fetch(`${APIurl}/api/account/new_otp/`, {
+      method: 'POST',
+      body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+            setText("Верифікаційний код надіслано!");
+            setIsOpen(true);
+        }
+        else {
+            return;
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   return (
     <Section className={"overflow-hidden"}>
       <Container>
