@@ -1,12 +1,15 @@
 "use client"
 
+import Link from "next/link";
+import { AuthUrl } from "route-urls";
+
 import { Button, Container, Section, Title } from "common/ui";
-import { ResetPasswordConfirmationForm } from "components/Auth/ResetPasswordConfirmationForm";
+import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
 import { useNotificationContext } from "contexts/NotificationContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
-export default function ResetPasswordConfirmationPage() {
+export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
 
   function SendCode() {
@@ -40,9 +43,9 @@ export default function ResetPasswordConfirmationPage() {
           }
         >
           <div className={"hidden w-1/3 md:block lg:w-1/2"}>
-            <Title className={"mb-5"}>Ми отримали ваш запит на відновлення паролю</Title>
+            <Title className={"mb-5"}>Підтвердження емейлу</Title>
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
-              Перегляньте електронну пошту, вам повинен прийти код доступу
+              Ми надіслали вам верифікаційний код на вашу електронну пошту
             </p>
             <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
           </div>
@@ -53,14 +56,14 @@ export default function ResetPasswordConfirmationPage() {
           >
             <div className={"mb-16 md:hidden"}>
               <Title className={"mb-12 text-3xl"}>
-              Ми отримали ваш запит на відновлення паролю
+                Підтвердження емейлу
               </Title>
               <p className={"mb-2 text-sm"}>
-              Перегляньте електронну пошту, вам повинен прийти код доступу
+              Ми надіслали вам верифікаційний код на вашу електронну пошту
               </p>
               <Button size={"large"}>Надіслати код повторно</Button>
             </div>
-            <ResetPasswordConfirmationForm />
+            <EmailConfirmationForm />
           </div>
         </div>
       </Container>

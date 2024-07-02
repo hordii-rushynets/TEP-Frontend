@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { AuthUrl, UserUrl } from "route-urls";
 
@@ -8,11 +10,63 @@ import { UserAddressForm } from "components/User/UserAddressForm ";
 import { UserBankCardForm } from "components/User/UserBankCardForm";
 import { UserSettings } from "components/User/UserSettings";
 
-const user = {
-  name: "Тарас",
-};
+import { useState, useEffect } from "react";
+
+import { fetchWithAuth } from "utils/helpers";
+import { useAuth } from "contexts/AuthContext";
+
+const APIurl = process.env.NEXT_PUBLIC_API_URL
+
+interface User {
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string; 
+  policy: boolean;
+  wantInfo: boolean;
+  wholesale: boolean;
+}
+
+const UserDefaultValue : User = {
+  email: "",
+  first_name: "",
+  id: 0,
+  last_name: "",
+  policy: false,
+  wantInfo: false,
+  wholesale: false,
+}
 
 export default function AccountPage() {
+  const [user, setUser] = useState<User>(UserDefaultValue);
+
+  const authContext = useAuth();
+
+  const getUserInfo = () => {
+    fetchWithAuth(`${APIurl}/api/account/profile/get/`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }, authContext)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        else {
+          return;
+        }
+      })
+      .then(data => {
+        data && setUser(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+  useEffect(getUserInfo, []);
+
   return (
     <Section>
       <Container>
@@ -23,7 +77,7 @@ export default function AccountPage() {
             }
           >
             <div>
-              <Title className={"mb-3.5 text-3xl"}>Привіт, {user.name}!</Title>
+              <Title className={"mb-3.5 text-3xl"}>Привіт, {user.first_name}!</Title>
               <p className={"text-sm lg:font-extralight"}>
                 Бажаєш змінити обліковий запис?{" "}
                 <Link

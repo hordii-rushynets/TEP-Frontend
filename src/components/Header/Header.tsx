@@ -10,7 +10,7 @@ import {
   FiUser,
   FiX,
 } from "react-icons/fi";
-import { MainUrl, ServicesUrl, UserUrl } from "route-urls";
+import { MainUrl, ServicesUrl, UserUrl, AuthUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { ButtonBase, Container } from "common/ui";
@@ -20,6 +20,8 @@ import { ChangeLanguage } from "components/ChangeLanguage";
 import { CompanyMenu } from "./CompanyMenu";
 import { GoodsMenu, categories } from "./GoodsMenu";
 import { InfoMenu } from "./InfoMenu";
+
+import { useAuth } from "contexts/AuthContext";
 
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
@@ -33,6 +35,8 @@ export function Header() {
     if (!body) return;
     body.style.overflow = menuIsOpen ? "hidden" : "";
   }, [menuIsOpen]);
+
+  const { isAuthenticated } = useAuth();
 
   return (
     <header
@@ -71,7 +75,7 @@ export function Header() {
                 />
               </ButtonBase>
             </Link>
-            <Link href={UserUrl._getRoot()}>
+            <Link href={isAuthenticated ? AuthUrl.getAccount() : AuthUrl.getSignIn()}>
               <ButtonBase>
                 <FiUser
                   className={"size-6 transition-colors hover:text-tep_blue-500"}

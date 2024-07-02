@@ -1,31 +1,45 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { AuthUrl } from "route-urls";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
+import { useRouter } from 'next/navigation';
 
-import { Button, FormTextInput } from "common/ui";
+import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
+import { useAuth } from "contexts/AuthContext";
+
+import {
+  Button,
+  FormTextInput,
+} from "common/ui";
 
 const formSchema = z.object({
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
+  verificationCode: z.string()
 });
-
+  
 type Form = z.infer<typeof formSchema>;
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
-export function ResetPasswordForm() {
+export function EmailConfirmationForm() {
   const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
 
-  function onSubmit(dataToSend: Form) {
-    fetch(`${APIurl}/api/account/password/reset/`, {
+  const { setIsOpen, setTitle } = useAuthNotificationContext();
+  const { login } = useAuth();
+
+  function onSubmit(data: Form) {
+    const dataToSend = {
+      "otp": data.verificationCode,
+      "email": localStorage.getItem("TEPemail")
+    }
+
+    fetch(`${APIurl}/api/account/register/verify-otp/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -34,15 +48,21 @@ export function ResetPasswordForm() {
     })
       .then(response => {
         if (response.status === 200) {
-          localStorage.setItem("TEPemail", dataToSend.email);
-          router.push(AuthUrl.getResetSuccess());
+            return response.json()
         }
-        else if (response.status === 404) {
-          form.setError("email", {type: "manual", message: "Неправильне ім'я електронної пошти"})
+        else if (response.status === 401) {
+          form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
         }
         else {
             return;
         }
+      })
+      .then(data => {
+        login(data.access_token, data.refresh_token);
+        setTitle(localStorage.getItem("TEPemail") || "");
+        setIsOpen(true);
+        localStorage.removeItem("TEPemail");
+        router.push(AuthUrl.getAccount());
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -54,9 +74,9 @@ export function ResetPasswordForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className={"flex flex-col gap-y-12 lg:gap-y-[72px]"}>
           <FormTextInput<Form>
-            fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Введіть пошту"}
+            fieldName={"verificationCode"}
+            label={"Верифікаційний код"}
+            placeholder={"Введіть код"}
           />
           <Button
             type={"submit"}
@@ -64,7 +84,7 @@ export function ResetPasswordForm() {
             colorVariant={"black"}
             fullWidth
           >
-            Продовжити
+            Підтвердити
           </Button>
         </div>
       </form>
