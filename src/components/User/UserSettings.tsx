@@ -6,10 +6,46 @@ import { Button, Checkbox, Dialog, Title } from "common/ui";
 
 import { DeleteAccountConfirm } from "./DeleteAccountConfirm";
 
+import { useNotificationContext } from "contexts/NotificationContext";
+import { fetchWithAuth } from "utils/helpers";
+import { useAuth } from "contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+import { MainUrl } from "route-urls";
+
+const APIurl = process.env.NEXT_PUBLIC_API_URL
+
 export function UserSettings() {
   const [byEmail, setByEmail] = useState(false);
   const [bySMS, setBySMS] = useState(true);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+  const { setIsOpen, setText } = useNotificationContext();
+  const authContext = useAuth();
+
+  const router = useRouter();
+
+  function DeleteAccount() {
+    fetchWithAuth(`${APIurl}/api/account/profile/delete/`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }, authContext)
+      .then(response => {
+        if (response.status === 204) {
+            authContext.logout();
+            setText("Ваш акаунт успішно видалено!");
+            setIsOpen(true);
+            router.push(MainUrl.getHome());
+        }
+        else {
+            return;
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
   useEffect(() => {
     const data = { byEmail, bySMS };
@@ -61,6 +97,7 @@ export function UserSettings() {
         <DeleteAccountConfirm
           onClick={() => {
             setIsConfirmOpen(false);
+            DeleteAccount();
           }}
         />
       </Dialog>

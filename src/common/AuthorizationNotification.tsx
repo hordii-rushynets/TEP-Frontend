@@ -26,7 +26,7 @@ export function AuthorizationNotification() {
         }
       >
         <p className={"basis-1/2 leading-normal lg:font-extralight"}>
-          <span className={"text-xl"}>Ви успошно авторизувались на {email}!</span> 
+          <span className={"text-xl"}>Ви успішно авторизувались на {email}!</span> 
         </p>
         <div className={"flex items-center gap-x-4"}>
           <ButtonBase

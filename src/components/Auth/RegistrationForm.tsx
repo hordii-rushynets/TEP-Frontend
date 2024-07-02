@@ -16,8 +16,8 @@ import {
 } from "common/ui";
 
 const formSchema = z.object({
-  firstName: z.string().default(""),
-  lastName: z.string().default(""),
+  first_name: z.string().default(""),
+  last_name: z.string().default(""),
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
   password: z
     .string()
@@ -54,7 +54,7 @@ export function RegistrationForm() {
           localStorage.setItem("TEPemail", dataToSend.email);
           router.push('/email-confirmation');
         }
-        else if (response.status === 409) {
+        else if (response.status === 409 || response.status === 401) {
           form.setError("email", { type: "manual", message: "Ця електронна пошта вже зайнята" });
         }
         else {
@@ -71,12 +71,12 @@ export function RegistrationForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className={"mb-10 flex flex-col gap-y-6"}>
           <FormTextInput<Form>
-            fieldName={"firstName"}
+            fieldName={"first_name"}
             label={"Ім’я"}
             placeholder={"Ваше ім’я"}
           />
           <FormTextInput<Form>
-            fieldName={"lastName"}
+            fieldName={"last_name"}
             label={"Прізвище"}
             placeholder={"Ваше прізвище"}
           />

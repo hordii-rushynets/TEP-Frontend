@@ -11,6 +11,7 @@ import { FavouriteProvider } from "contexts/FavouriteContext";
 import { SearchProvider } from "contexts/SearchContext";
 import { AuthNotificationProvider } from "contexts/AuthNotificationContext";
 import { NotificationProvider } from "contexts/NotificationContext";
+import { AuthProvider } from "contexts/AuthContext";
 
 export type ContextProvidersProps = {
   children: React.ReactNode;
@@ -28,7 +29,9 @@ export function Providers(props: ContextProvidersProps) {
               <BannerProvider>
                 <FavouriteProvider>
                   <CompareProvider>
-                    <CartProvider>{children}</CartProvider>
+                    <AuthProvider>
+                      <CartProvider>{children}</CartProvider>
+                    </AuthProvider>
                   </CompareProvider>
                 </FavouriteProvider>
               </BannerProvider>

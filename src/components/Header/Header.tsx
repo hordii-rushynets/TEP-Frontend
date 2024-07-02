@@ -21,6 +21,8 @@ import { CompanyMenu } from "./CompanyMenu";
 import { GoodsMenu, categories } from "./GoodsMenu";
 import { InfoMenu } from "./InfoMenu";
 
+import { useAuth } from "contexts/AuthContext";
+
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
 
@@ -33,6 +35,8 @@ export function Header() {
     if (!body) return;
     body.style.overflow = menuIsOpen ? "hidden" : "";
   }, [menuIsOpen]);
+
+  const { isAuthenticated } = useAuth();
 
   return (
     <header
@@ -71,7 +75,7 @@ export function Header() {
                 />
               </ButtonBase>
             </Link>
-            <Link href={AuthUrl.getSignIn()}>
+            <Link href={isAuthenticated ? AuthUrl.getAccount() : AuthUrl.getSignIn()}>
               <ButtonBase>
                 <FiUser
                   className={"size-6 transition-colors hover:text-tep_blue-500"}

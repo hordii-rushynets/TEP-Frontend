@@ -9,6 +9,7 @@ import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
+import { useAuth } from "contexts/AuthContext";
 
 import { Button, FormPasswordInput, FormTextInput } from "common/ui";
 
@@ -26,6 +27,7 @@ type Form = z.infer<typeof formSchema>;
 export function LoginForm() {
 
   const { setIsOpen, setTitle } = useAuthNotificationContext();
+  const { login } = useAuth();
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -61,8 +63,7 @@ export function LoginForm() {
         }
       })
       .then(data => {
-        localStorage.setItem("TEPAccessToken", data.access_token);
-        localStorage.setItem("TEPRefreshToken", data.refresh_token);
+        login(data.access_token, data.refresh_token);
         setTitle(dataToSend.email);
         setIsOpen(true);
         router.push('/account');

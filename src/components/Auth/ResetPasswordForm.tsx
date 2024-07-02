@@ -37,7 +37,7 @@ export function ResetPasswordForm() {
           localStorage.setItem("TEPemail", dataToSend.email);
           router.push(AuthUrl.getResetSuccess());
         }
-        else if (response.status === 401) {
+        else if (response.status === 404) {
           form.setError("email", {type: "manual", message: "Неправильне ім'я електронної пошти"})
         }
         else {

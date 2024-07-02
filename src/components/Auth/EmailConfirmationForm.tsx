@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
+import { useAuth } from "contexts/AuthContext";
 
 import {
   Button,
@@ -30,6 +31,7 @@ export function EmailConfirmationForm() {
   });
 
   const { setIsOpen, setTitle } = useAuthNotificationContext();
+  const { login } = useAuth();
 
   function onSubmit(data: Form) {
     const dataToSend = {
@@ -37,7 +39,7 @@ export function EmailConfirmationForm() {
       "email": localStorage.getItem("TEPemail")
     }
 
-    fetch(`${APIurl}/api/account/verify-otp/`, {
+    fetch(`${APIurl}/api/account/register/verify-otp/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -56,7 +58,7 @@ export function EmailConfirmationForm() {
         }
       })
       .then(data => {
-        localStorage.setItem("TEPAccessToken", data.token);
+        login(data.access_token, data.refresh_token);
         setTitle(localStorage.getItem("TEPemail") || "");
         setIsOpen(true);
         localStorage.removeItem("TEPemail");
