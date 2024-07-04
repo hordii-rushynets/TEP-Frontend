@@ -12,6 +12,7 @@ import { SearchProvider } from "contexts/SearchContext";
 import { AuthNotificationProvider } from "contexts/AuthNotificationContext";
 import { NotificationProvider } from "contexts/NotificationContext";
 import { AuthProvider } from "contexts/AuthContext";
+import { LocalizationProvider } from "contexts/LocalizationContext";
 
 export type ContextProvidersProps = {
   children: React.ReactNode;
@@ -23,21 +24,23 @@ export function Providers(props: ContextProvidersProps) {
   return (
     <QueryParamProvider adapter={NextAdapterApp}>
       <QueryClientProvider client={client}>
-        <NotificationProvider>
-          <AuthNotificationProvider>
-            <SearchProvider>
-              <BannerProvider>
-                <FavouriteProvider>
-                  <CompareProvider>
-                    <AuthProvider>
-                      <CartProvider>{children}</CartProvider>
-                    </AuthProvider>
-                  </CompareProvider>
-                </FavouriteProvider>
-              </BannerProvider>
-            </SearchProvider>
-          </AuthNotificationProvider>
-        </NotificationProvider>
+        <LocalizationProvider>
+          <NotificationProvider>
+            <AuthNotificationProvider>
+              <SearchProvider>
+                <BannerProvider>
+                  <FavouriteProvider>
+                    <CompareProvider>
+                      <AuthProvider>
+                        <CartProvider>{children}</CartProvider>
+                      </AuthProvider>
+                    </CompareProvider>
+                  </FavouriteProvider>
+                </BannerProvider>
+              </SearchProvider>
+            </AuthNotificationProvider>
+          </NotificationProvider>
+        </LocalizationProvider>
       </QueryClientProvider>
     </QueryParamProvider>
   );

@@ -3,11 +3,13 @@
 import { Button, Container, Section, Title } from "common/ui";
 import { ResetPasswordConfirmationForm } from "components/Auth/ResetPasswordConfirmationForm";
 import { useNotificationContext } from "contexts/NotificationContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ResetPasswordConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
+  const { staticData } = useLocalization();
 
   function SendCode() {
     fetch(`${APIurl}/api/account/password/forget/`, {
@@ -19,7 +21,7 @@ export default function ResetPasswordConfirmationPage() {
     })
       .then(response => {
         if (response.status === 201) {
-            setText("Верифікаційний код надіслано!");
+            setText(staticData !== null ? staticData.auth.notifications.verificationCodeSend : "Error");
             setIsOpen(true);
         }
         else {

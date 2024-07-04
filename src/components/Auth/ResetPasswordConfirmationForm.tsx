@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
 import { useNotificationContext } from "contexts/NotificationContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import {
   Button,
@@ -31,6 +32,7 @@ export function ResetPasswordConfirmationForm() {
   });
 
   const { setIsOpen, setText } = useNotificationContext();
+  const { staticData } = useLocalization();
 
   function onSubmit(data: Form) {
     const dataToSend = {
@@ -47,7 +49,7 @@ export function ResetPasswordConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-            setText("Вам на пошту відправлено новий надійний пароль.");
+            setText(staticData !== null ? staticData.auth.notifications.resetPasswordConfirm : "Error");
             setIsOpen(true);
             localStorage.removeItem("TEPemail");
             router.push(AuthUrl.getSignIn());

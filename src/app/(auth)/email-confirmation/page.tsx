@@ -6,11 +6,13 @@ import { AuthUrl } from "route-urls";
 import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
 import { useNotificationContext } from "contexts/NotificationContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
+  const { staticData } = useLocalization();
 
   function SendCode() {
     fetch(`${APIurl}/api/account/register/resent/`, {
@@ -22,7 +24,7 @@ export default function EmailConfirmationPage() {
     })
       .then(response => {
         if (response.status === 200) {
-            setText("Верифікаційний код надіслано!");
+            setText(staticData !== null ? staticData.auth.notifications.verificationCodeSend : "Error");
             setIsOpen(true);
         }
         else {

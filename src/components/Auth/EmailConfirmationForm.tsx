@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
 import { useNotificationContext } from "contexts/NotificationContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import {
   Button,
@@ -30,6 +31,7 @@ export function EmailConfirmationForm() {
   });
 
   const { setIsOpen, setText } = useNotificationContext();
+  const { staticData } = useLocalization();
 
   function onSubmit(data: Form) {
     const dataToSend = {
@@ -46,7 +48,7 @@ export function EmailConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-          setText("Ваш акаунт зареєстровано, увійдіть, будь ласка");
+          setText(staticData !== null ? staticData.auth.notifications.registration : "Error");
           setIsOpen(true);
           localStorage.removeItem("TEPemail");
           router.push(AuthUrl.getSignIn());

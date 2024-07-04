@@ -38,7 +38,6 @@ export default function AccountPage() {
         }
       })
       .then(data => {
-        console.log(data);
         data && setUser(data);
       })
       .catch((error) => {
