@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import { HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
@@ -96,7 +96,7 @@ export function RecommendedGoods({
   );
 }
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: BlankedIMG,

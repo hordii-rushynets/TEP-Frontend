@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 // Типи для категорій
 export interface Category {
+  id: number;
   slug: string;
   title_uk: string;
   title_en: string;
@@ -10,6 +11,17 @@ export interface Category {
   description_en: string;
   image: string;
 }
+
+export const DefaultCategory = {
+  id: 0,
+  slug: "",
+  title_uk: "",
+  title_en: "",
+  description_uk: "",
+  description_en: "",
+  image: ""
+}
+
 
 // Тип для значення контексту
 interface CategoriesContextType {

@@ -1,10 +1,10 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 
 import { Container, Section } from "common/ui";
 import ProductCard from "components/Home/ProductCard";
 
 type SalesProductsListProps = {
-  products: Product[];
+  products: ProductToShow[];
 };
 export default function SalesProductsList({
   products,

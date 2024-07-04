@@ -1,4 +1,4 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 
 import { Container, Section, Title } from "common/ui";
 
@@ -23,7 +23,7 @@ export type Status =
       label: "Відміна замовлення";
     };
 
-export type OrderedProduct = Product & {
+export type OrderedProduct = ProductToShow & {
   count: number;
 };
 

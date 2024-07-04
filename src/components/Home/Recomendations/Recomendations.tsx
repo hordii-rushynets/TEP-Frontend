@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -89,7 +89,7 @@ export function Recomendations() {
   );
 }
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: IMG1,

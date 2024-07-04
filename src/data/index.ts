@@ -1,11 +1,11 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 
 import IMG1 from "./static/img1.jpg";
 import IMG2 from "./static/img2.jpg";
 import IMG3 from "./static/img3.jpg";
 import IMG4 from "./static/img4.jpg";
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: IMG1,

@@ -1,7 +1,7 @@
 "use client";
 
 import * as HoverCard from "@radix-ui/react-hover-card";
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 import { FiChevronRight } from "react-icons/fi";
@@ -12,7 +12,7 @@ import { translateCategory } from "utils/helpers";
 import { IconButton, Title } from "./ui";
 
 type TipProps = {
-  product: Product;
+  product: ProductToShow;
 } & Pick<HTMLAttributes<HTMLDivElement>, "className">;
 
 export function Tip({ product, className }: TipProps) {

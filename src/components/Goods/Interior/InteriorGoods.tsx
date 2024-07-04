@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import { products } from "data";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,7 +58,7 @@ export function InteriorGoods() {
 }
 
 type InteriorCardProps = {
-  product: Product;
+  product: ProductToShow;
 };
 
 export function InteriorCard({ product }: InteriorCardProps) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { FiCheck, FiHeart } from "react-icons/fi";
 import { MainUrl } from "route-urls";
@@ -16,7 +16,7 @@ import { useCompareContext } from "contexts/CompareContext";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 
 type ProductCardProps = {
-  product: Product;
+  product: ProductToShow;
   hasFavourite?: boolean;
   hasCompare?: boolean;
   hasCart?: boolean;

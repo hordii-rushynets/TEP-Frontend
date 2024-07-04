@@ -1,4 +1,4 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { MainUrl } from "route-urls";
 
@@ -13,7 +13,7 @@ import IMG4 from "./static/img4.jpg";
 import IMG5 from "./static/img5.jpg";
 import IMG6 from "./static/img6.jpg";
 
-const favourite_goods: Product[] = [
+const favourite_goods: ProductToShow[] = [
   {
     id: "1",
     category: "blankets",

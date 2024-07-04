@@ -1,6 +1,6 @@
 "use client";
 
-import { Feedback } from "app/goods/pillows/[slug]/page";
+import { Feedback } from "app/goods/[category]/[product]/page";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";

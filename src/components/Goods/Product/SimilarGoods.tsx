@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Image from "next/image";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
@@ -87,7 +87,7 @@ export function SimilarGoods() {
   );
 }
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: BlankedIMG,
@@ -154,7 +154,7 @@ export const products: Product[] = [
 ];
 
 type ProductCardProps = {
-  product: Product;
+  product: ProductToShow;
 };
 
 export default function Card({ product }: ProductCardProps) {
