@@ -13,7 +13,7 @@ export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
 
   function SendCode() {
-    fetch(`${APIurl}/api/account/new_otp/`, {
+    fetch(`${APIurl}/api/account/register/resent/`, {
       method: 'POST',
       body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
       headers: {

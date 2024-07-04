@@ -5,7 +5,7 @@ import { AuthUrl, UserUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { AccountTabs } from "components/User/AccountTabs";
-import UserAccount from "components/User/UserAccount";
+import UserAccount, { User, UserDefaultValue } from "components/User/UserAccount";
 import { UserAddressForm } from "components/User/UserAddressForm ";
 import { UserBankCardForm } from "components/User/UserBankCardForm";
 import { UserSettings } from "components/User/UserSettings";
@@ -17,33 +17,13 @@ import { useAuth } from "contexts/AuthContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
-interface User {
-  email: string;
-  first_name: string;
-  id: number;
-  last_name: string; 
-  policy: boolean;
-  wantInfo: boolean;
-  wholesale: boolean;
-}
-
-const UserDefaultValue : User = {
-  email: "",
-  first_name: "",
-  id: 0,
-  last_name: "",
-  policy: false,
-  wantInfo: false,
-  wholesale: false,
-}
-
 export default function AccountPage() {
   const [user, setUser] = useState<User>(UserDefaultValue);
 
   const authContext = useAuth();
 
   const getUserInfo = () => {
-    fetchWithAuth(`${APIurl}/api/account/profile/get/`, {
+    fetchWithAuth(`${APIurl}/api/account/profile/`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json"
@@ -58,6 +38,7 @@ export default function AccountPage() {
         }
       })
       .then(data => {
+        console.log(data);
         data && setUser(data);
       })
       .catch((error) => {
@@ -99,7 +80,7 @@ export default function AccountPage() {
           <AccountTabs
             tabsContent={[
               <>
-                <UserAccount />
+                <UserAccount user={user}/>
               </>,
               <>
                 <UserAddressForm />

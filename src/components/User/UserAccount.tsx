@@ -9,14 +9,38 @@ import { ChangeAvatarForm } from "./ChangeAvatarForm";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { UserAccountForm } from "./UserAccountForm";
 
-export default function UserAccount() {
+export interface User {
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string; 
+  privacy_policy_accepted: boolean;
+  phone_number: string;
+  profile_picture: string;
+}
+
+export const UserDefaultValue : User = {
+  email: "",
+  first_name: "",
+  id: 0,
+  last_name: "",
+  privacy_policy_accepted: false,
+  phone_number: "",
+  profile_picture: ""
+}
+
+export interface UserAccountProps {
+  user: User;
+}
+
+export default function UserAccount({ user }: UserAccountProps) {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
 
   return (
     <>
       <div>
         <div className={"mb-10 flex justify-between"}>
-          <ChangeAvatarForm />
+          <ChangeAvatarForm profileImage={user.profile_picture}/>
           <Button
             onClick={() => setIsPasswordOpen(true)}
             size={"small"}
@@ -26,7 +50,7 @@ export default function UserAccount() {
             Змінити пароль
           </Button>
         </div>
-        <UserAccountForm />
+        <UserAccountForm user={user}/>
 
         <Button
           onClick={() => setIsPasswordOpen(true)}

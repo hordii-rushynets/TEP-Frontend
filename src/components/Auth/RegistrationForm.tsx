@@ -54,7 +54,7 @@ export function RegistrationForm() {
           localStorage.setItem("TEPemail", dataToSend.email);
           router.push('/email-confirmation');
         }
-        else if (response.status === 409 || response.status === 401) {
+        else if (response.status === 409 || response.status === 400) {
           form.setError("email", { type: "manual", message: "Ця електронна пошта вже зайнята" });
         }
         else {

@@ -63,7 +63,7 @@ export function LoginForm() {
         }
       })
       .then(data => {
-        login(data.access_token, data.refresh_token);
+        login(data.access, data.refresh);
         setTitle(dataToSend.email);
         setIsOpen(true);
         router.push('/account');

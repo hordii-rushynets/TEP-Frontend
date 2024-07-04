@@ -45,28 +45,26 @@ export async function fetchWithAuth(url: string, options : RequestInit = {}, aut
       ...options,
       headers: {
         ...options.headers,
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `JWT ${accessToken}`,
       },
     };
   }
   let response = await fetch(url, options);
 
   if (response.status === 401) {
-    let isToken = await authContext.isTokensValid();
-    if (!isToken) {
-      const newAccessToken = localStorage.getItem('TEPAccessToken');
-      if (newAccessToken) {
-        // Update options with new access token
-        options = {
-          ...options,
-          headers: {
-            ...options.headers,
-            'Authorization': `Bearer ${newAccessToken}`,
-          },
-        }
+    await authContext.refreshToken();
+    const newAccessToken = localStorage.getItem('TEPAccessToken');
+    if (newAccessToken) {
+      // Update options with new access token
+      options = {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `JWT ${newAccessToken}`,
+        },
       }
-      response = await fetch(url, options);
     }
+    response = await fetch(url, options);
   }
 
   return response;

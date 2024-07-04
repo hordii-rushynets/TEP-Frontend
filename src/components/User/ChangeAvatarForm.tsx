@@ -8,9 +8,13 @@ import { ButtonBase, Loader } from "common/ui";
 
 import Avatar from "./static/avatar.jpg";
 
-export function ChangeAvatarForm() {
+interface ChangeAvatarFormProps {
+  profileImage: string;
+}
+
+export function ChangeAvatarForm({profileImage} : ChangeAvatarFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [image] = useState<StaticImageData | string>(Avatar);
+  const [image] = useState<StaticImageData | string>(profileImage);
 
   return (
     <div className={"relative size-[184px]"}>

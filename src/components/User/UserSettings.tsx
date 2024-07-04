@@ -25,26 +25,26 @@ export function UserSettings() {
   const router = useRouter();
 
   function DeleteAccount() {
-    fetchWithAuth(`${APIurl}/api/account/profile/delete/`, {
-      method: 'DELETE',
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }, authContext)
-      .then(response => {
-        if (response.status === 204) {
-            authContext.logout();
-            setText("Ваш акаунт успішно видалено!");
-            setIsOpen(true);
-            router.push(MainUrl.getHome());
-        }
-        else {
-            return;
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    // fetchWithAuth(`${APIurl}/api/account/profile/delete/`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   }
+    // }, authContext)
+    //   .then(response => {
+    //     if (response.status === 204) {
+    //         authContext.logout();
+    //         setText("Ваш акаунт успішно видалено!");
+    //         setIsOpen(true);
+    //         router.push(MainUrl.getHome());
+    //     }
+    //     else {
+    //         return;
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
   }
 
   useEffect(() => {

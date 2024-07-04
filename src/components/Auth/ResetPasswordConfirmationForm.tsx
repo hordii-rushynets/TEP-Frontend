@@ -17,7 +17,6 @@ import {
 
 const formSchema = z.object({
   verificationCode: z.string(),
-  new_password: z.string()
 });
   
 type Form = z.infer<typeof formSchema>;
@@ -35,12 +34,11 @@ export function ResetPasswordConfirmationForm() {
 
   function onSubmit(data: Form) {
     const dataToSend = {
-      "otp": data.verificationCode,
-      "email": localStorage.getItem("TEPemail"),
-      "new_password": data.new_password
+      "code": data.verificationCode,
+      "email": localStorage.getItem("TEPemail")
     }
 
-    fetch(`${APIurl}/api/account/password/reset/confirm/`, {
+    fetch(`${APIurl}/api/account/password/forget/confirm/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -49,7 +47,7 @@ export function ResetPasswordConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-            setText("Ваш пароль успішно змінено!");
+            setText("Вам на пошту відправлено новий надійний пароль.");
             setIsOpen(true);
             localStorage.removeItem("TEPemail");
             router.push(AuthUrl.getSignIn());
@@ -73,11 +71,6 @@ export function ResetPasswordConfirmationForm() {
             fieldName={"verificationCode"}
             label={"Верифікаційний код"}
             placeholder={"Введіть код"}
-          />
-          <FormPasswordInput<Form>
-            fieldName={"new_password"}
-            label={"Новий пароль"}
-            placeholder={"Введіть новий пароль"}
           />
           <Button
             type={"submit"}

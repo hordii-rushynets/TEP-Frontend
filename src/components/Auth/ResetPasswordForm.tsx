@@ -25,7 +25,7 @@ export function ResetPasswordForm() {
   });
 
   function onSubmit(dataToSend: Form) {
-    fetch(`${APIurl}/api/account/password/reset/`, {
+    fetch(`${APIurl}/api/account/password/forget/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -33,11 +33,11 @@ export function ResetPasswordForm() {
       }
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           localStorage.setItem("TEPemail", dataToSend.email);
           router.push(AuthUrl.getResetSuccess());
         }
-        else if (response.status === 404) {
+        else if (response.status === 400) {
           form.setError("email", {type: "manual", message: "Неправильне ім'я електронної пошти"})
         }
         else {

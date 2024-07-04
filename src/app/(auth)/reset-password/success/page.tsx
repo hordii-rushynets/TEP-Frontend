@@ -10,7 +10,7 @@ export default function ResetPasswordConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
 
   function SendCode() {
-    fetch(`${APIurl}/api/account/new_otp/`, {
+    fetch(`${APIurl}/api/account/password/forget/`, {
       method: 'POST',
       body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
       headers: {
@@ -18,7 +18,7 @@ export default function ResetPasswordConfirmationPage() {
       }
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             setText("Верифікаційний код надіслано!");
             setIsOpen(true);
         }

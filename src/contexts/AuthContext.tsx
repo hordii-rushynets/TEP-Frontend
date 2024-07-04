@@ -9,7 +9,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   login: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
-  isTokensValid: () => Promise<boolean>;
+  refreshToken: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,38 +44,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsAuthenticated(false);
   };
 
-  const isAccessTokenValid = async () => {
-    const token = localStorage.getItem("TEPAccessToken");
-
-    let result = false;
-    await fetch(`${APIurl}/api/account/token/verify/access/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        "token": token
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-      .then(response => {
-        if (response.status === 200) {
-          result = true;
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-
-    return result;
-  }
-
   const refreshToken = async () => {
     const token = localStorage.getItem("TEPRefreshToken");
 
     await fetch(`${APIurl}/api/account/token/refresh/`, {
       method: 'POST',
       body: JSON.stringify({
-        "refresh_token": token
+        "refresh": token
       }),
       headers: {
         "Content-Type": "application/json",
@@ -94,24 +69,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return;
       })
       .then(data => {
-        localStorage.setItem("TEPAccessToken", data.access_token);
+        localStorage.setItem("TEPAccessToken", data.access);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   }
 
-  const isTokensValid = async () => {
-    const isAccess = await isAccessTokenValid();
-    if (!isAccess) {
-      await refreshToken();
-      return false;
-    }
-    return true;
-  }
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, isTokensValid }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, refreshToken }}>
       {children}
     </AuthContext.Provider>
   );

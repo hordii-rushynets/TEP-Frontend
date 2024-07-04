@@ -7,8 +7,7 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 import { useRouter } from 'next/navigation';
 
-import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
-import { useAuth } from "contexts/AuthContext";
+import { useNotificationContext } from "contexts/NotificationContext";
 
 import {
   Button,
@@ -30,16 +29,15 @@ export function EmailConfirmationForm() {
     defaultValues: getDefaults(formSchema),
   });
 
-  const { setIsOpen, setTitle } = useAuthNotificationContext();
-  const { login } = useAuth();
+  const { setIsOpen, setText } = useNotificationContext();
 
   function onSubmit(data: Form) {
     const dataToSend = {
-      "otp": data.verificationCode,
+      "code": data.verificationCode,
       "email": localStorage.getItem("TEPemail")
     }
 
-    fetch(`${APIurl}/api/account/register/verify-otp/`, {
+    fetch(`${APIurl}/api/account/register/confirm/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -48,21 +46,17 @@ export function EmailConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-            return response.json()
+          setText("Ваш акаунт зареєстровано, увійдіть, будь ласка");
+          setIsOpen(true);
+          localStorage.removeItem("TEPemail");
+          router.push(AuthUrl.getSignIn());
         }
-        else if (response.status === 401) {
+        else if (response.status === 400) {
           form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
         }
         else {
             return;
         }
-      })
-      .then(data => {
-        login(data.access_token, data.refresh_token);
-        setTitle(localStorage.getItem("TEPemail") || "");
-        setIsOpen(true);
-        localStorage.removeItem("TEPemail");
-        router.push(AuthUrl.getAccount());
       })
       .catch((error) => {
         console.error('Error:', error);
