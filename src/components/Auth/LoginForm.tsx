@@ -6,6 +6,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AuthUrl } from "route-urls";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
+import { useRouter } from 'next/navigation';
+
+import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
+import { useAuth } from "contexts/AuthContext";
 
 import { Button, FormPasswordInput, FormTextInput } from "common/ui";
 
@@ -16,19 +20,57 @@ const formSchema = z.object({
   password: z.string().default(""),
 });
 
+const APIurl = process.env.NEXT_PUBLIC_API_URL
+
 type Form = z.infer<typeof formSchema>;
 
 export function LoginForm() {
+
+  const { setIsOpen, setTitle } = useAuthNotificationContext();
+  const { login } = useAuth();
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
 
-  function onSubmit(data: Form) {
-    data;
-    // TODO
-    // ...
-    form.reset();
+  const router = useRouter();
+
+  function onSubmit(dataToSend: Form) {
+    fetch(`${APIurl}/api/account/login/`, {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+            return response.json()
+        }
+        else if (response.status === 401) {
+          form.setError("email", {
+            type: "manual",
+            message: "Неправильна адреса електронної пошти або пароль",
+          });
+          form.setError("password", {
+            type: "manual",
+            message: "Неправильна адреса електронної пошти або пароль",
+          });
+        }
+        else {
+            return;
+        }
+      })
+      .then(data => {
+        login(data.access, data.refresh);
+        setTitle(dataToSend.email);
+        setIsOpen(true);
+        router.push('/account');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (

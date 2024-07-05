@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import { Banner } from "common/Banner";
 import { CartNotification } from "common/CartNotification";
 import { FavouriteNotification } from "common/FavouriteNotification";
+import { AuthorizationNotification } from "common/AuthorizationNotification";
+import { Notification } from "common/Notification";
 import { Footer } from "components/Footer";
 import { Header } from "components/Header";
 import { Providers } from "components/Providers";
@@ -70,6 +72,8 @@ export default function RootLayout({
       <body className={"relative h-full"}>
         <Providers>
           <Banner />
+          <Notification />
+          <AuthorizationNotification />
           <CartNotification />
           <FavouriteNotification />
           <Wholesale10K />
