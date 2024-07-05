@@ -92,63 +92,72 @@ export const products: ProductToShow[] = [
     id: "1",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1299,
   },
   {
     id: "2",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "3",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "4",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "5",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
   {
     id: "6",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "7",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "8",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "9",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
 ];
@@ -158,7 +167,7 @@ type ProductCardProps = {
 };
 
 export default function Card({ product }: ProductCardProps) {
-  const { id, image, price, category, title } = product;
+  const { id, image, price, category_title, category_slug, title } = product;
   return (
     <Link
       href={`${GoodsUrl.getPillows()}/${id}`}
@@ -181,7 +190,7 @@ export default function Card({ product }: ProductCardProps) {
           <Title size={"base"} className={"mb-1.5 uppercase"} component={"h3"}>
             {title}
           </Title>
-          <p className={"text-sm font-light text-[#A5A5A5]"}>{category}</p>
+          <p className={"text-sm font-light text-[#A5A5A5]"}>{category_title}</p>
         </div>
         <div className={"flex gap-x-6 px-3"}>
           <ButtonBase

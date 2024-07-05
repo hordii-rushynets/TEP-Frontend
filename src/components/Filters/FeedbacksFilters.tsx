@@ -49,7 +49,7 @@ export default function FeedbacksFilters({
                   }))
                 }
               >
-                {category.title_uk}
+                {category.title}
               </Button>
             ))}
           </div>

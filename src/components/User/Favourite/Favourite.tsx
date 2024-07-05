@@ -16,7 +16,8 @@ import IMG6 from "./static/img6.jpg";
 const favourite_goods: ProductToShow[] = [
   {
     id: "1",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG1,
     price: 1299,
     description: "",
@@ -29,7 +30,8 @@ const favourite_goods: ProductToShow[] = [
   },
   {
     id: "2",
-    category: "linens",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG2,
     price: 1299,
     description: "",
@@ -42,7 +44,8 @@ const favourite_goods: ProductToShow[] = [
   },
   {
     id: "3",
-    category: "linens",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG3,
     price: 1299,
     description: "",
@@ -55,7 +58,8 @@ const favourite_goods: ProductToShow[] = [
   },
   {
     id: "4",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG4,
     price: 1299,
     description: "",
@@ -68,7 +72,8 @@ const favourite_goods: ProductToShow[] = [
   },
   {
     id: "5",
-    category: "covered",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG5,
     price: 1299,
     description: "",
@@ -81,7 +86,8 @@ const favourite_goods: ProductToShow[] = [
   },
   {
     id: "6",
-    category: "linens",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     image: IMG6,
     price: 1299,
     description: "",

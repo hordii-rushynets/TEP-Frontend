@@ -62,7 +62,7 @@ type InteriorCardProps = {
 };
 
 export function InteriorCard({ product }: InteriorCardProps) {
-  const { category, price, title, color, image, size, id } = product;
+  const { category_title, category_slug, price, title, color, image, size, id } = product;
   return (
     <div className={"flex gap-x-4 py-6 md:px-6 [&:not(:first-child)]:pt-8"}>
       <div className={"w-[134px]"}>
@@ -74,7 +74,7 @@ export function InteriorCard({ product }: InteriorCardProps) {
             {title}
           </Title>
           <p className={"text-sm font-light text-tep_gray-500"}>
-            {[translateCategory(category), color, size].join(", ")}
+            {[category_title, color, size].join(", ")}
           </p>
         </div>
         <div className={"flex justify-between"}>
@@ -85,7 +85,7 @@ export function InteriorCard({ product }: InteriorCardProps) {
             </span>
           </div>
           <Link
-            href={`${MainUrl.getGoods()}/${category}/${id}`}
+            href={`${MainUrl.getGoods()}/${category_slug}/${id}`}
             className={"self-end"}
           >
             <IconButton size={"large"}>

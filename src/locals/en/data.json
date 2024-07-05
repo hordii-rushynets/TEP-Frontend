@@ -1,0 +1,10 @@
+{
+    "backendPostfix": "en",
+    "auth": {
+        "notifications": {
+            "registration": "Your account is registered, please log in",
+            "resetPasswordConfirm": "A new secure password has been sent to your email.",
+            "verificationCodeSend": "The verification code has been sent!"
+        }
+    }
+}

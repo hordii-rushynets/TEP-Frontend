@@ -16,7 +16,7 @@ const CategoriesGrid:React.FC = () => {
           {categories.map((category: Category) => (
             <SimpleCard
               url={`${MainUrl.getGoods()}/${category.slug}`}
-              title={category.title_uk}
+              title={category.title}
               source={category.image}
               isIcon={false}
               key={category.slug}

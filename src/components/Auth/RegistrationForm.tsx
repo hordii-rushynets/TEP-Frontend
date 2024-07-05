@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { MainUrl } from "route-urls";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
+import { useRouter } from 'next/navigation';
 
 import {
   Button,
@@ -15,8 +16,8 @@ import {
 } from "common/ui";
 
 const formSchema = z.object({
-  firstName: z.string().default(""),
-  lastName: z.string().default(""),
+  first_name: z.string().default(""),
+  last_name: z.string().default(""),
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
   password: z
     .string()
@@ -29,17 +30,40 @@ const formSchema = z.object({
 
 type Form = z.infer<typeof formSchema>;
 
+const APIurl = process.env.NEXT_PUBLIC_API_URL
+
 export function RegistrationForm() {
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
 
-  function onSubmit(data: Form) {
-    data;
-    // TODO
-    // ...
-    form.reset();
+  const router = useRouter();
+
+  function onSubmit(dataToSend: Form) {
+    fetch(`${APIurl}/api/account/register/`, {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        if (response.status === 201) {
+          localStorage.setItem("TEPemail", dataToSend.email);
+          router.push('/email-confirmation');
+        }
+        else if (response.status === 409 || response.status === 400) {
+          form.setError("email", { type: "manual", message: "Ця електронна пошта вже зайнята" });
+        }
+        else {
+            return;
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
@@ -47,12 +71,12 @@ export function RegistrationForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className={"mb-10 flex flex-col gap-y-6"}>
           <FormTextInput<Form>
-            fieldName={"firstName"}
+            fieldName={"first_name"}
             label={"Ім’я"}
             placeholder={"Ваше ім’я"}
           />
           <FormTextInput<Form>
-            fieldName={"lastName"}
+            fieldName={"last_name"}
             label={"Прізвище"}
             placeholder={"Ваше прізвище"}
           />

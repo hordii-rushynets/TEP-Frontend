@@ -218,7 +218,7 @@ export const GoodsLinksList : React.FC = () => {
         key={category.slug}
         url={`${MainUrl.getGoods()}/${category.slug}`}
       >
-        {category.title_uk}
+        {category.title}
       </FooterLiLink>
     ))}
     <FooterLiLink url={MainUrl.getSales()}>Акції</FooterLiLink>

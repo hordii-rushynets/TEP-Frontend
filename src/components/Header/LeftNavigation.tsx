@@ -31,7 +31,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
                     },
                   )}
                 >
-                  {category.title_uk}
+                  {category.title}
                 </Link>
               </li>
             ))}

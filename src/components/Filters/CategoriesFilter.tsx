@@ -60,7 +60,7 @@ const CategoryButtonsList : React.FC<CategoryButtonListProps> = ({filter, setFil
         colorVariant={"filter"}
         onClick={() => setFilter({ category: category.slug })}
       >
-        {category.title_uk}
+        {category.title}
       </Button>
     ))}
     </>

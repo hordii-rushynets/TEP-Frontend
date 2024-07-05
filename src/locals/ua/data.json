@@ -1,0 +1,10 @@
+{
+    "backendPostfix": "uk",
+    "auth": {
+        "notifications": {
+            "registration": "Ваш акаунт зареєстровано, увійдіть, будь ласка",
+            "resetPasswordConfirm": "Вам на пошту відправлено новий надійний пароль.",
+            "verificationCodeSend": "Верифікаційний код надіслано!"
+        }
+    }
+}

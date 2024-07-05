@@ -122,7 +122,7 @@ const CategoriesFormSelect : React.FC = () => {
           display={"Обрати категорію"}
           options={categories.map((category) => ({
             value: category.slug,
-            label: category.title_uk,
+            label: category.title,
           }))}
         />
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FiCalendar } from "react-icons/fi";
 import InputMask from "react-input-mask";
@@ -13,30 +13,36 @@ import { Dialog, FormSelectInput, FormTextInput, TextInput } from "common/ui";
 import { BirthdayForm } from "./BirthdayForm";
 import { UserSocials } from "./UserSocials";
 
+import { UserAccountProps } from "./UserAccount";
+
 const formSchema = z.object({
-  firstName: z.string().default(""),
-  lastName: z.string().default(""),
+  first_name: z.string().default(""),
+  last_name: z.string().default(""),
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  phoneNumber: z.string().default(""),
+  phone_number: z.string().default(""),
   birthday: z.string().default(""),
   profileType: z.string().default("usual"),
 });
 
 type Form = z.infer<typeof formSchema>;
 
-export function UserAccountForm() {
-  const [phoneNumber, setPhoneNumber] = useState("");
+export function UserAccountForm({user}: UserAccountProps) {
+  const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
   const [isDateOpen, setIsDateOpen] = useState(false);
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
-    defaultValues: getDefaults(formSchema),
+    defaultValues: user,
   });
+
+  useEffect(() => {
+    form.reset(user);
+  }, [user]);
 
   function onSubmit(data: Form) {
     const fullData = {
       ...data,
-      phoneNumber: phoneNumber.match(/\d/g)?.join(""),
+      phone_number: phoneNumber.match(/\d/g)?.join(""),
     };
     fullData;
     // TODO
@@ -52,12 +58,12 @@ export function UserAccountForm() {
         >
           <div className={"flex flex-col gap-y-6"}>
             <FormTextInput<Form>
-              fieldName={"firstName"}
+              fieldName={"first_name"}
               label={"Ім’я"}
               placeholder={"Ваше ім’я"}
             />
             <FormTextInput<Form>
-              fieldName={"lastName"}
+              fieldName={"last_name"}
               label={"Прізвище"}
               placeholder={"Ваше прізвище"}
             />

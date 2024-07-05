@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { AuthContextType } from "contexts/AuthContext";
 
 export function translateCategory(category: string) {
   switch (category) {
@@ -35,4 +36,36 @@ export function transformImagesArr(
     }
   }
   return imgArr;
+}
+
+export async function fetchWithAuth(url: string, options : RequestInit = {}, authContext: AuthContextType) : Promise<Response> {
+  const accessToken = localStorage.getItem('TEPAccessToken');
+  if (accessToken) {
+    options = {
+      ...options,
+      headers: {
+        ...options.headers,
+        'Authorization': `JWT ${accessToken}`,
+      },
+    };
+  }
+  let response = await fetch(url, options);
+
+  if (response.status === 401) {
+    await authContext.refreshToken();
+    const newAccessToken = localStorage.getItem('TEPAccessToken');
+    if (newAccessToken) {
+      // Update options with new access token
+      options = {
+        ...options,
+        headers: {
+          ...options.headers,
+          'Authorization': `JWT ${newAccessToken}`,
+        },
+      }
+    }
+    response = await fetch(url, options);
+  }
+
+  return response;
 }

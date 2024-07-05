@@ -13,6 +13,7 @@ import ProductsList from "components/Goods/ProductsList";
 import BlanketIMG from "components/Goods/static/blanket.jpg";
 import { Category, DefaultCategory } from "contexts/CategoriesContext"
 import { StaticImageData } from "next/image";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import { useEffect, useState } from "react"
 
@@ -110,7 +111,8 @@ export type ProductToShow = {
   description?: string;
   size?: string[] | string;
   title: string;
-  category: string;
+  category_slug: string;
+  category_title: string;
   image: StaticImageData | string;
   price: number;
   isInCart?: boolean;
@@ -142,10 +144,17 @@ export default function CategoryPage({
       return
     })
     .then(data => {
-      data && setCategory(data);
+      data && setCategory({
+        id: data.id,
+        slug: data.slug,
+        image: data.image,
+        description: data[`description_${staticData.backendPostfix}` || "description"],
+        title: data[`title_${staticData.backendPostfix}` || "title"]
+      });
     });
   }
 
+  const { staticData } = useLocalization();
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [productsToShow, setProductsToShow] = useState([]);
 
@@ -173,16 +182,15 @@ export default function CategoryPage({
     .then(data => {
       data && setProductsWithVariants(data);
       if (data) {
-        let productsToShow = data.map((product:ProductWithVariant) => ({
+        let productsToShow = data.map((product:any) => ({
           id: product.id,
-          title: product.title_uk,
+          title: product[`title_${staticData.backendPostfix}` || "title"],
           category_slug: product.category.slug,
-          category_title: product.category.title_uk,
+          category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
           image: product.product_variants[0].main_image,
           price: product.product_variants[0].default_price,
         }));
         setProductsToShow(productsToShow);
-        console.log(productsToShow);
       }
     });
   }
@@ -195,9 +203,9 @@ export default function CategoryPage({
   return (
     <>
       <ProductHeader
-        title={category.title_uk}
+        title={category.title}
         description={
-          category.description_uk
+          category.description
         }
       />
       <BlanketsFilters count={productsWithVariants.length} />

@@ -21,7 +21,10 @@ const productsImages = [ProductIMG1, ProductIMG2, ProductIMG3, ProductIMG4];
 const products = [...Array(12)].map((_, Idx) => ({
   id: (Idx + 1).toString(),
   title: "Dream",
-  category: ["pillows", "blankets", "covered", "linens", "toppers", "sheets"][
+  category_slug: ["pillows", "blankets", "covered", "linens", "toppers", "sheets"][
+    Math.floor(Math.random() * 6)
+  ],
+  category_title: ["Pillows", "Blankets", "Covered", "Linens", "Toppers", "Sheets"][
     Math.floor(Math.random() * 6)
   ],
   image: productsImages[Math.floor(Math.random() * 4)],

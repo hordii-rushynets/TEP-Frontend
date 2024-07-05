@@ -33,14 +33,14 @@ export function GoodsMenu() {
         {categories.map((category: Category) => {
           return (
             <Link
-              onMouseOver={() => setCardInfo({slug: category.slug, title: category.title_uk, image: category.image, description: category.description_uk})}
+              onMouseOver={() => setCardInfo({slug: category.slug, title: category.title, image: category.image, description: category.description})}
               key={category.slug}
               href={`${MainUrl.getGoods()}/${category.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }
             >
-              {category.title_uk}
+              {category.title}
             </Link>
           );
         })}

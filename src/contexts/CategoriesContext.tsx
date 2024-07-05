@@ -1,24 +1,21 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useLocalization } from './LocalizationContext';
 
 // Типи для категорій
 export interface Category {
-  id: number;
+  id: string;
   slug: string;
-  title_uk: string;
-  title_en: string;
-  description_uk: string;
-  description_en: string;
+  title: string;
+  description: string;
   image: string;
 }
 
 export const DefaultCategory = {
-  id: 0,
+  id: "",
   slug: "",
-  title_uk: "",
-  title_en: "",
-  description_uk: "",
-  description_en: "",
+  title: "",
+  description: "",
   image: ""
 }
 
@@ -41,11 +38,18 @@ const APIurl = process.env.NEXT_PUBLIC_API_URL
 // Створення провайдера контексту
 export function CategoriesProvider({ children }: CategoriesProviderProps) {
   const [categories, setCategories] = useState<Category[]>([]);
+  const { staticData } = useLocalization();
 
   async function fetchCategories() {
     const res = await fetch(`${APIurl}/api/store/categories/`);
     const data = await res.json();
-    setCategories(data);
+    setCategories(data.map((category: any) => ({
+      id: category.id,
+      slug: category.slug,
+      title: category[`title_${staticData.backendPostfix}` || "title"],
+      description: category[`description_${staticData.backendPostfix}` || "description"],
+      image: category.image
+    })));
   }
 
   // Завантаження категорій при завантаженні компонента
