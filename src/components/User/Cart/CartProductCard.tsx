@@ -23,7 +23,7 @@ export function CartProductCard({
   trashAction,
   trashClassName,
 }: OrderProductCardProps) {
-  const { category, image, price, title, article, color, count, size } =
+  const { category_title, category_slug, image, price, title, article, color, count, size } =
     product;
   return (
     <div
@@ -41,9 +41,9 @@ export function CartProductCard({
             <Title size={"2xl"} className={"truncate"}>
               {title}
             </Title>
-            {category && (
+            {category_title && (
               <p className={"text-sm text-tep_gray-500 lg:font-extralight"}>
-                {translateCategory(category)}
+                {category_title}
               </p>
             )}
           </div>

@@ -16,7 +16,7 @@ import {
   Title,
 } from "common/ui";
 import { RatingStar } from "common/ui/icons/RatingStar";
-import { categories } from "components/Header/GoodsMenu";
+import { CategoriesProvider, useCategories } from "contexts/CategoriesContext";
 
 export const feedbackSchema = z.object({
   rating: z.number().min(1, "Оцініть товар від 1 до 5").default(0),
@@ -74,15 +74,9 @@ export function FeedbackForm() {
             label={"Пошта"}
             placeholder={"taras@gmail.com"}
           />
-          <FormSelectInput
-            fieldName={"category"}
-            label={"Товари"}
-            display={"Обрати категорію"}
-            options={categories.map((category) => ({
-              value: category.name,
-              label: category.title,
-            }))}
-          />
+          <CategoriesProvider>
+            <CategoriesFormSelect />
+          </CategoriesProvider>
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
@@ -116,3 +110,20 @@ export function FeedbackForm() {
     </FormProvider>
   );
 }
+
+
+const CategoriesFormSelect : React.FC = () => {
+  const { categories } = useCategories();
+
+  return (
+      <FormSelectInput
+          fieldName={"category"}
+          label={"Товари"}
+          display={"Обрати категорію"}
+          options={categories.map((category) => ({
+            value: category.slug,
+            label: category.title,
+          }))}
+        />
+  );
+} 

@@ -5,8 +5,7 @@ import { InfoUrl } from "route-urls";
 import { isStr } from "utils/js-types";
 
 import { Button, Container, Loader, Section, Title } from "common/ui";
-import FeedbacksFilters from "components/Filters/FeedbacksFilters";
-import { categories } from "components/Header/GoodsMenu";
+import FeedbacksFiltersWithCategories from "components/Info/Feedbacks/FeedbacksFiltersWithCategories";
 import { FeedbacksList } from "components/Info/Feedbacks/FeedbacksList";
 
 export type SearchParams = {
@@ -44,7 +43,7 @@ export default function FeedbacksPage({
         </Container>
       </Section>
       <Suspense fallback={<Loader />}>
-        <FeedbacksFilters categories={categories} />
+        <FeedbacksFiltersWithCategories />
       </Suspense>
       <Suspense>
         <FeedbacksList category={category as string} page={activePageNum} />

@@ -3,7 +3,7 @@
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { Button, Container, Section } from "common/ui";
-import { Category } from "components/Header/GoodsMenu";
+import { Category } from "contexts/CategoriesContext";
 
 type FeedbacksFiltersProps = {
   categories: Category[];
@@ -39,13 +39,13 @@ export default function FeedbacksFilters({
             </Button>
             {categories.map((category) => (
               <Button
-                key={category.id}
+                key={category.slug}
                 size={"filter"}
                 colorVariant={"filter"}
                 onClick={() =>
                   setFilter((params) => ({
                     ...params,
-                    category: category.name,
+                    category: category.slug,
                   }))
                 }
               >

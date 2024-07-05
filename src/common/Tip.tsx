@@ -1,7 +1,7 @@
 "use client";
 
 import * as HoverCard from "@radix-ui/react-hover-card";
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 import { FiChevronRight } from "react-icons/fi";
@@ -12,11 +12,11 @@ import { translateCategory } from "utils/helpers";
 import { IconButton, Title } from "./ui";
 
 type TipProps = {
-  product: Product;
+  product: ProductToShow;
 } & Pick<HTMLAttributes<HTMLDivElement>, "className">;
 
 export function Tip({ product, className }: TipProps) {
-  const { id = "1", title, category, price } = product;
+  const { id = "1", title, category_slug, category_title, price } = product;
 
   return (
     <div className={cn("inline-block", className)}>
@@ -45,14 +45,14 @@ export function Tip({ product, className }: TipProps) {
             >
               <Title className={"mb-2"}>{title}</Title>
               <p className={"mb-4 text-sm font-extralight text-[#A5A5A5]"}>
-                {translateCategory(category)}
+                {category_title}
               </p>
               <div className={"flex items-end justify-between"}>
                 <span className={"text-2xl font-bold"}>
                   {price}
                   <span className={"align-top text-xs font-bold"}> грн</span>
                 </span>
-                <Link href={`${MainUrl.getGoods()}/${category}/${id}`}>
+                <Link href={`${MainUrl.getGoods()}/${category_slug}/${id}`}>
                   <IconButton colorVariant={"empty"}>
                     <FiChevronRight
                       className={

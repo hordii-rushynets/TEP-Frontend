@@ -11,8 +11,7 @@ import MainCompanyIMG from "./static/Logo.svg";
 import CompanyLinksIMG from "./static/goods.jpg";
 
 const baseInfo = {
-  id: "",
-  name: "/",
+  slug: "/",
   title: "ТЕП",
   image: MainCompanyIMG,
   description: "Раді вітати Вас у ТЕП",
@@ -20,16 +19,14 @@ const baseInfo = {
 
 export const companyLinks = [
   {
-    id: "1",
-    name: "about",
+    slug: "about",
     title: "Про бренд ТЕП",
     image: CompanyLinksIMG,
     description:
       "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
-    id: "2",
-    name: "cooperation-and-partnership",
+    slug: "cooperation-and-partnership",
     title: "Співпраця та партнерство",
 
     image: CompanyLinksIMG,
@@ -37,24 +34,21 @@ export const companyLinks = [
       "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
-    id: "3",
-    name: "vacancies",
+    slug: "vacancies",
     title: "Робота в ТЕП",
     image: CompanyLinksIMG,
     description:
       "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
-    id: "4",
-    name: "technologies",
+    slug: "technologies",
     title: "Технології",
     image: CompanyLinksIMG,
     description:
       "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
-    id: "5",
-    name: "blog",
+    slug: "blog",
     title: "Блог",
     image: CompanyLinksIMG,
     description:
@@ -75,8 +69,8 @@ export function CompanyMenu() {
           return (
             <Link
               onMouseOver={() => setCardInfo(link)}
-              key={link.id}
-              href={`${MainUrl.getCompany()}/${link.name}`}
+              key={link.slug}
+              href={`${MainUrl.getCompany()}/${link.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }

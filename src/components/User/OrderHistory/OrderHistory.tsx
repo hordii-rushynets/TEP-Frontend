@@ -1,4 +1,4 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 
 import { Container, Section, Title } from "common/ui";
 
@@ -23,7 +23,7 @@ export type Status =
       label: "Відміна замовлення";
     };
 
-export type OrderedProduct = Product & {
+export type OrderedProduct = ProductToShow & {
   count: number;
 };
 
@@ -49,7 +49,8 @@ export const orders: OrderType[] = [
         id: "1",
         image: IMG1,
         article: "903.048.89",
-        category: "linens",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "сірий",
         count: 1,
         price: 1099,
@@ -60,7 +61,8 @@ export const orders: OrderType[] = [
         id: "2",
         image: IMG2,
         article: "923.248.54",
-        category: "toppers",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "білий",
         count: 1,
         price: 699,
@@ -71,7 +73,8 @@ export const orders: OrderType[] = [
         id: "3",
         image: IMG3,
         article: "723.238.51",
-        category: "blankets",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "білий",
         count: 2,
         price: 599,
@@ -93,7 +96,8 @@ export const orders: OrderType[] = [
         id: "1",
         image: IMG1,
         article: "903.048.89",
-        category: "linens",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "сірий",
         count: 1,
         price: 1099,
@@ -115,7 +119,8 @@ export const orders: OrderType[] = [
         id: "1",
         image: IMG1,
         article: "903.048.89",
-        category: "linens",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "сірий",
         count: 1,
         price: 1099,
@@ -126,7 +131,8 @@ export const orders: OrderType[] = [
         id: "2",
         image: IMG2,
         article: "923.248.54",
-        category: "toppers",
+        category_title: "Ковдра",
+        category_slug: "sheets",
         color: "білий",
         count: 1,
         price: 699,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { FiCheck, FiHeart } from "react-icons/fi";
 import { MainUrl } from "route-urls";
@@ -16,7 +16,7 @@ import { useCompareContext } from "contexts/CompareContext";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 
 type ProductCardProps = {
-  product: Product;
+  product: ProductToShow;
   hasFavourite?: boolean;
   hasCompare?: boolean;
   hasCart?: boolean;
@@ -38,7 +38,8 @@ export default function ProductCard({
     id,
     image,
     price,
-    category,
+    category_slug,
+    category_title,
     title,
     isSale = false,
     salePrice,
@@ -55,7 +56,7 @@ export default function ProductCard({
         "group mx-auto flex w-full max-w-[288px] flex-col overflow-hidden rounded-3xl p-2 transition-shadow hover:shadow"
       }
     >
-      <Link href={`${MainUrl.getGoods()}/${category}/${id}`}>
+      <Link href={`${MainUrl.getGoods()}/${category_slug}/${id}`}>
         <ImageSquare
           source={image}
           classes={{
@@ -67,7 +68,7 @@ export default function ProductCard({
       <div className={"mb-4 flex flex-1 items-start justify-between"}>
         <div>
           <Link
-            href={`${MainUrl.getGoods()}/${category}/${id}`}
+            href={`${MainUrl.getGoods()}/${category_slug}/${id}`}
             className={"mb-1.5 "}
           >
             <Title size={"xl"} className={"uppercase"} component={"h3"}>
@@ -75,7 +76,7 @@ export default function ProductCard({
             </Title>
           </Link>
           <p className={"font-light text-[#A5A5A5]"}>
-            {translateCategory(category)}
+            {category_title}
           </p>
         </div>
         <div className={"flex gap-x-6 pl-3"}>

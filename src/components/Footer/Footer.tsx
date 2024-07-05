@@ -9,7 +9,8 @@ import { Disclosure } from "common/Disclosure";
 import { Container, Title } from "common/ui";
 import { ChangeLanguage } from "components/ChangeLanguage";
 import { companyLinks } from "components/Header/CompanyMenu";
-import { categories } from "components/Header/GoodsMenu";
+// import { categories } from "components/Header/GoodsMenu";
+import { useCategories, Category, CategoriesProvider } from 'contexts/CategoriesContext';
 import { servicesLinks } from "components/Header/ServicesMenu";
 import { Socials } from "components/Socials";
 
@@ -18,7 +19,7 @@ import MastercardIMG from "./static/mastercard.svg";
 import VisaIMG from "./static/visa.svg";
 
 const companyFooterLinks = companyLinks.map((link) => ({
-  name: link.name,
+  name: link.slug,
   title: link.title,
 }));
 companyFooterLinks.splice(3, 0, {
@@ -27,7 +28,7 @@ companyFooterLinks.splice(3, 0, {
 });
 
 const servicesFooterLinks = servicesLinks
-  .map((link) => ({ name: link.name, title: link.title }))
+  .map((link) => ({ name: link.slug, title: link.title }))
   .reverse();
 
 const infoFooterLinks = [
@@ -50,7 +51,9 @@ export function Footer() {
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
                   Товари
                 </Title>
-                {goodsLinksList}
+                <CategoriesProvider>
+                  <GoodsLinksList />
+                </CategoriesProvider>
               </div>
               <div className={"basis-1/4"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
@@ -205,19 +208,23 @@ export const FooterLiLink = ({
   </li>
 );
 
-export const goodsLinksList = (
+export const GoodsLinksList : React.FC = () => {
+  const { categories } = useCategories();
+
+  return (
   <ul className={"flex flex-col gap-y-[18px]"}>
-    {categories.map((category) => (
+    {categories.map((category: Category) => (
       <FooterLiLink
-        key={category.id}
-        url={`${MainUrl.getGoods()}/${category.name}`}
+        key={category.slug}
+        url={`${MainUrl.getGoods()}/${category.slug}`}
       >
         {category.title}
       </FooterLiLink>
     ))}
     <FooterLiLink url={MainUrl.getSales()}>Акції</FooterLiLink>
   </ul>
-);
+  );
+};
 export const companyLinksList = (
   <ul className={"flex flex-col gap-y-[18px]"}>
     {companyFooterLinks.map((link) => (
@@ -253,7 +260,7 @@ export const infoLinksList = (
 );
 
 const links = [
-  { triger: "Товари", list: goodsLinksList },
+  { triger: "Товари", list: <GoodsLinksList/> },
   { triger: "Компанія", list: companyLinksList },
   { triger: "Послуги", list: servicesLinksList },
   { triger: "Інформація для покупців", list: infoLinksList },

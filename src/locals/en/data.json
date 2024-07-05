@@ -1,4 +1,5 @@
 {
+    "backendPostfix": "en",
     "auth": {
         "notifications": {
             "registration": "Your account is registered, please log in",

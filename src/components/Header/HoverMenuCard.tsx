@@ -9,8 +9,7 @@ import { IconButton, Title } from "common/ui";
 type HoverMenuCardProps = {
   url: string;
   info: {
-    id?: string;
-    name: string;
+    slug: string;
     title: string;
     image: StaticImageData | string;
     description: string;
@@ -18,7 +17,7 @@ type HoverMenuCardProps = {
 };
 
 export function HoverMenuCard({ info, url }: HoverMenuCardProps) {
-  const { description, image, name, title } = info;
+  const { description, image, slug, title } = info;
   return (
     <div
       className={
@@ -28,7 +27,7 @@ export function HoverMenuCard({ info, url }: HoverMenuCardProps) {
       <Title size={"2xl"}>{title}</Title>
       <p className={"line-clamp-3 text-sm font-extralight"}>{description}</p>
       <Image src={image} alt={"Image"} fill className={"-z-10 object-cover"} />
-      <Link className={"absolute right-6 top-6"} href={`${url}/${name}`}>
+      <Link className={"absolute right-6 top-6"} href={`${url}/${slug}`}>
         <IconButton size={"large"}>
           <FiArrowRight className={"size-6"} />
         </IconButton>

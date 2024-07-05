@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import { HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
@@ -96,68 +96,77 @@ export function RecommendedGoods({
   );
 }
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1299,
   },
   {
     id: "2",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "3",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "4",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "5",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
   {
     id: "6",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "7",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "8",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "9",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
 ];

@@ -1,4 +1,5 @@
 export default interface StaticData {
+    backendPostfix: string;
     auth: {
         notifications: {
             registration: string;

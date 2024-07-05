@@ -11,6 +11,8 @@ export type ImageSquareProps = {
   };
 };
 
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
+
 export function ImageSquare(props: ImageSquareProps) {
   const { source, alt = "Image", classes, onClick, ...imageProps } = props;
   return (
@@ -22,7 +24,7 @@ export function ImageSquare(props: ImageSquareProps) {
     >
       <Image
         onClick={onClick}
-        src={source}
+        src={typeof(source) === "string" && !source.includes(APIurl || "") ? APIurl + source : source}
         alt={alt}
         fill
         className={cn("object-cover", classes?.image)}

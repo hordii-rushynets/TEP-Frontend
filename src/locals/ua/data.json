@@ -1,4 +1,5 @@
 {
+    "backendPostfix": "uk",
     "auth": {
         "notifications": {
             "registration": "Ваш акаунт зареєстровано, увійдіть, будь ласка",

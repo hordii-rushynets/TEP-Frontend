@@ -31,7 +31,7 @@ export default function NoveltyPage({
         }
       />
       <Images />
-      <NewGoods activePage={activePageNum} pages={12} />
+      <NewGoods activePage={activePageNum} />
       <PopularGoods />
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 import { HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
@@ -15,68 +15,77 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1299,
   },
   {
     id: "2",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "3",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "4",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "5",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
   {
     id: "6",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 699,
   },
   {
     id: "7",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 1099,
   },
   {
     id: "8",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 899,
   },
   {
     id: "9",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
-    category: "Ковдра",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     price: 299,
   },
 ];

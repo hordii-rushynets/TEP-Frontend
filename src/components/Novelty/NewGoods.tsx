@@ -9,17 +9,17 @@ import PillowIMG from "./static/pillow.jpg";
 const pillows = [...Array(9)].map((_, Idx) => ({
   id: (Idx + 1).toString(),
   title: "Dream",
-  category: "Подушка",
+  category_title: "Ковдра",
+  category_slug: "sheets",
   image: PillowIMG,
   price: 1199,
 }));
 
 type NewGoodsProps = {
-  pages: number;
   activePage: number;
 };
 
-export const NewGoods = ({ activePage, pages }: NewGoodsProps) => {
+export const NewGoods = ({ activePage }: NewGoodsProps) => {
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -32,7 +32,6 @@ export const NewGoods = ({ activePage, pages }: NewGoodsProps) => {
           </div>
           <ProductsList
             activePage={activePage}
-            pages={pages}
             products={pillows}
           />
         </div>

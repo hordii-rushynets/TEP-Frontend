@@ -1,16 +1,17 @@
-import { Product } from "app/goods/pillows/page";
+import { ProductToShow } from "app/goods/[category]/page";
 
 import IMG1 from "./static/img1.jpg";
 import IMG2 from "./static/img2.jpg";
 import IMG3 from "./static/img3.jpg";
 import IMG4 from "./static/img4.jpg";
 
-export const products: Product[] = [
+export const products: ProductToShow[] = [
   {
     id: "1",
     image: IMG1,
     article: "903.048.89",
-    category: "linens",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "сірий",
     count: 1,
     price: 1099,
@@ -26,7 +27,8 @@ export const products: Product[] = [
     id: "2",
     image: IMG2,
     article: "923.248.54",
-    category: "toppers",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 1,
     price: 699,
@@ -42,7 +44,8 @@ export const products: Product[] = [
     id: "3",
     image: IMG3,
     article: "723.238.51",
-    category: "blankets",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,
@@ -58,7 +61,8 @@ export const products: Product[] = [
     id: "4",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,
@@ -74,7 +78,8 @@ export const products: Product[] = [
     id: "5",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 1,
     price: 599,
@@ -90,7 +95,8 @@ export const products: Product[] = [
     id: "6",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,
@@ -106,7 +112,8 @@ export const products: Product[] = [
     id: "7",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,
@@ -122,7 +129,8 @@ export const products: Product[] = [
     id: "8",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,
@@ -137,7 +145,8 @@ export const products: Product[] = [
     id: "9",
     image: IMG4,
     article: "723.238.51",
-    category: "pillows",
+    category_title: "Ковдра",
+    category_slug: "sheets",
     color: "білий",
     count: 2,
     price: 599,

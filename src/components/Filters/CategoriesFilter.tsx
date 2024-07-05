@@ -4,7 +4,7 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 import { cn } from "utils/cn";
 
 import { Button } from "common/ui";
-import { categories } from "components/Header/GoodsMenu";
+import { CategoriesProvider, useCategories} from "contexts/CategoriesContext";
 
 export default function CategoriesFilter() {
   const [filter, setFilter] = useQueryParams(
@@ -30,21 +30,39 @@ export default function CategoriesFilter() {
       >
         Всі
       </Button>
-      {categories.map((category) => (
-        <Button
-          key={category.id}
-          className={{
-            button: cn({
-              "border border-black": filter.category === category.name,
-            }),
-          }}
-          size={"filter"}
-          colorVariant={"filter"}
-          onClick={() => setFilter({ category: category.name })}
-        >
-          {category.title}
-        </Button>
-      ))}
+      <CategoriesProvider>
+        <CategoryButtonsList filter={filter} setFilter={setFilter} />
+      </CategoriesProvider>
     </div>
+  );
+}
+
+type CategoryButtonListProps = {
+  filter: any,
+  setFilter: any
+}
+
+const CategoryButtonsList : React.FC<CategoryButtonListProps> = ({filter, setFilter}) => {
+
+  const { categories } = useCategories();
+
+  return (
+    <>
+    {categories.map((category) => (
+      <Button
+        key={category.slug}
+        className={{
+          button: cn({
+            "border border-black": filter.category === category.slug,
+          }),
+        }}
+        size={"filter"}
+        colorVariant={"filter"}
+        onClick={() => setFilter({ category: category.slug })}
+      >
+        {category.title}
+      </Button>
+    ))}
+    </>
   );
 }

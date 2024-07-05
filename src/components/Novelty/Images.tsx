@@ -18,7 +18,8 @@ export const Images = () => {
             <Tip
               product={{
                 id: "1",
-                category: "pillows",
+                category_title: "Ковдра",
+                category_slug: "sheets",
                 title: "Velure",
                 price: 1299,
                 image: "",
@@ -34,7 +35,8 @@ export const Images = () => {
             <Tip
               product={{
                 id: "2",
-                category: "pillows",
+                category_title: "Ковдра",
+                category_slug: "sheets",
                 title: "Velure",
                 price: 1299,
                 image: "",
