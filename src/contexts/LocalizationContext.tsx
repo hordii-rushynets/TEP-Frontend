@@ -2,11 +2,12 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import StaticData from "../locals/dataInterface";
+import data from "../locals/ua/data.json"
 
 export interface LocalizationContextType {
   localization: string;
   setLocalization: (value: string) => void;
-  staticData: StaticData | null;
+  staticData: StaticData;
 }
 
 async function loadJSON(localization: string) {
@@ -27,11 +28,11 @@ interface LocalizationProviderProps {
 
 export const LocalizationProvider = ({ children }: LocalizationProviderProps) => {
   const [localization, setLocalization] = useState<string>("ua");
-  const [staticData, setStaticData] = useState<StaticData | null>(null);
+  const [staticData, setStaticData] = useState<StaticData>(data);
 
   useEffect(() => {
       async function fetchData() {
-        const data = await loadJSON(localization);
+        const data: StaticData = await loadJSON(localization);
         setStaticData(data);
       }
   

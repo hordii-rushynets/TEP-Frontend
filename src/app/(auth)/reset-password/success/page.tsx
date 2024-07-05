@@ -21,7 +21,7 @@ export default function ResetPasswordConfirmationPage() {
     })
       .then(response => {
         if (response.status === 201) {
-            setText(staticData !== null ? staticData.auth.notifications.verificationCodeSend : "Error");
+            setText(staticData.auth.notifications.verificationCodeSend);
             setIsOpen(true);
         }
         else {

@@ -24,7 +24,7 @@ export default function EmailConfirmationPage() {
     })
       .then(response => {
         if (response.status === 200) {
-            setText(staticData !== null ? staticData.auth.notifications.verificationCodeSend : "Error");
+            setText(staticData.auth.notifications.verificationCodeSend);
             setIsOpen(true);
         }
         else {

@@ -48,7 +48,7 @@ export function EmailConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-          setText(staticData !== null ? staticData.auth.notifications.registration : "Error");
+          setText(staticData.auth.notifications.registration);
           setIsOpen(true);
           localStorage.removeItem("TEPemail");
           router.push(AuthUrl.getSignIn());

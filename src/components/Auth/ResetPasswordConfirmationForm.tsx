@@ -49,7 +49,7 @@ export function ResetPasswordConfirmationForm() {
     })
       .then(response => {
         if (response.status === 200) {
-            setText(staticData !== null ? staticData.auth.notifications.resetPasswordConfirm : "Error");
+            setText(staticData.auth.notifications.resetPasswordConfirm);
             setIsOpen(true);
             localStorage.removeItem("TEPemail");
             router.push(AuthUrl.getSignIn());
