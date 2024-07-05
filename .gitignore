@@ -21,7 +21,7 @@ Thumbs.db
 *.tsbuildinfo
 
 # dotenv environment variables file
-.env.local
+# .env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -40,7 +40,7 @@ output
 *.code-workspace
 
 # Optional: local env files
-.env.local
+#.env.local
 .env.*.local
 
 # Optional: custom environment config
