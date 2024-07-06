@@ -4,7 +4,7 @@ import { productDescriptions } from "data";
 import { GoodsUrl } from "route-urls";
 import { isStr } from "utils/js-types";
 
-import BlanketsFilters from "components/Filters/BlanketsFilters";
+import ProductsFilters from "components/Filters/ProductsFilters";
 import { CompareBanner } from "components/Goods/CompareBanner";
 import { PopularGoods } from "components/Goods/PopularGoods";
 import ProductDescriptions from "components/Goods/ProductDescriptions";
@@ -24,6 +24,41 @@ const blankets = [...Array(15)].map((_, Idx) => ({
   image: BlanketIMG,
   price: 1199,
 }));
+
+const randomInt = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+
+const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number }  = {
+  "suitable": (a: ProductToShow, b: ProductToShow) => {
+    return randomInt(-1, 1);
+    //TO DO
+  },
+  "asc": (a: ProductToShow, b: ProductToShow) => {
+    return a.price - b.price;
+  },
+  "desc": (a: ProductToShow, b: ProductToShow) => {
+    return b.price - a.price;
+  },
+  "new": (a: ProductToShow, b: ProductToShow) => {
+    return randomInt(-1, 1);
+    //TO DO
+  },
+  "title": (a: ProductToShow, b: ProductToShow) => {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  },
+  "popular": (a: ProductToShow, b: ProductToShow) => {
+    return randomInt(-1, 1);
+    //TO DO
+  },
+}
 
 type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -169,6 +204,13 @@ export default function CategoryPage({
     "material": "",
   });
 
+  const [sort, setSort] = useState<string>("suitable");
+
+  useEffect(() => {
+    const newProducts = [...productsToShow].sort(sortings[sort]);
+    setProductsToShow(newProducts);
+  }, [sort]);
+
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
 
@@ -208,7 +250,7 @@ export default function CategoryPage({
           category.description
         }
       />
-      <BlanketsFilters count={productsWithVariants.length} />
+      <ProductsFilters count={productsWithVariants.length} sort={sort} setSort={setSort}/>
       <CompareBanner url={GoodsUrl.getBlankets()} />
       <ProductsList
         className={"mt-12"}
