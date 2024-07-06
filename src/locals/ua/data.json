@@ -4,7 +4,8 @@
         "notifications": {
             "registration": "Ваш акаунт зареєстровано, увійдіть, будь ласка",
             "resetPasswordConfirm": "Вам на пошту відправлено новий надійний пароль.",
-            "verificationCodeSend": "Верифікаційний код надіслано!"
+            "verificationCodeSend": "Верифікаційний код надіслано!",
+            "unautorized": "Будь-ласка, увійдіть"
         }
     }
 }
