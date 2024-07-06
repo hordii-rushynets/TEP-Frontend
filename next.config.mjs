@@ -4,7 +4,7 @@ const nextConfig = {
   //     missingSuspenseWithCSRBailout: false,
   //   },
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'test.tep-internet-technology-hub.online'],
   },
 };
 
