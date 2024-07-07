@@ -9,6 +9,9 @@ import UserAccount, { User, UserDefaultValue } from "components/User/UserAccount
 import { UserAddressForm } from "components/User/UserAddressForm ";
 import { UserBankCardForm } from "components/User/UserBankCardForm";
 import { UserSettings } from "components/User/UserSettings";
+import { useRouter } from 'next/navigation';
+import { useNotificationContext } from "contexts/NotificationContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import { useState, useEffect } from "react";
 
@@ -19,7 +22,9 @@ const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export default function AccountPage() {
   const [user, setUser] = useState<User>(UserDefaultValue);
-
+  const router = useRouter();
+  const { setIsOpen, setText } = useNotificationContext();
+  const { staticData } = useLocalization();
   const authContext = useAuth();
 
   const getUserInfo = () => {
@@ -32,6 +37,11 @@ export default function AccountPage() {
       .then(response => {
         if (response.status === 200) {
           return response.json();
+        }
+        if (response.status === 401) {
+          setText(staticData.auth.notifications.unautorized);
+          setIsOpen(true);
+          router.push('/sign-in');
         }
         else {
           return;
