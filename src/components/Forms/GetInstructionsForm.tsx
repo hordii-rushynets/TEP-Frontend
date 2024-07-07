@@ -86,6 +86,7 @@ export function GetInstructionsForm() {
               aria-hidden
               fill
               className={"object-cover"}
+              sizes="100vw, 50vw, 33vw"
             />
           </div>
         </div>

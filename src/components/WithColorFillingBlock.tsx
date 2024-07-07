@@ -29,6 +29,7 @@ export function WithColorFillingBlock({
           src={image}
           alt={"Background image"}
           className={"object-cover"}
+          sizes="100vw, 50vw, 33vw"
         />
       </div>
       <div

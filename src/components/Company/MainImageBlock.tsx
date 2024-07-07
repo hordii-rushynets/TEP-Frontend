@@ -31,6 +31,7 @@ export function MainImageBlock({
           alt={"Image"}
           fill
           className={cn("-z-10 select-none object-cover", className?.image)}
+          sizes="100vw, 50vw, 33vw"
         />
         {title && (
           <Title

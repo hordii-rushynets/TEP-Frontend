@@ -122,9 +122,9 @@ export function Footer() {
                 "flex shrink-0 basis-1/4 gap-x-2 md:basis-1/2 lg:basis-auto xl:basis-1/4"
               }
             >
-              <Image src={VisaIMG} alt={"Payment image"} />
-              <Image src={MastercardIMG} alt={"Payment image"} />
-              <Image src={MaestroIMG} alt={"Payment image"} />
+              <Image src={VisaIMG} alt={"Payment image"} sizes="100vw, 50vw, 33vw"/>
+              <Image src={MastercardIMG} alt={"Payment image"} sizes="100vw, 50vw, 33vw"/>
+              <Image src={MaestroIMG} alt={"Payment image"} sizes="100vw, 50vw, 33vw"/>
             </div>
             <div
               className={

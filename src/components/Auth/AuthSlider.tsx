@@ -27,17 +27,17 @@ export function AuthSlider() {
     >
       <SwiperSlide>
         <div className={"relative h-60 w-full overflow-hidden rounded-3xl"}>
-          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} />
+          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} sizes="100vw, 50vw, 33vw"/>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className={"relative h-60 overflow-hidden rounded-3xl"}>
-          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} />
+          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} sizes="100vw, 50vw, 33vw"/>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className={"relative h-60 overflow-hidden rounded-3xl"}>
-          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} />
+          <Image fill className={"object-cover"} src={AuthIMG} alt={"Image"} sizes="100vw, 50vw, 33vw"/>
         </div>
       </SwiperSlide>
     </Swiper>
