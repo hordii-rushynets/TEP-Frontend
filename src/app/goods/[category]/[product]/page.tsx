@@ -13,12 +13,19 @@ import PinkIMG1 from "components/Goods/Product/static/pinkIMG1.jpg";
 import PinkIMG2 from "components/Goods/Product/static/pinkIMG2.jpg";
 import PinkIMG3 from "components/Goods/Product/static/pinkIMG3.jpg";
 import { RecommendedGoods } from "components/Goods/RecommendedGoods";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { ProductVariant, SearchParams, Color, ProductWithVariant, Size } from "../page";
+import { useLocalization } from "contexts/LocalizationContext";
+import { Category } from "contexts/CategoriesContext";
 
 export type Feedback = {
   title: string;
   description: string;
   rating: number;
 };
+
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 const product = {
   id: "1",
@@ -76,21 +83,75 @@ const packageDetails = {
   packageCount: 1,
   article: "903.048.89",
 };
-export default function PillowPage() {
+export default function ProductPage({searchParams, params}:{searchParams: SearchParams; params: { product: string }}) {
   const {
     article,
     category,
-    colors,
     feedbacks,
     isInStock,
     count,
     id,
     price,
-    sizes,
     title,
     isFavourite,
     isInCart,
   } = product;
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const [productVariants, setProductVariants] = useState<ProductVariant[]>([]);
+  const [productWithVariant, setProduct] = useState<ProductWithVariant>();
+  const [currentVariant, setCurrentVariant] = useState<ProductVariant>();
+  const [colors, setColors] = useState<Color[]>([{id: "", slug: "", title: "", title_en: "", title_uk: "", hex: ""} as Color]);
+  const [sizes, setSizes] = useState<Size[]>([{id: "", slug: "", title: "", title_en: "", title_uk: ""} as Size]);
+  const { staticData } = useLocalization();
+
+  const getProductInfo = () => {
+    fetch(`${APIurl}/api/store/products/${params.product}/`)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        return
+      })
+      .then(data => {
+        setProductVariants(data.product_variants);
+        setProduct(data);
+        if (!searchParams.article) {
+          router.push(`${pathname}?article=${data.product_variants[0].sku}&color=${data.product_variants[0].colors[0].slug}&size=${data.product_variants[0].sizes[0].slug}`);
+        }
+      });
+  }
+
+  useEffect(getProductInfo, []);
+
+  const setCurrVariant = () => {
+    let currVar = productVariants.find((productVariant) => {return productVariant.colors.map(color=>color.slug).includes(searchParams.color?.toString()||"") && (searchParams.size?.toString() ? productVariant.sizes.map(size=>size.slug).includes(searchParams.size?.toString()||"") : true)});
+    console.log(currVar);
+    if (currVar) {
+      setCurrentVariant(currVar);
+      router.push(`${pathname}?${new URLSearchParams({...searchParams, article: (currVar?.sku || "")}).toString()}`);
+    }
+  }
+
+  useEffect(() => {
+    setCurrVariant();
+    const uniqueColors = Array.from(
+      productVariants.flatMap(item => item.colors)
+        .reduce((map, color) => map.set(color.id, color), new Map())
+        .values()
+    );
+    uniqueColors.length !== 0 && setColors(uniqueColors);
+
+    const uniqueSizes = Array.from(
+      productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color.slug).includes(searchParams.color?.toString()||"")}).flatMap(item => item.sizes)
+        .reduce((map, size) => map.set(size.id, size), new Map())
+        .values()
+    );
+    uniqueSizes.length !== 0 && setSizes(uniqueSizes);
+
+  }, [productVariants]);
+
   return (
     <>
       <Section>
@@ -98,18 +159,21 @@ export default function PillowPage() {
           <div>
             <PaymentDetails
               id={id}
-              article={article}
-              category={category}
+              article={searchParams.article?.toString() || ""}
+              category={productWithVariant?.category[(`title_${staticData.backendPostfix}` || "title") as keyof Category] || ""}
               colors={colors}
+              description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               isInStock={isInStock}
-              price={price}
+              price={currentVariant?.default_price || 0}
               sizes={sizes}
-              title={title}
-              count={count}
+              title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
+              count={currentVariant?.count || 0}
+              images={[currentVariant?.main_image || ""]}
               isInCart={isInCart}
               isFavourite={isFavourite}
               onCartClick={() => {}}
               onFavouriteClick={() => {}}
+              searchParams={searchParams}
             />
           </div>
         </Container>

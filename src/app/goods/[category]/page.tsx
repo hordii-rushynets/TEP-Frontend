@@ -25,7 +25,7 @@ const blankets = [...Array(15)].map((_, Idx) => ({
   price: 1199,
 }));
 
-type SearchParams = {
+export type SearchParams = {
   [key: string]: string | string[] | undefined;
 };
 
@@ -44,9 +44,9 @@ interface Product {
   title_uk: string;
 }
 
-interface Color {
+export interface Color {
   hex: string;
-  id: number;
+  id: string;
   slug: string;
   title: string;
   title_en: string;
@@ -61,15 +61,15 @@ interface Material {
   title_uk: string;
 }
 
-interface Size {
-  id: number;
+export interface Size {
+  id: string;
   slug: string;
   title: string;
   title_en: string;
   title_uk: string;
 }
 
-interface ProductVariant {
+export interface ProductVariant {
   colors: Color[];
   count: number;
   default_price: number;
@@ -183,7 +183,7 @@ export default function CategoryPage({
       data && setProductsWithVariants(data);
       if (data) {
         let productsToShow = data.map((product:any) => ({
-          id: product.id,
+          id: product.slug,
           title: product[`title_${staticData.backendPostfix}` || "title"],
           category_slug: product.category.slug,
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
