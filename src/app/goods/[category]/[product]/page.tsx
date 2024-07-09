@@ -15,7 +15,7 @@ import PinkIMG3 from "components/Goods/Product/static/pinkIMG3.jpg";
 import { RecommendedGoods } from "components/Goods/RecommendedGoods";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { ProductVariant, SearchParams, Color, ProductWithVariant, Size } from "../page";
+import { ProductVariant, SearchParams, Color, ProductWithVariant, Size, VariantInfoDefault } from "../page";
 import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 
@@ -128,7 +128,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   useEffect(getProductInfo, []);
 
   const setCurrVariant = () => {
-    let currVar = productVariants.find((productVariant) => {return (selectedColor ? productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor) : true) && (selectedSize ? productVariant.sizes.map(size=>size[(`title_${staticData.backendPostfix}` || "title") as keyof Size]).includes(selectedSize) : true)});
+    let currVar = selectedColor || selectedSize ? productVariants.find((productVariant) => {return (selectedColor ? productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor) : true) && (selectedSize ? productVariant.sizes.map(size=>size[(`title_${staticData.backendPostfix}` || "title") as keyof Size]).includes(selectedSize) : true)}) : productVariants.find((productVariant) => {return productVariant.sku === searchParams.article});
     console.log(currVar);
     if (currVar) {
       setCurrentVariant(currVar);
@@ -171,7 +171,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               sizes={sizes}
               title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
               count={currentVariant?.count || 0}
-              images={[currentVariant?.main_image || ""]}
+              images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
               isInCart={isInCart}
               isFavourite={isFavourite}
               onCartClick={() => {}}
@@ -190,8 +190,9 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
           <div className={"flex gap-x-6"}>
             <div className={"overflow-hidden md:grow-0 md:basis-[65%]"}>
               <InfoDisclosure
-                packageDetails={packageDetails}
+                info={currentVariant?.variant_info || VariantInfoDefault}
                 feedbacks={feedbacks}
+                description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />
               <SimilarGoods />
               <InteriorLook />

@@ -69,6 +69,42 @@ export interface Size {
   title_uk: string;
 }
 
+interface VariantImages {
+  id: number;
+  image: string;
+  product_variant: number;
+}
+
+export interface VariantInfo {
+  id: number;
+  material_and_care: string; 
+  material_and_care_uk: string; 
+  material_and_care_en: string; 
+  ecology_and_environment: string;
+  ecology_and_environment_uk: string;
+  ecology_and_environment_en: string;
+  packaging: string;
+  packaging_uk: string;
+  packaging_en: string;
+  last_modified: string;
+  product_variant: number;
+}
+
+export const VariantInfoDefault = {
+  id: 0,
+  material_and_care: "",
+  material_and_care_uk: "",
+  material_and_care_en: "", 
+  ecology_and_environment: "",
+  ecology_and_environment_uk: "",
+  ecology_and_environment_en: "",
+  packaging: "",
+  packaging_uk: "",
+  packaging_en: "",
+  last_modified: "",
+  product_variant: 0,
+}
+
 export interface ProductVariant {
   colors: Color[];
   count: number;
@@ -87,6 +123,8 @@ export interface ProductVariant {
   title_uk: string;
   variant_order: number;
   wholesale_price: number;
+  variant_images: VariantImages[];
+  variant_info: VariantInfo;
 }
 
 export interface ProductWithVariant {
