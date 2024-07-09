@@ -40,6 +40,10 @@ type PaymentDetailsProps = {
   searchParams: SearchParams;
   onFavouriteClick: (v: string) => void;
   onCartClick: (v: string) => void;
+  selectedColor: string;
+  setSelectedColor: (v: string) => void; 
+  selectedSize: string;
+  setSelectedSize: (v: string) => void; 
 };
 
 export function PaymentDetails({
@@ -58,23 +62,18 @@ export function PaymentDetails({
   isInCart,
   onFavouriteClick = () => {},
   onCartClick = () => {},
+  selectedColor,
+  setSelectedColor,
+  selectedSize,
+  setSelectedSize
 }: PaymentDetailsProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { staticData } = useLocalization();
   const [email, setEmail] = useState("");
-  const [selectedSize, setSelectedSize] = useState(searchParams.get("size"));
-  const [selectedColor, setSelectedColor] = useState(searchParams.get("color"));
-  const sizeOptions = sizes.map((s) => ({ label: s[(`title_${staticData.backendPostfix}` || "title") as keyof Size], value: s.slug }));
+  const sizeOptions = sizes.map((s) => ({ label: s[(`title_${staticData.backendPostfix}` || "title") as keyof Size], value: s[(`title_${staticData.backendPostfix}` || "title") as keyof Size] }));
   const colorOptions = colors.map((c) => ({
     label: toTitleCase(c[(`title_${staticData.backendPostfix}` || "title") as keyof Color]),
-    value: c.slug,
+    value: c[(`title_${staticData.backendPostfix}` || "title") as keyof Color],
   }));
-
-  const updateSearchParams = () => {
-    router.push(`${pathname}?article=${searchParams.get("article")}&color=${selectedColor}&size=${selectedSize}`);
-  }
 
   const handleColorChange = (value: string) => {
     setSelectedColor(value);
@@ -84,8 +83,6 @@ export function PaymentDetails({
   const handleSizeChange = (value: string) => {
     setSelectedSize(value);
   }
-
-  useEffect(updateSearchParams, [selectedColor, selectedSize]);
 
   const { setIsOpen, setTitle } = useCartContext();
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
@@ -107,9 +104,9 @@ export function PaymentDetails({
               <p className={"text-sm font-light text-tep_gray-500"}>
                 {category},{" "}
                 {
-                  selectedColor
+                  selectedColor || "Колір"
                 }
-                , {selectedSize}
+                , {selectedSize || "Розмір"}
               </p>
             </div>
             <Article className={"hidden lg:block"} article={article} />

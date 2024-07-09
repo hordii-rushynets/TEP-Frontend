@@ -105,6 +105,8 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [colors, setColors] = useState<Color[]>([{id: "", slug: "", title: "", title_en: "", title_uk: "", hex: ""} as Color]);
   const [sizes, setSizes] = useState<Size[]>([{id: "", slug: "", title: "", title_en: "", title_uk: ""} as Size]);
   const { staticData } = useLocalization();
+  const [selectedColor, setSelectedColor] = useState<string>(""); 
+  const [selectedSize, setSelectedSize] = useState<string>("");
 
   const getProductInfo = () => {
     fetch(`${APIurl}/api/store/products/${params.product}/`)
@@ -118,7 +120,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
         setProductVariants(data.product_variants);
         setProduct(data);
         if (!searchParams.article) {
-          router.push(`${pathname}?article=${data.product_variants[0].sku}&color=${data.product_variants[0].colors[0].slug}&size=${data.product_variants[0].sizes[0].slug}`);
+          router.push(`${pathname}?article=${data.product_variants[0].sku}`);
         }
       });
   }
@@ -126,7 +128,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   useEffect(getProductInfo, []);
 
   const setCurrVariant = () => {
-    let currVar = productVariants.find((productVariant) => {return productVariant.colors.map(color=>color.slug).includes(searchParams.color?.toString()||"") && (searchParams.size?.toString() ? productVariant.sizes.map(size=>size.slug).includes(searchParams.size?.toString()||"") : true)});
+    let currVar = productVariants.find((productVariant) => {return (selectedColor ? productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor) : true) && (selectedSize ? productVariant.sizes.map(size=>size[(`title_${staticData.backendPostfix}` || "title") as keyof Size]).includes(selectedSize) : true)});
     console.log(currVar);
     if (currVar) {
       setCurrentVariant(currVar);
@@ -143,14 +145,15 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     );
     uniqueColors.length !== 0 && setColors(uniqueColors);
 
+    console.log(productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor)}));
     const uniqueSizes = Array.from(
-      productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color.slug).includes(searchParams.color?.toString()||"")}).flatMap(item => item.sizes)
+      productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor)}).flatMap(item => item.sizes)
         .reduce((map, size) => map.set(size.id, size), new Map())
         .values()
     );
     uniqueSizes.length !== 0 && setSizes(uniqueSizes);
 
-  }, [productVariants]);
+  }, [productVariants, selectedColor, selectedSize]);
 
   return (
     <>
@@ -174,6 +177,10 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               onCartClick={() => {}}
               onFavouriteClick={() => {}}
               searchParams={searchParams}
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+              selectedSize={selectedSize}
+              setSelectedSize={setSelectedSize}
             />
           </div>
         </Container>
