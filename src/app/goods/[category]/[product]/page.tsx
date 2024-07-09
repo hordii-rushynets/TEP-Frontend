@@ -129,7 +129,6 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
 
   const setCurrVariant = () => {
     let currVar = selectedColor || selectedSize ? productVariants.find((productVariant) => {return (selectedColor ? productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor) : true) && (selectedSize ? productVariant.sizes.map(size=>size[(`title_${staticData.backendPostfix}` || "title") as keyof Size]).includes(selectedSize) : true)}) : productVariants.find((productVariant) => {return productVariant.sku === searchParams.article});
-    console.log(currVar);
     if (currVar) {
       setCurrentVariant(currVar);
       router.push(`${pathname}?${new URLSearchParams({...searchParams, article: (currVar?.sku || "")}).toString()}`);
@@ -153,7 +152,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     );
     uniqueSizes.length !== 0 && setSizes(uniqueSizes);
 
-  }, [productVariants, selectedColor, selectedSize]);
+  }, [productVariants, selectedColor, selectedSize, searchParams.article]);
 
   return (
     <>
