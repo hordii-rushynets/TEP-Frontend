@@ -34,6 +34,7 @@ export function DesignCheckbox(
             alt={""}
             fill
             className={"select-none object-cover"}
+            sizes="100vw, 50vw, 33vw"
           />
         </Switch>
         {label && (

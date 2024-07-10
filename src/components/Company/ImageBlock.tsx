@@ -45,6 +45,7 @@ export function ImageBlock({
         alt={"Image"}
         fill
         className={"-z-10 select-none object-cover"}
+        sizes="100vw, 50vw, 33vw"
       />
     </Section>
   );

@@ -43,6 +43,7 @@ export function WantToBuy() {
         className={"-z-10 select-none object-cover"}
         aria-hidden
         alt={"Image"}
+        sizes="100vw, 50vw, 33vw"
       />
     </Section>
   );

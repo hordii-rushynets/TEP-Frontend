@@ -17,7 +17,7 @@ export function InteriorLook() {
             "relative overflow-hidden rounded-3xl pb-[100%] md:h-[300px] md:pb-0 lg:h-[616px]"
           }
         >
-          <Image src={IMG1} fill alt={"Image"} className={"object-cover"} />
+          <Image src={IMG1} fill alt={"Image"} className={"object-cover"} sizes="100vw, 50vw, 33vw"/>
         </div>{" "}
         <div
           className={

@@ -15,6 +15,7 @@ export function Hero() {
         fill
         className={"select-none object-cover opacity-85"}
         aria-hidden
+        sizes="100vw, 50vw, 33vw"
       />
       <Container>
         <div

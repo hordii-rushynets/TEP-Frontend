@@ -100,6 +100,7 @@ export function HelpButton() {
                       alt={"User"}
                       fill
                       className={"object-cover"}
+                      sizes="100vw, 50vw, 33vw"
                     />
                   </div>
                   <div>
@@ -126,6 +127,7 @@ export function HelpButton() {
                       alt={"User"}
                       fill
                       className={"object-cover"}
+                      sizes="100vw, 50vw, 33vw"
                     />
                   </div>
                   <div>

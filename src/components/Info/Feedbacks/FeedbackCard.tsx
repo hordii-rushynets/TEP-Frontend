@@ -39,6 +39,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
               fill
               src={author.avatar ?? NoAvatarIMG}
               alt={"Avatar image"}
+              sizes="100vw, 50vw, 33vw"
             />
           </div>
           <div>

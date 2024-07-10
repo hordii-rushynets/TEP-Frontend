@@ -26,7 +26,7 @@ export function HoverMenuCard({ info, url }: HoverMenuCardProps) {
     >
       <Title size={"2xl"}>{title}</Title>
       <p className={"line-clamp-3 text-sm font-extralight"}>{description}</p>
-      <Image src={image} alt={"Image"} fill className={"-z-10 object-cover"} />
+      <Image src={image} alt={"Image"} fill className={"-z-10 object-cover"} sizes="100vw, 50vw, 33vw"/>
       <Link className={"absolute right-6 top-6"} href={`${url}/${slug}`}>
         <IconButton size={"large"}>
           <FiArrowRight className={"size-6"} />
