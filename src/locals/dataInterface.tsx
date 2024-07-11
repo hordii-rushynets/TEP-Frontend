@@ -5,6 +5,7 @@ export default interface StaticData {
             registration: string;
             resetPasswordConfirm: string;
             verificationCodeSend: string;
+            unautorized: string;
         }
     }
 }

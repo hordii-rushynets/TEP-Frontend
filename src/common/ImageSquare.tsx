@@ -28,6 +28,7 @@ export function ImageSquare(props: ImageSquareProps) {
         alt={alt}
         fill
         className={cn("object-cover", classes?.image)}
+        sizes="100vw, 50vw, 33vw"
         {...imageProps}
       />
     </div>

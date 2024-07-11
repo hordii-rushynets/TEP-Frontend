@@ -13,6 +13,13 @@ import PinkIMG1 from "components/Goods/Product/static/pinkIMG1.jpg";
 import PinkIMG2 from "components/Goods/Product/static/pinkIMG2.jpg";
 import PinkIMG3 from "components/Goods/Product/static/pinkIMG3.jpg";
 import { RecommendedGoods } from "components/Goods/RecommendedGoods";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { ProductVariant, SearchParams, Color, ProductWithVariant, Size, VariantInfoDefault } from "../page";
+import { useLocalization } from "contexts/LocalizationContext";
+import { Category } from "contexts/CategoriesContext";
+import { getProductInfo } from "daos/productDAO";
+import { getUniqueColors, getUniqueSizes, findMatchingVariant } from "services/productServices";
 
 export type Feedback = {
   title: string;
@@ -68,29 +75,65 @@ const product = {
   isInCart: true,
 };
 
-const packageDetails = {
-  width: 60,
-  height: 15,
-  length: 63,
-  weight: 0.87,
-  packageCount: 1,
-  article: "903.048.89",
-};
-export default function PillowPage() {
+export default function ProductPage({searchParams, params}:{searchParams: SearchParams; params: { product: string }}) {
   const {
     article,
     category,
-    colors,
     feedbacks,
     isInStock,
     count,
     id,
     price,
-    sizes,
     title,
     isFavourite,
     isInCart,
   } = product;
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const [productVariants, setProductVariants] = useState<ProductVariant[]>([]);
+  const [productWithVariant, setProduct] = useState<ProductWithVariant>();
+  const [currentVariant, setCurrentVariant] = useState<ProductVariant>();
+  const [colors, setColors] = useState<Color[]>([{id: "", slug: "", title: "", title_en: "", title_uk: "", hex: ""} as Color]);
+  const [sizes, setSizes] = useState<Size[]>([{id: "", slug: "", title: "", title_en: "", title_uk: ""} as Size]);
+  const { staticData } = useLocalization();
+  const [selectedColor, setSelectedColor] = useState<string>(""); 
+  const [selectedSize, setSelectedSize] = useState<string>("");
+
+  useEffect(() => {
+    getProductInfo(params.product)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return
+    })
+    .then(data => {
+      setProductVariants(data.product_variants);
+      setProduct(data);
+      if (!searchParams.article) {
+        router.push(`${pathname}?article=${data.product_variants[0].sku}`);
+      }
+    });
+  }, []);
+
+  const setCurrVariant = () => {
+    let currVar = findMatchingVariant(selectedColor, selectedSize, productVariants, staticData, searchParams);
+    if (currVar) {
+      setCurrentVariant(currVar);
+      router.push(`${pathname}?${new URLSearchParams({...searchParams, article: (currVar?.sku || "")}).toString()}`);
+    }
+  }
+
+  useEffect(() => {
+    setCurrVariant();
+    const uniqueColors = getUniqueColors(productVariants);
+    uniqueColors.length !== 0 && setColors(uniqueColors);
+    const uniqueSizes = getUniqueSizes(productVariants, staticData, selectedColor);
+    uniqueSizes.length !== 0 && setSizes(uniqueSizes);
+
+  }, [productVariants, selectedColor, selectedSize, searchParams.article]);
+
   return (
     <>
       <Section>
@@ -98,18 +141,25 @@ export default function PillowPage() {
           <div>
             <PaymentDetails
               id={id}
-              article={article}
-              category={category}
+              article={searchParams.article?.toString() || ""}
+              category={productWithVariant?.category[(`title_${staticData.backendPostfix}` || "title") as keyof Category] || ""}
               colors={colors}
+              description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               isInStock={isInStock}
-              price={price}
+              price={currentVariant?.default_price || 0}
               sizes={sizes}
-              title={title}
-              count={count}
+              title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
+              count={currentVariant?.count || 0}
+              images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
               isInCart={isInCart}
               isFavourite={isFavourite}
               onCartClick={() => {}}
               onFavouriteClick={() => {}}
+              searchParams={searchParams}
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+              selectedSize={selectedSize}
+              setSelectedSize={setSelectedSize}
             />
           </div>
         </Container>
@@ -119,8 +169,9 @@ export default function PillowPage() {
           <div className={"flex gap-x-6"}>
             <div className={"overflow-hidden md:grow-0 md:basis-[65%]"}>
               <InfoDisclosure
-                packageDetails={packageDetails}
+                info={currentVariant?.variant_info || VariantInfoDefault}
                 feedbacks={feedbacks}
+                description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />
               <SimilarGoods />
               <InteriorLook />

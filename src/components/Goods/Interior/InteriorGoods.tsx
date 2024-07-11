@@ -24,7 +24,7 @@ export function InteriorGoods() {
               "relative min-h-[548px] overflow-hidden rounded-3xl lg:min-h-[800px] lg:basis-[57%]"
             }
           >
-            <Image src={IMG1} alt={"Image"} fill className={"object-cover"} />
+            <Image src={IMG1} alt={"Image"} fill className={"object-cover"} sizes="100vw, 50vw, 33vw"/>
             <Tip
               product={products[0]}
               className={"absolute right-[7%] top-[10%]"}
