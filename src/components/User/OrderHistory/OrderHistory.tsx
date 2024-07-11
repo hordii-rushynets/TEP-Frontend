@@ -56,6 +56,8 @@ export const orders: OrderType[] = [
         price: 1099,
         title: "Vareld",
         size: "50x50",
+        number_of_views: 1,
+        date: ""
       },
       {
         id: "2",
@@ -68,6 +70,8 @@ export const orders: OrderType[] = [
         price: 699,
         title: "Dream",
         size: "120x160",
+        number_of_views: 1,
+        date: ""
       },
       {
         id: "3",
@@ -80,6 +84,8 @@ export const orders: OrderType[] = [
         price: 599,
         title: "Pink flower",
         size: "120x160",
+        number_of_views: 1,
+        date: ""
       },
     ],
   },
@@ -103,6 +109,8 @@ export const orders: OrderType[] = [
         price: 1099,
         title: "Vareld",
         size: "50x50",
+        number_of_views: 1,
+        date: ""
       },
     ],
   },
@@ -126,6 +134,8 @@ export const orders: OrderType[] = [
         price: 1099,
         title: "Vareld",
         size: "50x50",
+        number_of_views: 1,
+        date: ""
       },
       {
         id: "2",
@@ -138,6 +148,8 @@ export const orders: OrderType[] = [
         price: 699,
         title: "Dream",
         size: "120x160",
+        number_of_views: 1,
+        date: ""
       },
     ],
   },

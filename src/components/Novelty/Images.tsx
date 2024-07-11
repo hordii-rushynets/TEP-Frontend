@@ -23,6 +23,8 @@ export const Images = () => {
                 title: "Velure",
                 price: 1299,
                 image: "",
+                number_of_views: 1,
+                date: ""
               }}
               className={"absolute right-[20%] top-[45%]"}
             />
@@ -40,6 +42,8 @@ export const Images = () => {
                 title: "Velure",
                 price: 1299,
                 image: "",
+                number_of_views: 1,
+                date: ""
               }}
               className={"absolute right-[30%] top-[30%]"}
             />

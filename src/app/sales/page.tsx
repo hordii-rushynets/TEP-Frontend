@@ -31,6 +31,8 @@ const products = [...Array(12)].map((_, Idx) => ({
   price: 1199,
   isSale: true,
   salePrice: 1090,
+  number_of_views: 12,
+  date: "new Date()",
 }));
 
 export default function SalesPage() {

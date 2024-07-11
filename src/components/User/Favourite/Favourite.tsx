@@ -27,6 +27,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "2",
@@ -41,6 +43,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "3",
@@ -55,6 +59,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "4",
@@ -69,6 +75,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "5",
@@ -83,6 +91,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "6",
@@ -97,6 +107,8 @@ const favourite_goods: ProductToShow[] = [
     isInStock: true,
     size: "",
     isFavourite: true,
+    number_of_views: 1,
+    date: ""
   },
 ];
 

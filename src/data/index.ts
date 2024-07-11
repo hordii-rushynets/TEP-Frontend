@@ -22,6 +22,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "2",
@@ -39,6 +41,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "3",
@@ -56,6 +60,8 @@ export const products: ProductToShow[] = [
     isInStock: false,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "4",
@@ -73,6 +79,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "5",
@@ -90,6 +98,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "6",
@@ -107,6 +117,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "7",
@@ -124,6 +136,8 @@ export const products: ProductToShow[] = [
     isInStock: true,
     isSale: true,
     salePrice: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "8",
@@ -140,6 +154,8 @@ export const products: ProductToShow[] = [
     isInCart: true,
     isInStock: true,
     isSale: false,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "9",
@@ -155,6 +171,8 @@ export const products: ProductToShow[] = [
     isFavourite: false,
     isInCart: true,
     isInStock: true,
+    number_of_views: 1,
+    date: ""
   },
 ];
 
