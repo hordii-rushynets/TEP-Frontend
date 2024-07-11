@@ -18,14 +18,14 @@ import { useRouter, usePathname } from "next/navigation";
 import { ProductVariant, SearchParams, Color, ProductWithVariant, Size, VariantInfoDefault } from "../page";
 import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
+import { getProductInfo } from "daos/productDAO";
+import { getUniqueColors, getUniqueSizes, findMatchingVariant } from "services/productServices";
 
 export type Feedback = {
   title: string;
   description: string;
   rating: number;
 };
-
-const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 const product = {
   id: "1",
@@ -108,27 +108,25 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [selectedColor, setSelectedColor] = useState<string>(""); 
   const [selectedSize, setSelectedSize] = useState<string>("");
 
-  const getProductInfo = () => {
-    fetch(`${APIurl}/api/store/products/${params.product}/`)
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        }
-        return
-      })
-      .then(data => {
-        setProductVariants(data.product_variants);
-        setProduct(data);
-        if (!searchParams.article) {
-          router.push(`${pathname}?article=${data.product_variants[0].sku}`);
-        }
-      });
-  }
-
-  useEffect(getProductInfo, []);
+  useEffect(() => {
+    getProductInfo(params.product)
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return
+    })
+    .then(data => {
+      setProductVariants(data.product_variants);
+      setProduct(data);
+      if (!searchParams.article) {
+        router.push(`${pathname}?article=${data.product_variants[0].sku}`);
+      }
+    });
+  }, []);
 
   const setCurrVariant = () => {
-    let currVar = selectedColor || selectedSize ? productVariants.find((productVariant) => {return (selectedColor ? productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor) : true) && (selectedSize ? productVariant.sizes.map(size=>size[(`title_${staticData.backendPostfix}` || "title") as keyof Size]).includes(selectedSize) : true)}) : productVariants.find((productVariant) => {return productVariant.sku === searchParams.article});
+    let currVar = findMatchingVariant(selectedColor, selectedSize, productVariants, staticData, searchParams);
     if (currVar) {
       setCurrentVariant(currVar);
       router.push(`${pathname}?${new URLSearchParams({...searchParams, article: (currVar?.sku || "")}).toString()}`);
@@ -137,19 +135,9 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
 
   useEffect(() => {
     setCurrVariant();
-    const uniqueColors = Array.from(
-      productVariants.flatMap(item => item.colors)
-        .reduce((map, color) => map.set(color.id, color), new Map())
-        .values()
-    );
+    const uniqueColors = getUniqueColors(productVariants);
     uniqueColors.length !== 0 && setColors(uniqueColors);
-
-    console.log(productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor)}));
-    const uniqueSizes = Array.from(
-      productVariants.filter((productVariant) => {return productVariant.colors.map(color=>color[(`title_${staticData.backendPostfix}` || "title") as keyof Color]).includes(selectedColor)}).flatMap(item => item.sizes)
-        .reduce((map, size) => map.set(size.id, size), new Map())
-        .values()
-    );
+    const uniqueSizes = getUniqueSizes(productVariants, staticData, selectedColor);
     uniqueSizes.length !== 0 && setSizes(uniqueSizes);
 
   }, [productVariants, selectedColor, selectedSize, searchParams.article]);
