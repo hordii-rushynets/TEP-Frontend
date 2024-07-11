@@ -151,6 +151,8 @@ export default function CategoryPage({
         description: data[`description_${staticData.backendPostfix}` || "description"],
         title: data[`title_${staticData.backendPostfix}` || "title"]
       });
+
+      setFilterParams({...filterParams, ["category_title"]: data.title});
     });
   }
 
@@ -161,7 +163,7 @@ export default function CategoryPage({
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
     "slug": "",
     "title": "",
-    "category": params.category,
+    "category_title": "",
     "price_min": "",
     "price_max": "",
     "size": "",
@@ -197,8 +199,11 @@ export default function CategoryPage({
 
   useEffect(() => {
     fetchCategory();
-    searchFetch();
   }, []);
+
+  useEffect(() => {
+    searchFetch();
+  }, [filterParams]);
 
   return (
     <>
