@@ -75,14 +75,6 @@ const product = {
   isInCart: true,
 };
 
-const packageDetails = {
-  width: 60,
-  height: 15,
-  length: 63,
-  weight: 0.87,
-  packageCount: 1,
-  article: "903.048.89",
-};
 export default function ProductPage({searchParams, params}:{searchParams: SearchParams; params: { product: string }}) {
   const {
     article,
