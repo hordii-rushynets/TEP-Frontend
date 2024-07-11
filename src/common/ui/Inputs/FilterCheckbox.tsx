@@ -24,7 +24,7 @@ export function FilterCheckbox(props: FilterCheckboxProps) {
   } = className;
 
   return (
-    <div className={cn("flex items-center justify-between gap-x-4", wrapper)}>
+    <div className={cn("flex items-center justify-between gap-x-4 my-2", wrapper)}>
       <Switch.Group>
         {label && (
           <Switch.Label

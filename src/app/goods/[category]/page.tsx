@@ -42,8 +42,13 @@ const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number
     return b.price - a.price;
   },
   "new": (a: ProductToShow, b: ProductToShow) => {
-    return randomInt(-1, 1);
-    //TO DO
+    if (a.date > b.date) {
+      return -1;
+    }
+    if (a.date < b.date) {
+      return 1;
+    }
+    return 0;
   },
   "title": (a: ProductToShow, b: ProductToShow) => {
     if (a.title < b.title) {
@@ -55,8 +60,7 @@ const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number
     return 0;
   },
   "popular": (a: ProductToShow, b: ProductToShow) => {
-    return randomInt(-1, 1);
-    //TO DO
+    return b.number_of_views - a.number_of_views;
   },
 }
 
@@ -150,6 +154,8 @@ export type ProductToShow = {
   category_title: string;
   image: StaticImageData | string;
   price: number;
+  number_of_views: number;
+  date: string;
   isInCart?: boolean;
   isInCompare?: boolean;
   isFavourite?: boolean;
@@ -184,7 +190,8 @@ export default function CategoryPage({
         slug: data.slug,
         image: data.image,
         description: data[`description_${staticData.backendPostfix}` || "description"],
-        title: data[`title_${staticData.backendPostfix}` || "title"]
+        title: data[`title_${staticData.backendPostfix}` || "title"],
+        filters: data.filter
       });
     });
   }
@@ -193,15 +200,15 @@ export default function CategoryPage({
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [productsToShow, setProductsToShow] = useState([]);
 
+  function getUniqueSizes(products: ProductWithVariant[]): string[] {
+    const sizes = products.flatMap(product => product.product_variants.flatMap(variant => variant.sizes.map(size => size[(`title_${staticData.backendPostfix}` || "title") as keyof Size].toString())));
+    return Array.from(new Set(sizes));
+  }
+
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
-    "slug": "",
-    "title": "",
-    "category": params.category,
-    "price_min": "",
-    "price_max": "",
+    "category_slug": params.category,
     "size": "",
-    "color": "",
-    "material": "",
+    "filter_fields_value_en_mul": ""
   });
 
   const [sort, setSort] = useState<string>("suitable");
@@ -231,6 +238,8 @@ export default function CategoryPage({
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
           image: product.product_variants[0].main_image,
           price: product.product_variants[0].default_price,
+          number_of_views: product.number_of_views,
+          date: new Date(product.last_modified)
         }));
         setProductsToShow(productsToShow);
       }
@@ -239,8 +248,11 @@ export default function CategoryPage({
 
   useEffect(() => {
     fetchCategory();
-    searchFetch();
   }, []);
+
+  useEffect(() => {
+    searchFetch();
+  }, [filterParams]);
 
   return (
     <>
@@ -250,7 +262,15 @@ export default function CategoryPage({
           category.description
         }
       />
-      <ProductsFilters count={productsWithVariants.length} sort={sort} setSort={setSort}/>
+      <ProductsFilters 
+        count={productsWithVariants.length} 
+        sort={sort} 
+        setSort={setSort} 
+        filters={category.filters}
+        sizes={getUniqueSizes(productsWithVariants)}
+        setFilterParams={setFilterParams}
+        filterParams={filterParams}
+      />
       <CompareBanner url={GoodsUrl.getBlankets()} />
       <ProductsList
         className={"mt-12"}

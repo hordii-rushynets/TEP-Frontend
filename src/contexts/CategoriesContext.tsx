@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useLocalization } from './LocalizationContext';
+import { Filter } from 'components/Filters/ProductsFilters';
 
 // Типи для категорій
 export interface Category {
@@ -9,6 +10,7 @@ export interface Category {
   title: string;
   description: string;
   image: string;
+  filters: Filter[];
 }
 
 export const DefaultCategory = {
@@ -16,7 +18,8 @@ export const DefaultCategory = {
   slug: "",
   title: "",
   description: "",
-  image: ""
+  image: "",
+  filters: [],
 }
 
 
@@ -48,7 +51,8 @@ export function CategoriesProvider({ children }: CategoriesProviderProps) {
       slug: category.slug,
       title: category[`title_${staticData.backendPostfix}` || "title"],
       description: category[`description_${staticData.backendPostfix}` || "description"],
-      image: category.image
+      image: category.image,
+      filters: category.filter
     })));
   }
 
