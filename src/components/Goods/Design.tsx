@@ -28,6 +28,8 @@ export default function Design() {
               title: "Velure",
               price: 1299,
               image: "",
+              number_of_views: 1,
+              date: ""
             }}
             className={"absolute right-[20%] top-[40%]"}
           />
@@ -39,6 +41,8 @@ export default function Design() {
               title: "Velure",
               price: 1299,
               image: "",
+              number_of_views: 1,
+              date: ""
             }}
             className={"absolute bottom-[10%] left-[20%]"}
           />
@@ -50,6 +54,8 @@ export default function Design() {
               title: "Velure",
               price: 1299,
               image: "",
+              number_of_views: 1,
+              date: ""
             }}
             className={"absolute left-[50%] top-[45%]"}
           />

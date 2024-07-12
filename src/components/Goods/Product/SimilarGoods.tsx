@@ -95,6 +95,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 1299,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "2",
@@ -103,6 +105,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 699,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "3",
@@ -111,6 +115,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "4",
@@ -119,6 +125,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 899,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "5",
@@ -127,6 +135,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 299,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "6",
@@ -135,6 +145,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 699,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "7",
@@ -143,6 +155,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 1099,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "8",
@@ -151,6 +165,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 899,
+    number_of_views: 1,
+    date: ""
   },
   {
     id: "9",
@@ -159,6 +175,8 @@ export const products: ProductToShow[] = [
     category_title: "Ковдра",
     category_slug: "sheets",
     price: 299,
+    number_of_views: 1,
+    date: ""
   },
 ];
 

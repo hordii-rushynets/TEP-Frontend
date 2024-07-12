@@ -45,6 +45,8 @@ export function LittleGrid({
                 title: "Velure",
                 price: 1299,
                 image: "",
+                number_of_views: 1,
+                date: ""
               }}
               className={"absolute left-[20%] top-[35%]"}
             />

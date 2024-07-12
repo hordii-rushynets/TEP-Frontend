@@ -4,7 +4,7 @@ import { productDescriptions } from "data";
 import { GoodsUrl } from "route-urls";
 import { isStr } from "utils/js-types";
 
-import BlanketsFilters from "components/Filters/BlanketsFilters";
+import ProductsFilters from "components/Filters/ProductsFilters";
 import { CompareBanner } from "components/Goods/CompareBanner";
 import { PopularGoods } from "components/Goods/PopularGoods";
 import ProductDescriptions from "components/Goods/ProductDescriptions";
@@ -24,6 +24,45 @@ const blankets = [...Array(15)].map((_, Idx) => ({
   image: BlanketIMG,
   price: 1199,
 }));
+
+const randomInt = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+
+const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number }  = {
+  "suitable": (a: ProductToShow, b: ProductToShow) => {
+    return randomInt(-1, 1);
+    //TO DO
+  },
+  "asc": (a: ProductToShow, b: ProductToShow) => {
+    return a.price - b.price;
+  },
+  "desc": (a: ProductToShow, b: ProductToShow) => {
+    return b.price - a.price;
+  },
+  "new": (a: ProductToShow, b: ProductToShow) => {
+    if (a.date > b.date) {
+      return -1;
+    }
+    if (a.date < b.date) {
+      return 1;
+    }
+    return 0;
+  },
+  "title": (a: ProductToShow, b: ProductToShow) => {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  },
+  "popular": (a: ProductToShow, b: ProductToShow) => {
+    return b.number_of_views - a.number_of_views;
+  },
+}
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -153,6 +192,8 @@ export type ProductToShow = {
   category_title: string;
   image: StaticImageData | string;
   price: number;
+  number_of_views: number;
+  date: string;
   isInCart?: boolean;
   isInCompare?: boolean;
   isFavourite?: boolean;
@@ -187,7 +228,8 @@ export default function CategoryPage({
         slug: data.slug,
         image: data.image,
         description: data[`description_${staticData.backendPostfix}` || "description"],
-        title: data[`title_${staticData.backendPostfix}` || "title"]
+        title: data[`title_${staticData.backendPostfix}` || "title"],
+        filters: data.filter
       });
 
       setFilterParams({...filterParams, ["category_title"]: data.title});
@@ -198,16 +240,23 @@ export default function CategoryPage({
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [productsToShow, setProductsToShow] = useState([]);
 
+  function getUniqueSizes(products: ProductWithVariant[]): string[] {
+    const sizes = products.flatMap(product => product.product_variants.flatMap(variant => variant.sizes.map(size => size[(`title_${staticData.backendPostfix}` || "title") as keyof Size].toString())));
+    return Array.from(new Set(sizes));
+  }
+
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
-    "slug": "",
-    "title": "",
-    "category_title": "",
-    "price_min": "",
-    "price_max": "",
+    "category_slug": params.category,
     "size": "",
-    "color": "",
-    "material": "",
+    "filter_fields_value_en_mul": ""
   });
+
+  const [sort, setSort] = useState<string>("suitable");
+
+  useEffect(() => {
+    const newProducts = [...productsToShow].sort(sortings[sort]);
+    setProductsToShow(newProducts);
+  }, [sort]);
 
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
@@ -229,6 +278,8 @@ export default function CategoryPage({
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
           image: product.product_variants[0].main_image,
           price: product.product_variants[0].default_price,
+          number_of_views: product.number_of_views,
+          date: new Date(product.last_modified)
         }));
         setProductsToShow(productsToShow);
       }
@@ -251,7 +302,15 @@ export default function CategoryPage({
           category.description
         }
       />
-      <BlanketsFilters count={productsWithVariants.length} />
+      <ProductsFilters 
+        count={productsWithVariants.length} 
+        sort={sort} 
+        setSort={setSort} 
+        filters={category.filters}
+        sizes={getUniqueSizes(productsWithVariants)}
+        setFilterParams={setFilterParams}
+        filterParams={filterParams}
+      />
       <CompareBanner url={GoodsUrl.getBlankets()} />
       <ProductsList
         className={"mt-12"}

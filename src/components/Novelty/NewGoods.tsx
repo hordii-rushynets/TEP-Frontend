@@ -13,6 +13,8 @@ const pillows = [...Array(9)].map((_, Idx) => ({
   category_slug: "sheets",
   image: PillowIMG,
   price: 1199,
+  number_of_views: 1,
+  date: ""
 }));
 
 type NewGoodsProps = {
