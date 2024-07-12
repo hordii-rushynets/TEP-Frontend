@@ -11,29 +11,32 @@ import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import { GetInstructionsForm } from "components/Forms/GetInstructionsForm";
 import { Socials } from "components/Socials";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function PillarPage({ params }: { params: { slug: string } }) {
-  const article = articles.find((article) => article.id === params.slug)!;
+  const article = articles.find((article) => article.id == params.slug)!;
+  const { localization } = useLocalization();
+
   return (
     <>
       <MainImageBlock
-        image={article.info.images.topicImg}
+        image={article.image}
         className={{ image: "object-top" }}
       />
       <Section className={"pb-10 pt-24 md:pb-20 lg:pb-40 lg:pt-40"}>
         <Container className={"relative"}>
           <Socials
-            links={article.author.socialLinks}
+            links={article.author.social_networks}
             className={"absolute right-4 top-0 hidden lg:flex"}
           />
           <div className={"mx-auto max-w-[808px]"}>
             <Title size={"5xl"} className={"mb-7 md:mb-[52px]"}>
-              {article.topic}
+              {article[`title_${localization}`]}
             </Title>
             <AuthorDetails
               author={article.author.name}
-              date={article.author.created_at}
-              socialLinks={article.author.socialLinks}
+              date={article.created_at}
+              socialLinks={article.author.social_networks}
             />
             <BlogPlan />
             <div className={"mb-10 flex flex-col gap-y-6 md:mb-14 lg:mb-40"}>
@@ -183,8 +186,8 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       </Section>
       <ImageBlock
         size={"large"}
-        image={article.info.images.for_childrenImg}
-        description={article.info.for_children?.imageText}
+        image={article.for_children.image}
+        description={article.for_children[`additional_description_${localization}`]}
       />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
@@ -238,7 +241,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.info.images.what_materials} />
+      <ImageBlock size={"large"} image={article.what_materials?.image} />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>
@@ -342,7 +345,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.info.images.complexityImg} />
+      <ImageBlock size={"large"} image={article.complexity.image} />
       <Section className={"pb-[68px] pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>

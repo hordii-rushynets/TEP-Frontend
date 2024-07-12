@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import StaticData from "../locals/dataInterface";
-import data from "../locals/ua/data.json"
+import data from "../locals/uk/data.json"
 
 export interface LocalizationContextType {
   localization: string;
@@ -27,7 +27,7 @@ interface LocalizationProviderProps {
 }
 
 export const LocalizationProvider = ({ children }: LocalizationProviderProps) => {
-  const [localization, setLocalization] = useState<string>("ua");
+  const [localization, setLocalization] = useState<string>("uk");
   const [staticData, setStaticData] = useState<StaticData>(data);
 
   useEffect(() => {

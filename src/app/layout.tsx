@@ -66,7 +66,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang={"ua"}
+      lang={"uk"}
       className={`${mont.variable} h-full scroll-smooth text-black`}
     >
       <body className={"relative h-full"}>

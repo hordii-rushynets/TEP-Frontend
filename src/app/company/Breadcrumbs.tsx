@@ -5,8 +5,11 @@ import { CompanyUrl, MainUrl } from "route-urls";
 
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
 import { technologies } from "components/Company/Technologies/Technologies";
+import { useLocalization } from "contexts/LocalizationContext";
 
-import { articles } from "./blog/page";
+import { useEffect, useState } from "react";
+import { Article } from "./blog/interfaces";
+import { ArticleService } from "./blog/services";
 import { vacancies } from "./vacancies/_data";
 
 export function Breadcrumbs() {
@@ -15,7 +18,40 @@ export function Breadcrumbs() {
   const slug = params.slug as string;
   const vacancyPosition = vacancies.find((v) => v.id === slug)!;
   const technology = technologies.find((t) => t.id === slug)!;
-  const article = articles.find((a) => a.id === slug)!;
+
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { localization } = useLocalization();
+
+  useEffect(() => {
+    const articleService = new ArticleService();
+
+    articleService.getArticles()
+      .then(
+        articles => {
+          setArticles(articles);
+          setLoading(false);
+          
+          console.log('\n\n\n Article: ', articles.find((a) => a.id == slug)!, '\n\n\n')
+          for (let index = 0; index < articles.length; index++) {
+            const element = articles[index];
+            console.log('Article:', element)
+            console.log('Slug:', slug)
+            console.log(element.id == slug)
+          }
+        }
+      )
+      .catch(error => {
+        console.error('Error fetching articles:', error);
+      })
+
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while fetching data
+  }
+
+  const article = articles.find((a) => a.id == slug)!;
 
   const items = (() => {
     const base = [
@@ -149,7 +185,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getBlog(),
           },
           {
-            name: article.topic,
+            name: article[`title_${localization}`],
             href: CompanyUrl.getArticle(slug),
           },
         ];

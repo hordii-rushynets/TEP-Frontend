@@ -1,82 +1,113 @@
+"use client"
+
 import { Container, Section, Title } from "common/ui";
 import { Author } from "components/Company/Blog/Author";
 import { MoreArticles } from "components/Company/Blog/MoreArticles";
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
-
-import { articles } from "../page";
+import { useEffect, useState } from "react";
+import { Article } from "../interfaces";
+import { ArticleService } from "../services";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const article = articles.find((article) => article.id === params.slug)!;
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const articleService = new ArticleService();
+
+    articleService.getArticles()
+      .then(
+        articles => {
+          setArticles(articles);
+          setLoading(false);
+          console.log(`\n\n\n Articles${JSON.stringify(articles)}\n\n\n`)
+        }
+      )
+      .catch(error => {
+        console.error('Error fetching articles:', error);
+      })
+
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while fetching data
+  }
+
+  const article = articles.find((article) => article.id == params.slug)!;
+  const { localization } = useLocalization();
+
+  console.log('\n\n ', localization, '\n\n ',)
 
   return (
     <>
       <MainImageBlock
-        image={article.info.images.topicImg}
-        title={article.topic}
+        image={article.image}
+        title={article[`title_${localization}`]}
         className={{ image: "object-top" }}
       />
       <Author
         author={article.author.name}
-        date={article.author.created_at}
-        tags={article.author.tags}
-        socialLinks={article.author.socialLinks}
+        date={article.created_at}
+        tags={article.tags.map(tag => tag[`title_${localization}`])}
+        socialLinks={article.author.social_networks}
       />
       <Section>
         <Container>
           <div className={"py-20 md:py-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article.info.complexity?.title}
+              {article.complexity[`title_${localization}`]}
             </Title>
             <p className={"mb:text-sm text-lg lg:font-extralight"}>
-              {article.info.complexity?.description}
+              {article.complexity[`description_${localization}`]}
             </p>
           </div>
         </Container>
       </Section>
-      <ImageBlock image={article.info.images.complexityImg} />
+      <ImageBlock image={article.complexity?.image} />
       <Section>
         <Container>
           <div className={"pb-16 pt-20 md:pb-20 md:pt-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article.info.requirements?.title}
+              {article.requirements[`title_${localization}`]}
             </Title>
             <ol
               className={
                 "mb:text-sm list-inside list-decimal text-lg lg:font-extralight"
               }
             >
-              {article.info.requirements?.description.map((i, Idx) => (
-                <li key={Idx}>{i}</li>
-              ))}
+              <li>
+                {article.requirements[`description_${localization}`]}
+              </li>
             </ol>
           </div>
         </Container>
       </Section>
       <ImageBlock
-        image={article.info.images.for_childrenImg}
-        description={article.info.for_children?.imageText}
+        image={article.for_children?.image}
+        description={article.for_children[`additional_description_${localization}`]}
       />
       <Section>
         <Container>
           <div className={"pb-16 pt-20 md:pb-20 md:pt-24"}>
             <p className={"mb:text-sm text-lg lg:font-extralight"}>
-              {article.info.for_children?.description}
+              {article.for_children?.description}
             </p>
           </div>
         </Container>
       </Section>
-      <ImageBlock image={article.info.images.what_materials} />
+      <ImageBlock image={article.what_materials?.image} />
       <Section>
         <Container>
           <div className={"py-20 md:py-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article.info.what_materials?.title}
+              {article.what_materials[`title_${localization}`]}
             </Title>
             <ol className={"mb:text-sm text-lg lg:font-extralight"}>
-              {article.info.what_materials?.description.map((i, Idx) => (
-                <li key={Idx}>{i}</li>
-              ))}
+              <li>
+                  {article.requirements[`description_${localization}`]}
+              </li>
             </ol>
           </div>
         </Container>
