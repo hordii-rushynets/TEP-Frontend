@@ -25,7 +25,7 @@ const blankets = [...Array(15)].map((_, Idx) => ({
   price: 1199,
 }));
 
-type SearchParams = {
+export type SearchParams = {
   [key: string]: string | string[] | undefined;
 };
 
@@ -44,9 +44,9 @@ interface Product {
   title_uk: string;
 }
 
-interface Color {
+export interface Color {
   hex: string;
-  id: number;
+  id: string;
   slug: string;
   title: string;
   title_en: string;
@@ -61,15 +61,51 @@ interface Material {
   title_uk: string;
 }
 
-interface Size {
-  id: number;
+export interface Size {
+  id: string;
   slug: string;
   title: string;
   title_en: string;
   title_uk: string;
 }
 
-interface ProductVariant {
+interface VariantImages {
+  id: number;
+  image: string;
+  product_variant: number;
+}
+
+export interface VariantInfo {
+  id: number;
+  material_and_care: string; 
+  material_and_care_uk: string; 
+  material_and_care_en: string; 
+  ecology_and_environment: string;
+  ecology_and_environment_uk: string;
+  ecology_and_environment_en: string;
+  packaging: string;
+  packaging_uk: string;
+  packaging_en: string;
+  last_modified: string;
+  product_variant: number;
+}
+
+export const VariantInfoDefault = {
+  id: 0,
+  material_and_care: "",
+  material_and_care_uk: "",
+  material_and_care_en: "", 
+  ecology_and_environment: "",
+  ecology_and_environment_uk: "",
+  ecology_and_environment_en: "",
+  packaging: "",
+  packaging_uk: "",
+  packaging_en: "",
+  last_modified: "",
+  product_variant: 0,
+}
+
+export interface ProductVariant {
   colors: Color[];
   count: number;
   default_price: number;
@@ -87,6 +123,8 @@ interface ProductVariant {
   title_uk: string;
   variant_order: number;
   wholesale_price: number;
+  variant_images: VariantImages[];
+  variant_info: VariantInfo;
 }
 
 export interface ProductWithVariant {
@@ -151,6 +189,8 @@ export default function CategoryPage({
         description: data[`description_${staticData.backendPostfix}` || "description"],
         title: data[`title_${staticData.backendPostfix}` || "title"]
       });
+
+      setFilterParams({...filterParams, ["category_title"]: data.title});
     });
   }
 
@@ -161,7 +201,7 @@ export default function CategoryPage({
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
     "slug": "",
     "title": "",
-    "category": params.category,
+    "category_title": "",
     "price_min": "",
     "price_max": "",
     "size": "",
@@ -183,7 +223,7 @@ export default function CategoryPage({
       data && setProductsWithVariants(data);
       if (data) {
         let productsToShow = data.map((product:any) => ({
-          id: product.id,
+          id: product.slug,
           title: product[`title_${staticData.backendPostfix}` || "title"],
           category_slug: product.category.slug,
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
@@ -197,8 +237,11 @@ export default function CategoryPage({
 
   useEffect(() => {
     fetchCategory();
-    searchFetch();
   }, []);
+
+  useEffect(() => {
+    searchFetch();
+  }, [filterParams]);
 
   return (
     <>

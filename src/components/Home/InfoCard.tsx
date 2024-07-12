@@ -27,6 +27,7 @@ export default function InfoCard({
           className={
             "object-cover transition-transform duration-300 group-hover:scale-105"
           }
+          sizes="100vw, 50vw, 33vw"
         />
       </div>
       <IconButton

@@ -30,6 +30,7 @@ export function ChangeAvatarForm({profileImage} : ChangeAvatarFormProps) {
             priority
             fill
             className={"z-10 select-none object-cover"}
+            sizes="100vw, 50vw, 33vw"
           />
         )}
         <div

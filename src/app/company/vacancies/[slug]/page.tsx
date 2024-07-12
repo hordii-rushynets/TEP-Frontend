@@ -5,7 +5,7 @@ import VacancyIMG from "components/Company/Vacancies/static/vacancy.jpg";
 import { vacancies } from "../_data";
 
 export default function VacancyPage({ params }: { params: { slug: string } }) {
-  const vacancy = vacancies.find((v) => v.id === params.slug);
+  const vacancy = vacancies.find((v) => v.id == params.slug);
   if (!vacancy) return;
 
   return (

@@ -27,6 +27,7 @@ export function Map() {
               className={"mx-auto"}
               src={MapIMG}
               alt={"Map of Ukraine image"}
+              sizes="100vw, 50vw, 33vw"
             />
           </div>
         </div>

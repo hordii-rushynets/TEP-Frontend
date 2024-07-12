@@ -9,27 +9,24 @@ import { cn } from "utils/cn";
 import { Disclosure, DisclosureItem } from "common/Disclosure";
 import { Title } from "common/ui";
 import { FilterDialog } from "components/Filters/FilterDialog";
+import { VariantInfo } from "app/goods/[category]/page";
+
+import { useLocalization } from "contexts/LocalizationContext";
 
 import { Article } from "./Article";
 
 type InfoDisclosure = {
   feedbacks: Feedback[];
-  packageDetails: {
-    width: number;
-    height: number;
-    length: number;
-    weight: number;
-    packageCount: number;
-    article: string;
-  };
+  info: VariantInfo;
+  description: string;
 };
 
-export function InfoDisclosure({ feedbacks, packageDetails }: InfoDisclosure) {
+export function InfoDisclosure({ feedbacks, info, description }: InfoDisclosure) {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isSizeOpen, setIsSizeOpen] = useState(false);
 
-  const { height, length, packageCount, weight, width, article } =
-    packageDetails;
+  const { staticData } = useLocalization();
+
   return (
     <>
       <div className={"mb-24 mt-[72px] max-w-full"}>
@@ -89,7 +86,7 @@ export function InfoDisclosure({ feedbacks, packageDetails }: InfoDisclosure) {
         <InfoSkeleton
           title={"Інформація про товар"}
           description={
-            "Тканина із суміші бавовни й поліестеру дуже проста у догляді, адже менше мнеться й збігається. Підковдра з прихованими кнопками, завдяки яким ковдра не вибивається."
+            description
           }
         >
           <Disclosure>
@@ -100,17 +97,7 @@ export function InfoDisclosure({ feedbacks, packageDetails }: InfoDisclosure) {
             >
               <div>
                 <p className={"mb-5 text-sm lg:font-extralight"}>
-                  65% бавовна, 35 % поліестер (100% з перероблених матеріалів)
-                </p>
-                <p className={"text-sm lg:font-extralight"}>
-                  65% бавовна, 35 % поліестер (100% з перероблених матеріалів)
-                  <br />
-                  Машинне прання, макс. 60°C, стандартний режим.
-                  <br />
-                  Не відбілювати. Машинна сушка за стандартної температури
-                  (макс. 80°C). Прасувати макс. за 150°C.
-                  <br />
-                  Не піддавати хімічному очищенню.
+                  {info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}
                 </p>
               </div>
             </DisclosureItem>
@@ -120,9 +107,7 @@ export function InfoDisclosure({ feedbacks, packageDetails }: InfoDisclosure) {
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <p className={"text-sm lg:font-extralight"}>
-                Використовуючи залишкові матеріали після виробництва матраців та
-                подушок як наповнення для цього виробу, ми споживаємо менше
-                сировини та зменшуємо наш вплив на клімат.
+                {info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}
               </p>
             </DisclosureItem>
             <DisclosureItem
@@ -132,19 +117,7 @@ export function InfoDisclosure({ feedbacks, packageDetails }: InfoDisclosure) {
             >
               <div>
                 <p className={"mb-5 text-sm lg:font-extralight"}>
-                  Ергоном подушка, для сну на боці/спині
-                </p>
-                <p className={"text-sm lg:font-extralight"}>Артикул номер</p>
-                <Article
-                  article={article}
-                  className={"mb-6 inline-block bg-black"}
-                />
-                <p className={"flex flex-col text-sm lg:font-extralight"}>
-                  <span>Ширина {width} см</span>
-                  <span>Висота {height} см</span>
-                  <span>Довжина {length} см</span>
-                  <span>Вага {weight} кг</span>
-                  <span>Упаковка {packageCount}</span>
+                  {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString()}
                 </p>
               </div>
             </DisclosureItem>

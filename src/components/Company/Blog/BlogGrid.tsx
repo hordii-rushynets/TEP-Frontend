@@ -1,5 +1,6 @@
 import { Article } from "app/company/blog/page";
 import { CompanyUrl } from "route-urls";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import { SimpleCard } from "common/Cards/SimpleCard";
 
@@ -8,6 +9,8 @@ export type BlogGridProps = {
 };
 
 export default function BlogGrid({ articles = [] }: BlogGridProps) {
+  const { localization } = useLocalization();
+
   return (
     <div
       className={
@@ -17,8 +20,8 @@ export default function BlogGrid({ articles = [] }: BlogGridProps) {
       {articles.map((article) => (
         <SimpleCard
           key={article.id}
-          source={article.info.images.topicImg}
-          title={article.topic}
+          source={article.image}
+          title={article[`title_${localization}`]}
           url={CompanyUrl.getArticle(article.id)}
         />
       ))}

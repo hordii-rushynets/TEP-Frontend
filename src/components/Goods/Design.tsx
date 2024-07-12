@@ -18,6 +18,7 @@ export default function Design() {
             alt={"Image"}
             fill
             className={"object-cover"}
+            sizes="100vw, 50vw, 33vw"
           />
           <Tip
             product={{
