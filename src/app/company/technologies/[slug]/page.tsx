@@ -4,7 +4,7 @@ import ProcessSection from "components/Company/Technologies/ProcessSection";
 import { technologies } from "components/Company/Technologies/Technologies";
 
 export default function TechPage({ params }: { params: { slug: string } }) {
-  const technology = technologies.find((tech) => tech.id === params.slug);
+  const technology = technologies.find((tech) => tech.id == params.slug);
   const otherTechnologies = technologies.filter(
     (tech) => tech.id !== params.slug,
   );

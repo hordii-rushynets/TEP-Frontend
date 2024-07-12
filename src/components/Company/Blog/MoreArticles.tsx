@@ -1,6 +1,5 @@
 "use client";
 
-import { articles } from "app/company/blog/page";
 import { HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { CompanyUrl } from "route-urls";
@@ -10,6 +9,11 @@ import { cn } from "utils/cn";
 
 import { SimpleCard } from "common/Cards/SimpleCard";
 import { Container, IconButton, Section, Title } from "common/ui";
+import { useEffect, useState } from "react";
+
+import { Article } from "app/company/blog//interfaces";
+import { ArticleService } from "app/company/blog/services";
+import { useLocalization } from "contexts/LocalizationContext";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -19,6 +23,30 @@ type PopularGoodsProps = {
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function MoreArticles({ id, className }: PopularGoodsProps) {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { localization } = useLocalization();
+
+  useEffect(() => {
+    const articleService = new ArticleService();
+
+    articleService.getArticles()
+      .then(
+        articles => {
+          setArticles(articles);
+          setLoading(false);
+        }
+      )
+      .catch(error => {
+        console.error('Error fetching articles:', error);
+      })
+
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading state while fetching data
+  }
+
   const otherArticles = articles.filter((article) => article.id !== id);
   return (
     <Section className={cn("overflow-hidden", className)}>
@@ -52,8 +80,8 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
             {otherArticles.map((article) => (
               <SwiperSlide key={article.id}>
                 <SimpleCard
-                  source={article.info.images.topicImg}
-                  title={article.topic}
+                  source={article.image}
+                  title={article[`title_${localization}`]}
                   url={CompanyUrl.getArticle(id)}
                   isIcon={false}
                 />

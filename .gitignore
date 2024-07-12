@@ -2,6 +2,7 @@
 node_modules
 /.pnp
 .pnp.js
+.devcontainer
 
 # Next.js build output
 .next
