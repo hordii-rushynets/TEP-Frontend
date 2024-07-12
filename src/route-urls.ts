@@ -13,7 +13,7 @@ export const MainUrl = {
   // Additional
   getProductReturnPolicy: () => "/product-return-policy",
   getProductReturnForm: () => "/product-return-form",
-  getCareRools: () => "/care-rools",
+  getCareRools: () => "https://drive.google.com/uc?export=download&id=1QzmZjhzr28qjwSKMZygLjSlUMyGLYpkc",
   getPurchase: () => "/purchase",
 };
 

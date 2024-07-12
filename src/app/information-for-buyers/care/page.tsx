@@ -35,7 +35,7 @@ export default function CarePage() {
             </p>
             <Disclosure>
               <Link
-                href={"https://drive.google.com/uc?export=download&id=1QzmZjhzr28qjwSKMZygLjSlUMyGLYpkc"}
+                href={MainUrl.getCareRools()}
                 className={
                   "group flex items-center justify-between gap-x-4 py-6 pl-1 transition-colors duration-300 hover:text-tep_blue-400"
                 }
