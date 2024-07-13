@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-interface Tag {
+export interface Tag {
   title_uk: string;
   title_en: string;
 }

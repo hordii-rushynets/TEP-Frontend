@@ -185,7 +185,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getBlog(),
           },
           {
-            name: article[`title_${localization}`],
+            name: article[`title_${localization}` as keyof Article] as string,
             href: CompanyUrl.getArticle(slug),
           },
         ];

@@ -1,4 +1,4 @@
-import { Article } from "app/company/blog/page";
+import { Article } from "app/company/blog/interfaces";
 
 import { Container, Section, Title } from "common/ui";
 

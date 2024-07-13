@@ -1,4 +1,4 @@
-import { Article } from "app/company/blog/page";
+import { Article } from "app/company/blog/interfaces";
 import { CompanyUrl } from "route-urls";
 import { useLocalization } from "contexts/LocalizationContext";
 
@@ -21,7 +21,7 @@ export default function BlogGrid({ articles = [] }: BlogGridProps) {
         <SimpleCard
           key={article.id}
           source={article.image}
-          title={article[`title_${localization}`]}
+          title={article[`title_${localization}` as keyof Article] as string}
           url={CompanyUrl.getArticle(article.id)}
         />
       ))}
