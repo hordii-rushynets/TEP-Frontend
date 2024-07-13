@@ -1,41 +1,36 @@
+"use client"
+
 import { Container, Section, Title } from "common/ui";
 import CategoriesFilter from "components/Filters/CategoriesFilter";
 import { BigGrid } from "components/Goods/BigGrid";
 import SalesProductsList from "components/Goods/SalesProductsList";
+import { useState, useEffect } from "react";
+import { ProductForSaleService } from "./services"; 
+import { ProductToShow } from "app/goods/[category]/page";
+import { useLocalization } from "contexts/LocalizationContext";
 import IMG1 from "components/Goods/static/sales/img1.jpg";
 import IMG2 from "components/Goods/static/sales/img2.jpg";
 import IMG3 from "components/Goods/static/sales/img3.jpg";
 import IMG4 from "components/Goods/static/sales/img4.jpg";
 import IMG5 from "components/Goods/static/sales/img5.jpg";
 import IMG6 from "components/Goods/static/sales/img6.jpg";
-import ProductIMG1 from "components/Goods/static/sales/sales1.jpg";
-import ProductIMG2 from "components/Goods/static/sales/sales2.jpg";
-import ProductIMG3 from "components/Goods/static/sales/sales3.jpg";
-import ProductIMG4 from "components/Goods/static/sales/sales4.jpg";
 
 import { Breadcrumbs } from "./Breadcrumbs";
 
 const images = [IMG1, IMG2, IMG3, IMG4, IMG5, IMG6];
-const productsImages = [ProductIMG1, ProductIMG2, ProductIMG3, ProductIMG4];
-
-const products = [...Array(12)].map((_, Idx) => ({
-  id: (Idx + 1).toString(),
-  title: "Dream",
-  category_slug: ["pillows", "blankets", "covered", "linens", "toppers", "sheets"][
-    Math.floor(Math.random() * 6)
-  ],
-  category_title: ["Pillows", "Blankets", "Covered", "Linens", "Toppers", "Sheets"][
-    Math.floor(Math.random() * 6)
-  ],
-  image: productsImages[Math.floor(Math.random() * 4)],
-  price: 1199,
-  isSale: true,
-  salePrice: 1090,
-  number_of_views: 12,
-  date: "new Date()",
-}));
 
 export default function SalesPage() {
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+  const [category, setCategory] = useState("");
+  const { localization } = useLocalization();
+
+  useEffect(()=>{
+    const productsService = new ProductForSaleService();
+    productsService.getProductsForSale(category, localization).then(products => {
+      setProducts(products);
+    })
+  }, [category]);
+
   return (
     <>
       <Breadcrumbs />
@@ -45,7 +40,7 @@ export default function SalesPage() {
             <Title className={"mb-[38px] text-3xl"}>Акції</Title>
             <div className={"border-b border-tep_gray-200 pb-6"}>
               
-              <CategoriesFilter />
+              <CategoriesFilter setCategory={setCategory}/>
             </div>
           </div>
         </Container>
@@ -58,7 +53,7 @@ export default function SalesPage() {
               Більше акційних товарів
             </Title>
             <div className={"mb-6"}>
-              <CategoriesFilter />
+              <CategoriesFilter setCategory={setCategory}/>
             </div>
             <BigGrid images_array={images} />
           </div>

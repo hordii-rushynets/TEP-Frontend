@@ -177,6 +177,8 @@ export interface ProductWithVariant {
   title: string;
   title_en: string;
   title_uk: string;
+  number_of_views: number;
+  last_modified: string;
   product_variants: ProductVariant[];
 }
 
@@ -193,7 +195,7 @@ export type ProductToShow = {
   image: StaticImageData | string;
   price: number;
   number_of_views: number;
-  date: string;
+  date: Date;
   isInCart?: boolean;
   isInCompare?: boolean;
   isFavourite?: boolean;
@@ -278,6 +280,8 @@ export default function CategoryPage({
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
           image: product.product_variants[0].main_image,
           price: product.product_variants[0].default_price,
+          isSale: product.product_variants[0].promotion,
+          salePrice: product.product_variants[0].promo_price,
           number_of_views: product.number_of_views,
           date: new Date(product.last_modified)
         }));
