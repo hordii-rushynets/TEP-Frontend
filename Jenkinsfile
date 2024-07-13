@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['ssh']) {
-                        sh "ssh -o StrictHostKeyChecking=no \${EC2_HOST} 'sudo su -c \" cd TEP-Frontend && git pull origin main && docker compose stop nextjs && docker compose build nextjs && docker compose up -d\"'"
+                        sh "ssh -o StrictHostKeyChecking=no \${EC2_HOST} 'sudo su -c \" cd TEP-Frontend && git pull origin developer && docker compose stop nextjs && docker compose build nextjs && docker compose up -d\"'"
                     }
                 }
             }
