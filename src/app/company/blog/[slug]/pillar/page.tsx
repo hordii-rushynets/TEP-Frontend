@@ -1,6 +1,10 @@
-import { articles } from "app/company/blog/page";
+"use client"
+
 import Link from "next/link";
 import { CompanyUrl } from "route-urls";
+import {useState, useEffect} from "react";
+import { Article, ArticleDefault } from "../../interfaces";
+import {ArticleService} from "../../services"
 
 import { Container, Section, Title } from "common/ui";
 import { AuthorDetails } from "components/Company/Blog/AuthorDetails";
@@ -14,7 +18,29 @@ import { Socials } from "components/Socials";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export default function PillarPage({ params }: { params: { slug: string } }) {
-  const article = articles.find((article) => article.id == params.slug)!;
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [article, setArticle] = useState<Article>(ArticleDefault);
+
+  useEffect(() => {
+    const articleService = new ArticleService();
+
+    articleService.getArticles()
+      .then(
+        articles => {
+          setArticles(articles);
+          console.log(`\n\n\n Articles${JSON.stringify(articles)}\n\n\n`)
+        }
+      )
+      .catch(error => {
+        console.error('Error fetching articles:', error);
+      })
+
+  }, []);
+
+  useEffect(() => {
+    setArticle(articles.find((article) => article.id == params.slug)!);
+  } , [articles]);
+
   const { localization } = useLocalization();
 
   return (
@@ -31,7 +57,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           />
           <div className={"mx-auto max-w-[808px]"}>
             <Title size={"5xl"} className={"mb-7 md:mb-[52px]"}>
-              {article[`title_${localization}`]}
+              {article[`title_${localization}` as keyof Article]?.toString()}
             </Title>
             <AuthorDetails
               author={article.author.name}
@@ -186,8 +212,8 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       </Section>
       <ImageBlock
         size={"large"}
-        image={article.for_children.image}
-        description={article.for_children[`additional_description_${localization}`]}
+        image={article.for_children?.image || ""}
+        description={article.for_children?.[`additional_description_${localization}` as keyof {}]}
       />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
@@ -241,7 +267,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.what_materials?.image} />
+      <ImageBlock size={"large"} image={article.what_materials?.image || ""} />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>
@@ -345,7 +371,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.complexity.image} />
+      <ImageBlock size={"large"} image={article.complexity?.image || ""} />
       <Section className={"pb-[68px] pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>

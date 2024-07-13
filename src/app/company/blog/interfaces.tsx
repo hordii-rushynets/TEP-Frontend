@@ -52,3 +52,16 @@ export type Article = {
     };
   };
 };
+
+export const ArticleDefault : Article = {
+  id: "",
+  title_uk: "",
+  title_en: "",
+  tags: [],
+  image: "",
+  created_at: "",
+
+  author: {
+    name: "",
+  }
+}
