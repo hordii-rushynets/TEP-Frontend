@@ -16,26 +16,11 @@ import { MainImageBlock } from "components/Company/MainImageBlock";
 import { GetInstructionsForm } from "components/Forms/GetInstructionsForm";
 import { Socials } from "components/Socials";
 import { useLocalization } from "contexts/LocalizationContext";
+import { useArticles } from "contexts/ArticlesContext";
 
 export default function PillarPage({ params }: { params: { slug: string } }) {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { articles } = useArticles();
   const [article, setArticle] = useState<Article>(ArticleDefault);
-
-  useEffect(() => {
-    const articleService = new ArticleService();
-
-    articleService.getArticles()
-      .then(
-        articles => {
-          setArticles(articles);
-          console.log(`\n\n\n Articles${JSON.stringify(articles)}\n\n\n`)
-        }
-      )
-      .catch(error => {
-        console.error('Error fetching articles:', error);
-      })
-
-  }, []);
 
   useEffect(() => {
     setArticle(articles.find((article) => article.id == params.slug)!);

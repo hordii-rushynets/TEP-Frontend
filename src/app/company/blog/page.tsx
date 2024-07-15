@@ -22,7 +22,7 @@ import TopicIMG7 from "components/Company/Blog/static/topic-img7.jpg";
 import TopicIMG8 from "components/Company/Blog/static/topic-img8.jpg";
 import { WithColorFillingBlock } from "components/WithColorFillingBlock";
 import { Article } from "./interfaces";
-import { ArticleService } from "./services";
+import { useArticles } from "contexts/ArticlesContext";
 
 // export type Article = {
 //   id: string;
@@ -514,25 +514,13 @@ import { ArticleService } from "./services";
 // ];
 
 export default function BlogPage() {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { articles } = useArticles();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const articleService = new ArticleService();
-
-    articleService.getArticles()
-      .then(
-        articles => {
-          setArticles(articles);
-          setLoading(false);
-          console.log(`\n\n\n Articles${JSON.stringify(articles)}\n\n\n`)
-        }
-      )
-      .catch(error => {
-        console.error('Error fetching articles:', error);
-      })
-
-  }, []);
+    articles ? setLoading(false) : setLoading(true);
+    console.log(articles);
+  }, [articles]);
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data

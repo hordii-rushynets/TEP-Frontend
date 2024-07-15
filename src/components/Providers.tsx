@@ -14,6 +14,7 @@ import { NotificationProvider } from "contexts/NotificationContext";
 import { AuthProvider } from "contexts/AuthContext";
 import { LocalizationProvider } from "contexts/LocalizationContext";
 import { CategoriesProvider } from "contexts/CategoriesContext";
+import { ArticlesProvider } from "contexts/ArticlesContext";
 
 export type ContextProvidersProps = {
   children: React.ReactNode;
@@ -35,7 +36,9 @@ export function Providers(props: ContextProvidersProps) {
                       <AuthProvider>
                         <CartProvider>
                           <CategoriesProvider>
-                            {children}
+                            <ArticlesProvider>
+                              {children}
+                            </ArticlesProvider>
                           </CategoriesProvider>
                         </CartProvider>
                       </AuthProvider>

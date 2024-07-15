@@ -9,7 +9,7 @@ import { useLocalization } from "contexts/LocalizationContext";
 
 import { useEffect, useState } from "react";
 import { Article } from "./blog/interfaces";
-import { ArticleService } from "./blog/services";
+import { useArticles } from "contexts/ArticlesContext";
 import { vacancies } from "./vacancies/_data";
 
 export function Breadcrumbs() {
@@ -19,33 +19,14 @@ export function Breadcrumbs() {
   const vacancyPosition = vacancies.find((v) => v.id === slug)!;
   const technology = technologies.find((t) => t.id === slug)!;
 
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { articles } = useArticles();
   const [loading, setLoading] = useState(true);
   const { localization } = useLocalization();
 
   useEffect(() => {
-    const articleService = new ArticleService();
-
-    articleService.getArticles()
-      .then(
-        articles => {
-          setArticles(articles);
-          setLoading(false);
-          
-          console.log('\n\n\n Article: ', articles.find((a) => a.id == slug)!, '\n\n\n')
-          for (let index = 0; index < articles.length; index++) {
-            const element = articles[index];
-            console.log('Article:', element)
-            console.log('Slug:', slug)
-            console.log(element.id == slug)
-          }
-        }
-      )
-      .catch(error => {
-        console.error('Error fetching articles:', error);
-      })
-
-  }, []);
+    articles ? setLoading(false) : setLoading(true);
+  }, [articles]);
+  
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data
@@ -185,7 +166,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getBlog(),
           },
           {
-            name: article[`title_${localization}` as keyof Article] as string,
+            name: article?.[`title_${localization}` as keyof Article] as string || "",
             href: CompanyUrl.getArticle(slug),
           },
         ];
