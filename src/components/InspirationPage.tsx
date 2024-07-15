@@ -36,7 +36,7 @@ export function InspirationPage() {
         <div className={"pb-40 pt-12 lg:pb-64"}>
           <Title className={"mb-[38px] text-3xl"}>Натхнення</Title>
           <div className={"mb-6"}>
-            <CategoriesFilter />
+            <CategoriesFilter setCategory={(category) => {}}/>
           </div>
           <BigGrid images_array={images} />
         </div>

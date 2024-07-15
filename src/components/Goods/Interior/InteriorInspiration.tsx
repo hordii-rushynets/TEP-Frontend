@@ -36,7 +36,7 @@ export function InteriorInspiration() {
         <div>
           <Title className={"mb-[38px] text-3xl"}>Більше натхнення</Title>
           <div className={"mb-6"}>
-            <CategoriesFilter />
+            <CategoriesFilter setCategory={(category) => {}}/>
           </div>
           <BigGrid images_array={images} />
         </div>

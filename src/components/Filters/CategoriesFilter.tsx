@@ -5,8 +5,13 @@ import { cn } from "utils/cn";
 
 import { Button } from "common/ui";
 import { CategoriesProvider, useCategories} from "contexts/CategoriesContext";
+import { useEffect } from "react";
 
-export default function CategoriesFilter() {
+interface CategoryFiltersProps {
+  setCategory: (value: string) => void;
+}
+
+export default function CategoriesFilter({setCategory}: CategoryFiltersProps) {
   const [filter, setFilter] = useQueryParams(
     {
       category: withDefault(StringParam, ""),
@@ -15,6 +20,10 @@ export default function CategoriesFilter() {
       removeDefaultsFromUrl: true,
     },
   );
+
+  useEffect(() => {
+    setCategory(filter.category);
+  }, [filter]);
 
   return (
     <div className={"-mb-3 flex flex-nowrap gap-x-6 overflow-scroll pb-3"}>
