@@ -27,7 +27,7 @@ export function Author({ author, date, tags, socialLinks }: AuthorProps) {
           <div className={"lg:flex-1 lg:grow-[2]"}>
             <div className={"mb-4 lg:font-extralight"}>Теги</div>
             <div className={"max-w-[288px] font-bold first-letter:uppercase"}>
-              {tags.join(", ")}
+              {tags?.join(", ")}
             </div>
           </div>
 

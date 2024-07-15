@@ -1,13 +1,11 @@
 "use client"
 
 import FeedbacksFilters from "components/Filters/FeedbacksFilters";
-import { useCategories, CategoriesProvider } from "contexts/CategoriesContext";
+import { useCategories } from "contexts/CategoriesContext";
 
 const FeedbacksFiltersWithCategories: React.FC = () => {
     return (
-      <CategoriesProvider>
-        <CategoriesForFeedbackFilter />
-      </CategoriesProvider>
+      <CategoriesForFeedbackFilter />
     );
 }
 

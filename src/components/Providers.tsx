@@ -13,6 +13,8 @@ import { AuthNotificationProvider } from "contexts/AuthNotificationContext";
 import { NotificationProvider } from "contexts/NotificationContext";
 import { AuthProvider } from "contexts/AuthContext";
 import { LocalizationProvider } from "contexts/LocalizationContext";
+import { CategoriesProvider } from "contexts/CategoriesContext";
+import { ArticlesProvider } from "contexts/ArticlesContext";
 
 export type ContextProvidersProps = {
   children: React.ReactNode;
@@ -32,7 +34,13 @@ export function Providers(props: ContextProvidersProps) {
                   <FavouriteProvider>
                     <CompareProvider>
                       <AuthProvider>
-                        <CartProvider>{children}</CartProvider>
+                        <CartProvider>
+                          <CategoriesProvider>
+                            <ArticlesProvider>
+                              {children}
+                            </ArticlesProvider>
+                          </CategoriesProvider>
+                        </CartProvider>
                       </AuthProvider>
                     </CompareProvider>
                   </FavouriteProvider>
