@@ -60,7 +60,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
 
   function getTrueKeys(obj: { [key: string]: boolean }): string { 
     const trueKeys = Object.keys(obj).filter(key => obj[key]);
-    return trueKeys.join(', ');
+    return trueKeys.join(',');
   }
 
 
