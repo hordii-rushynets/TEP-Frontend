@@ -180,7 +180,7 @@ export type ProductToShow = {
   image: StaticImageData | string;
   price: number;
   number_of_views: number;
-  date: Date;
+  date: Date | string;
   isInCart?: boolean;
   isInCompare?: boolean;
   isFavourite?: boolean;

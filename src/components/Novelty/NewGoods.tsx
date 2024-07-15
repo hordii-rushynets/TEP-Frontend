@@ -29,7 +29,7 @@ export const NewGoods = ({ activePage }: NewGoodsProps) => {
           <Title className={"mb-9"}>Нові товари</Title>
           <div className={"mb-12 md:mb-6"}>
             <Suspense fallback={<Loader />}>
-              <CategoriesFilter />
+              <CategoriesFilter setCategory={(category) => {}}/>
             </Suspense>
           </div>
           <ProductsList
