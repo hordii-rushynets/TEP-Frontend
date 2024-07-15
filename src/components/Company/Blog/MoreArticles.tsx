@@ -81,7 +81,7 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
               <SwiperSlide key={article.id}>
                 <SimpleCard
                   source={article.image}
-                  title={article[`title_${localization}`]}
+                  title={article[`title_${localization}` as keyof Article] as string}
                   url={CompanyUrl.getArticle(id)}
                   isIcon={false}
                 />

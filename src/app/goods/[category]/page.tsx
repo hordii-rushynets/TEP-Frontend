@@ -129,21 +129,6 @@ export interface VariantInfo {
   product_variant: number;
 }
 
-export const VariantInfoDefault = {
-  id: 0,
-  material_and_care: "",
-  material_and_care_uk: "",
-  material_and_care_en: "", 
-  ecology_and_environment: "",
-  ecology_and_environment_uk: "",
-  ecology_and_environment_en: "",
-  packaging: "",
-  packaging_uk: "",
-  packaging_en: "",
-  last_modified: "",
-  product_variant: 0,
-}
-
 export interface ProductVariant {
   colors: Color[];
   count: number;

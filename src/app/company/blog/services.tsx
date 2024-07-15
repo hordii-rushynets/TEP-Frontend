@@ -6,7 +6,7 @@ export class ArticleService {
     private daoService: ArticleDAOService;
 
     constructor() {
-        this.daoService = new ArticleDAOService(process.env.NEXT_PUBLIC_API_URL);
+        this.daoService = new ArticleDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
     public async getArticles(): Promise<Article[]> {

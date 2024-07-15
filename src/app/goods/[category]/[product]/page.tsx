@@ -15,7 +15,8 @@ import PinkIMG3 from "components/Goods/Product/static/pinkIMG3.jpg";
 import { RecommendedGoods } from "components/Goods/RecommendedGoods";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { ProductVariant, SearchParams, Color, ProductWithVariant, Size, VariantInfoDefault } from "../page";
+import { ProductVariant, SearchParams, Color, ProductWithVariant, Size } from "../page";
+import { VariantInfoDefault } from "../defaultValues"
 import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 import { getProductInfo } from "daos/productDAO";
@@ -142,7 +143,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
             <PaymentDetails
               id={id}
               article={searchParams.article?.toString() || ""}
-              category={productWithVariant?.category[(`title_${staticData.backendPostfix}` || "title") as keyof Category] || ""}
+              category={productWithVariant?.category[(`title_${staticData.backendPostfix}` || "title") as keyof Category].toString() || ""}
               colors={colors}
               description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               isInStock={isInStock}
