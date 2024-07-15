@@ -4,7 +4,7 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 import { cn } from "utils/cn";
 
 import { Button } from "common/ui";
-import { CategoriesProvider, useCategories} from "contexts/CategoriesContext";
+import { useCategories} from "contexts/CategoriesContext";
 import { useEffect } from "react";
 
 interface CategoryFiltersProps {
@@ -39,9 +39,7 @@ export default function CategoriesFilter({setCategory}: CategoryFiltersProps) {
       >
         Всі
       </Button>
-      <CategoriesProvider>
-        <CategoryButtonsList filter={filter} setFilter={setFilter} />
-      </CategoriesProvider>
+      <CategoryButtonsList filter={filter} setFilter={setFilter} />
     </div>
   );
 }

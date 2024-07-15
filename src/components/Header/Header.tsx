@@ -21,7 +21,6 @@ import { GoodsMenu } from "./GoodsMenu";
 import LeftNavigation from "./LeftNavigation";
 import { InfoMenu } from "./InfoMenu";
 
-import { CategoriesProvider } from 'contexts/CategoriesContext';
 import { useAuth } from "contexts/AuthContext";
 
 // import { ServicesMenu } from "./ServicesMenu";
@@ -58,9 +57,7 @@ export function Header() {
               "order-3 hidden basis-[350px] items-center justify-between gap-x-2 text-center text-sm font-bold lg:flex"
             }
           >
-            <CategoriesProvider>
-              <GoodsMenu />
-            </CategoriesProvider>
+            <GoodsMenu />
             <CompanyMenu />
             {/* <ServicesMenu /> */}
             <InfoMenu />
@@ -134,9 +131,7 @@ export function Header() {
                 />
               </ButtonBase>
             </div>
-            <CategoriesProvider>
-              <LeftNavigation setMenuIsOpen={setMenuIsOpen}/>
-            </CategoriesProvider>
+            <LeftNavigation setMenuIsOpen={setMenuIsOpen}/>
             <ChangeLanguage />
           </div>
           {menuIsOpen && (

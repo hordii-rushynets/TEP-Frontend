@@ -16,7 +16,7 @@ import {
   Title,
 } from "common/ui";
 import { RatingStar } from "common/ui/icons/RatingStar";
-import { CategoriesProvider, useCategories } from "contexts/CategoriesContext";
+import { useCategories } from "contexts/CategoriesContext";
 
 export const feedbackSchema = z.object({
   rating: z.number().min(1, "Оцініть товар від 1 до 5").default(0),
@@ -74,9 +74,7 @@ export function FeedbackForm() {
             label={"Пошта"}
             placeholder={"taras@gmail.com"}
           />
-          <CategoriesProvider>
-            <CategoriesFormSelect />
-          </CategoriesProvider>
+          <CategoriesFormSelect />
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
