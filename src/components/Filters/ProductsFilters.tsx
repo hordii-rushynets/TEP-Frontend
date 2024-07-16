@@ -23,11 +23,12 @@ interface FilterField {
   value: string;
   value_uk: string;
   value_en: string;
+  filter: number;
 }
 
 export interface Filter {
   id: number;
-  filter_fields: FilterField[];
+  filter_field: FilterField[];
   name: string;
   name_uk: string;
   name_en: string;
@@ -69,7 +70,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
   }, [size]);
 
   useEffect(()=>{
-    setFilterParams({...filterParams, ["filter_fields_value_en_mul"]: getTrueKeys(dynamicFilterFields)});
+    setFilterParams({...filterParams, ["filter_fields_id"]: getTrueKeys(dynamicFilterFields)});
   }, [dynamicFilterFields]);
 
   return (
@@ -177,11 +178,11 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[148px] gap-x-12 py-5"}>
-                  {filter.filter_fields.map((field) =>
+                  {filter.filter_field.map((field) =>
                   <FilterCheckbox
-                    checked={dynamicFilterFields[field.value_en]}
+                    checked={dynamicFilterFields[field.id]}
                     onChange={() =>
-                      setDynamicFilterFields((v) => ({ ...v, [field.value_en]: !v[field.value_en] }))
+                      setDynamicFilterFields((v) => ({ ...v, [field.id]: !v[field.id] }))
                     }
                     label={field[(`value_${staticData.backendPostfix}` || "value") as keyof FilterField]}
                   />

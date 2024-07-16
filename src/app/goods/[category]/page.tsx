@@ -235,7 +235,7 @@ export default function CategoryPage({
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
     "category_slug": params.category,
     "size": "",
-    "filter_fields_value_en_mul": ""
+    "filter_fields_id": ""
   });
 
   const [sort, setSort] = useState<string>("suitable");
@@ -263,7 +263,7 @@ export default function CategoryPage({
           title: product[`title_${staticData.backendPostfix}` || "title"],
           category_slug: product.category.slug,
           category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
-          image: product.product_variants[0].main_image,
+          image: product.product_variants[0].main_image || "",
           price: product.product_variants[0].default_price,
           isSale: product.product_variants[0].promotion,
           salePrice: product.product_variants[0].promo_price,
