@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useLocalization } from './LocalizationContext';
-import { Filter } from 'components/Filters/ProductsFilters';
+import { DynamicFilter } from 'components/Filters/ProductsFilters';
 
 export interface Category {
   id: string;
@@ -9,7 +9,7 @@ export interface Category {
   title: string;
   description: string;
   image: string;
-  filters: Filter[];
+  filters: DynamicFilter[];
 }
 
 export const DefaultCategory = {
