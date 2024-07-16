@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { useLocalization } from './LocalizationContext';
 import { Filter } from 'components/Filters/ProductsFilters';
 
-// Типи для категорій
 export interface Category {
   id: string;
   slug: string;
@@ -22,23 +21,18 @@ export const DefaultCategory = {
   filters: [],
 }
 
-
-// Тип для значення контексту
 interface CategoriesContextType {
   categories: Category[];
 }
 
-// Створення контексту з початковим значенням
 const CategoriesContext = createContext<CategoriesContextType | undefined>(undefined);
 
-// Тип для провайдера контексту
 interface CategoriesProviderProps {
   children: ReactNode;
 }
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
-// Створення провайдера контексту
 export function CategoriesProvider({ children }: CategoriesProviderProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const { staticData } = useLocalization();
@@ -56,12 +50,10 @@ export function CategoriesProvider({ children }: CategoriesProviderProps) {
     })));
   }
 
-  // Завантаження категорій при завантаженні компонента
   useEffect(() => {
     fetchCategories();
   }, []);
 
-  // Повернення провайдера контексту з передачею значення
   return (
     <CategoriesContext.Provider value={{ categories }}>
       {children}
@@ -69,7 +61,6 @@ export function CategoriesProvider({ children }: CategoriesProviderProps) {
   );
 }
 
-// Хук для використання контексту
 export function useCategories() {
   const context = useContext(CategoriesContext);
   if (!context) {
