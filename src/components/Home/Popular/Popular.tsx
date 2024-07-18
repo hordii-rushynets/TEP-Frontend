@@ -61,7 +61,7 @@ export function Popular() {
           >
             {categories.map((c) => (
               <SwiperSlide key={c.id || 0}>
-                <PopularCard photo={c.image || ""} category={c.title || ""} />
+                <PopularCard photo={c.image || ""} category={c.title || ""} slug={c.slug || ""} />
               </SwiperSlide>
             ))}
             <IconButton
@@ -96,9 +96,10 @@ export function Popular() {
 type PopularCardProps = {
   category: string;
   photo: StaticImageData | string;
+  slug: string;
 };
 
-export default function PopularCard({ photo, category }: PopularCardProps) {
+export default function PopularCard({ photo, category, slug }: PopularCardProps) {
   return (
     <div
       className={
@@ -111,7 +112,7 @@ export default function PopularCard({ photo, category }: PopularCardProps) {
           image: "transition-transform duration-300 group-hover:scale-105",
         }}
       />
-      <Link href={`${MainUrl.getGoods()}/${category}`}>
+      <Link href={`${MainUrl.getGoods()}/${slug}`}>
         <Button
           className={{
             button: "absolute left-1/2 top-[72%] z-10 -translate-x-1/2",
