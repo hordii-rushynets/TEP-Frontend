@@ -25,7 +25,7 @@ import { getUniqueColors, getUniqueSizes, findMatchingVariant, getUniqueFilters 
 import { DynamicFilter, DynamicFilterField } from "components/Filters/ProductsFilters";
 import { CartService } from "app/account/cart/services";
 import { useAuth } from "contexts/AuthContext";
-
+import { ProductService } from "../services";
 
 export type Feedback = {
   title: string;
@@ -113,6 +113,8 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [count, setCount] = useState(1);
 
   useEffect(() => {
+    const productService = new ProductService();
+    
     getProductInfo(params.product)
     .then(response => {
       if (response.status === 200) {
@@ -123,6 +125,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     .then(data => {
       setProductVariants(data.product_variants);
       setProduct(data);
+      productService.viewProduct(data.id);
       if (!searchParams.article) {
         router.push(`${pathname}?article=${data.product_variants[0].sku}`);
       }

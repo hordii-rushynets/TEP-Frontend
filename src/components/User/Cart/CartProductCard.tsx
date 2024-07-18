@@ -1,3 +1,5 @@
+"use client"
+
 import { HTMLAttributes } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { cn } from "utils/cn";
