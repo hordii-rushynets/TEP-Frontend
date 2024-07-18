@@ -18,7 +18,7 @@ import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
 import { useLocalization } from "contexts/LocalizationContext";
 
-interface DynamicFilterField {
+export interface DynamicFilterField {
   id: number;
   value: string;
   value_uk: string;
@@ -178,7 +178,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[148px] gap-x-12 py-5"}>
-                  {filter.filter_field.map((field) =>
+                  {filter.filter_field?.map((field) =>
                   <FilterCheckbox
                     checked={dynamicFilterFields[field.id]}
                     onChange={() =>

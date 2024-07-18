@@ -1,10 +1,10 @@
 import { Price } from "components/Goods/Product/Price";
 
-import { OrderedProduct } from "../OrderHistory/OrderHistory";
+import { CartItem } from "app/account/cart/interfaces";
 
 export type TotalPriceBlockProps = {
   hasTotalPrice?: boolean;
-  goods: OrderedProduct[];
+  goods: CartItem[];
   isLoading?: boolean;
 };
 
@@ -14,9 +14,9 @@ export function TotalPriceBlock({
   goods,
 }: TotalPriceBlockProps) {
   const deliveryPrice = goods.length * 70;
-  const totalPrice = goods.reduce((acc, el) => acc + el.price, 0) * 1.19;
+  const totalPrice = goods.reduce((acc, el) => acc + el?.product_variants?.default_price * el.quantity, 0) * 1.19;
   const totalPriceWithVAT =
-    goods.reduce((acc, el) => acc + el.price, 0) * 1.19 + goods.length * 70;
+    goods.reduce((acc, el) => acc + el?.product_variants?.default_price, 0) * 1.19 + goods.length * 70;
 
   return (
     <div

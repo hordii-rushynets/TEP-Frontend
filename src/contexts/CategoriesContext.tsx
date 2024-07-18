@@ -9,7 +9,7 @@ export interface Category {
   title: string;
   description: string;
   image: string;
-  filters: DynamicFilter[];
+  filter: DynamicFilter[];
 }
 
 export const DefaultCategory = {
@@ -18,7 +18,7 @@ export const DefaultCategory = {
   title: "",
   description: "",
   image: "",
-  filters: [],
+  filter: [],
 }
 
 interface CategoriesContextType {

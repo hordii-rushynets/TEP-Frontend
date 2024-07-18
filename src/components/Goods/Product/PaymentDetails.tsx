@@ -11,7 +11,6 @@ import { Button, IconButton, SelectInput, TextInput, Title } from "common/ui";
 import { useCartContext } from "contexts/CartContext";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 import { useLocalization } from "contexts/LocalizationContext";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { Article } from "./Article";
 import { Counter } from "./Counter";
@@ -22,6 +21,7 @@ import { Color, Size, SearchParams } from "app/goods/[category]/page";
 import DeliveryIcon from "./static/deliveryIcon.svg";
 import GaranteeIcon from "./static/garanteeIcon.svg";
 import SupportIcon from "./static/supportIcon.svg";
+import { DynamicFilter, DynamicFilterField } from "components/Filters/ProductsFilters";
 
 type PaymentDetailsProps = {
   id: string;
@@ -30,6 +30,7 @@ type PaymentDetailsProps = {
   sizes: Size[];
   price: number;
   count: number;
+  setCount: (v: number) => void;
   isInStock: boolean;
   article: string;
   colors: Color[];
@@ -44,6 +45,9 @@ type PaymentDetailsProps = {
   setSelectedColor: (v: string) => void; 
   selectedSize: string;
   setSelectedSize: (v: string) => void; 
+  filters: DynamicFilter[];
+  selectedFilters: {[key: string]: string};
+  setSelectedFilters:  (v: any) => void; 
 };
 
 export function PaymentDetails({
@@ -55,6 +59,7 @@ export function PaymentDetails({
   description,
   isInStock,
   count,
+  setCount,
   price,
   sizes,
   title,
@@ -65,9 +70,12 @@ export function PaymentDetails({
   selectedColor,
   setSelectedColor,
   selectedSize,
-  setSelectedSize
+  setSelectedSize,
+  filters,
+  selectedFilters,
+  setSelectedFilters
 }: PaymentDetailsProps) {
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
   const [email, setEmail] = useState("");
   const sizeOptions = sizes.map((s) => ({ label: s[(`title_${staticData.backendPostfix}` || "title") as keyof Size], value: s[(`title_${staticData.backendPostfix}` || "title") as keyof Size] }));
   const colorOptions = colors.map((c) => ({
@@ -77,16 +85,19 @@ export function PaymentDetails({
 
   const handleColorChange = (value: string) => {
     setSelectedColor(value);
-    setSelectedSize("");
   }
 
   const handleSizeChange = (value: string) => {
     setSelectedSize(value);
   }
 
+  const handleFilterChange = (filter_id: string, value: string) => {
+    setSelectedFilters({...selectedFilters, [filter_id]: value});
+  }
+
   const { setIsOpen, setTitle } = useCartContext();
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
-  
+
   return (
     <div className={"flex flex-col gap-x-6 md:flex-row"}>
       <div className={"overflow-hidden md:grow-0 md:basis-[65%]"}>
@@ -113,7 +124,7 @@ export function PaymentDetails({
           </div>
           <div className={"mb-9 flex items-center justify-between"}>
             <Price price={price} className={"text-[42px]"} />
-            <Counter count={count} />
+            <Counter count={count} setCount={setCount}/>
           </div>
           <p className={"mb-6 text-sm font-extralight"}>
             {
@@ -143,6 +154,24 @@ export function PaymentDetails({
                 className={{ label: "text-sm font-extralight" }}
               />
             )}
+            {filters.map(filter => (
+              filter.filter_field.length > 0 && (
+                <SelectInput
+                  key={filter.id}
+                  label={filter[`name_${localization}` as keyof DynamicFilter] as string}
+                  display={"Оберіть варіант"}
+                  options={filter.filter_field.map(field => ({
+                    label: toTitleCase(field[(`value_${staticData.backendPostfix}` || "value") as keyof DynamicFilterField] as string),
+                    value: field[(`value_${staticData.backendPostfix}` || "value") as keyof DynamicFilterField] as string,
+                  }))}
+                  value={selectedFilters[filter.id.toString()]||""}
+                  onChange={(v: string) => {
+                    handleFilterChange(filter.id.toString(), v);
+                  }}
+                  className={{ label: "text-sm font-extralight" }}
+                />
+              )
+            ))}
           </div>
           {isInStock && (
             <div className={"mb-8 flex gap-x-2"}>
