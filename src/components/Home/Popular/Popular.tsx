@@ -124,31 +124,3 @@ export default function PopularCard({ photo, category }: PopularCardProps) {
     </div>
   );
 }
-
-export const static_popular = [
-  {
-    id: 1,
-    photo: IMG1,
-    category: "pillows",
-  },
-  {
-    id: 2,
-    photo: IMG2,
-    category: "linens",
-  },
-  {
-    id: 3,
-    photo: IMG3,
-    category: "blankets",
-  },
-  {
-    id: 4,
-    photo: IMG4,
-    category: "sheets",
-  },
-  {
-    id: 5,
-    photo: IMG5,
-    category: "toppers",
-  },
-];
