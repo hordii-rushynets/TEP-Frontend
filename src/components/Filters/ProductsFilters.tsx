@@ -18,16 +18,17 @@ import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
 import { useLocalization } from "contexts/LocalizationContext";
 
-interface FilterField {
+interface DynamicFilterField {
   id: number;
   value: string;
   value_uk: string;
   value_en: string;
+  filter: number;
 }
 
-export interface Filter {
+export interface DynamicFilter {
   id: number;
-  filter_field: FilterField[];
+  filter_field: DynamicFilterField[];
   name: string;
   name_uk: string;
   name_en: string;
@@ -37,7 +38,7 @@ type PillowsFiltersProps = {
   count: number;
   sort: string;
   setSort: (string: string) => void;
-  filters: Filter[];
+  filters: DynamicFilter[];
   sizes: string[];
   filterParams: {[key: string]: string;};
   setFilterParams: Dispatch<SetStateAction<{[key: string]: string;}>>;
@@ -69,7 +70,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
   }, [size]);
 
   useEffect(()=>{
-    setFilterParams({...filterParams, ["filter_fields_value_en_mul"]: getTrueKeys(dynamicFilterFields)});
+    setFilterParams({...filterParams, ["filter_fields_id"]: getTrueKeys(dynamicFilterFields)});
   }, [dynamicFilterFields]);
 
   return (
@@ -108,7 +109,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
               size={"filter"}
               colorVariant={"filter"}
             >
-              {filter[(`name_${staticData.backendPostfix}` || "name") as keyof Filter].toString()}
+              {filter[(`name_${staticData.backendPostfix}` || "name") as keyof DynamicFilter].toString()}
             </Button>
             )}
             <Button
@@ -172,18 +173,18 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
               </DisclosureItem>
               {filters.map((filter) =>
               <DisclosureItem
-                trigger={filter[(`name_${staticData.backendPostfix}` || "name") as keyof Filter].toString()}
+                trigger={filter[(`name_${staticData.backendPostfix}` || "name") as keyof DynamicFilter].toString()}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[148px] gap-x-12 py-5"}>
                   {filter.filter_field.map((field) =>
                   <FilterCheckbox
-                    checked={dynamicFilterFields[field.value_en]}
+                    checked={dynamicFilterFields[field.id]}
                     onChange={() =>
-                      setDynamicFilterFields((v) => ({ ...v, [field.value_en]: !v[field.value_en] }))
+                      setDynamicFilterFields((v) => ({ ...v, [field.id]: !v[field.id] }))
                     }
-                    label={field[(`value_${staticData.backendPostfix}` || "value") as keyof FilterField]}
+                    label={field[(`value_${staticData.backendPostfix}` || "value") as keyof DynamicFilterField]}
                   />
                   )}
                 </div>
