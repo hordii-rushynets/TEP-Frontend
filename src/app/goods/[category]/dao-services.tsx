@@ -17,5 +17,10 @@ export class ProductDAOService {
       });
       return response;
     }
+
+    public async getPopularProducts(): Promise<Response> {
+      const response = await fetch(`${this.apiUrl}/api/store/products/?ordering=number_of_views`);
+      return response;
+    }
   }
   

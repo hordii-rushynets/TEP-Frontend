@@ -10,12 +10,15 @@ import { cn } from "utils/cn";
 import { Container, IconButton, Section, Title } from "common/ui";
 import BlanketIMG from "components/Goods/static/blanket.jpg";
 import ProductCard from "components/Home/ProductCard";
+import { ProductService } from "app/goods/[category]/services";
+import { useState, useEffect } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { useLocalization } from "contexts/LocalizationContext";
 
-export const products: ProductToShow[] = [
+export const static_products: ProductToShow[] = [
   {
     id: "1",
     image: BlanketIMG,
@@ -116,6 +119,14 @@ export function PopularGoods({
   title = "Популярні товари",
   className,
 }: PopularGoodsProps) {
+  const productService = new ProductService();
+  const { staticData } = useLocalization();
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+
+  useEffect(() => {
+    productService.getPopularProducts(staticData).then(data => {setProducts(data);})
+  }, []);
+
   return (
     <Section className={cn("mb-[72px] overflow-hidden", className)}>
       <Container>

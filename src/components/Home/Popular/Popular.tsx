@@ -6,10 +6,10 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { MainUrl } from "route-urls";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { translateCategory } from "utils/helpers";
 
 import { ImageSquare } from "common/ImageSquare";
 import { Button, Container, IconButton, Section, Title } from "common/ui";
+import { useCategories } from "contexts/CategoriesContext";
 
 import IMG1 from "./static/img1.jpg";
 import IMG2 from "./static/img2.jpg";
@@ -22,6 +22,8 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 export function Popular() {
+  const { categories } = useCategories();
+
   return (
     <Section className={"my-24 overflow-hidden"}>
       <Container>
@@ -57,9 +59,9 @@ export function Popular() {
               },
             }}
           >
-            {popular.map((p) => (
-              <SwiperSlide key={p.id}>
-                <PopularCard photo={p.photo} category={p.category} />
+            {categories.map((c) => (
+              <SwiperSlide key={c.id || 0}>
+                <PopularCard photo={c.image || ""} category={c.title || ""} />
               </SwiperSlide>
             ))}
             <IconButton
@@ -93,7 +95,7 @@ export function Popular() {
 
 type PopularCardProps = {
   category: string;
-  photo: StaticImageData;
+  photo: StaticImageData | string;
 };
 
 export default function PopularCard({ photo, category }: PopularCardProps) {
@@ -116,14 +118,14 @@ export default function PopularCard({ photo, category }: PopularCardProps) {
           }}
           colorVariant={"black"}
         >
-          {translateCategory(category)}
+          {category}
         </Button>
       </Link>
     </div>
   );
 }
 
-export const popular = [
+export const static_popular = [
   {
     id: 1,
     photo: IMG1,
