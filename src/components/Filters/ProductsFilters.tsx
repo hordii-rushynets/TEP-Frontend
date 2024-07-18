@@ -27,7 +27,7 @@ interface FilterField {
 
 export interface Filter {
   id: number;
-  filter_fields: FilterField[];
+  filter_field: FilterField[];
   name: string;
   name_uk: string;
   name_en: string;
@@ -177,7 +177,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[148px] gap-x-12 py-5"}>
-                  {filter.filter_fields.map((field) =>
+                  {filter.filter_field.map((field) =>
                   <FilterCheckbox
                     checked={dynamicFilterFields[field.value_en]}
                     onChange={() =>

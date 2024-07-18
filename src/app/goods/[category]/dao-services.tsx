@@ -1,5 +1,3 @@
-import getIp from 'ipify';
-
 export class ProductDAOService {
     private apiUrl: string;
   
@@ -8,12 +6,14 @@ export class ProductDAOService {
     }
   
     public async viewProduct(productId: string): Promise<Response> {
-      const realIp = await getIp();
-
-      const response = await fetch(`${this.apiUrl}/api/store/products/`, {
+      const response = await fetch(`${this.apiUrl}/api/store/products/increase_number_of_view/`, {
+        method: "POST",
         headers: { 
-          REAL_IP: realIp,
-        }
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "id": productId
+        })
       });
       return response;
     }
