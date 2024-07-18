@@ -18,6 +18,10 @@ export class CartService {
       return response;
     }
 
+    public async updateItemInCart(item_id: number, body: Object, authContext: any): Promise<void> {
+        await this.daoService.updateItemInCart(item_id, body, authContext);
+    }
+
     public async deleteItemFromCart(item_id: number, authContext: any): Promise<void> {
         await this.daoService.deleteItemFromCart(item_id, authContext);
     }

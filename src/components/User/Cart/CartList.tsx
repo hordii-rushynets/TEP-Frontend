@@ -10,9 +10,11 @@ export type CartListProps = {
   goods: CartItem[];
   hasButton?: boolean;
   trashAction: (item_id: number, authContext: any) => void;
+  cartRefresh: boolean,
+  setCartRefresh: (v: boolean) => void,
 };
 
-export function CartList({ goods, hasButton = true, trashAction }: CartListProps) {
+export function CartList({ goods, hasButton = true, trashAction, cartRefresh, setCartRefresh }: CartListProps) {
   return (
     <div
       className={
@@ -21,7 +23,7 @@ export function CartList({ goods, hasButton = true, trashAction }: CartListProps
     >
       <div className={"flex max-w-[704px] flex-1 flex-col gap-y-12"}>
         {goods.map((product) => (
-          <CartProductCard key={product.cart} product={product} trashAction={trashAction} />
+          <CartProductCard key={product.cart} product={product} trashAction={trashAction} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh}/>
         ))}
       </div>
       {hasButton && (

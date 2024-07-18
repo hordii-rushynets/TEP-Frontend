@@ -170,6 +170,10 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     return ids;
   };
 
+  const isAllFiltersChoosen = (): boolean => {
+    return filters.length === Object.keys(selectedFilters).length;
+  }
+
   return (
     <>
       <Section>
@@ -191,7 +195,11 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               isInCart={isInCart}
               isFavourite={isFavourite}
               onCartClick={() => {
-                if (!selectedColor || !selectedSize) {return}
+                if (!selectedColor || !selectedSize || !isAllFiltersChoosen()) {
+                  setText("Виберіть характеристики продукту");
+                  setIsOpen(true);
+                  return
+                }
                 cartService.putItemInCart({
                   color_id: colors.find(color => color[`title_${localization}` as keyof Color] === selectedColor)?.id,
                   size_id: sizes.find(size => size[`title_${localization}` as keyof Size] === selectedSize)?.id,
@@ -204,6 +212,10 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                     setText(staticData.auth.notifications.unautorized);
                     setIsOpen(true);
                     router.push('/sign-in');
+                  }
+                  if (response.ok) {
+                    setText("Продукт додано до кошику!");
+                    setIsOpen(true);
                   }
                 });
               }}

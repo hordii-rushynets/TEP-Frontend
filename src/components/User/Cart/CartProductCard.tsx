@@ -13,11 +13,15 @@ import { Color, ProductVariant, Size } from "app/goods/[category]/page";
 import { useLocalization } from "contexts/LocalizationContext";
 import { DynamicFilterField } from "components/Filters/ProductsFilters";
 import { useAuth } from "contexts/AuthContext";
+import { useEffect, useState } from "react";
+import { CartService } from "app/account/cart/services";
 
 export type OrderProductCardProps = {
   product: CartItem;
   hasThrash?: boolean;
   trashAction: (item_id: number, authContext: any) => void;
+  cartRefresh: boolean,
+  setCartRefresh: (v: boolean) => void,
   trashClassName?: string;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
@@ -26,10 +30,18 @@ export function CartProductCard({
   className,
   hasThrash = true,
   trashAction,
+  cartRefresh,
+  setCartRefresh,
   trashClassName,
 }: OrderProductCardProps) {
   const {localization} = useLocalization();
   const authContext = useAuth();
+  const cartService = new CartService();
+  const [quantity, setQuantity] = useState(product.quantity);
+
+  useEffect(() => {
+    cartService.updateItemInCart(product.id, {...product, "quantity": quantity}, authContext).then(() => {setCartRefresh(!cartRefresh);});
+  }, [quantity]);
 
   return (
     <div
@@ -66,7 +78,7 @@ export function CartProductCard({
       </div>
       <div className={"flex flex-col gap-y-8"}>
         <div className={"flex items-center justify-between gap-x-8"}>
-          <Counter count={product.quantity} setCount={(n: number) => {console.log(product.quantity); product.quantity = n}}/>
+          <Counter count={product.quantity} setCount={(n: number) => {setQuantity(n)}}/>
           <IconButton
             onClick={() => {
               trashAction(product.id, authContext);

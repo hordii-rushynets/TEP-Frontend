@@ -95,7 +95,6 @@ export function PaymentDetails({
     setSelectedFilters({...selectedFilters, [filter_id]: value});
   }
 
-  const { setIsOpen, setTitle } = useCartContext();
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
 
   return (
@@ -177,8 +176,6 @@ export function PaymentDetails({
             <div className={"mb-8 flex gap-x-2"}>
               <Button
                 onClick={() => {
-                  setTitle(title);
-                  setIsOpen(true);
                   onCartClick(id);
                 }}
                 colorVariant={"black"}

@@ -18,10 +18,11 @@ export function Cart() {
   const cartService = new CartService();
   const authContext = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartRefresh, setCartRefresh] = useState(false);
 
   useEffect(() => {
     cartService.getCart(authContext).then(items => setCartItems(items));
-  }, []);
+  }, [cartRefresh]);
 
   if (!cartItems.length) {
     return (
@@ -94,7 +95,7 @@ export function Cart() {
             isLoading={true}
           />
 
-          <CartList goods={cartItems} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext); cartService.getCart(authContext).then(items => setCartItems(items));}}/>
+          <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}}/>
           <ButtonBase
             className={{
               button:
