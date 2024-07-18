@@ -21,6 +21,7 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 import { getProductInfo } from "daos/productDAO";
 import { getUniqueColors, getUniqueSizes, findMatchingVariant } from "services/productServices";
+import { ProductService } from "../services";
 
 export type Feedback = {
   title: string;
@@ -102,6 +103,8 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [selectedSize, setSelectedSize] = useState<string>("");
 
   useEffect(() => {
+    const productService = new ProductService();
+    
     getProductInfo(params.product)
     .then(response => {
       if (response.status === 200) {
@@ -112,6 +115,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     .then(data => {
       setProductVariants(data.product_variants);
       setProduct(data);
+      productService.viewProduct(data.id);
       if (!searchParams.article) {
         router.push(`${pathname}?article=${data.product_variants[0].sku}`);
       }
