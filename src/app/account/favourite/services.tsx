@@ -36,4 +36,8 @@ export class FavouriteService {
     public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<void> {
       await this.daoService.markFavourite(product_id, is_favourite, authContext, dontAuthAction);
     }
+
+    public async deleteAllFavourite(authContext: any, dontAuthAction: () => void): Promise<void> {
+      await this.daoService.deleteAllFavourite(authContext, dontAuthAction);
+    }
 }

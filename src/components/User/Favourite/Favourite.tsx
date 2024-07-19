@@ -76,6 +76,9 @@ export function Favourite() {
               button:
                 "mb-6 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
             }}
+            onClick={()=> {
+              favouriteService.deleteAllFavourite(authContext, ()=>{}).then(() => {setRefresh(!refresh)})
+            }}
           >
             Видалити всі товари
           </ButtonBase>

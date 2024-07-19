@@ -49,5 +49,22 @@ export class FavouriteDAOService {
         console.log(error);
       }
     }
+
+    public async deleteAllFavourite(authContext: any, dontAuthAction: () => void): Promise<void> {
+        try {
+          const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/favorite/remove/`, {
+              method: "DELETE",
+            }, authContext);
+          if (response.status === 401) {
+            dontAuthAction();
+          }
+          if (!response.ok) {
+            throw new Error("Failed to fetch favourite products");
+          }
+    
+        } catch (error) {
+          console.log(error);
+        }
+      }
   }
   

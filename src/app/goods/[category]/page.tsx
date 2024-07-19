@@ -246,9 +246,14 @@ export default function CategoryPage({
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
 
-    await fetchWithAuth(`${APIurl}/api/store/products/?${urlParams}`, {}, authContext)
+    await fetchWithAuth(`${APIurl}/api/store/products/?${urlParams}`, {}, authContext).then(response => {
+      if (response.status === 401) {
+        return fetch(`${APIurl}/api/store/products/?${urlParams}`)
+      }
+      return response
+    })
     .then(response => {
-      if (response.status === 200) {
+      if (response?.status === 200) {
         return response.json();
       }
       return
