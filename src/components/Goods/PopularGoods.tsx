@@ -10,103 +10,13 @@ import { cn } from "utils/cn";
 import { Container, IconButton, Section, Title } from "common/ui";
 import BlanketIMG from "components/Goods/static/blanket.jpg";
 import ProductCard from "components/Home/ProductCard";
+import { ProductService } from "app/goods/[category]/services";
+import { useState, useEffect } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
-
-export const products: ProductToShow[] = [
-  {
-    id: "1",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "2",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "3",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "4",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "5",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "6",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "7",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "8",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "9",
-    image: BlanketIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-];
+import { useLocalization } from "contexts/LocalizationContext";
 
 type PopularGoodsProps = {
   title?: string;
@@ -116,6 +26,14 @@ export function PopularGoods({
   title = "Популярні товари",
   className,
 }: PopularGoodsProps) {
+  const productService = new ProductService();
+  const { staticData } = useLocalization();
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+
+  useEffect(() => {
+    productService.getPopularProducts(staticData).then(data => {setProducts(data);})
+  }, []);
+
   return (
     <Section className={cn("mb-[72px] overflow-hidden", className)}>
       <Container>

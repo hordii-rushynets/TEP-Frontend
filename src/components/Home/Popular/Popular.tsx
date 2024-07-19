@@ -6,10 +6,10 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { MainUrl } from "route-urls";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { translateCategory } from "utils/helpers";
 
 import { ImageSquare } from "common/ImageSquare";
 import { Button, Container, IconButton, Section, Title } from "common/ui";
+import { useCategories } from "contexts/CategoriesContext";
 
 import IMG1 from "./static/img1.jpg";
 import IMG2 from "./static/img2.jpg";
@@ -22,6 +22,8 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 export function Popular() {
+  const { categories } = useCategories();
+
   return (
     <Section className={"my-24 overflow-hidden"}>
       <Container>
@@ -57,9 +59,9 @@ export function Popular() {
               },
             }}
           >
-            {popular.map((p) => (
-              <SwiperSlide key={p.id}>
-                <PopularCard photo={p.photo} category={p.category} />
+            {categories.map((c) => (
+              <SwiperSlide key={c.id || 0}>
+                <PopularCard photo={c.image || ""} category={c.title || ""} slug={c.slug || ""} />
               </SwiperSlide>
             ))}
             <IconButton
@@ -93,10 +95,11 @@ export function Popular() {
 
 type PopularCardProps = {
   category: string;
-  photo: StaticImageData;
+  photo: StaticImageData | string;
+  slug: string;
 };
 
-export default function PopularCard({ photo, category }: PopularCardProps) {
+export default function PopularCard({ photo, category, slug }: PopularCardProps) {
   return (
     <div
       className={
@@ -109,44 +112,16 @@ export default function PopularCard({ photo, category }: PopularCardProps) {
           image: "transition-transform duration-300 group-hover:scale-105",
         }}
       />
-      <Link href={`${MainUrl.getGoods()}/${category}`}>
+      <Link href={`${MainUrl.getGoods()}/${slug}`}>
         <Button
           className={{
             button: "absolute left-1/2 top-[72%] z-10 -translate-x-1/2",
           }}
           colorVariant={"black"}
         >
-          {translateCategory(category)}
+          {category}
         </Button>
       </Link>
     </div>
   );
 }
-
-export const popular = [
-  {
-    id: 1,
-    photo: IMG1,
-    category: "pillows",
-  },
-  {
-    id: 2,
-    photo: IMG2,
-    category: "linens",
-  },
-  {
-    id: 3,
-    photo: IMG3,
-    category: "blankets",
-  },
-  {
-    id: 4,
-    photo: IMG4,
-    category: "sheets",
-  },
-  {
-    id: 5,
-    photo: IMG5,
-    category: "toppers",
-  },
-];
