@@ -8,6 +8,7 @@ import PillowIMG from "./static/pillow.jpg";
 
 const pillows = [...Array(9)].map((_, Idx) => ({
   id: (Idx + 1).toString(),
+  slug: "",
   title: "Dream",
   category_title: "Ковдра",
   category_slug: "sheets",

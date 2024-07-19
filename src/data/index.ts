@@ -8,6 +8,7 @@ import IMG4 from "./static/img4.jpg";
 export const products: ProductToShow[] = [
   {
     id: "1",
+    slug: "",
     image: IMG1,
     article: "903.048.89",
     category_title: "Ковдра",
@@ -27,6 +28,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "2",
+    slug: "",
     image: IMG2,
     article: "923.248.54",
     category_title: "Ковдра",
@@ -46,6 +48,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "3",
+    slug: "",
     image: IMG3,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -65,6 +68,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "4",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -84,6 +88,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "5",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -103,6 +108,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "6",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -122,6 +128,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "7",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -141,6 +148,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "8",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",
@@ -159,6 +167,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "9",
+    slug: "",
     image: IMG4,
     article: "723.238.51",
     category_title: "Ковдра",

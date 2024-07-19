@@ -47,6 +47,7 @@ export const orders: OrderType[] = [
     products: [
       {
         id: "1",
+        slug: "",
         image: IMG1,
         article: "903.048.89",
         category_title: "Ковдра",
@@ -61,6 +62,7 @@ export const orders: OrderType[] = [
       },
       {
         id: "2",
+        slug: "",
         image: IMG2,
         article: "923.248.54",
         category_title: "Ковдра",
@@ -75,6 +77,7 @@ export const orders: OrderType[] = [
       },
       {
         id: "3",
+        slug: "",
         image: IMG3,
         article: "723.238.51",
         category_title: "Ковдра",
@@ -100,6 +103,7 @@ export const orders: OrderType[] = [
     products: [
       {
         id: "1",
+        slug: "",
         image: IMG1,
         article: "903.048.89",
         category_title: "Ковдра",
@@ -125,6 +129,7 @@ export const orders: OrderType[] = [
     products: [
       {
         id: "1",
+        slug: "",
         image: IMG1,
         article: "903.048.89",
         category_title: "Ковдра",
@@ -139,6 +144,7 @@ export const orders: OrderType[] = [
       },
       {
         id: "2",
+        slug: "",
         image: IMG2,
         article: "923.248.54",
         category_title: "Ковдра",

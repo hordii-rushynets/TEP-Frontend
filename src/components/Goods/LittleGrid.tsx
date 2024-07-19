@@ -40,6 +40,7 @@ export function LittleGrid({
             <Tip
               product={{
                 id: "1",
+                slug: "",
                 category_slug: "pillows",
                 category_title: "Pillows",
                 title: "Velure",
