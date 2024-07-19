@@ -18,6 +18,7 @@ import "swiper/css/scrollbar";
 export const products: ProductToShow[] = [
   {
     id: "1",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -28,6 +29,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "2",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -38,6 +40,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "3",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -48,6 +51,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "4",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -58,6 +62,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "5",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -68,6 +73,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "6",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -78,6 +84,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "7",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -88,6 +95,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "8",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -98,6 +106,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "9",
+    slug: "",
     image: BlanketIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",

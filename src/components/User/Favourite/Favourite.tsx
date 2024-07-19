@@ -1,3 +1,5 @@
+"use client"
+
 import { ProductToShow } from "app/goods/[category]/page";
 import Link from "next/link";
 import { MainUrl } from "route-urls";
@@ -6,113 +8,22 @@ import { Button, ButtonBase, Container, Section, Title } from "common/ui";
 import { Price } from "components/Goods/Product/Price";
 import ProductCard from "components/Home/ProductCard";
 
-import IMG1 from "./static/img1.jpg";
-import IMG2 from "./static/img2.jpg";
-import IMG3 from "./static/img3.jpg";
-import IMG4 from "./static/img4.jpg";
-import IMG5 from "./static/img5.jpg";
-import IMG6 from "./static/img6.jpg";
-
-const favourite_goods: ProductToShow[] = [
-  {
-    id: "1",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG1,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "2",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG2,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "3",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG3,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "4",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG4,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "5",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG5,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "6",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    image: IMG6,
-    price: 1299,
-    description: "",
-    title: "ВОРЕЛЬД",
-    article: "",
-    color: "",
-    isInStock: true,
-    size: "",
-    isFavourite: true,
-    number_of_views: 1,
-    date: ""
-  },
-];
+import { useEffect, useState } from "react";
+import { FavouriteService } from "app/account/favourite/services";
+import { useLocalization } from "contexts/LocalizationContext";
+import { useAuth } from "contexts/AuthContext";
 
 export function Favourite() {
+  const [favourite_goods, setFavouriteGoods] = useState<ProductToShow[]>([]);
+  const favouriteService = new FavouriteService();
+  const { staticData } = useLocalization();
+  const authContext = useAuth();
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    favouriteService.getFavourites(authContext, staticData, () => {}).then(products => setFavouriteGoods(products));
+  }, [refresh]);
+
   if (!favourite_goods.length) {
     return (
       <Section>
@@ -157,7 +68,7 @@ export function Favourite() {
             }
           >
             {favourite_goods.map((favourite) => {
-              return <ProductCard key={favourite.id} product={favourite} />;
+              return <ProductCard key={favourite.id} product={favourite} refreshFav={refresh} setRefreshFav={setRefresh}/>;
             })}
           </div>
           <ButtonBase
