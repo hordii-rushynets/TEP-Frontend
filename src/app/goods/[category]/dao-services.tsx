@@ -19,7 +19,7 @@ export class ProductDAOService {
     }
 
     public async getPopularProducts(): Promise<Response> {
-      const response = await fetch(`${this.apiUrl}/api/store/products/?ordering=number_of_views`);
+      const response = await fetch(`${this.apiUrl}/api/store/products/?ordering=-number_of_add_to_cart,-number_of_views`);
       return response;
     }
   }
