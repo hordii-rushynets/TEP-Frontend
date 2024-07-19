@@ -92,6 +92,7 @@ export function Recomendations() {
 export const products: ProductToShow[] = [
   {
     id: "1",
+    slug: "",
     image: IMG1,
     title: "VÅRELD ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -102,6 +103,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "2",
+    slug: "",
     image: IMG2,
     title: "INDIRA ІНДІРА",
     category_title: "Ковдра",
@@ -112,6 +114,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "3",
+    slug: "",
     image: IMG3,
     title: "NATTJASMIN НАТТЯСМІН",
     category_title: "Ковдра",
@@ -122,6 +125,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "4",
+    slug: "",
     image: IMG4,
     title: "GULVED ГУЛЬВЕД",
     category_title: "Ковдра",
@@ -132,6 +136,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "5",
+    slug: "",
     image: IMG5,
     title: "VÅRELD ВОРЕЛЬД",
     category_title: "Ковдра",

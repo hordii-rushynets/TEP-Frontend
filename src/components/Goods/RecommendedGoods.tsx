@@ -99,6 +99,7 @@ export function RecommendedGoods({
 export const products: ProductToShow[] = [
   {
     id: "1",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -109,6 +110,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "2",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -119,6 +121,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "3",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -129,6 +132,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "4",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -139,6 +143,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "5",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -149,6 +154,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "6",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -159,6 +165,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "7",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -169,6 +176,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "8",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",
@@ -179,6 +187,7 @@ export const products: ProductToShow[] = [
   },
   {
     id: "9",
+    slug: "",
     image: BlankedIMG,
     title: "ВОРЕЛЬД",
     category_title: "Ковдра",

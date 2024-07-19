@@ -132,6 +132,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
   );
 }
 
+
 type ProductCardProps = {
   product: ProductToShow;
 };

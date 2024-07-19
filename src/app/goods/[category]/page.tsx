@@ -16,15 +16,9 @@ import { StaticImageData } from "next/image";
 import { useLocalization } from "contexts/LocalizationContext";
 import { DynamicFilterField } from "components/Filters/ProductsFilters";
 
-import { useEffect, useState } from "react"
-
-const blankets = [...Array(15)].map((_, Idx) => ({
-  id: (Idx + 1).toString(),
-  title: "Dream",
-  category: "blankets",
-  image: BlanketIMG,
-  price: 1199,
-}));
+import { useEffect, useState } from "react";
+import { fetchWithAuth } from "utils/helpers";
+import { useAuth } from "contexts/AuthContext";
 
 const randomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -167,10 +161,12 @@ export interface ProductWithVariant {
   number_of_views: number;
   last_modified: string;
   product_variants: ProductVariant[];
+  is_favorite: boolean;
 }
 
 export type ProductToShow = {
   id: string;
+  slug: string;
   article?: string;
   color?: string;
   isInStock?: boolean;
@@ -247,12 +243,19 @@ export default function CategoryPage({
     setProductsToShow(newProducts);
   }, [sort]);
 
+  const authContext = useAuth();
+
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
 
-    await fetch(`${APIurl}/api/store/products/?${urlParams}`)
+    await fetchWithAuth(`${APIurl}/api/store/products/?${urlParams}`, {}, authContext).then(response => {
+      if (response.status === 401) {
+        return fetch(`${APIurl}/api/store/products/?${urlParams}`)
+      }
+      return response
+    })
     .then(response => {
-      if (response.status === 200) {
+      if (response?.status === 200) {
         return response.json();
       }
       return
@@ -262,9 +265,9 @@ export default function CategoryPage({
       if (data) {
         let productsToShow = data.map((product:any) => {
           let productVariant = product.product_variants[0];
-
           return {
-            id: product.slug,
+            id: product.id,
+            slug: product.slug,
             title: product[`title_${staticData.backendPostfix}` || "title"],
             category_slug: product.category.slug,
             category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
@@ -273,7 +276,8 @@ export default function CategoryPage({
             isSale: productVariant.promotion,
             salePrice: productVariant.promo_price,
             number_of_views: product.number_of_views,
-            date: new Date(product.last_modified)
+            date: new Date(product.last_modified),
+            isFavourite: product.is_favorite
           }
         });
         setProductsToShow(productsToShow);

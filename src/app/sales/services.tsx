@@ -15,6 +15,7 @@ export class ProductForSaleService {
             const variantOnPromotion : ProductVariant | undefined = product.product_variants.find((variant) => variant.promotion);
             return {
                 id: product.slug,
+                slug: product.slug,
                 title: product[(`title_${localization}` || "title") as keyof ProductWithVariant].toString(),
                 category_slug: product.category.slug,
                 category_title: product.category[(`title_${localization}` || "title") as keyof Category].toString(),
