@@ -14,7 +14,7 @@ export class ProductForSaleService {
         return (await this.daoService.getProductsForSale(category)).map((product) => {
             const variantOnPromotion : ProductVariant | undefined = product.product_variants.find((variant) => variant.promotion);
             return {
-                id: product.slug,
+                id: product.id.toString(),
                 slug: product.slug,
                 title: product[(`title_${localization}` || "title") as keyof ProductWithVariant].toString(),
                 category_slug: product.category.slug,

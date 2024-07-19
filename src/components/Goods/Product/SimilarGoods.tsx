@@ -38,20 +38,21 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
     })
     .then(data => {
       if (data) {
-        let productsToShow : ProductToShow[] = data.map((productWithVar:any) => {
-          let productVariant = productWithVar.product_variants[0];
-
+        let productsToShow : ProductToShow[] = data.map((product:any) => {
+          let productVariant = product.product_variants[0];
           return {
-            id: productWithVar.slug,
-            title: productWithVar[`title_${staticData.backendPostfix}` || "title"],
-            category_slug: productWithVar.category.slug,
-            category_title: productWithVar.category[`title_${staticData.backendPostfix}` || "title"],
+            id: product.id,
+            slug: product.slug,
+            title: product[`title_${staticData.backendPostfix}` || "title"],
+            category_slug: product.category.slug,
+            category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
             image: productVariant.main_image || "",
             price: productVariant.default_price,
             isSale: productVariant.promotion,
             salePrice: productVariant.promo_price,
-            number_of_views: productWithVar.number_of_views,
-            date: new Date(productWithVar.last_modified)
+            number_of_views: product.number_of_views,
+            date: new Date(product.last_modified),
+            isFavourite: product.is_favorite
           }
         });
 
@@ -60,7 +61,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
         setProducts(productsToShow);
       }
     })
-  }, []);
+  }, [product]);
 
   return (
     <Section className={"mb-24"}>
