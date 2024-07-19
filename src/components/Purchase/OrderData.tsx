@@ -1,14 +1,27 @@
+"use client"
+
 import Link from "next/link";
 import { PurchaseUrl } from "route-urls";
 
 import { Button, ButtonBase, Container, Section, Title } from "common/ui";
 import { CartList } from "components/User/Cart/CartList";
 import { TotalPriceBlock } from "components/User/Cart/TotalPriceBlock";
-import { orders } from "components/User/OrderHistory/OrderHistory";
 
-const goods = orders[0].products;
+import { CartService } from "app/account/cart/services";
+import { CartItem } from "app/account/cart/interfaces";
+import { useAuth } from "contexts/AuthContext";
+import { useState, useEffect } from "react";
 
 export function OrderData() {
+  const cartService = new CartService();
+  const authContext = useAuth();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartRefresh, setCartRefresh] = useState(false);
+
+  useEffect(() => {
+    cartService.getCart(authContext).then(items => setCartItems(items));
+  }, [cartRefresh]);
+
   return (
     <Section>
       <Container>
@@ -16,9 +29,9 @@ export function OrderData() {
           <Title size={"2xl"} className={"mb-11"}>
             Дані замовлення
           </Title>
-          <TotalPriceBlock hasTotalPrice={false} goods={goods} />
+          <TotalPriceBlock hasTotalPrice={false} goods={cartItems} />
 
-          <CartList goods={goods} hasButton={false} />
+          <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}} hasButton={false} />
           <ButtonBase
             className={{
               button:
@@ -28,7 +41,7 @@ export function OrderData() {
             Видалити всі товари
           </ButtonBase>
           <div>
-            <TotalPriceBlock goods={goods} />
+            <TotalPriceBlock goods={cartItems} />
             <Link href={PurchaseUrl.getPayment()} className={"sm:inline-block"}>
               <Button fullWidth colorVariant={"black"} size={"super-large"}>
                 Зберегти та продовжити

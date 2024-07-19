@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { cn } from "utils/cn";
 
@@ -9,14 +9,20 @@ import { ButtonBase } from "common/ui";
 export type CounterProps = {
   count?: number;
   inactive?: boolean;
+  setCount?: (v: number) => void;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function Counter({
   count = 1,
   inactive = false,
+  setCount = () => {},
   className,
 }: CounterProps) {
   const [num, setNum] = useState(count);
+
+  useEffect(() => {
+    setCount(num);
+  }, [num]);
 
   return (
     <div
@@ -40,7 +46,7 @@ export function Counter({
         className={{
           button: "text-tep_gray-700 transition-colors hover:text-black",
         }}
-        onClick={() => setNum((prev) => (prev !== 0 ? prev - 1 : 0))}
+        onClick={() => setNum((prev) => (prev !== 1 ? prev - 1 : 1))}
       >
         <FiMinus className={"stroke-[3px]"} />
       </ButtonBase>

@@ -14,6 +14,7 @@ import BlanketIMG from "components/Goods/static/blanket.jpg";
 import { Category, DefaultCategory } from "contexts/CategoriesContext"
 import { StaticImageData } from "next/image";
 import { useLocalization } from "contexts/LocalizationContext";
+import { DynamicFilterField } from "components/Filters/ProductsFilters";
 
 import { useEffect, useState } from "react";
 import { fetchWithAuth } from "utils/helpers";
@@ -86,7 +87,7 @@ export interface Color {
   title_uk: string;
 }
 
-interface Material {
+export interface Material {
   id: number;
   slug: string;
   title: string;
@@ -143,6 +144,7 @@ export interface ProductVariant {
   wholesale_price: number;
   variant_images: VariantImages[];
   variant_info: VariantInfo;
+  filter_field: DynamicFilterField[];
 }
 
 export interface ProductWithVariant {
@@ -212,7 +214,7 @@ export default function CategoryPage({
         image: data.image,
         description: data[`description_${staticData.backendPostfix}` || "description"],
         title: data[`title_${staticData.backendPostfix}` || "title"],
-        filters: data.filter
+        filter: data.filter
       });
 
       setFilterParams({...filterParams, ["category_title"]: data.title});
@@ -303,7 +305,7 @@ export default function CategoryPage({
         count={productsWithVariants.length} 
         sort={sort} 
         setSort={setSort} 
-        filters={category.filters}
+        filters={category.filter}
         sizes={getUniqueSizes(productsWithVariants)}
         setFilterParams={setFilterParams}
         filterParams={filterParams}
