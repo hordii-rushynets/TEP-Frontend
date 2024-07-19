@@ -23,6 +23,7 @@ export default function Design() {
           <Tip
             product={{
               id: "1",
+              slug: "",
               category_slug: "pillows",
               category_title: "Pillows",
               title: "Velure",
@@ -36,6 +37,7 @@ export default function Design() {
           <Tip
             product={{
               id: "1",
+              slug: "",
               category_slug: "pillows",
               category_title: "Pillows",
               title: "Velure",
@@ -49,6 +51,7 @@ export default function Design() {
           <Tip
             product={{
               id: "1",
+              slug: "",
               category_slug: "pillows",
               category_title: "Pillows",
               title: "Velure",
