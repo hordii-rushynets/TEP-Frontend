@@ -15,12 +15,16 @@ import PinkIMG3 from "components/Goods/Product/static/pinkIMG3.jpg";
 import { RecommendedGoods } from "components/Goods/RecommendedGoods";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useNotificationContext } from "contexts/NotificationContext";
 import { ProductVariant, SearchParams, Color, ProductWithVariant, Size } from "../page";
 import { VariantInfoDefault } from "../defaultValues"
 import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 import { getProductInfo } from "daos/productDAO";
-import { getUniqueColors, getUniqueSizes, findMatchingVariant } from "services/productServices";
+import { getUniqueColors, getUniqueSizes, findMatchingVariant, getUniqueFilters } from "services/productServices";
+import { DynamicFilter, DynamicFilterField } from "components/Filters/ProductsFilters";
+import { CartService } from "app/account/cart/services";
+import { useAuth } from "contexts/AuthContext";
 import { ProductService } from "../services";
 
 export type Feedback = {
@@ -82,8 +86,6 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     article,
     category,
     feedbacks,
-    isInStock,
-    count,
     id,
     price,
     title,
@@ -91,16 +93,24 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     isInCart,
   } = product;
 
+  const cartService = new CartService();
+  const authContext = useAuth();
+
   const router = useRouter();
+  const { setText, setIsOpen } = useNotificationContext();
   const pathname = usePathname();
   const [productVariants, setProductVariants] = useState<ProductVariant[]>([]);
   const [productWithVariant, setProduct] = useState<ProductWithVariant>();
   const [currentVariant, setCurrentVariant] = useState<ProductVariant>();
   const [colors, setColors] = useState<Color[]>([{id: "", slug: "", title: "", title_en: "", title_uk: "", hex: ""} as Color]);
   const [sizes, setSizes] = useState<Size[]>([{id: "", slug: "", title: "", title_en: "", title_uk: ""} as Size]);
-  const { staticData } = useLocalization();
+  const [filters, setFilters] = useState<DynamicFilter[]>([]);
+  const { localization, staticData } = useLocalization();
   const [selectedColor, setSelectedColor] = useState<string>(""); 
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedFilters, setSelectedFilters] = useState<{[key: string]: string}>({});
+  const [isCurrVariantFound, setIsCurrVariantFound] = useState(false); 
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     const productService = new ProductService();
@@ -123,21 +133,49 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   }, []);
 
   const setCurrVariant = () => {
-    let currVar = findMatchingVariant(selectedColor, selectedSize, productVariants, staticData, searchParams);
+    let currVar = findMatchingVariant(selectedColor, selectedSize, selectedFilters, productVariants, staticData, searchParams);
     if (currVar) {
       setCurrentVariant(currVar);
+      setIsCurrVariantFound(true);
       router.push(`${pathname}?${new URLSearchParams({...searchParams, article: (currVar?.sku || "")}).toString()}`);
     }
+    else {
+      setIsCurrVariantFound(false);
+    }
   }
+
+  useEffect(setCurrVariant, [selectedColor, selectedSize, selectedFilters]);
 
   useEffect(() => {
     setCurrVariant();
     const uniqueColors = getUniqueColors(productVariants);
     uniqueColors.length !== 0 && setColors(uniqueColors);
-    const uniqueSizes = getUniqueSizes(productVariants, staticData, selectedColor);
+    const uniqueSizes = getUniqueSizes(productVariants);
     uniqueSizes.length !== 0 && setSizes(uniqueSizes);
+    const uniqueFilters = getUniqueFilters(productWithVariant?.category.filter || [], productVariants);
+    uniqueFilters.length !== 0 && setFilters(uniqueFilters);
 
-  }, [productVariants, selectedColor, selectedSize, searchParams.article]);
+  }, [productVariants, searchParams.article]);
+
+  const getFilterFieldIds = () => {
+    const ids: number[] = [];
+
+    filters.forEach(filter => {
+      const selectedValue = selectedFilters[filter.id.toString()];
+      if (selectedValue) {
+        const matchingField = filter.filter_field.find(field => field[`value_${localization}` as keyof DynamicFilterField] === selectedValue);
+        if (matchingField) {
+          ids.push(matchingField.id);
+        }
+      }
+    });
+
+    return ids;
+  };
+
+  const isAllFiltersChoosen = (): boolean => {
+    return filters.length === Object.keys(selectedFilters).length;
+  }
 
   return (
     <>
@@ -145,26 +183,54 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
         <Container>
           <div>
             <PaymentDetails
-              id={id}
+              id={productWithVariant?.id.toString() || ""}
               article={searchParams.article?.toString() || ""}
               category={productWithVariant?.category[(`title_${staticData.backendPostfix}` || "title") as keyof Category].toString() || ""}
               colors={colors}
               description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
-              isInStock={isInStock}
+              isInStock={currentVariant?.count && isCurrVariantFound ? true : false}
               price={currentVariant?.default_price || 0}
               sizes={sizes}
               title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
-              count={currentVariant?.count || 0}
+              count={count}
+              setCount={setCount}
               images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
               isInCart={isInCart}
               isFavourite={isFavourite}
-              onCartClick={() => {}}
+              onCartClick={() => {
+                if (!selectedColor || !selectedSize || !isAllFiltersChoosen()) {
+                  setText("Виберіть характеристики продукту");
+                  setIsOpen(true);
+                  return
+                }
+                cartService.putItemInCart({
+                  color_id: colors.find(color => color[`title_${localization}` as keyof Color] === selectedColor)?.id,
+                  size_id: sizes.find(size => size[`title_${localization}` as keyof Size] === selectedSize)?.id,
+                  material_id: currentVariant?.materials[0].id,
+                  filter_field_ids: getFilterFieldIds(),
+                  product_variants_id: currentVariant?.id,
+                  quantity: count,
+                }, authContext).then(response => {
+                  if (response.status === 401) {
+                    setText(staticData.auth.notifications.unautorized);
+                    setIsOpen(true);
+                    router.push('/sign-in');
+                  }
+                  if (response.ok) {
+                    setText("Продукт додано до кошику!");
+                    setIsOpen(true);
+                  }
+                });
+              }}
               onFavouriteClick={() => {}}
               searchParams={searchParams}
               selectedColor={selectedColor}
               setSelectedColor={setSelectedColor}
               selectedSize={selectedSize}
               setSelectedSize={setSelectedSize}
+              filters={filters}
+              selectedFilters={selectedFilters || {}}
+              setSelectedFilters={setSelectedFilters}
             />
           </div>
         </Container>

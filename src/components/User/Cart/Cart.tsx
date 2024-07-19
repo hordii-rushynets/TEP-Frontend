@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link";
 import { AuthUrl, MainUrl, PurchaseUrl } from "route-urls";
+import { useState, useEffect } from "react";
 
 import { Button, ButtonBase, Container, Section, Title } from "common/ui";
 import { orders } from "components/User/OrderHistory/OrderHistory";
@@ -7,17 +10,28 @@ import { orders } from "components/User/OrderHistory/OrderHistory";
 import { CartList } from "./CartList";
 import { TotalPriceBlock } from "./TotalPriceBlock";
 
-const goods = orders[0].products;
+import { CartService } from "app/account/cart/services";
+import { CartItem } from "app/account/cart/interfaces";
+import { useAuth } from "contexts/AuthContext";
 
 export function Cart() {
-  if (!goods.length) {
+  const cartService = new CartService();
+  const authContext = useAuth();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartRefresh, setCartRefresh] = useState(false);
+
+  useEffect(() => {
+    cartService.getCart(authContext).then(items => setCartItems(items));
+  }, [cartRefresh]);
+
+  if (!cartItems.length) {
     return (
       <Section>
         <Container>
           <div className={"mt-8 md:mt-12"}>
             <Title className={"mb-2 text-3xl md:mb-1.5"}>Кошик</Title>
             <p className={"text-sm lg:font-extralight"}>
-              {goods.length} товарів у кошику
+              {cartItems.length} товарів у кошику
             </p>
             <div
               className={
@@ -72,16 +86,16 @@ export function Cart() {
           <div className={"mb-12"}>
             <Title className={"mb-2 text-3xl md:mb-1.5"}>Кошик</Title>
             <p className={"text-sm lg:font-extralight"}>
-              {goods.length} товарів у кошику
+              {cartItems.length} товарів у кошику
             </p>
           </div>
           <TotalPriceBlock
             hasTotalPrice={false}
-            goods={goods}
+            goods={cartItems}
             isLoading={true}
           />
 
-          <CartList goods={goods} />
+          <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}}/>
           <ButtonBase
             className={{
               button:
@@ -91,7 +105,7 @@ export function Cart() {
             Видалити всі товари
           </ButtonBase>
           <div className={"flex flex-col"}>
-            <TotalPriceBlock goods={goods} isLoading={true} />
+            <TotalPriceBlock goods={cartItems} isLoading={true} />
             <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
               <Button colorVariant={"black"} size={"super-large"}>
                 Оформити

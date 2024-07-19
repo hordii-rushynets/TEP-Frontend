@@ -3,15 +3,18 @@ import { PurchaseUrl } from "route-urls";
 
 import { Button } from "common/ui";
 
-import { OrderedProduct } from "../OrderHistory/OrderHistory";
+import { CartItem } from "app/account/cart/interfaces";
 import { CartProductCard } from "./CartProductCard";
 
 export type CartListProps = {
-  goods: OrderedProduct[];
+  goods: CartItem[];
   hasButton?: boolean;
+  trashAction: (item_id: number, authContext: any) => void;
+  cartRefresh: boolean,
+  setCartRefresh: (v: boolean) => void,
 };
 
-export function CartList({ goods, hasButton = true }: CartListProps) {
+export function CartList({ goods, hasButton = true, trashAction, cartRefresh, setCartRefresh }: CartListProps) {
   return (
     <div
       className={
@@ -20,7 +23,7 @@ export function CartList({ goods, hasButton = true }: CartListProps) {
     >
       <div className={"flex max-w-[704px] flex-1 flex-col gap-y-12"}>
         {goods.map((product) => (
-          <CartProductCard key={product.id} product={product} />
+          <CartProductCard key={product.cart} product={product} trashAction={trashAction} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh}/>
         ))}
       </div>
       {hasButton && (
