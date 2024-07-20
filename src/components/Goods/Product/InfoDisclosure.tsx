@@ -9,7 +9,7 @@ import { cn } from "utils/cn";
 import { Disclosure, DisclosureItem } from "common/Disclosure";
 import { Title } from "common/ui";
 import { FilterDialog } from "components/Filters/FilterDialog";
-import { VariantInfo } from "app/goods/[category]/page";
+import { DimensionalGrid, DimensionalGridSize, VariantInfo } from "app/goods/[category]/page";
 
 import { useLocalization } from "contexts/LocalizationContext";
 
@@ -19,9 +19,10 @@ type InfoDisclosure = {
   feedbacks: Feedback[];
   info: VariantInfo;
   description: string;
+  dimensionalGrid: DimensionalGrid[];
 };
 
-export function InfoDisclosure({ feedbacks, info, description }: InfoDisclosure) {
+export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }: InfoDisclosure) {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isSizeOpen, setIsSizeOpen] = useState(false);
 
@@ -127,98 +128,31 @@ export function InfoDisclosure({ feedbacks, info, description }: InfoDisclosure)
       <FilterDialog open={isSizeOpen} onClose={() => setIsSizeOpen(false)}>
         <InfoSkeleton title={"Розмірна сітка"}>
           <Disclosure>
-            <div className={"flex gap-x-2 py-8"}>
-              <Title className={"basis-32"} component={"h6"} size={"base"}>
-                Полуторний
-              </Title>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>Підковдра</span>
-                <span>Простирадло</span>
-                <span>Наволочка</span>
+            {dimensionalGrid.map(grid => (
+              <div className={"flex gap-x-2 py-8"}>
+                <Title className={"basis-32"} component={"h6"} size={"base"}>
+                  {grid[`title_${staticData.backendPostfix}` as keyof DimensionalGrid] as string}
+                </Title>
+                <div
+                  className={
+                    "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
+                  }
+                >
+                  {grid.sizes.map(size => (
+                    <span>{size[`title_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                  ))}
+                </div>
+                <div
+                  className={
+                    "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
+                  }
+                >
+                  {grid.sizes.map(size => (
+                    <span>{size[`size_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                  ))}
+                </div>
               </div>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>215 х 150</span>
-                <span>215 х 150</span>
-                <span>70 х 70 (2 шт)</span>
-              </div>
-            </div>
-            <div className={"flex gap-x-2 py-8"}>
-              <Title component={"h6"} className={"basis-32"} size={"base"}>
-                Двоспальний
-              </Title>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>Підковдра</span>
-                <span>Простирадло</span>
-                <span>Наволочка</span>
-              </div>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>215 х 180</span>
-                <span>215 х 220</span>
-                <span>70 х 70 (2 шт)</span>
-              </div>
-            </div>
-            <div className={"flex gap-x-2 py-8"}>
-              <Title className={"basis-32"} component={"h6"} size={"base"}>
-                Євростандарт
-              </Title>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>Підковдра</span>
-                <span>Простирадло</span>
-                <span>Наволочка</span>
-              </div>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>215 х 200</span>
-                <span>215 х 240</span>
-                <span>70 х 70 (2 шт)</span>
-              </div>
-            </div>
-            <div className={"flex gap-x-2 py-8"}>
-              <Title className={"basis-32"} component={"h6"} size={"base"}>
-                Сімейний
-              </Title>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>Підковдра</span>
-                <span>Простирадло</span>
-                <span>Наволочка</span>
-              </div>
-              <div
-                className={
-                  "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                }
-              >
-                <span>215 х 150 (2 шт)</span>
-                <span>215 х 240</span>
-                <span>70 х 70 (2 шт)</span>
-              </div>
-            </div>
+            ))}
           </Disclosure>
         </InfoSkeleton>
       </FilterDialog>
