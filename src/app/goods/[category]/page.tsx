@@ -162,6 +162,21 @@ export interface ProductWithVariant {
   last_modified: string;
   product_variants: ProductVariant[];
   is_favorite: boolean;
+  dimensional_grid: DimensionalGrid[];
+}
+
+export type DimensionalGridSize = {
+  title_uk: string;
+  title_en: string;
+  size_uk: string;
+  size_en: string;
+}
+
+export type DimensionalGrid = {
+  id: number;
+  title_uk: string;
+  title_en: string;
+  sizes: DimensionalGridSize[];
 }
 
 export type ProductToShow = {

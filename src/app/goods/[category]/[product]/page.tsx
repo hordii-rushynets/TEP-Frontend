@@ -242,6 +242,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               <InfoDisclosure
                 info={currentVariant?.variant_info || VariantInfoDefault}
                 feedbacks={feedbacks}
+                dimensionalGrid={productWithVariant?.dimensional_grid || []}
                 description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />
               <SimilarGoods />
