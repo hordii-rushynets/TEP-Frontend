@@ -7,18 +7,18 @@ import { Button, SelectInput, Title } from "common/ui";
 const date = new Date();
 
 const months = [
-  { value: "January", label: "Січень" },
-  { value: "February", label: "Лютий" },
-  { value: "March", label: "Березень" },
-  { value: "April", label: "Квітень" },
-  { value: "May", label: "Травень" },
-  { value: "June", label: "Червень" },
-  { value: "July", label: "Липень" },
-  { value: "August", label: "Серпень" },
-  { value: "September", label: "Вересень" },
-  { value: "October", label: "Жовтень" },
-  { value: "November", label: "Листопад" },
-  { value: "December", label: "Грудень" },
+  { value: "01", label: "Січень" },
+  { value: "02", label: "Лютий" },
+  { value: "03", label: "Березень" },
+  { value: "04", label: "Квітень" },
+  { value: "05", label: "Травень" },
+  { value: "06", label: "Червень" },
+  { value: "07", label: "Липень" },
+  { value: "08", label: "Серпень" },
+  { value: "09", label: "Вересень" },
+  { value: "10", label: "Жовтень" },
+  { value: "11", label: "Листопад" },
+  { value: "12", label: "Грудень" },
 ];
 
 const getAllDaysInMonth = (month: number, year: number) =>
@@ -96,7 +96,7 @@ export function BirthdayForm({ onSubmit }: BirthdayFormProps) {
         size={"super-large"}
         colorVariant={"black"}
         onClick={() =>
-          onSubmit([day, months.find((m) => m.value === month)!.label, year])
+          onSubmit([day, months.find((m) => m.value === month)!.value, year])
         }
       >
         Змінити

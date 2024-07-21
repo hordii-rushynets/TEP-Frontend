@@ -24,7 +24,73 @@ export class AccountDAOService {
         }
         return response.ok;
       } catch (error) {
-        console.error('Failed to delete item from the cart:', error);
+        console.error('Failed to update password:', error);
+        throw error;
+      }
+    }
+
+    public async profileUpdate(body: FormData, authContext: any): Promise<boolean> {
+        try {
+            const response = await fetchWithAuth(`${this.apiUrl}/api/account/profile/`, {
+              method: "PATCH",
+              body: body
+            }, authContext);
+
+            return response.ok;
+          } catch (error) {
+            console.error('Failed to update profile:', error);
+            throw error;
+          }
+    }
+
+    public async emailUpdateRequest(new_email: string, authContext: any): Promise<boolean> {
+      try {
+        const response = await fetchWithAuth(`${this.apiUrl}/api/account/update/email/request/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "new_email": new_email,
+          })
+        }, authContext);
+
+        return response.ok;
+      } catch (error) {
+        console.error('Failed to update profile:', error);
+        throw error;
+      }
+    }
+
+    public async emailUpdateConfirm(new_email: string, code: string, authContext: any): Promise<boolean> {
+      try {
+        const response = await fetchWithAuth(`${this.apiUrl}/api/account/update/email/confirm/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "new_email": new_email,
+            "code": code,
+          })
+        }, authContext);
+
+        return response.ok;
+      } catch (error) {
+        console.error('Failed to update profile:', error);
+        throw error;
+      }
+    }
+
+    public async profileDelete(authContext: any): Promise<Response> {
+      try {
+        const response = await fetchWithAuth(`${this.apiUrl}/api/account/profile/`, {
+          method: "DELETE",
+        }, authContext);
+
+        return response;
+      } catch (error) {
+        console.error('Failed to update profile:', error);
         throw error;
       }
     }

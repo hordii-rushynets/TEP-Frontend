@@ -11,6 +11,7 @@ import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import { MainUrl } from "route-urls";
+import { AccountService } from "app/account/services";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
@@ -23,28 +24,21 @@ export function UserSettings() {
   const authContext = useAuth();
 
   const router = useRouter();
+  const accountService = new AccountService();
 
   function DeleteAccount() {
-    // fetchWithAuth(`${APIurl}/api/account/profile/delete/`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   }
-    // }, authContext)
-    //   .then(response => {
-    //     if (response.status === 204) {
-    //         authContext.logout();
-    //         setText("Ваш акаунт успішно видалено!");
-    //         setIsOpen(true);
-    //         router.push(MainUrl.getHome());
-    //     }
-    //     else {
-    //         return;
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
+    accountService.profileDelete(authContext)
+      .then(response => {
+        if (response.ok) {
+            authContext.logout();
+            setText("Ваш акаунт успішно видалено!");
+            setIsOpen(true);
+            router.push(MainUrl.getHome());
+        }
+        else {
+            return;
+        }
+      })
   }
 
   useEffect(() => {

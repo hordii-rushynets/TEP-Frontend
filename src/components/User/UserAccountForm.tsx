@@ -8,52 +8,87 @@ import InputMask from "react-input-mask";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
-import { Dialog, FormSelectInput, FormTextInput, TextInput } from "common/ui";
+import { Button, Dialog, FormSelectInput, FormTextInput, TextInput } from "common/ui";
 
 import { BirthdayForm } from "./BirthdayForm";
 import { UserSocials } from "./UserSocials";
 
 import { UserAccountProps } from "./UserAccount";
+import { AccountService } from "app/account/services";
+import { useAuth } from "contexts/AuthContext";
+import { useNotificationContext } from "contexts/NotificationContext";
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   first_name: z.string().default(""),
   last_name: z.string().default(""),
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
   phone_number: z.string().default(""),
-  birthday: z.string().default(""),
+  birth_date: z.string().default(""),
   profileType: z.string().default("usual"),
 });
 
 type Form = z.infer<typeof formSchema>;
 
-export function UserAccountForm({user}: UserAccountProps) {
-  const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
+export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) {
+  const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [isDateOpen, setIsDateOpen] = useState(false);
+
+  const accountService = new AccountService();
+  const authContext = useAuth();
+  const { setText, setIsOpen } = useNotificationContext();
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
-    defaultValues: user,
+    defaultValues: getDefaults(formSchema),
   });
 
   useEffect(() => {
-    form.reset(user);
+    form.setValue("first_name", user.first_name || "");
+    form.setValue("last_name", user.last_name || "");
+    form.setValue("birth_date", user.birth_date || "");
+    form.setValue("email", user.email || "");
+    form.setValue("phone_number", user.phone_number || "");
+    setPhoneNumber(user.phone_number);
   }, [user]);
 
-  function onSubmit(data: Form) {
+  const router = useRouter();
+
+  function onFormSubmit(data: Form) {
     const fullData = {
       ...data,
       phone_number: phoneNumber.match(/\d/g)?.join(""),
     };
-    fullData;
-    // TODO
-    // ...
+    const formData = new FormData();
+    Object.entries(fullData).map(value => {
+      formData.append(value[0], value[1] || "");
+    })
+
+    const isEmailChanged = fullData.email !== user.email;
+
+    accountService.profileUpdate(formData, authContext).then(success => {
+      if (success && !isEmailChanged) {
+        setText("Ваш профіль успішно оновлено!");
+        setIsOpen(true);
+      }
+    });
+
+    isEmailChanged && accountService.emailUpdateRequest(fullData.email, authContext).then(success => {
+      if (success) {
+        localStorage.setItem("TEPemail", fullData.email);
+        router.push('/account/email-confirmation');
+      }
+      else {
+        form.setError("email", {type: "manual", message: "Пошта неправильна, або вже зареєстрована"});
+      }
+    })
   }
 
   return (
     <>
       <FormProvider {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onFormSubmit)}
           className={"max-w-[600px]"}
         >
           <div className={"flex flex-col gap-y-6"}>
@@ -82,9 +117,9 @@ export function UserAccountForm({user}: UserAccountProps) {
               <TextInput label={"Телефон"} />
             </InputMask>
             <FormTextInput<Form>
-              fieldName={"birthday"}
+              fieldName={"birth_date"}
               label={"День народження"}
-              placeholder={"дд/мм/рррр"}
+              placeholder={"pppp-мм-дд"}
               endAdornment={
                 <FiCalendar className={"size-6 text-tep_gray-700"} />
               }
@@ -99,6 +134,15 @@ export function UserAccountForm({user}: UserAccountProps) {
               ]}
             />
             <UserSocials fbLink={"#"} googleLink={"#"} />
+            <Button
+              type={"submit"}
+              fullWidth
+              className={{ button: "mx-auto block md:w-auto" }}
+              size={"super-large"}
+              colorVariant={"black"}
+            >
+              Змінити профіль
+            </Button>
           </div>
         </form>
       </FormProvider>
@@ -113,7 +157,7 @@ export function UserAccountForm({user}: UserAccountProps) {
       >
         <BirthdayForm
           onSubmit={(values) => {
-            form.setValue("birthday", values.join("/"));
+            form.setValue("birth_date", values.reverse().join("-"));
             setIsDateOpen(false);
           }}
         />

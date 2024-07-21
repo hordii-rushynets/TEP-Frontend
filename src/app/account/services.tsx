@@ -17,4 +17,20 @@ export class AccountService {
             return false;
         }
     }
+
+    public async profileUpdate(body: FormData, authContext: any): Promise<boolean> {
+        return await this.daoService.profileUpdate(body, authContext);
+    }
+
+    public async emailUpdateRequest(new_email: string, authContext: any): Promise<boolean> {
+        return await this.daoService.emailUpdateRequest(new_email, authContext);
+    }
+
+    public async emailUpdateConfirm(new_email: string, code: string, authContext: any): Promise<boolean> {
+        return await this.daoService.emailUpdateConfirm(new_email, code, authContext);
+    }
+
+    public async profileDelete(authContext: any): Promise<Response> {
+        return await this.daoService.profileDelete(authContext);
+    }
 }
