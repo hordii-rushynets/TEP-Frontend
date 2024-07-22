@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -57,7 +57,7 @@ export function Recomendations() {
           >
             {products.map((product) => (
               <SwiperSlide key={product.id}>
-                <ProductCard product={product} />
+                <ProductCard product={product} productWithVariant={{}as ProductWithVariant}/>
               </SwiperSlide>
             ))}
             <IconButton

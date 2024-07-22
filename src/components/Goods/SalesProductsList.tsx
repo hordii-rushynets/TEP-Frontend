@@ -1,4 +1,4 @@
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 
 import { Container, Section } from "common/ui";
 import ProductCard from "components/Home/ProductCard";
@@ -18,7 +18,7 @@ export default function SalesProductsList({
           }
         >
           {products.map((product) => {
-            return <ProductCard key={product.id} product={product} />;
+            return <ProductCard key={product.id} product={product} productWithVariant={{}as ProductWithVariant}/>;
           })}
         </div>
       </Container>

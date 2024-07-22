@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import { HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
@@ -76,6 +76,7 @@ export function PopularGoods({
               <SwiperSlide key={product.id}>
                 <ProductCard
                   product={product}
+                  productWithVariant={{}as ProductWithVariant}
                   hasCompare={false}
                   hasFavourite={false}
                 />
