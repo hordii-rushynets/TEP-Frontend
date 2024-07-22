@@ -3,22 +3,22 @@ import Link from "next/link";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
-import { translateCategory } from "utils/helpers";
 
 import { ImageSquare } from "common/ImageSquare";
 import { ButtonBase, Title } from "common/ui";
 import { Star } from "common/ui/icons/Star";
 import NoAvatarIMG from "components/static/noavatar.png";
 
-import { Feedback } from "./FeedbacksList";
+import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
+import { useLocalization } from "contexts/LocalizationContext";
+import { Category } from "contexts/CategoriesContext";
 
 export type FeedbackCardProps = {
   feedback: Feedback;
 };
 
 export function FeedbackCard({ feedback }: FeedbackCardProps) {
-  const { author, category, created_at, interaction, rating, text, images } =
-    feedback;
+  const {localization} = useLocalization();
 
   return (
     <div
@@ -37,29 +37,29 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
               className={"select-none object-cover"}
               aria-hidden
               fill
-              src={author.avatar ?? NoAvatarIMG}
+              src={feedback.tep_user.profile_picture ?? NoAvatarIMG}
               alt={"Avatar image"}
               sizes="100vw, 50vw, 33vw"
             />
           </div>
           <div>
-            <Title size={"xl"}>{author.name}</Title>
-            <span
+            <Title size={"xl"}>{feedback.tep_user.first_name} {feedback.tep_user.last_name}</Title>
+            {/* <span
               className={"block text-[10px] text-tep_gray-700 lg:font-light"}
             >
               {created_at}
-            </span>
+            </span> */}
           </div>
         </div>
         <div className={"flex gap-x-2"}>
           {Array.from({ length: 5 }).map((_, Idx) => (
-            <Star key={Idx} className={cn({ "fill-black": Idx < rating })} />
+            <Star key={Idx} className={cn({ "fill-black": Idx < feedback.evaluation })} />
           ))}
         </div>
       </div>
       <div>
         <Link
-          href={`${MainUrl.getGoods()}/${category}`}
+          href={`${MainUrl.getGoods()}/${feedback.product.category.slug}`}
           className={
             "mb-6 inline-block transition-colors hover:text-tep_blue-500 md:mb-4"
           }
@@ -67,18 +67,18 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
           <span
             className={"rounded-full bg-white px-4 py-1 text-[10px] font-bold"}
           >
-            {translateCategory(category)}
+            {feedback.product.category[`title_${localization}` as keyof Category] as string}
           </span>
         </Link>
-        <p className={"text-sm lg:font-extralight"}>{text}</p>
+        <p className={"text-sm lg:font-extralight"}>{feedback.text}</p>
       </div>
-      {!!images?.length && (
+      {!!feedback.feedback_images?.length && (
         <div className={"flex flex-wrap gap-2"}>
-          {images.map((image, Idx) => (
+          {feedback.feedback_images.map((image, Idx) => (
             <div key={Idx} className={"w-[118px]"}>
               <ImageSquare
                 classes={{ wrapper: "rounded-2xl" }}
-                source={image}
+                source={image.image}
               />
             </div>
           ))}
@@ -91,7 +91,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
           >
             <BiLike className={"size-4"} />
           </ButtonBase>
-          <span className={"text-[10px] font-light"}>{interaction.like}</span>
+          <span className={"text-[10px] font-light"}>{feedback.like_number}</span>
         </div>
         <div className={"flex flex-col items-center text-tep_gray-700"}>
           <ButtonBase
@@ -100,7 +100,7 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
             <BiDislike className={"size-4"} />
           </ButtonBase>
           <span className={"text-[10px] font-light"}>
-            {interaction.dislike}
+            {feedback.dislike_number}
           </span>
         </div>
       </div>

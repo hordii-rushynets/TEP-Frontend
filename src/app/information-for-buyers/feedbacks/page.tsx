@@ -1,5 +1,7 @@
+"use client"
+
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { InfoUrl } from "route-urls";
 import { isStr } from "utils/js-types";
@@ -7,6 +9,8 @@ import { isStr } from "utils/js-types";
 import { Button, Container, Loader, Section, Title } from "common/ui";
 import FeedbacksFiltersWithCategories from "components/Info/Feedbacks/FeedbacksFiltersWithCategories";
 import { FeedbacksList } from "components/Info/Feedbacks/FeedbacksList";
+import { Feedback } from "./interfaces";
+import { FeedbackService } from "./services";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -20,6 +24,13 @@ export default function FeedbacksPage({
 
   let activePageNum = 1;
   if (isStr(page)) activePageNum = parseInt(page);
+
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const feedbackService = new FeedbackService();
+
+  useEffect(() => {
+    feedbackService.getFeedbacks({"category": category?.toString() || ""}).then(data => setFeedbacks(data));
+  }, [category]);
 
   return (
     <>
@@ -46,7 +57,7 @@ export default function FeedbacksPage({
         <FeedbacksFiltersWithCategories />
       </Suspense>
       <Suspense>
-        <FeedbacksList category={category as string} page={activePageNum} />
+        <FeedbacksList category={category as string} page={activePageNum} feedbacks={feedbacks}/>
       </Suspense>
     </>
   );
