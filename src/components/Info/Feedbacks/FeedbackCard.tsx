@@ -12,13 +12,19 @@ import NoAvatarIMG from "components/static/noavatar.png";
 import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
+import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
+import { useAuth } from "contexts/AuthContext";
 
 export type FeedbackCardProps = {
   feedback: Feedback;
+  refresh: () => void;
 };
 
-export function FeedbackCard({ feedback }: FeedbackCardProps) {
+export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
   const {localization} = useLocalization();
+  const authContext = useAuth();
+
+  const feedbackService = new FeedbackService();
 
   return (
     <div
@@ -88,18 +94,26 @@ export function FeedbackCard({ feedback }: FeedbackCardProps) {
         <div className={"flex flex-col items-center text-tep_gray-700"}>
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
+            onClick={() => {
+              feedbackService.likeOrDislikeFeedback("like", feedback.id, authContext).then(() => {refresh()});
+            }}
           >
             <BiLike className={"size-4"} />
           </ButtonBase>
-          <span className={"text-[10px] font-light"}>{feedback.like_number}</span>
+          <span className={"text-[10px] font-light"} >
+            {feedback.like_number}
+          </span>
         </div>
         <div className={"flex flex-col items-center text-tep_gray-700"}>
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
+            onClick={() => {
+              feedbackService.likeOrDislikeFeedback("dislike", feedback.id, authContext).then(() => {refresh()});
+            }}
           >
             <BiDislike className={"size-4"} />
           </ButtonBase>
-          <span className={"text-[10px] font-light"}>
+          <span className={"text-[10px] font-light"} >
             {feedback.dislike_number}
           </span>
         </div>

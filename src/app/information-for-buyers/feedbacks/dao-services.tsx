@@ -37,5 +37,26 @@ export class FeedbackDAOService {
           throw error;
         }
     }
+
+    public async likeOrDislikeFeedback(action: string, id: number, authContext: any): Promise<void> {
+        try {
+          const response = await fetchWithAuth(`${this.apiUrl}/api/store/feedback/${id}/like_dislike/`, {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "action": action
+            }),
+          }, authContext);
+          if (!response.ok) {
+            throw new Error(`Error fetching feedbacks: ${response.statusText}`);
+          }
+
+        } catch (error) {
+          console.error('Failed to fetch feedbacks:', error);
+          throw error;
+        }
+    }
   }
   

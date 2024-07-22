@@ -7,9 +7,10 @@ type FeedbacksListProps = {
   category: string;
   page: number;
   feedbacks: Feedback[];
+  refresh: () => void;
 };
 
-export function FeedbacksList({ page, feedbacks }: FeedbacksListProps) {
+export function FeedbacksList({ page, feedbacks, refresh }: FeedbacksListProps) {
   // category param for fetching
   return (
     <Section className={"mb-24 lg:mb-40"}>
@@ -17,7 +18,7 @@ export function FeedbacksList({ page, feedbacks }: FeedbacksListProps) {
         <div>
           <div className={"mb-[72px] flex flex-col gap-10 lg:mb-16"}>
             {feedbacks.slice(page*10 - 10,page*10).map((feedback) => (
-              <FeedbackCard key={feedback.id} feedback={feedback} />
+              <FeedbackCard key={feedback.id} feedback={feedback} refresh={refresh}/>
             ))}
           </div>
           <Pagination activePage={page} total={Math.ceil(feedbacks.length/10)} />

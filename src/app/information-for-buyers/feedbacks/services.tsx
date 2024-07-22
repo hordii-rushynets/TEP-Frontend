@@ -16,4 +16,8 @@ export class FeedbackService {
     public async postFeedback(body: FormData, authContext: any): Promise<boolean> {
         return await this.daoService.postFeedback(body, authContext);
     }
+
+    public async likeOrDislikeFeedback(action: string, id: number, authContext: any): Promise<void> {
+        return await this.daoService.likeOrDislikeFeedback(action, id, authContext);
+    }
 }

@@ -26,11 +26,16 @@ export default function FeedbacksPage({
   if (isStr(page)) activePageNum = parseInt(page);
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [refresh, setRefresh] = useState(false);
   const feedbackService = new FeedbackService();
+
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+  }
 
   useEffect(() => {
     feedbackService.getFeedbacks({"category": category?.toString() || ""}).then(data => setFeedbacks(data));
-  }, [category]);
+  }, [category, refresh]);
 
   return (
     <>
@@ -57,7 +62,7 @@ export default function FeedbacksPage({
         <FeedbacksFiltersWithCategories />
       </Suspense>
       <Suspense>
-        <FeedbacksList category={category as string} page={activePageNum} feedbacks={feedbacks}/>
+        <FeedbacksList category={category as string} page={activePageNum} feedbacks={feedbacks} refresh={handleRefresh}/>
       </Suspense>
     </>
   );
