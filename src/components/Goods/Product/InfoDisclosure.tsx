@@ -1,6 +1,6 @@
 "use client";
 
-import { Feedback } from "app/goods/[category]/[product]/page";
+import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
@@ -63,18 +63,18 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                     className={"rounded-[20px] bg-tep_gray-200 px-7 py-6"}
                   >
                     <div className={"mb-2 flex items-center justify-between"}>
-                      <Title className={"!text-sm"}>{feedback.title}</Title>
+                      <Title className={"!text-sm"}>{feedback.tep_user.first_name} {feedback.tep_user.last_name}</Title>
                       <div
                         className={
                           "flex items-center gap-x-1 text-sm font-bold"
                         }
                       >
                         <FaStar className={"size-3"} />
-                        <span>{feedback.rating}</span>
+                        <span>{feedback.evaluation}</span>
                       </div>
                     </div>
                     <p className={"text-xs font-light leading-none"}>
-                      {feedback.description}
+                      {feedback.text}
                     </p>
                   </div>
                 ))}

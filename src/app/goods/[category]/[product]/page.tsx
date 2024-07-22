@@ -28,12 +28,8 @@ import { useAuth } from "contexts/AuthContext";
 import { ProductService } from "../services";
 import { FavouriteService } from "app/account/favourite/services";
 import { useFavouriteContext } from "contexts/FavouriteContext";
-
-export type Feedback = {
-  title: string;
-  description: string;
-  rating: number;
-};
+import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
+import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
 
 const product = {
   id: "1",
@@ -87,7 +83,6 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const {
     article,
     category,
-    feedbacks,
     id,
     price,
     title,
@@ -97,6 +92,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
 
   const cartService = new CartService();
   const favouriteService = new FavouriteService();
+  const feedbackService = new FeedbackService();
   const authContext = useAuth();
 
   const router = useRouter();
@@ -116,6 +112,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [count, setCount] = useState(1);
   const [IsFavourite, setIsFavourite] = useState(false);
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   useEffect(() => {
     const productService = new ProductService();
@@ -161,6 +158,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     const uniqueFilters = getUniqueFilters(productWithVariant?.category.filter || [], productVariants);
     uniqueFilters.length !== 0 && setFilters(uniqueFilters);
 
+    feedbackService.getFeedbacks({"product": productWithVariant?.slug || ""}).then(feedbacks => setFeedbacks(feedbacks));
   }, [productVariants, searchParams.article]);
 
   const getFilterFieldIds = () => {
