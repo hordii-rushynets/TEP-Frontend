@@ -188,8 +188,6 @@ export function PaymentDetails({
                 size={"large"}
                 colorVariant={"outlined"}
                 onClick={() => {
-                  setTitleF(title);
-                  setIsOpenF(true);
                   onFavouriteClick(id);
                 }}
               >

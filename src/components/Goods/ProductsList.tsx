@@ -1,4 +1,4 @@
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import { HTMLAttributes } from "react";
 import { cn } from "utils/cn";
 
@@ -7,10 +7,12 @@ import ProductCard from "components/Home/ProductCard";
 
 type ProductsListProps = {
   products: ProductToShow[];
+  productsWithVariants: ProductWithVariant[];
   activePage: number;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 export default function ProductsList({
   products,
+  productsWithVariants,
   activePage,
   className,
 }: ProductsListProps) {
@@ -23,7 +25,12 @@ export default function ProductsList({
           }
         >
           {products.slice(activePage*10 - 10,activePage*10).map((product) => {
-            return <ProductCard key={product.id} product={product} />;
+            return <ProductCard 
+              key={product.id} 
+              product={product} 
+              productWithVariant={productsWithVariants.find(productWithVariant => productWithVariant.id.toString() == product.id) || {} as ProductWithVariant}
+              hasCart={product.count && product.count > 0 ? true : false}
+            />;
           })}
         </div>
         <Pagination
