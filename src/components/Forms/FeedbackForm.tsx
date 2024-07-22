@@ -2,11 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useId } from "react";
+import React, { useId, useState, useEffect, ChangeEvent } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FiPaperclip } from "react-icons/fi";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
+
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 import {
   Button,
@@ -17,12 +19,18 @@ import {
 } from "common/ui";
 import { RatingStar } from "common/ui/icons/RatingStar";
 import { useCategories } from "contexts/CategoriesContext";
+import { ProductWithVariant } from "app/goods/[category]/page";
+import { useLocalization } from "contexts/LocalizationContext";
+import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
+import { useAuth } from "contexts/AuthContext";
+import { AuthUrl } from "route-urls";
+import { useNotificationContext } from "contexts/NotificationContext";
+import { ImageSquare } from "common/ImageSquare";
 
 export const feedbackSchema = z.object({
   rating: z.number().min(1, "Оцініть товар від 1 до 5").default(0),
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
   category: z.string().min(1, "Оберіть категорію").default(""),
+  product: z.string().min(1, "Оберіть товар").default(""),
   message: z.string().default(""),
 });
 
@@ -32,19 +40,50 @@ export function FeedbackForm() {
   const router = useRouter();
   const pathname = usePathname();
   const id = useId();
+  const [products, setProducts] = useState<ProductWithVariant[]>([]);
+  const feedbackService = new FeedbackService();
+  const authContext = useAuth();
+  const {setText, setIsOpen} = useNotificationContext();
+  const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFiles(Array.from(event.target.files || []));
+  };
 
   const form = useForm<Form>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: getDefaults(feedbackSchema),
   });
-  function onSubmit(data: Form) {
-    // TODO
-    // ...
-    data;
 
-    form.reset();
-    router.push(`${pathname}/success`);
+  function onSubmit(data: Form) {
+    const dataToSend = new FormData();
+    dataToSend.append("product_id", data.product);
+    dataToSend.append("text", data.message);
+    dataToSend.append("evaluation", data.rating.toString());
+    dataToSend.append("feedback_images", new Blob(selectedFiles));
+
+    feedbackService.postFeedback(dataToSend, authContext).then(success => {
+      if (success) {
+        form.reset();
+        router.push(`${pathname}/success`);
+      }
+      else {
+        setText("Будь ласка, увійдіть");
+        setIsOpen(true);
+        router.push(AuthUrl.getSignIn());
+      }
+    });
   }
+
+  useEffect(() => {
+    form.watch().category && fetch(`${APIurl}/api/store/products/?category_slug=${form.getValues().category}`).then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+    }).then(data => {
+      setProducts(data);
+    })
+  }, [form.watch().category]);
 
   return (
     <FormProvider {...form}>
@@ -64,24 +103,24 @@ export function FeedbackForm() {
               inactiveStrokeColor: "#1D1D1D",
             }}
           />
-          <FormTextInput<Form>
-            fieldName={"fullname"}
-            label={"Ім’я"}
-            placeholder={"Тарас Шевченко"}
-          />
-          <FormTextInput<Form>
-            fieldName={"email"}
-            label={"Пошта"}
-            placeholder={"taras@gmail.com"}
-          />
           <CategoriesFormSelect />
+          <ProductsFormSelect products={products}/>
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
             label={"Повідомлення *"}
             placeholder={"Не обов’язково *"}
           />
-          {/* //TODO FileInput */}
+          <div className={"flex flex-wrap gap-2"}>
+            {selectedFiles.map((file, Idx) => 
+              <div key={Idx} className={"w-[118px]"}>
+              <ImageSquare
+                classes={{ wrapper: "rounded-2xl" }}
+                source={URL.createObjectURL(file)}
+              />
+          </div>
+          )}
+          </div>
           <div className={"self-end"}>
             <label
               htmlFor={id}
@@ -92,7 +131,7 @@ export function FeedbackForm() {
               <FiPaperclip className={"size-4"} />
               <span className={"text-sm font-bold"}>Файли</span>
             </label>
-            <input id={id} type={"file"} className={"hidden"} />
+            <input id={id} type={"file"} className={"hidden"} multiple onChange={handleFileChange} accept={"image/jpeg,image/png"}/>
           </div>
         </div>
         <Button
@@ -116,11 +155,31 @@ const CategoriesFormSelect : React.FC = () => {
   return (
       <FormSelectInput
           fieldName={"category"}
-          label={"Товари"}
+          label={"Категорія"}
           display={"Обрати категорію"}
           options={categories.map((category) => ({
             value: category.slug,
             label: category.title,
+          }))}
+        />
+  );
+} 
+
+type ProductsFormSelectProps = {
+  products: ProductWithVariant[];
+}
+
+const ProductsFormSelect : React.FC<ProductsFormSelectProps> = ({products}: ProductsFormSelectProps) => {
+  const { localization } = useLocalization();
+
+  return (
+      <FormSelectInput
+          fieldName={"product"}
+          label={"Товари"}
+          display={"Оберіть товар"}
+          options={products.map((product) => ({
+            value: product.id.toString(),
+            label: product[`title_${localization}` as keyof ProductWithVariant] as string,
           }))}
         />
   );

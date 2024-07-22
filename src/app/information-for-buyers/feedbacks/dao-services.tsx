@@ -1,3 +1,4 @@
+import { fetchWithAuth } from "utils/helpers";
 import { Feedback } from "./interfaces";
 
 export class FeedbackDAOService {
@@ -21,6 +22,20 @@ export class FeedbackDAOService {
           console.error('Failed to fetch feedbacks:', error);
           throw error;
         }
-      }
+    }
+
+    public async postFeedback(body: FormData, authContext: any): Promise<boolean> {
+        try {
+          const response = await fetchWithAuth(`${this.apiUrl}/api/store/feedback/`, {
+            method: 'POST',
+            body: body,
+          }, authContext);
+          return response.ok;
+
+        } catch (error) {
+          console.error('Failed to fetch feedbacks:', error);
+          throw error;
+        }
+    }
   }
   

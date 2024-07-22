@@ -255,7 +255,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
             <div className={"overflow-hidden md:grow-0 md:basis-[65%]"}>
               <InfoDisclosure
                 info={currentVariant?.variant_info || VariantInfoDefault}
-                feedbacks={feedbacks}
+                feedbacks={feedbacks.reverse()}
                 dimensionalGrid={productWithVariant?.dimensional_grid || []}
                 description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />

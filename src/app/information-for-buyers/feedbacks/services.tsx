@@ -12,4 +12,8 @@ export class FeedbackService {
     public async getFeedbacks(filters: {[key: string]: string}): Promise<Feedback[]> {
         return await this.daoService.getFeedbacks(filters);
     }
+
+    public async postFeedback(body: FormData, authContext: any): Promise<boolean> {
+        return await this.daoService.postFeedback(body, authContext);
+    }
 }
