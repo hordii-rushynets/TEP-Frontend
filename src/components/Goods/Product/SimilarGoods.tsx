@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import Image from "next/image";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight, FiHeart } from "react-icons/fi";
@@ -9,14 +9,60 @@ import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { ButtonBase, Container, IconButton, Section, Title } from "common/ui";
-
-import BlankedIMG from "./static/blanket.jpg";
+import { useState, useEffect } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { useLocalization } from "contexts/LocalizationContext";
 
-export function SimilarGoods() {
+interface SimilarGoodsProps {
+  product: ProductWithVariant | undefined;
+}
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export function SimilarGoods({product}:SimilarGoodsProps) {
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+  const { staticData } = useLocalization();
+
+  useEffect(() => {
+    fetch(`${apiUrl}/api/store/products/?category_slug=${product?.category.slug}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      else {
+        return
+      }
+    })
+    .then(data => {
+      if (data) {
+        let productsToShow : ProductToShow[] = data.map((product:any) => {
+          let productVariant = product.product_variants[0];
+          return {
+            id: product.id,
+            slug: product.slug,
+            title: product[`title_${staticData.backendPostfix}` || "title"],
+            category_slug: product.category.slug,
+            category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
+            image: productVariant.main_image || "",
+            price: productVariant.default_price,
+            isSale: productVariant.promotion,
+            salePrice: productVariant.promo_price,
+            number_of_views: product.number_of_views,
+            date: new Date(product.last_modified),
+            isFavourite: product.is_favorite
+          }
+        });
+
+        productsToShow = productsToShow.filter(productWithVar => productWithVar.id !== product?.id.toString())
+
+        setProducts(productsToShow);
+      }
+    })
+  }, [product]);
+
   return (
     <Section className={"mb-24"}>
       <Container>
@@ -87,107 +133,6 @@ export function SimilarGoods() {
   );
 }
 
-export const products: ProductToShow[] = [
-  {
-    id: "1",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "2",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "3",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "4",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "5",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "6",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "7",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "8",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "9",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-];
 
 type ProductCardProps = {
   product: ProductToShow;

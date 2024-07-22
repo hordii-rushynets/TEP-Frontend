@@ -245,7 +245,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                 dimensionalGrid={productWithVariant?.dimensional_grid || []}
                 description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />
-              <SimilarGoods />
+              <SimilarGoods product={productWithVariant}/>
               <InteriorLook />
             </div>
             <div className={"hidden md:block"}></div>
