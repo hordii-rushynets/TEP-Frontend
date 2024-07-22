@@ -73,7 +73,7 @@ export default function SearchPage() {
       {searchQuery && (
         <>
           <SearchFilters className={"border-none"} count={4} />
-          <ProductsList activePage={1} products={products} />
+          <ProductsList activePage={1} products={products} productsWithVariants={[]}/>
           <Section className={"mb-40 lg:mb-64"}>
             <Container>
               <div>

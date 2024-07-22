@@ -1,6 +1,6 @@
 "use client"
 
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import Link from "next/link";
 import { MainUrl } from "route-urls";
 
@@ -68,7 +68,7 @@ export function Favourite() {
             }
           >
             {favourite_goods.map((favourite) => {
-              return <ProductCard key={favourite.id} product={favourite} refreshFav={refresh} setRefreshFav={setRefresh}/>;
+              return <ProductCard key={favourite.id} product={favourite} refreshFav={refresh} setRefreshFav={setRefresh} productWithVariant={{}as ProductWithVariant} />;
             })}
           </div>
           <ButtonBase

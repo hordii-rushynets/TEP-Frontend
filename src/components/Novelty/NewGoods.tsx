@@ -36,6 +36,7 @@ export const NewGoods = ({ activePage }: NewGoodsProps) => {
           <ProductsList
             activePage={activePage}
             products={pillows}
+            productsWithVariants={[]}
           />
         </div>
       </Container>

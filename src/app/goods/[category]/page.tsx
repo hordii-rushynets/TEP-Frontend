@@ -286,6 +286,7 @@ export default function CategoryPage({
             title: product[`title_${staticData.backendPostfix}` || "title"],
             category_slug: product.category.slug,
             category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
+            count: productVariant.count,
             image: productVariant.main_image || "",
             price: productVariant.default_price,
             isSale: productVariant.promotion,
@@ -330,6 +331,7 @@ export default function CategoryPage({
         className={"mt-12"}
         activePage={activePageNum}
         products={productsToShow}
+        productsWithVariants={productsWithVariants}
       />
       <PopularGoods />
       <ProductDescriptions descriptions={productDescriptions} />
