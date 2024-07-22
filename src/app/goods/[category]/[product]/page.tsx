@@ -26,6 +26,8 @@ import { DynamicFilter, DynamicFilterField } from "components/Filters/ProductsFi
 import { CartService } from "app/account/cart/services";
 import { useAuth } from "contexts/AuthContext";
 import { ProductService } from "../services";
+import { FavouriteService } from "app/account/favourite/services";
+import { useFavouriteContext } from "contexts/FavouriteContext";
 
 export type Feedback = {
   title: string;
@@ -94,6 +96,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   } = product;
 
   const cartService = new CartService();
+  const favouriteService = new FavouriteService();
   const authContext = useAuth();
 
   const router = useRouter();
@@ -111,11 +114,13 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [selectedFilters, setSelectedFilters] = useState<{[key: string]: string}>({});
   const [isCurrVariantFound, setIsCurrVariantFound] = useState(false); 
   const [count, setCount] = useState(1);
+  const [IsFavourite, setIsFavourite] = useState(false);
+  const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
 
   useEffect(() => {
     const productService = new ProductService();
     
-    getProductInfo(params.product)
+    getProductInfo(params.product, authContext)
     .then(response => {
       if (response.status === 200) {
         return response.json();
@@ -125,6 +130,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     .then(data => {
       setProductVariants(data.product_variants);
       setProduct(data);
+      setIsFavourite(data.is_favorite);
       productService.viewProduct(data.id);
       if (!searchParams.article) {
         router.push(`${pathname}?article=${data.product_variants[0].sku}`);
@@ -196,7 +202,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               setCount={setCount}
               images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
               isInCart={isInCart}
-              isFavourite={isFavourite}
+              isFavourite={IsFavourite}
               onCartClick={() => {
                 if (!selectedColor || !selectedSize || !isAllFiltersChoosen()) {
                   setText("Виберіть характеристики продукту");
@@ -222,7 +228,17 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                   }
                 });
               }}
-              onFavouriteClick={() => {}}
+              onFavouriteClick={() => {
+                favouriteService.markFavourite(id, !IsFavourite, authContext, ()=>{
+                  setText(staticData.auth.notifications.unautorized);
+                  setIsOpen(true);
+                  router.push('/sign-in');
+                }).then(()=>{
+                  !IsFavourite && setTitleF(productWithVariant?.[`title_${localization}` as keyof ProductWithVariant] as string);
+                  !IsFavourite && setIsOpenF(true);
+                  setIsFavourite(!IsFavourite);
+                });
+              }}
               searchParams={searchParams}
               selectedColor={selectedColor}
               setSelectedColor={setSelectedColor}
