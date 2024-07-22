@@ -1,11 +1,50 @@
 "use client"
 
+import Link from "next/link";
+import { AuthUrl } from "route-urls";
+import { useState, useEffect } from "react";
+
 import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
+import { useNotificationContext } from "contexts/NotificationContext";
 import { useLocalization } from "contexts/LocalizationContext";
+import { AccountService } from "../services";
+import { useAuth } from "contexts/AuthContext";
+
+const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
+  const { setIsOpen, setText } = useNotificationContext();
   const { staticData } = useLocalization();
+  const accountService = new AccountService();
+  const authContext = useAuth();
+
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setTimeout(() => {
+        setCooldown(cooldown - 1);
+      }, 1000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
+  function SendCode() {
+    cooldown === 0 && accountService.emailUpdateRequest(localStorage.getItem("TEPemail") || "", authContext).then(success => {
+      if (success) {
+        setText(staticData.auth.notifications.verificationCodeSend);
+        setIsOpen(true);
+      }
+      else {
+        setText("Сталася помилка, будь-ласка, спробуйте ще раз");
+        setIsOpen(true);
+      }
+      setCooldown(60);
+    })
+  }
 
   return (
     <Section className={"overflow-hidden"}>
@@ -20,6 +59,10 @@ export default function EmailConfirmationPage() {
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
               Ми надіслали вам верифікаційний код на вашу електронну пошту
             </p>
+            <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+            {cooldown !== 0 && <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"} style={{color: "red"}}>
+              Спробуйте через {cooldown} секунд
+            </p>}
           </div>
           <div
             className={
@@ -33,7 +76,10 @@ export default function EmailConfirmationPage() {
               <p className={"mb-2 text-sm"}>
               Ми надіслали вам верифікаційний код на вашу електронну пошту
               </p>
-              <Button size={"large"}>Надіслати код повторно</Button>
+              <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+              {cooldown !== 0 && <p className={"mb-2 text-sm"} style={{color: "red"}}>
+                Спробуйте через {cooldown} секунд
+              </p>}
             </div>
             <EmailConfirmationForm updating={true}/>
           </div>

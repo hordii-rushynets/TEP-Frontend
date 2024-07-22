@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AuthUrl } from "route-urls";
+import { useState, useEffect } from "react";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
@@ -14,8 +15,21 @@ export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
   const { staticData } = useLocalization();
 
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setTimeout(() => {
+        setCooldown(cooldown - 1);
+      }, 1000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
   function SendCode() {
-    fetch(`${APIurl}/api/account/register/resent/`, {
+    cooldown === 0 && fetch(`${APIurl}/api/account/register/resent/`, {
       method: 'POST',
       body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
       headers: {
@@ -30,6 +44,7 @@ export default function EmailConfirmationPage() {
         else {
             return;
         }
+        setCooldown(60);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -50,6 +65,9 @@ export default function EmailConfirmationPage() {
               Ми надіслали вам верифікаційний код на вашу електронну пошту
             </p>
             <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+            {cooldown !== 0 && <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"} style={{color: "red"}}>
+              Спробуйте через {cooldown} секунд
+            </p>}
           </div>
           <div
             className={
@@ -63,7 +81,10 @@ export default function EmailConfirmationPage() {
               <p className={"mb-2 text-sm"}>
               Ми надіслали вам верифікаційний код на вашу електронну пошту
               </p>
-              <Button size={"large"}>Надіслати код повторно</Button>
+              <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+              {cooldown !== 0 && <p className={"mb-2 text-sm"} style={{color: "red"}}>
+                Спробуйте через {cooldown} секунд
+              </p>}
             </div>
             <EmailConfirmationForm />
           </div>

@@ -57,7 +57,7 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
   function onFormSubmit(data: Form) {
     const fullData = {
       ...data,
-      phone_number: phoneNumber.match(/\d/g)?.join(""),
+      phone_number: phoneNumber && phoneNumber.match(/\d/g)?.join(""),
     };
     const formData = new FormData();
     Object.entries(fullData).map(value => {
