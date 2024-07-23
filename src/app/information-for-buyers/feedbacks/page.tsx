@@ -11,6 +11,7 @@ import FeedbacksFiltersWithCategories from "components/Info/Feedbacks/FeedbacksF
 import { FeedbacksList } from "components/Info/Feedbacks/FeedbacksList";
 import { Feedback } from "./interfaces";
 import { FeedbackService } from "./services";
+import { useAuth } from "contexts/AuthContext";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -28,13 +29,14 @@ export default function FeedbacksPage({
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [refresh, setRefresh] = useState(false);
   const feedbackService = new FeedbackService();
+  const authContext = useAuth();
 
   const handleRefresh = () => {
     setRefresh(!refresh);
   }
 
   useEffect(() => {
-    feedbackService.getFeedbacks({"category": category?.toString() || ""}).then(data => setFeedbacks(data));
+    feedbackService.getFeedbacks({"category": category?.toString() || ""}, authContext).then(data => setFeedbacks(data));
   }, [category, refresh]);
 
   return (

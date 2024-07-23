@@ -10,6 +10,8 @@ export interface Feedback {
     dislike_number: number;
     evaluation: number;
     feedback_images: FeedbackImage[];
+    creation_time: string;
+    user_vote: boolean | null;
 }
 
 export interface FeedbackImage {

@@ -9,15 +9,19 @@ export class FeedbackService {
         this.daoService = new FeedbackDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getFeedbacks(filters: {[key: string]: string}): Promise<Feedback[]> {
-        return await this.daoService.getFeedbacks(filters);
+    public async getFeedbacks(filters: {[key: string]: string}, authContext: any): Promise<Feedback[]> {
+        return await this.daoService.getFeedbacks(filters, authContext);
     }
 
     public async postFeedback(body: FormData, authContext: any): Promise<boolean> {
         return await this.daoService.postFeedback(body, authContext);
     }
 
-    public async likeOrDislikeFeedback(action: string, id: number, authContext: any): Promise<void> {
-        return await this.daoService.likeOrDislikeFeedback(action, id, authContext);
+    public async dislikeFeedback(id: number, authContext: any): Promise<void> {
+        return await this.daoService.dislikeFeedback(id, authContext);
+    }
+
+    public async likeFeedback(id: number, authContext: any): Promise<void> {
+        return await this.daoService.likeFeedback(id, authContext);
     }
 }

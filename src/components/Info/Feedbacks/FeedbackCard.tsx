@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BiDislike, BiLike } from "react-icons/bi";
+import { BiDislike, BiLike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
 
@@ -26,6 +26,11 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
 
   const feedbackService = new FeedbackService();
 
+  const getTimeToShow = (time: string) : string => {
+    const date = new Date(time);
+    return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear().toString()}`
+  }
+
   return (
     <div
       className={
@@ -50,11 +55,11 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
           </div>
           <div>
             <Title size={"xl"}>{feedback.tep_user.first_name} {feedback.tep_user.last_name}</Title>
-            {/* <span
+            <span
               className={"block text-[10px] text-tep_gray-700 lg:font-light"}
             >
-              {created_at}
-            </span> */}
+              {getTimeToShow(feedback.creation_time)}
+            </span>
           </div>
         </div>
         <div className={"flex gap-x-2"}>
@@ -95,10 +100,10 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
             onClick={() => {
-              feedbackService.likeOrDislikeFeedback("like", feedback.id, authContext).then(() => {refresh()});
+              feedbackService.likeFeedback(feedback.id, authContext).then(() => {refresh()});
             }}
           >
-            <BiLike className={"size-4"} />
+            {feedback.user_vote !== null && feedback.user_vote ? <BiSolidLike className={"size-4"} /> : <BiLike className={"size-4"} />}
           </ButtonBase>
           <span className={"text-[10px] font-light"} >
             {feedback.like_number}
@@ -108,10 +113,10 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
             onClick={() => {
-              feedbackService.likeOrDislikeFeedback("dislike", feedback.id, authContext).then(() => {refresh()});
+              feedbackService.dislikeFeedback(feedback.id, authContext).then(() => {refresh()});
             }}
           >
-            <BiDislike className={"size-4"} />
+            {feedback.user_vote !== null && !feedback.user_vote ? <BiSolidDislike className={"size-4"} /> : <BiDislike className={"size-4"} />}
           </ButtonBase>
           <span className={"text-[10px] font-light"} >
             {feedback.dislike_number}
