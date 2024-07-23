@@ -158,7 +158,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     const uniqueFilters = getUniqueFilters(productWithVariant?.category.filter || [], productVariants);
     uniqueFilters.length !== 0 && setFilters(uniqueFilters);
 
-    feedbackService.getFeedbacks({"product": productWithVariant?.slug || ""}).then(feedbacks => setFeedbacks(feedbacks));
+    feedbackService.getFeedbacks({"product": productWithVariant?.slug || ""}, authContext).then(feedbacks => setFeedbacks(feedbacks));
   }, [productVariants, searchParams.article]);
 
   const getFilterFieldIds = () => {
