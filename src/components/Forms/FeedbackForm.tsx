@@ -61,7 +61,7 @@ export function FeedbackForm() {
     dataToSend.append("text", data.message);
     dataToSend.append("evaluation", data.rating.toString());
     dataToSend.append("feedback_images", new Blob(selectedFiles));
-
+    
     feedbackService.postFeedback(dataToSend, authContext).then(success => {
       if (success) {
         form.reset();
