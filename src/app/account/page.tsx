@@ -26,6 +26,8 @@ export default function AccountPage() {
   const { setIsOpen, setText } = useNotificationContext();
   const { staticData } = useLocalization();
   const authContext = useAuth();
+  const [refresh, setRefresh] = useState(false);
+
 
   const getUserInfo = () => {
     fetchWithAuth(`${APIurl}/api/account/profile/`, {
@@ -55,7 +57,7 @@ export default function AccountPage() {
       });
   }
 
-  useEffect(getUserInfo, []);
+  useEffect(getUserInfo, [refresh]);
 
   return (
     <Section>
@@ -89,7 +91,7 @@ export default function AccountPage() {
           <AccountTabs
             tabsContent={[
               <>
-                <UserAccount user={user}/>
+                <UserAccount user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
               <>
                 <UserAddressForm />
