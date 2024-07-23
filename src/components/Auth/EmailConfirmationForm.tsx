@@ -9,11 +9,13 @@ import { useRouter } from 'next/navigation';
 
 import { useNotificationContext } from "contexts/NotificationContext";
 import { useLocalization } from "contexts/LocalizationContext";
+import { AccountService } from "app/account/services";
 
 import {
   Button,
   FormTextInput,
 } from "common/ui";
+import { useAuth } from "contexts/AuthContext";
 
 const formSchema = z.object({
   verificationCode: z.string()
@@ -23,7 +25,11 @@ type Form = z.infer<typeof formSchema>;
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
-export function EmailConfirmationForm() {
+type EmailConfirmationFormProps = {
+  updating?: boolean;
+}
+
+export function EmailConfirmationForm({updating = false} : EmailConfirmationFormProps) {
   const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -33,13 +39,27 @@ export function EmailConfirmationForm() {
   const { setIsOpen, setText } = useNotificationContext();
   const { staticData } = useLocalization();
 
+  const accountService = new AccountService();
+  const authContext = useAuth();
+
   function onSubmit(data: Form) {
     const dataToSend = {
       "code": data.verificationCode,
       "email": localStorage.getItem("TEPemail")
     }
 
-    fetch(`${APIurl}/api/account/register/confirm/`, {
+    updating ? accountService.emailUpdateConfirm(dataToSend.email || "", dataToSend.code, authContext).then(success => {
+      if (success) {
+        localStorage.removeItem("TEPemail");
+        setText("Ваш профіль успішно оновлено!");
+        setIsOpen(true);
+        router.push(AuthUrl.getAccount());
+      }
+      else {
+        form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
+      }
+    })
+    : fetch(`${APIurl}/api/account/register/confirm/`, {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {

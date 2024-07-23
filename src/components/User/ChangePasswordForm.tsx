@@ -7,9 +7,11 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormPasswordInput, Title } from "common/ui";
+import { AccountService } from "app/account/services";
+import { useAuth } from "contexts/AuthContext";
 
 const formSchema = z.object({
-  old_password: z.string().email("").default(""),
+  old_password: z.string().default(""),
   new_password: z
     .string()
     .min(8, "Пароль повинен містити хоча б 8 символів")
@@ -30,12 +32,21 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
     defaultValues: getDefaults(formSchema),
   });
 
+  const accountService = new AccountService();
+  const authContext = useAuth();
+
   function onSubmitHandler(data: Form) {
-    data;
-    setIsSuccess(true);
-    // TODO
-    // ...
-    form.reset();
+    accountService.passwordUpdate(data.old_password, data.new_password, data.repeat_password, () => {
+      form.setError("repeat_password", {type: "manual", message: "Паролі не співпадають"});
+    }, () => {
+      form.setError("old_password", {type: "manual", message: "Неправильний пароль"});
+    }, authContext)
+    .then(success => {
+      if (success) {
+        setIsSuccess(true);
+        form.reset();
+      }
+    })
   }
 
   if (isSuccess) {

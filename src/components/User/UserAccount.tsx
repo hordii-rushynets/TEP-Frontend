@@ -14,6 +14,7 @@ export interface User {
   first_name: string;
   id: number;
   last_name: string; 
+  birth_date: string;
   privacy_policy_accepted: boolean;
   phone_number: string;
   profile_picture: string;
@@ -24,6 +25,7 @@ export const UserDefaultValue : User = {
   first_name: "",
   id: 0,
   last_name: "",
+  birth_date: "",
   privacy_policy_accepted: false,
   phone_number: "",
   profile_picture: ""
@@ -31,16 +33,18 @@ export const UserDefaultValue : User = {
 
 export interface UserAccountProps {
   user: User;
+  refresh: boolean;
+  setRefresh: (b: boolean) => void;
 }
 
-export default function UserAccount({ user }: UserAccountProps) {
+export default function UserAccount({ user, refresh, setRefresh }: UserAccountProps) {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
 
   return (
     <>
       <div>
         <div className={"mb-10 flex justify-between"}>
-          <ChangeAvatarForm profileImage={user.profile_picture}/>
+          <ChangeAvatarForm profileImage={user.profile_picture} refresh={refresh} setRefresh={setRefresh}/>
           <Button
             onClick={() => setIsPasswordOpen(true)}
             size={"small"}
@@ -50,7 +54,7 @@ export default function UserAccount({ user }: UserAccountProps) {
             Змінити пароль
           </Button>
         </div>
-        <UserAccountForm user={user}/>
+        <UserAccountForm user={user} refresh={refresh} setRefresh={setRefresh}/>
 
         <Button
           onClick={() => setIsPasswordOpen(true)}

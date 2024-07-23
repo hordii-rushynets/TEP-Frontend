@@ -6,15 +6,20 @@ import { FiCamera, FiUser } from "react-icons/fi";
 
 import { ButtonBase, Loader } from "common/ui";
 
-import Avatar from "./static/avatar.jpg";
+import { AccountService } from "app/account/services";
+import { useAuth } from "contexts/AuthContext";
 
 interface ChangeAvatarFormProps {
   profileImage: string;
+  refresh: boolean;
+  setRefresh: (b: boolean) => void;
 }
 
-export function ChangeAvatarForm({profileImage} : ChangeAvatarFormProps) {
+export function ChangeAvatarForm({profileImage, refresh, setRefresh} : ChangeAvatarFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [image] = useState<StaticImageData | string>(profileImage);
+  const accountService = new AccountService();
+  const authContext = useAuth();
 
   return (
     <div className={"relative size-[184px]"}>
@@ -55,8 +60,11 @@ export function ChangeAvatarForm({profileImage} : ChangeAvatarFormProps) {
           accept={"image/jpeg,image/png"}
           onChange={(e) => {
             const file = e.target.files?.[0];
-            file;
-            // TODO download to the server
+            const formData = new FormData();
+            file && formData.append("profile_picture", file);
+            accountService.profileUpdate(formData, authContext).then(() => {
+              setRefresh(!refresh);
+            });
           }}
           onLoadedData={() => setIsLoading(false)}
           onLoadStart={() => setIsLoading(true)}

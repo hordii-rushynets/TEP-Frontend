@@ -8,12 +8,16 @@ import { Button, Container, Section, Title } from "common/ui";
 import { EmailConfirmationForm } from "components/Auth/EmailConfirmationForm";
 import { useNotificationContext } from "contexts/NotificationContext";
 import { useLocalization } from "contexts/LocalizationContext";
+import { AccountService } from "../services";
+import { useAuth } from "contexts/AuthContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
   const { staticData } = useLocalization();
+  const accountService = new AccountService();
+  const authContext = useAuth();
 
   const [cooldown, setCooldown] = useState(0);
 
@@ -29,26 +33,17 @@ export default function EmailConfirmationPage() {
   }, [cooldown]);
 
   function SendCode() {
-    cooldown === 0 && fetch(`${APIurl}/api/account/register/resent/`, {
-      method: 'POST',
-      body: JSON.stringify({"email": localStorage.getItem("TEPemail")}),
-      headers: {
-        "Content-Type": "application/json"
+    cooldown === 0 && accountService.emailUpdateRequest(localStorage.getItem("TEPemail") || "", authContext).then(success => {
+      if (success) {
+        setText(staticData.auth.notifications.verificationCodeSend);
+        setIsOpen(true);
       }
+      else {
+        setText("Сталася помилка, будь-ласка, спробуйте ще раз");
+        setIsOpen(true);
+      }
+      setCooldown(60);
     })
-      .then(response => {
-        if (response.status === 200) {
-            setText(staticData.auth.notifications.verificationCodeSend);
-            setIsOpen(true);
-        }
-        else {
-            return;
-        }
-        setCooldown(60);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
   }
 
   return (
@@ -86,7 +81,7 @@ export default function EmailConfirmationPage() {
                 Спробуйте через {cooldown} секунд
               </p>}
             </div>
-            <EmailConfirmationForm />
+            <EmailConfirmationForm updating={true}/>
           </div>
         </div>
       </Container>
