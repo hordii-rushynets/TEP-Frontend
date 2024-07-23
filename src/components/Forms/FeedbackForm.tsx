@@ -60,7 +60,9 @@ export function FeedbackForm() {
     dataToSend.append("product_id", data.product);
     dataToSend.append("text", data.message);
     dataToSend.append("evaluation", data.rating.toString());
-    dataToSend.append("feedback_images", new Blob(selectedFiles));
+    selectedFiles.forEach((file, index) => {
+      dataToSend.append(`images[${index}]`, file);
+    });
 
     feedbackService.postFeedback(dataToSend, authContext).then(success => {
       if (success) {

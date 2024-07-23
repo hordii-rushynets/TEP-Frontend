@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiCamera, FiUser } from "react-icons/fi";
 
 import { ButtonBase, Loader } from "common/ui";
@@ -17,9 +17,13 @@ interface ChangeAvatarFormProps {
 
 export function ChangeAvatarForm({profileImage, refresh, setRefresh} : ChangeAvatarFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [image] = useState<StaticImageData | string>(profileImage);
+  const [image, setImage] = useState<StaticImageData | string>(profileImage);
   const accountService = new AccountService();
   const authContext = useAuth();
+
+  useEffect(() => {
+    setImage(profileImage);
+  }, [profileImage]);
 
   return (
     <div className={"relative size-[184px]"}>
