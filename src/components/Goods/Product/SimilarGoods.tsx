@@ -56,7 +56,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
           }
         });
 
-        productsToShow = productsToShow.filter(productWithVar => productWithVar.id !== product?.id.toString())
+        productsToShow = productsToShow.filter(productWithVar => productWithVar.slug !== product?.slug)
 
         setProducts(productsToShow);
       }
@@ -139,10 +139,10 @@ type ProductCardProps = {
 };
 
 export default function Card({ product }: ProductCardProps) {
-  const { id, image, price, category_title, category_slug, title } = product;
+  const { id, slug, image, price, category_title, category_slug, title } = product;
   return (
     <Link
-      href={`${GoodsUrl.getPillows()}/${id}`}
+      href={`${GoodsUrl.getPillows()}/${slug}`}
       className={
         "group  mx-auto w-full max-w-[288px] overflow-hidden rounded-3xl p-2 transition-shadow hover:shadow"
       }
