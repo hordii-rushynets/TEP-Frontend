@@ -10,7 +10,7 @@ export class FavouriteService {
         this.daoService = new FavouriteDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getFavourites(authContext: any, staticData: StaticData, dontAuthAction: () => void): Promise<ProductToShow[]> {
+    public async getFavourites(authContext: any, staticData: StaticData, dontAuthAction: () => void): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
       const productsWithVariants = await this.daoService.getFavourites(authContext, dontAuthAction);
       const productsToShow = productsWithVariants ? productsWithVariants.map((product:any) => {
         let productVariant = product.product_variants[0];
@@ -30,7 +30,7 @@ export class FavouriteService {
           isFavourite: product.is_favorite
         }
       }) : [];
-      return productsToShow; 
+      return {productsWithVariant: productsWithVariants || [], productsToShow : productsToShow}; 
     }
 
     public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<void> {
