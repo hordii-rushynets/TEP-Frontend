@@ -105,6 +105,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
             </Button>
             {filters.slice(0, Math.floor(filters.length/2)).map((filter) =>
             <Button
+              key={filter.id}
               onClick={() => setIsFilterOpen(true)}
               size={"filter"}
               colorVariant={"filter"}
@@ -160,8 +161,9 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[127px] py-5"}>
-                  {sizes.map((size_name)=>
+                  {sizes.map((size_name, idx)=>
                     <FilterCheckbox
+                      key={idx}
                       checked={size[size_name]}
                       onChange={() =>
                         setSize((v) => ({ ...v, [size_name]: !v[size_name] }))
@@ -173,6 +175,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
               </DisclosureItem>
               {filters.map((filter) =>
               <DisclosureItem
+                key={filter.id}
                 trigger={filter[(`name_${staticData.backendPostfix}` || "name") as keyof DynamicFilter].toString()}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
@@ -180,6 +183,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 <div className={"max-w-[148px] gap-x-12 py-5"}>
                   {filter.filter_field?.map((field) =>
                   <FilterCheckbox
+                    key={field.id}
                     checked={dynamicFilterFields[field.id]}
                     onChange={() =>
                       setDynamicFilterFields((v) => ({ ...v, [field.id]: !v[field.id] }))
