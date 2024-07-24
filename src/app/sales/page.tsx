@@ -6,7 +6,7 @@ import { BigGrid } from "components/Goods/BigGrid";
 import SalesProductsList from "components/Goods/SalesProductsList";
 import { useState, useEffect } from "react";
 import { ProductForSaleService } from "./services"; 
-import { ProductToShow } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import { useLocalization } from "contexts/LocalizationContext";
 import IMG1 from "components/Goods/static/sales/img1.jpg";
 import IMG2 from "components/Goods/static/sales/img2.jpg";
@@ -21,13 +21,15 @@ const images = [IMG1, IMG2, IMG3, IMG4, IMG5, IMG6];
 
 export default function SalesPage() {
   const [products, setProducts] = useState<ProductToShow[]>([]);
+  const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [category, setCategory] = useState("");
   const { localization } = useLocalization();
 
   useEffect(()=>{
     const productsService = new ProductForSaleService();
     productsService.getProductsForSale(category, localization).then(products => {
-      setProducts(products);
+      setProducts(products.productsToShow);
+      setProductsWithVariants(products.productsWithVariant);
     })
   }, [category]);
 
@@ -55,7 +57,7 @@ export default function SalesPage() {
             <div className={"mb-6"}>
               <CategoriesFilter setCategory={setCategory}/>
             </div>
-            <BigGrid images_array={images} />
+            <BigGrid images_array={productsWithVariants.flatMap(product => product.product_variants.flatMap(variant => variant.variant_images.map(image => image.image)))} />
           </div>
         </Container>
       </Section>
