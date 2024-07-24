@@ -15,12 +15,20 @@ import {
 
 import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
+import { Address, ScopeOfWork, TypeOfEmployement, TypeOfWork } from "app/company/vacancies/interfaces";
+import { VacancyService } from "app/company/vacancies/services";
+import { generateDictionary, getTrueKeys } from "utils/helpers";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type VacanciesFiltersProps = {
   count: number;
+  onFilterChange: (key: string, value: string) => void
 };
 
-export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
+export default function VacanciesFilters({ count, onFilterChange }: VacanciesFiltersProps) {
+  const vacancyService = new VacancyService();
+  const { localization } = useLocalization();
+
   const [filter, setFilter] = useQueryParams(
     {
       query: withDefault(StringParam, ""),
@@ -33,21 +41,9 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
   const [searchInputValue, setSearchInputValue] = useState(filter.query);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [scope, setScope] = useState({
-    seamstress: false,
-    marketer: false,
-    accountant: false,
-    manager: false,
-  });
-  const [type, setType] = useState({
-    office: false,
-    production: false,
-  });
-  const [occupation, setOccupation] = useState({
-    fulltime: false,
-    parttime: false,
-    remote: false,
-  });
+  const [scope, setScope] = useState<{[key: string]: boolean}>({});
+  const [type, setType] = useState<{[key: string]: boolean}>({});
+  const [occupation, setOccupation] = useState<{[key: string]: boolean}>({});
   const [region, setRegion] = useState("");
   const [city, setCity] = useState("");
 
@@ -58,10 +54,61 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
         query: searchInputValue,
         page: "",
       }));
+      onFilterChange(`title_${localization}`, searchInputValue);
     }, 500);
 
     return () => clearTimeout(timeout);
   }, [searchInputValue, filter, setFilter]);
+
+  const [scopesOfWork, setScopesOfWork] = useState<ScopeOfWork[]>([]);
+  const [typesOfWork, setTypesOfWork] = useState<TypeOfWork[]>([]);
+  const [typesOfEmployement, setTypesOfEmployement] = useState<TypeOfEmployement[]>([]);
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  
+  useEffect(() => {
+    vacancyService.getScopesOfWork().then(scopes => {setScopesOfWork(scopes)});
+    vacancyService.getTypesOfEmployement().then(typesOfEmployement => {setTypesOfEmployement(typesOfEmployement)})
+    vacancyService.getTypesOfWork().then(typesOfWork => {setTypesOfWork(typesOfWork)})
+    vacancyService.getAddresses().then(addresses => {setAddresses(addresses)})
+  }, []);
+
+  useEffect(() => {
+    setScope(generateDictionary(scopesOfWork.map(scope => scope.name)));
+  }, [scopesOfWork]);
+
+  useEffect(() => {
+    setType(generateDictionary(typesOfWork.map(type => type.name)));
+  }, [typesOfWork]);
+
+  useEffect(() => {
+    setOccupation(generateDictionary(typesOfEmployement.map(occup => occup.name)));
+  }, [typesOfEmployement]);
+
+  useEffect(() => {
+    onFilterChange("scope_of_work", getTrueKeys(scope));
+  }, [scope]);
+
+  useEffect(() => {
+    onFilterChange("type_of_work", getTrueKeys(type));
+  }, [type]);
+
+  useEffect(() => {
+    onFilterChange("type_of_employment", getTrueKeys(occupation));
+  }, [occupation]);
+
+  useEffect(() => {
+    onFilterChange("region", region);
+  }, [region]);
+
+  useEffect(() => {
+    onFilterChange("city", city);
+  }, [city]);
+
+  const [isCleanButtonDisabled, setIsCleanButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    setIsCleanButtonDisabled(getTrueKeys(scope) + getTrueKeys(type) + getTrueKeys(occupation) + region + city === "");
+  }, [scope, type, occupation, region, city]);
 
   return (
     <>
@@ -122,7 +169,13 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
         </div>
       </div>
       <FilterDialog open={isOpen} onClose={() => setIsOpen(false)}>
-        <Skeleton count={4} title={"Фільтр"} onClick={() => setIsOpen(false)}>
+        <Skeleton count={count} title={"Фільтр"} onClick={() => setIsOpen(false)} isCleanButtonDisabled={isCleanButtonDisabled} cleanFIlter={() => {
+          setScope(generateDictionary(scopesOfWork.map(scope => scope.name)));
+          setType(generateDictionary(typesOfWork.map(type => type.name)));
+          setOccupation(generateDictionary(typesOfEmployement.map(occup => occup.name)));
+          setRegion("");
+          setCity("");
+        }}>
           <Disclosure>
             <DisclosureItem
               trigger={"Сфера роботи"}
@@ -130,34 +183,16 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <div className={"flex max-w-[144px] flex-col gap-y-5 py-5"}>
-                <FilterCheckbox
-                  checked={scope.seamstress}
-                  onChange={() =>
-                    setScope((v) => ({ ...v, seamstress: !v.seamstress }))
-                  }
-                  label={"Швачка"}
-                />
-                <FilterCheckbox
-                  checked={scope.marketer}
-                  onChange={() =>
-                    setScope((v) => ({ ...v, marketer: !v.marketer }))
-                  }
-                  label={"Маркетолог"}
-                />
-                <FilterCheckbox
-                  checked={scope.accountant}
-                  onChange={() =>
-                    setScope((v) => ({ ...v, accountant: !v.accountant }))
-                  }
-                  label={"Бугалтер"}
-                />
-                <FilterCheckbox
-                  checked={scope.manager}
-                  onChange={() =>
-                    setScope((v) => ({ ...v, manager: !v.manager }))
-                  }
-                  label={"Менеджер"}
-                />
+                {scopesOfWork.map(s => (
+                  <FilterCheckbox
+                    key={s.name}
+                    checked={scope[s.name]}
+                    onChange={() =>
+                      setScope((v) => ({ ...v, [s.name]: !v[s.name] }))
+                    }
+                    label={s[`name_${localization}` as keyof ScopeOfWork]}
+                  />
+                ))}
               </div>
             </DisclosureItem>
             <DisclosureItem
@@ -166,18 +201,16 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <div className={"flex max-w-[138px] flex-col gap-y-5 py-5"}>
-                <FilterCheckbox
-                  checked={type.office}
-                  onChange={() => setType((v) => ({ ...v, office: !v.office }))}
-                  label={"Офісна"}
-                />
-                <FilterCheckbox
-                  checked={type.production}
-                  onChange={() =>
-                    setType((v) => ({ ...v, production: !v.production }))
-                  }
-                  label={"Виробнича"}
-                />
+                {typesOfWork.map(t => (
+                  <FilterCheckbox
+                    key={t.name}
+                    checked={type[t.name]}
+                    onChange={() =>
+                      setType((v) => ({ ...v, [t.name]: !v[t.name] }))
+                    }
+                    label={t[`name_${localization}` as keyof TypeOfWork]}
+                  />
+                ))}
               </div>
             </DisclosureItem>
             <DisclosureItem
@@ -186,27 +219,16 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <div className={"flex max-w-[193px] flex-col gap-y-5 py-5"}>
-                <FilterCheckbox
-                  checked={occupation.fulltime}
-                  onChange={() =>
-                    setOccupation((v) => ({ ...v, fulltime: !v.fulltime }))
-                  }
-                  label={"Повна зайнятість"}
-                />
-                <FilterCheckbox
-                  checked={occupation.parttime}
-                  onChange={() =>
-                    setOccupation((v) => ({ ...v, parttime: !v.parttime }))
-                  }
-                  label={"Неповна зайнятість"}
-                />
-                <FilterCheckbox
-                  checked={occupation.remote}
-                  onChange={() =>
-                    setOccupation((v) => ({ ...v, remote: !v.remote }))
-                  }
-                  label={"Віддалено"}
-                />
+                {typesOfEmployement.map(e => (
+                  <FilterCheckbox
+                    key={e.name}
+                    checked={occupation[e.name]}
+                    onChange={() =>
+                      setOccupation((v) => ({ ...v, [e.name]: !v[e.name] }))
+                    }
+                    label={e[`name_${localization}` as keyof TypeOfEmployement]}
+                  />
+                ))}
               </div>
             </DisclosureItem>
             <DisclosureItem
@@ -219,12 +241,10 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
                   value={region}
                   onChange={setRegion}
                   display={"Ваша область"}
-                  options={[
-                    { label: "Львівська", value: "lviv" },
-                    { label: "Тернопільська", value: "ternopil" },
-                    { label: "Хмельницька", value: "khmelnytskyi" },
-                    { label: "Київська", value: "kyiv" },
-                  ]}
+                  options={addresses.map(address => ({
+                    label: address[`region_${localization}` as keyof Address],
+                    value: address.region
+                  }))}
                 />
               </div>
             </DisclosureItem>
@@ -238,12 +258,10 @@ export default function VacanciesFilters({ count }: VacanciesFiltersProps) {
                   value={city}
                   onChange={setCity}
                   display={"Ваше місто"}
-                  options={[
-                    { label: "Львів", value: "lviv" },
-                    { label: "Тернопіль", value: "ternopil" },
-                    { label: "Хмельницький", value: "khmelnytskyi" },
-                    { label: "Київ", value: "kyiv" },
-                  ]}
+                  options={addresses.map(address => ({
+                    label: address[`city_${localization}` as keyof Address],
+                    value: address.city
+                  }))}
                 />
               </div>
             </DisclosureItem>

@@ -69,3 +69,21 @@ export async function fetchWithAuth(url: string, options : RequestInit = {}, aut
 
   return response;
 }
+
+export const getTimeToShow = (time: string) : string => {
+  const date = new Date(time);
+  return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear().toString()}`
+}
+
+export function generateDictionary(keys: string[]): { [key: string]: boolean } {
+  const dictionary: { [key: string]: boolean } = {};
+  keys.forEach(key => {
+    dictionary[key] = false;
+  });
+  return dictionary;
+}
+
+export function getTrueKeys(obj: { [key: string]: boolean }): string { 
+  const trueKeys = Object.keys(obj).filter(key => obj[key]);
+  return trueKeys.join(',');
+}

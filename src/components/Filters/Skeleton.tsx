@@ -5,6 +5,7 @@ export type SkeletonProps = {
   children: React.ReactNode;
   count?: number;
   isSelected?: boolean;
+  isCleanButtonDisabled?: boolean;
   cleanFIlter?: () => void;
   onClick: () => void;
 };
@@ -14,6 +15,7 @@ export function Skeleton({
   children,
   count = 12,
   isSelected = true,
+  isCleanButtonDisabled = true,
   onClick,
   cleanFIlter,
 }: SkeletonProps) {
@@ -26,7 +28,7 @@ export function Skeleton({
       <div className={"flex w-full gap-x-2 overflow-auto pt-2"}>
         <Button
           fullWidth
-          disabled={isSelected}
+          disabled={isCleanButtonDisabled}
           onClick={cleanFIlter}
           className={{ button: "px-2 py-3" }}
         >

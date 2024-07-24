@@ -14,6 +14,7 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
 import { useAuth } from "contexts/AuthContext";
+import { getTimeToShow } from "utils/helpers";
 
 export type FeedbackCardProps = {
   feedback: Feedback;
@@ -25,11 +26,6 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
   const authContext = useAuth();
 
   const feedbackService = new FeedbackService();
-
-  const getTimeToShow = (time: string) : string => {
-    const date = new Date(time);
-    return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear().toString()}`
-  }
 
   return (
     <div
