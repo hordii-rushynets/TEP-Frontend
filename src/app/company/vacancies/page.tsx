@@ -1,12 +1,14 @@
-import { Suspense } from "react";
+"use client"
+
+import { Suspense, useEffect, useState } from "react";
 import { CompanyUrl } from "route-urls";
 
 import AnyQuestions from "common/AnyQuestions";
 import { Container, Loader, Section, Title } from "common/ui";
 import { VacanciesList } from "components/Company/Vacancies/VacanciesList";
 import VacanciesFilters from "components/Filters/VacanciesFilters";
-
-import { Vacancy, vacancies } from "./_data";
+import { Vacancy } from "./interfaces";
+import { VacancyService } from "./services";
 
 type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -17,6 +19,31 @@ export default function VacanciesPage({
 }: {
   searchParams: SearchParams;
 }) {
+  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+  const [filters, setFilters] = useState<{[key: string]: string}>({
+    "title_uk": "",
+    "title_en": "",
+    "title_ru": "",
+    "city": "",
+    "region": "",
+    "scope_of_work": "",
+    "type_of_work": "",
+    "type_of_employment": "",
+  });
+
+  const vacancyService = new VacancyService();
+
+  const handleFilterChange = (key: string, value: string) => {
+    setFilters({
+      ...filters,
+      [key]: value,
+    });
+  }
+
+  useEffect(() => {
+    vacancyService.getVacancies(filters).then(data => setVacancies(data));
+  }, [filters]);
+
   return (
     <>
       <Section className={"mt-12"}>
@@ -24,7 +51,7 @@ export default function VacanciesPage({
           <div>
             <Title className={"mb-6 md:mb-8"}>Вакансії</Title>
             <Suspense fallback={<Loader />}>
-              <VacanciesFilters count={vacancies.length} />
+              <VacanciesFilters count={vacancies.length} onFilterChange={handleFilterChange}/>
             </Suspense>
             <Results vacancies={vacancies} />
           </div>
