@@ -1,6 +1,6 @@
 import StaticData from "locals/dataInterface";
 import { ProductDAOService } from "./dao-services";
-import { ProductToShow } from "./page";
+import { ProductToShow, ProductWithVariant } from "./page";
 
 function filterExpiredProducts(viewedProducts: {id: string, expiry: number}[]):{id: string, expiry: number}[]{
     const now = new Date().getTime();
@@ -32,7 +32,7 @@ export class ProductService {
         }
     }
 
-    public async getPopularProducts(staticData: StaticData): Promise<ProductToShow[]> {
+    public async getPopularProducts(staticData: StaticData): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
       return await this.daoService.getPopularProducts().then(response => {
         if (response.ok) {return response.json();}
       }).then(data => {
@@ -40,7 +40,8 @@ export class ProductService {
           let productVariant = product.product_variants[0];
 
           return {
-            id: product.slug,
+            id: product.id,
+            slug: product.slug,
             title: product[`title_${staticData.backendPostfix}` || "title"],
             category_slug: product.category.slug,
             category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
@@ -53,7 +54,7 @@ export class ProductService {
           }
         });
 
-        return productsToShow;
+        return {productsWithVariant: data, productsToShow: productsToShow};
       });
     }
 }
