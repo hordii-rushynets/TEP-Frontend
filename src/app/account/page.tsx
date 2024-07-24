@@ -96,9 +96,9 @@ export default function AccountPage() {
               <>
                 <UserAddressForm />
               </>,
-              <>
-                <UserBankCardForm />
-              </>,
+              // <>
+              //   {/* <UserBankCardForm /> */}
+              // </>,
               <>
                 <UserSettings />
               </>,
