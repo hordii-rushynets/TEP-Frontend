@@ -10,7 +10,7 @@ export class FavouriteDAOService {
   
     public async getFavourites(authContext: any, dontAuthAction: () => void): Promise<ProductWithVariant[] | undefined> {
       try {
-        const response = await await fetchWithAuth(`${this.apiUrl}/api/store/products/favorite/`, {}, authContext)
+        const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/favorite/`, {}, authContext)
         if (response.status === 401) {
           dontAuthAction();
           return [];
@@ -18,8 +18,8 @@ export class FavouriteDAOService {
         if (!response.ok) {
           throw new Error("Failed to fetch favourite products");
         }
-        return response.json();
-  
+        const favourite_goods : ProductWithVariant[] = await response.json();
+        return favourite_goods;
       } catch (error) {
         console.log(error);
       }

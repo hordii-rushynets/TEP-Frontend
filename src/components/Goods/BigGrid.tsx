@@ -22,6 +22,8 @@ export function BigGrid({ images_array }: BigGridProps) {
     } else if (document.documentElement.clientWidth < 1024) {
       setImages(transformImagesArr(images_array, 4));
       setCount(4);
+    } else {
+      setImages(transformImagesArr(images_array));
     }
   }, [images_array]);
 
@@ -32,16 +34,18 @@ export function BigGrid({ images_array }: BigGridProps) {
           return <ImagesSection key={Idx} images={image} />;
         })}
       </div>
-      <Button
+      {images_array.length > count && <Button
         colorVariant={"black"}
         size={"large"}
         className={{ button: "mx-auto" }}
-        onClick={() =>
-          setImages((data) => [...data, images_array.slice(0, count)])
-        }
+        onClick={() => {
+          setImages((data) => [...data, images_array.slice(count, document.documentElement.clientWidth < 768 ? count + 2 : document.documentElement.clientWidth < 1024 ? count + 4 : count + 6)]);
+          setCount(document.documentElement.clientWidth < 768 ? count + 2 : document.documentElement.clientWidth < 1024 ? count + 4 : count + 6);
+        }}
       >
         Більше
       </Button>
+      }
     </>
   );
 }
@@ -50,6 +54,7 @@ export type ImagesSectionProps = {
   images: (StaticImageData | string)[];
 };
 export function ImagesSection({ images }: ImagesSectionProps) {
+  console.log(images);
   return (
     <div className={"columns-1 gap-6 md:columns-2 lg:columns-3"}>
       {images.map((image, Idx) => {
@@ -59,6 +64,8 @@ export function ImagesSection({ images }: ImagesSectionProps) {
             key={Idx}
             src={image}
             alt={"Image"}
+            width={500}
+            height={1000}
             className={cn("mb-6 w-full rounded-3xl object-cover", {
               "aspect-square": isSquare,
               "aspect-[3/5]": !isSquare,

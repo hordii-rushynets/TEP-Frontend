@@ -4,7 +4,7 @@ import { Tab } from "@headlessui/react";
 import { ReactNode } from "react";
 import { cn } from "utils/cn";
 
-const tabs = ["Обліковий запис", "Адреса", "Банківська картка", "Налаштування"];
+const tabs = ["Обліковий запис", "Адреса", "Налаштування"];
 
 export type AccountTabsProps = {
   tabsContent: ReactNode[];

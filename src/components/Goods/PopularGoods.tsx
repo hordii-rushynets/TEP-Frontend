@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { cn } from "utils/cn";
 
 import { Container, IconButton, Section, Title } from "common/ui";
-import BlanketIMG from "components/Goods/static/blanket.jpg";
 import ProductCard from "components/Home/ProductCard";
 import { ProductService } from "app/goods/[category]/services";
 import { useState, useEffect } from "react";
@@ -29,9 +28,13 @@ export function PopularGoods({
   const productService = new ProductService();
   const { staticData } = useLocalization();
   const [products, setProducts] = useState<ProductToShow[]>([]);
+  const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
 
   useEffect(() => {
-    productService.getPopularProducts(staticData).then(data => {setProducts(data);})
+    productService.getPopularProducts(staticData).then(data => {
+      setProducts(data.productsToShow);
+      setProductsWithVariants(data.productsWithVariant);
+    })
   }, []);
 
   return (
@@ -76,7 +79,7 @@ export function PopularGoods({
               <SwiperSlide key={product.id}>
                 <ProductCard
                   product={product}
-                  productWithVariant={{}as ProductWithVariant}
+                  productWithVariant={productsWithVariants.find(productWithVariants => productWithVariants.id.toString() === product.id) as ProductWithVariant}
                   hasCompare={false}
                   hasFavourite={false}
                 />

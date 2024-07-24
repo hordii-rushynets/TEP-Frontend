@@ -15,13 +15,17 @@ import { useAuth } from "contexts/AuthContext";
 
 export function Favourite() {
   const [favourite_goods, setFavouriteGoods] = useState<ProductToShow[]>([]);
+  const [goodsWithVariants, setGoodsWithVariants] = useState<ProductWithVariant[]>([]);
   const favouriteService = new FavouriteService();
   const { staticData } = useLocalization();
   const authContext = useAuth();
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    favouriteService.getFavourites(authContext, staticData, () => {}).then(products => setFavouriteGoods(products));
+    favouriteService.getFavourites(authContext, staticData, () => {}).then(products => {
+      setFavouriteGoods(products.productsToShow);
+      setGoodsWithVariants(products.productsWithVariant);
+    });
   }, [refresh]);
 
   if (!favourite_goods.length) {
@@ -68,7 +72,7 @@ export function Favourite() {
             }
           >
             {favourite_goods.map((favourite) => {
-              return <ProductCard key={favourite.id} product={favourite} refreshFav={refresh} setRefreshFav={setRefresh} productWithVariant={{}as ProductWithVariant} />;
+              return <ProductCard key={favourite.id} product={favourite} refreshFav={refresh} setRefreshFav={setRefresh} productWithVariant={goodsWithVariants.find(good => favourite.slug === good.slug) as ProductWithVariant} />;
             })}
           </div>
           <ButtonBase

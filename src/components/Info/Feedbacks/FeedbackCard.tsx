@@ -14,6 +14,8 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { Category } from "contexts/CategoriesContext";
 import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
 import { useAuth } from "contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+import { useNotificationContext } from "contexts/NotificationContext";
 import { getTimeToShow } from "utils/helpers";
 
 export type FeedbackCardProps = {
@@ -22,8 +24,10 @@ export type FeedbackCardProps = {
 };
 
 export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
-  const {localization} = useLocalization();
+  const {localization, staticData} = useLocalization();
   const authContext = useAuth();
+  const router = useRouter();
+  const { setIsOpen, setText } = useNotificationContext();
 
   const feedbackService = new FeedbackService();
 
@@ -96,7 +100,14 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
             onClick={() => {
-              feedbackService.likeFeedback(feedback.id, authContext).then(() => {refresh()});
+              feedbackService.likeFeedback(feedback.id, authContext).then(status => {
+                if (status === 401) {
+                  setText(staticData.auth.notifications.unautorized);
+                  setIsOpen(true);
+                  router.push('/sign-in');
+                }
+                refresh()
+              });
             }}
           >
             {feedback.user_vote !== null && feedback.user_vote ? <BiSolidLike className={"size-4"} /> : <BiLike className={"size-4"} />}
@@ -109,7 +120,14 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
           <ButtonBase
             className={{ button: "transition-colors hover:text-tep_blue-400" }}
             onClick={() => {
-              feedbackService.dislikeFeedback(feedback.id, authContext).then(() => {refresh()});
+              feedbackService.dislikeFeedback(feedback.id, authContext).then(status => {
+                if (status === 401) {
+                  setText(staticData.auth.notifications.unautorized);
+                  setIsOpen(true);
+                  router.push('/sign-in');
+                }
+                refresh()
+              });
             }}
           >
             {feedback.user_vote !== null && !feedback.user_vote ? <BiSolidDislike className={"size-4"} /> : <BiDislike className={"size-4"} />}
