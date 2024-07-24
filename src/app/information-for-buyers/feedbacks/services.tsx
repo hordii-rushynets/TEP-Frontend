@@ -17,11 +17,11 @@ export class FeedbackService {
         return await this.daoService.postFeedback(body, authContext);
     }
 
-    public async dislikeFeedback(id: number, authContext: any): Promise<void> {
+    public async dislikeFeedback(id: number, authContext: any): Promise<number> {
         return await this.daoService.dislikeFeedback(id, authContext);
     }
 
-    public async likeFeedback(id: number, authContext: any): Promise<void> {
+    public async likeFeedback(id: number, authContext: any): Promise<number> {
         return await this.daoService.likeFeedback(id, authContext);
     }
 }

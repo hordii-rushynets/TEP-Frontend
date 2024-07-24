@@ -38,14 +38,16 @@ export class FeedbackDAOService {
         }
     }
 
-    public async dislikeFeedback(id: number, authContext: any): Promise<void> {
+    public async dislikeFeedback(id: number, authContext: any): Promise<number> {
         try {
           const response = await fetchWithAuth(`${this.apiUrl}/api/store/feedback/${id}/dislike/`, {
             method: 'POST',
           }, authContext);
-          if (!response.ok) {
+          if (!response.ok && response.status !== 401) {
             throw new Error(`Error fetching feedbacks: ${response.statusText}`);
           }
+
+          return response.status;
 
         } catch (error) {
           console.error('Failed to fetch feedbacks:', error);
@@ -53,14 +55,17 @@ export class FeedbackDAOService {
         }
     }
 
-    public async likeFeedback(id: number, authContext: any): Promise<void> {
+    public async likeFeedback(id: number, authContext: any): Promise<number> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/store/feedback/${id}/like/`, {
           method: 'POST',
         }, authContext);
-        if (!response.ok) {
+        if (!response.ok && response.status !== 401) {
           throw new Error(`Error fetching feedbacks: ${response.statusText}`);
         }
+
+        return response.status;
+
 
       } catch (error) {
         console.error('Failed to fetch feedbacks:', error);
