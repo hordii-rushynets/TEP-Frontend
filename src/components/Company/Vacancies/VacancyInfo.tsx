@@ -1,26 +1,19 @@
-import { Vacancy } from "app/company/vacancies/_data";
+import { Address, Tag, TypeOfEmployement, Vacancy } from "app/company/vacancies/interfaces";
 import Link from "next/link";
 import { FiClock, FiMapPin, FiTag } from "react-icons/fi";
 import { CompanyUrl } from "route-urls";
+import { getTimeToShow } from "utils/helpers";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type VacancyInfoProps = {
   vacancy: Vacancy;
 };
 
 export function VacancyInfo({ vacancy }: VacancyInfoProps) {
-  const {
-    id,
-    city,
-    country,
-    occupation,
-    position,
-    requirements,
-    created_at,
-    description,
-    about_company,
-  } = vacancy;
+  const { localization } = useLocalization();
+
   return (
     <Section>
       <Container>
@@ -31,10 +24,10 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
             }
           >
             <Title component={"h4"} className={"mb-5 text-3xl"}>
-              {position}
+              {vacancy?.[`title_${localization}` as keyof Vacancy] as string}
             </Title>
             <span className={"text-sm text-tep_gray-500 lg:font-extralight"}>
-              {created_at}
+              {getTimeToShow(vacancy?.creation_time)}
             </span>
           </div>
           <div
@@ -45,39 +38,39 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
             <div className={"flex gap-x-2"}>
               <FiMapPin className={"size-4 shrink-0"} />
               <span>
-                {city}, {country}
+              {vacancy?.address[`city_${localization}` as keyof Address] as string}, {vacancy?.address[`region_${localization}` as keyof Address] as string}
               </span>
             </div>
             <div className={"flex gap-x-2"}>
               <FiClock className={"size-4 shrink-0"} />
-              <span>{occupation}</span>
+              <span>{vacancy?.type_of_employment[0][`name_${localization}` as keyof TypeOfEmployement] as string}</span>
             </div>
             <div className={"flex gap-x-2"}>
               <FiTag className={"size-4 shrink-0"} />
-              <span>{requirements.join(", ")}</span>
+              <span>{vacancy?.tag.map(tag => tag[`name_${localization}` as keyof Tag] as string).join(", ")}</span>
             </div>
           </div>
-          {description && (
+          {vacancy?.description && (
             <div className={"mb-7 lg:mb-12"}>
               <Title size={"xl"} className={"mb-5"}>
                 Опис
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
-                {description}
+                {vacancy?.[`description_${localization}` as keyof Vacancy] as string}
               </p>
             </div>
           )}
-          {about_company && (
+          {vacancy?.about_company && (
             <div className={"mb-10 md:mb-20 lg:mb-24"}>
               <Title size={"xl"} className={"mb-5"}>
                 Про компанію
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
-                {about_company}
+                {vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}
               </p>
             </div>
           )}
-          <Link href={CompanyUrl.getVacanciesRequest(id)}>
+          <Link href={CompanyUrl.getVacanciesRequest(vacancy?.id.toString())}>
             <Button
               fullWidth
               className={{ button: "sm:w-auto" }}

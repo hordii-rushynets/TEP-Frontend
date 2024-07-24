@@ -1,4 +1,4 @@
-import { Vacancy } from "app/company/vacancies/_data";
+import { Vacancy } from "app/company/vacancies/interfaces";
 
 import { VacancyCard } from "./VacancyCard";
 

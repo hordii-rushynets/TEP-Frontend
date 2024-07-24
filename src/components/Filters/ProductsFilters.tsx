@@ -17,6 +17,7 @@ import {
 import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
 import { useLocalization } from "contexts/LocalizationContext";
+import { generateDictionary, getTrueKeys } from "utils/helpers";
 
 export interface DynamicFilterField {
   id: number;
@@ -48,22 +49,8 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { staticData } = useLocalization();
 
-  function generateDictionary(keys: string[]): { [key: string]: boolean } {
-    const dictionary: { [key: string]: boolean } = {};
-    keys.forEach(key => {
-      dictionary[key] = false;
-    });
-    return dictionary;
-  }
-
   const [size, setSize] = useState(generateDictionary(sizes));
   const [dynamicFilterFields, setDynamicFilterFields] = useState<{ [key: string]: boolean }>({});
-
-  function getTrueKeys(obj: { [key: string]: boolean }): string { 
-    const trueKeys = Object.keys(obj).filter(key => obj[key]);
-    return trueKeys.join(',');
-  }
-
 
   useEffect(()=>{
     setFilterParams({...filterParams, ["size"]: getTrueKeys(size)});
@@ -130,7 +117,10 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
           open={isFilterOpen}
           onClose={() => setIsFilterOpen(false)}
         >
-          <Skeleton onClick={() => setIsFilterOpen(false)} count={count}>
+          <Skeleton onClick={() => setIsFilterOpen(false)} count={count} isCleanButtonDisabled={getTrueKeys(size) + getTrueKeys(dynamicFilterFields) === ""} cleanFIlter={() => {
+            setSize(generateDictionary(sizes));
+            setDynamicFilterFields({});
+          }}>
             <Disclosure>
               <DisclosureItem
                 trigger={"Сортувати"}

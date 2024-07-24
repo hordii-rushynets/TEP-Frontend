@@ -10,14 +10,28 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { useEffect, useState } from "react";
 import { Article } from "./blog/interfaces";
 import { useArticles } from "contexts/ArticlesContext";
-import { vacancies } from "./vacancies/_data";
+import { VacancyService } from "./vacancies/services";
+import { Vacancy } from "./vacancies/interfaces";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params.slug as string;
-  const vacancyPosition = vacancies.find((v) => v.id === slug)!;
-  const technology = technologies.find((t) => t.id === slug)!;
+
+  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+  const [filters, setFilters] = useState<{[key: string]: string}>({
+    "city": "",
+    "region": "",
+    "scope_of_work": "",
+    "type_of_work": "",
+    "type_of_employment": "",
+  });
+
+  const vacancyService = new VacancyService();
+
+  useEffect(() => {
+    vacancyService.getVacancies(filters).then(data => setVacancies(data));
+  }, [filters]);
 
   const { articles } = useArticles();
   const [loading, setLoading] = useState(true);
@@ -27,6 +41,9 @@ export function Breadcrumbs() {
     articles ? setLoading(false) : setLoading(true);
   }, [articles]);
   
+
+  const vacancyPosition = vacancies.find((v) => v.id.toString() === slug)!;
+  const technology = technologies.find((t) => t.id === slug)!;
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data
@@ -94,7 +111,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getVacancies(),
           },
           {
-            name: vacancyPosition?.position,
+            name: vacancyPosition?.[`title_${localization}` as keyof Vacancy] as string,
             href: `${CompanyUrl.getVacancies()}/${slug}`,
           },
         ];
@@ -106,7 +123,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getVacancies(),
           },
           {
-            name: vacancyPosition?.position,
+            name: vacancyPosition?.title,
             href: `${CompanyUrl.getVacancies()}/${slug}`,
           },
           {
@@ -122,7 +139,7 @@ export function Breadcrumbs() {
             href: CompanyUrl.getVacancies(),
           },
           {
-            name: vacancyPosition?.position,
+            name: vacancyPosition?.title,
             href: `${CompanyUrl.getVacancies()}/${slug}`,
           },
           {
