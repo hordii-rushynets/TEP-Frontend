@@ -12,20 +12,13 @@ export class VacancyService {
         return await this.daoService.getVacancies(filters);
     }
 
-    public async getTypesOfWork(): Promise<TypeOfWork[]> {
-        return await this.daoService.getTypesOfWork();
-    }
-
-    public async getTypesOfEmployement(): Promise<TypeOfEmployement[]> {
-        return await this.daoService.getTypesOfEmployement();
-    }
-
-    public async getScopesOfWork(): Promise<ScopeOfWork[]> {
-        return await this.daoService.getScopesOfWork();
-    }
-
-    public async getAddresses(): Promise<Address[]> {
-        return await this.daoService.getAddresses();
+    public async getFiltersValues(): Promise<{
+        scope_of_work: ScopeOfWork[];
+        type_of_work: TypeOfWork[];
+        type_of_employment: TypeOfEmployement[];
+        address: Address[];
+      }> {
+        return await this.daoService.getFiltersValues();
     }
 
     public async getVacancy(id: string): Promise<Vacancy> {

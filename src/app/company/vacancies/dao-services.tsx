@@ -24,60 +24,25 @@ export class VacancyDAOService {
       }
     }
 
-    public async getTypesOfWork(): Promise<TypeOfWork[]> {
+    public async getFiltersValues(): Promise<{
+      scope_of_work: ScopeOfWork[];
+      type_of_work: TypeOfWork[];
+      type_of_employment: TypeOfEmployement[];
+      address: Address[];
+    }> {
       try {
-        const response = await fetch(`${this.apiUrl}/api/vacancy/type-of-work/`);
+        const response = await fetch(`${this.apiUrl}/api/vacancy/full-data/`);
         if (!response.ok) {
             throw new Error("Failed to fetch vacancies");
           }
 
-        const typesOfWork : TypeOfWork[] = await response.json();
-        return typesOfWork;
-      } catch (error) {
-        console.error('Failed to fetch vacancies:', error);
-        throw error;
-      }
-    }
-
-    public async getScopesOfWork(): Promise<ScopeOfWork[]> {
-      try {
-        const response = await fetch(`${this.apiUrl}/api/vacancy/scope-of-work/`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch vacancies");
-          }
-
-        const scopesOfWork : ScopeOfWork[] = await response.json();
-        return scopesOfWork;
-      } catch (error) {
-        console.error('Failed to fetch vacancies:', error);
-        throw error;
-      }
-    }
-
-    public async getTypesOfEmployement(): Promise<TypeOfEmployement[]> {
-      try {
-        const response = await fetch(`${this.apiUrl}/api/vacancy/type-of-employment/`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch vacancies");
-          }
-
-        const typesOfEmployement : TypeOfEmployement[] = await response.json();
-        return typesOfEmployement;
-      } catch (error) {
-        console.error('Failed to fetch vacancies:', error);
-        throw error;
-      }
-    }
-
-    public async getAddresses(): Promise<Address[]> {
-      try {
-        const response = await fetch(`${this.apiUrl}/api/vacancy/address/`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch vacancies");
-          }
-
-        const addresses : Address[] = await response.json();
-        return addresses;
+        const filtersValues : {
+          scope_of_work: ScopeOfWork[];
+          type_of_work: TypeOfWork[];
+          type_of_employment: TypeOfEmployement[];
+          address: Address[];
+        } = await response.json();
+        return filtersValues;
       } catch (error) {
         console.error('Failed to fetch vacancies:', error);
         throw error;

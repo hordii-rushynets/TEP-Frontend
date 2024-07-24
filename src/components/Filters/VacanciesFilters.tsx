@@ -66,10 +66,12 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
   const [addresses, setAddresses] = useState<Address[]>([]);
   
   useEffect(() => {
-    vacancyService.getScopesOfWork().then(scopes => {setScopesOfWork(scopes)});
-    vacancyService.getTypesOfEmployement().then(typesOfEmployement => {setTypesOfEmployement(typesOfEmployement)})
-    vacancyService.getTypesOfWork().then(typesOfWork => {setTypesOfWork(typesOfWork)})
-    vacancyService.getAddresses().then(addresses => {setAddresses(addresses)})
+    vacancyService.getFiltersValues().then(filtersValues => {
+      setScopesOfWork(filtersValues.scope_of_work);
+      setTypesOfWork(filtersValues.type_of_work);
+      setTypesOfEmployement(filtersValues.type_of_employment);
+      setAddresses(filtersValues.address);
+    });
   }, []);
 
   useEffect(() => {
