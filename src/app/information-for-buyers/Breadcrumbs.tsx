@@ -83,7 +83,7 @@ export function Breadcrumbs() {
             href: InfoUrl.getQuestionsAndAnswers(),
           },
           {
-            name: category.topic,
+            name: "",
             href: InfoUrl.getQAACategory(slug),
           },
         ];

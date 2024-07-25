@@ -9,7 +9,6 @@ import { Disclosure } from "common/Disclosure";
 import { Container, Title } from "common/ui";
 import { ChangeLanguage } from "components/ChangeLanguage";
 import { companyLinks } from "components/Header/CompanyMenu";
-// import { categories } from "components/Header/GoodsMenu";
 import { useCategories, Category } from 'contexts/CategoriesContext';
 import { servicesLinks } from "components/Header/ServicesMenu";
 import { Socials } from "components/Socials";
