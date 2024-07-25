@@ -22,7 +22,7 @@ export const VariantInfoDefault : VariantInfo = {
 export const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number }  = {
   "suitable": (a: ProductToShow, b: ProductToShow) => {
     return randomInt(-1, 1);
-    //TO DO
+    //TO DO: Needs logic for sorting products from most suitable for user to less suitable
   },
   "asc": (a: ProductToShow, b: ProductToShow) => {
     return a.price - b.price;
