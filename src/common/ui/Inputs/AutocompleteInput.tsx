@@ -1,7 +1,9 @@
+"use client"
+
 import { Combobox, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment, HTMLAttributes, useState } from "react";
+import { Fragment, HTMLAttributes, useState, useEffect } from "react";
 import { FiArrowRight, FiGrid, FiSearch, FiStar, FiX } from "react-icons/fi";
 import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
@@ -10,59 +12,12 @@ import { ImageSquare } from "common/ImageSquare";
 import { Title } from "common/ui";
 import IMG from "components/Search/static/img.jpg";
 import { useSearchContext } from "contexts/SearchContext";
+import { ProductWithVariant } from "app/goods/[category]/page";
+import { SearchService } from "app/search/services";
+import { useLocalization } from "contexts/LocalizationContext";
+import { useAuth } from "contexts/AuthContext";
 
 const queries = ["постіль", "подушки", "чохли на подушку", "простинь"];
-
-const goods = [
-  {
-    id: "1",
-    title: "Постільна білизна",
-    category: "linens",
-    article: "1239931",
-    rating: 3.0,
-    image: IMG,
-  },
-  {
-    id: "2",
-    title: "Постільна білизна",
-    category: "linens",
-    article: "2133531",
-    rating: 5.0,
-    image: IMG,
-  },
-  {
-    id: "3",
-    title: "Постільна білизна",
-    category: "linens",
-    article: "2139976",
-    rating: 4.4,
-    image: IMG,
-  },
-  {
-    id: "4",
-    title: "Подушки",
-    category: "pillows",
-    article: "1239931",
-    rating: 3.7,
-    image: IMG,
-  },
-  {
-    id: "5",
-    title: "Подушки",
-    category: "pillows",
-    article: "2133531",
-    rating: 5.0,
-    image: IMG,
-  },
-  {
-    id: "6",
-    title: "Подушки",
-    category: "pillows",
-    article: "2139976",
-    rating: 4.0,
-    image: IMG,
-  },
-];
 
 export type AutocompleteInputProps = Pick<
   HTMLAttributes<HTMLElement>,
@@ -73,6 +28,9 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
   const [query, setQuery] = useState("");
   const { setSearchQuery } = useSearchContext();
   const router = useRouter();
+  const searchService = new SearchService();
+  const { staticData, localization } = useLocalization();
+  const authContext = useAuth();
 
   const filteredQueries =
     query === ""
@@ -81,12 +39,16 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
           return i.toLowerCase().includes(query?.toLowerCase());
         });
 
-  const filteredGoods =
-    query === ""
-      ? []
-      : goods.filter((p) => {
-          return p.title.toLowerCase().includes(query?.toLowerCase());
-        });
+  const [filteredGoods, setFilteredGoods] = useState<ProductWithVariant[]>([]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      query === "" ? setFilteredGoods([]) : 
+      searchService.getSearchProducts({[`title_${localization}`]: query}, staticData, authContext).then(products => setFilteredGoods(products.productsWithVariant))
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [query])
 
   return (
     <Combobox
@@ -163,7 +125,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                   filteredGoods.map((g) => (
                     <Combobox.Option
                       key={g.id}
-                      value={g.title}
+                      value={g[`title_${localization}` as keyof ProductWithVariant]}
                       className={"rounded-lg  transition-colors"}
                     >
                       {({ active }) => {
@@ -179,7 +141,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                             <div className={"size-[73px]"}>
                               <ImageSquare
                                 classes={{ wrapper: "rounded-xl" }}
-                                source={g.image}
+                                source={g.product_variants[0].main_image}
                               />
                             </div>
                             <div className={"flex-1"}>
@@ -188,10 +150,10 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                                 component={"h4"}
                                 size={"base"}
                               >
-                                {g.title}
+                                {g[`title_${localization}` as keyof ProductWithVariant] as string}
                               </Title>
                               <span className={"text-sm"}>
-                                Артикул №{g.article}
+                                Артикул №{g.product_variants[0].sku}
                               </span>
                             </div>
                             <div
@@ -205,7 +167,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                                   "pt-0.5 text-sm font-bold leading-[0]"
                                 }
                               >
-                                {g.rating}
+                                {g.average_rating}
                               </span>
                             </div>
                             <FiArrowRight className={"size-6"} />
@@ -219,10 +181,10 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                     {filteredQueries.map((q, Idx) => (
                       <Combobox.Option
                         key={Idx}
-                        // onClick={() => {
-                        //   setSearchQuery(q.label);
-                        //   setQuery(q.label);
-                        // }}
+                        onClick={() => {
+                          setSearchQuery(q);
+                          setQuery(q);
+                        }}
                         value={q}
                         className={
                           "rounded-lg transition-colors hover:bg-tep_blue-500 hover:text-white"
