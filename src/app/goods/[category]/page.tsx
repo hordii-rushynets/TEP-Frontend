@@ -117,6 +117,7 @@ export interface ProductWithVariant {
   description_uk: string;
   group_id: string;
   id: number;
+  images: {image: string}[];
   slug: string;
   title: string;
   title_en: string;
