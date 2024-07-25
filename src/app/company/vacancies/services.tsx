@@ -24,4 +24,9 @@ export class VacancyService {
     public async getVacancy(id: string): Promise<Vacancy> {
         return await this.daoService.getVacancy(id);
     }
+
+    public async postVacancyOffer(body: FormData): Promise<boolean> {
+        return await this.daoService.postVacancyOffer(body);
+    }
+
 }
