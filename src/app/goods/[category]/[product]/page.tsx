@@ -260,7 +260,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                 description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               />
               <SimilarGoods product={productWithVariant}/>
-              <InteriorLook />
+              {productWithVariant?.images.length !== 0 && <InteriorLook images={productWithVariant?.images || []}/>}
             </div>
             <div className={"hidden md:block"}></div>
           </div>

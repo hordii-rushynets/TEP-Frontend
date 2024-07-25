@@ -63,7 +63,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
     })
   }, [product]);
 
-  return (
+  return products.length !== 0 ? (
     <Section className={"mb-24"}>
       <Container>
         <div>
@@ -130,7 +130,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
         </div>
       </Container>
     </Section>
-  );
+  ) : <></>;
 }
 
 

@@ -32,22 +32,22 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
     <>
       <div className={"mb-24 mt-[72px] max-w-full"}>
         <Disclosure>
-          <DisclosureItem
+          {!(info.ecology_and_environment + info.material_and_care + info.packaging === "") && <DisclosureItem
             onClick={() => setIsInfoOpen(true)}
             trigger={
               <Title component={"h4"} size={"xl"}>
                 Інформація про товар
               </Title>
             }
-          />
-          <DisclosureItem
+          />}
+          {dimensionalGrid.length !== 0 && <DisclosureItem
             onClick={() => setIsSizeOpen(true)}
             trigger={
               <Title component={"h4"} size={"xl"}>
                 Розмірна сітка
               </Title>
             }
-          />
+          />}
           {!!feedbacks.length && (
             <DisclosureItem
               trigger={
@@ -91,7 +91,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
           }
         >
           <Disclosure>
-            <DisclosureItem
+            {info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString() && <DisclosureItem
               trigger={"Матеріали та догляд"}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
@@ -101,8 +101,8 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                   {info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}
                 </p>
               </div>
-            </DisclosureItem>
-            <DisclosureItem
+            </DisclosureItem>}
+            {info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString() && <DisclosureItem
               trigger={"Екологія та довкілля"}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
@@ -110,8 +110,8 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
               <p className={"text-sm lg:font-extralight"}>
                 {info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}
               </p>
-            </DisclosureItem>
-            <DisclosureItem
+            </DisclosureItem>}
+            {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() && <DisclosureItem
               trigger={"Упаковка"}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
@@ -121,11 +121,11 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                   {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString()}
                 </p>
               </div>
-            </DisclosureItem>
+            </DisclosureItem>}
           </Disclosure>
         </InfoSkeleton>
       </FilterDialog>
-      <FilterDialog open={isSizeOpen} onClose={() => setIsSizeOpen(false)}>
+      {dimensionalGrid.length !== 0 && <FilterDialog open={isSizeOpen} onClose={() => setIsSizeOpen(false)}>
         <InfoSkeleton title={"Розмірна сітка"}>
           <Disclosure>
             {dimensionalGrid.map(grid => (
@@ -155,7 +155,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
             ))}
           </Disclosure>
         </InfoSkeleton>
-      </FilterDialog>
+      </FilterDialog>}
     </>
   );
 }

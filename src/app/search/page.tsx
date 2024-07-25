@@ -93,7 +93,7 @@ export default function SearchPage() {
           </div>
         </Container>
       </Section>
-      {searchQuery && (
+      {searchQuery && products.length !== 0 && (
         <>
           <SearchFilters sort={sort} setSort={setSort} className={"border-none"} count={products.length} onFilterChange={handleFilterChange}/>
           <ProductsList activePage={1} products={products} productsWithVariants={productsWithVariants}/>
