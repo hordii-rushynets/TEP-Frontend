@@ -64,6 +64,17 @@ export class VacancyDAOService {
       }
     }
 
-    
+    public async postVacancyOffer(body: FormData): Promise<boolean> {
+      try {
+        const response = await fetch(`${this.apiUrl}/api/vacancy/cooperation-offer/`, {
+          method: "POST",
+          body: body,
+        });
+        return response.ok;
+      } catch (error) {
+        console.error('Failed to fetch vacancies:', error);
+        throw error;
+      }
+    }
   }
   
