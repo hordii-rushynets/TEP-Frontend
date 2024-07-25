@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { PiFadersBold } from "react-icons/pi";
 import { cn } from "utils/cn";
@@ -15,48 +15,79 @@ import {
 } from "common/ui";
 
 import {
-  BlueCheckbox,
-  DarkGreenCheckbox,
-  DarkPinkCheckbox,
-  GreenCheckbox,
-  LightBlueCheckbox,
-  LightGreenCheckbox,
-  PinkCheckbox,
-  WhiteCheckbox,
+  ColorCheckbox,
 } from "./ColorCheckboxes";
 import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
+import { Color, Material, Size } from "app/goods/[category]/page";
+import { SearchService } from "app/search/services";
+import { generateDictionary, getTrueKeys } from "utils/helpers";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type SearchFiltersProps = {
   count: number;
+  onFilterChange: (key: string, value: string) => void;
+  sort: string;
+  setSort: (v: string) => void;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export default function SearchFilters({
   count,
   className,
+  onFilterChange,
+  sort, 
+  setSort
 }: SearchFiltersProps) {
+  const { localization } = useLocalization();
+
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sort, setSort] = useState("suitable");
-  const [color, setColor] = useState({
-    blue: false,
-    light_blue: false,
-    dark_green: false,
-    green: false,
-    light_green: false,
-    pink: false,
-    dark_pink: false,
-    white: false,
-  });
-  const [fabric, setFabric] = useState({
-    velor: false,
-    microfiber: false,
-  });
-  const [size, setSize] = useState({
-    "150х210": false,
-    "180х240": false,
-    "220х240": false,
-    "240х260": false,
-  });
+  const [color, setColor] = useState<{[key: string]: boolean}>({});
+  const [material, setMaterial] = useState<{[key: string]: boolean}>({});
+  const [size, setSize] = useState<{[key: string]: boolean}>({});
+
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [colors, setColors] = useState<Color[]>([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
+
+  const searchService = new SearchService();
+
+  useEffect(() => {
+    searchService.getSearchFilterFields().then(filtersValues => {
+      setSizes(filtersValues.size);
+      setColors(filtersValues.color);
+      setMaterials(filtersValues.material);
+    });
+  }, []);
+
+  useEffect(() => {
+    setSize(generateDictionary(sizes.map(size => size.title)));
+  }, [sizes]);
+
+  useEffect(() => {
+    setColor(generateDictionary(colors.map(color => color.title)));
+  }, [colors]);
+
+  useEffect(() => {
+    setMaterial(generateDictionary(materials.map(material => material.title)));
+  }, [materials]);
+
+  useEffect(() => {
+    onFilterChange("size", getTrueKeys(size));
+  }, [size]);
+
+  useEffect(() => {
+    onFilterChange("color", getTrueKeys(color));
+  }, [color]);
+
+  useEffect(() => {
+    onFilterChange("material", getTrueKeys(material));
+  }, [material]);
+
+  const [isCleanButtonDisabled, setIsCleanButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    setIsCleanButtonDisabled(getTrueKeys(size) + getTrueKeys(color) + getTrueKeys(material) === "");
+  }, [size, material, color]);
 
   return (
     <Section className={"overflow-x-hidden"}>
@@ -105,13 +136,6 @@ export default function SearchFilters({
             </Button>
             <Button
               onClick={() => setIsFilterOpen(true)}
-              size={"filter"}
-              colorVariant={"filter"}
-            >
-              Тип
-            </Button>
-            <Button
-              onClick={() => setIsFilterOpen(true)}
               endIcon={<PiFadersBold className={"size-6"} />}
               size={"filter"}
               colorVariant={"filter"}
@@ -127,7 +151,11 @@ export default function SearchFilters({
           open={isFilterOpen}
           onClose={() => setIsFilterOpen(false)}
         >
-          <Skeleton onClick={() => setIsFilterOpen(false)}>
+          <Skeleton count={count} onClick={() => setIsFilterOpen(false)} isCleanButtonDisabled={isCleanButtonDisabled} cleanFIlter={() => {
+              setSize(generateDictionary(sizes.map(size => size.title)));
+              setColor(generateDictionary(colors.map(color => color.title)));
+              setMaterial(generateDictionary(materials.map(material => material.title)));
+            }}>
             <Disclosure>
               <DisclosureItem
                 trigger={"Сортувати"}
@@ -158,84 +186,31 @@ export default function SearchFilters({
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"grid grid-cols-4 gap-y-8 py-5"}>
-                  <BlueCheckbox
-                    checked={color.blue}
-                    onChange={() => setColor((v) => ({ ...v, blue: !v.blue }))}
-                    label={"Синій"}
-                  />
-                  <LightBlueCheckbox
-                    checked={color.light_blue}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, light_blue: !v.light_blue }))
-                    }
-                    label={"Блакитний"}
-                  />
-                  <DarkGreenCheckbox
-                    checked={color.dark_green}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, dark_green: !v.dark_green }))
-                    }
-                    label={"Темно зелений"}
-                  />
-                  <GreenCheckbox
-                    checked={color.green}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, green: !v.green }))
-                    }
-                    label={"Зелений"}
-                  />
-                  <LightGreenCheckbox
-                    checked={color.light_green}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, light_green: !v.light_green }))
-                    }
-                    label={"Світло зелений"}
-                  />
-                  <PinkCheckbox
-                    checked={color.pink}
-                    onChange={() => setColor((v) => ({ ...v, pink: !v.pink }))}
-                    label={"Рожевий"}
-                  />
-                  <DarkPinkCheckbox
-                    checked={color.dark_pink}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, dark_pink: !v.dark_pink }))
-                    }
-                    label={"Темно рожевий"}
-                  />
-                  <WhiteCheckbox
-                    checked={color.white}
-                    onChange={() =>
-                      setColor((v) => ({ ...v, white: !v.white }))
-                    }
-                    label={"Білий"}
-                  />
+                  {colors.map(c => 
+                    <ColorCheckbox
+                      checked={color[c.title]}
+                      onChange={() => setColor((v) => ({ ...v, [c.title]: !v[c.title] }))}
+                      label={c[`title_${localization}` as keyof Color]}
+                      hex={c.hex}
+                    />
+                  )}
                 </div>
               </DisclosureItem>
               <DisclosureItem
-                trigger={"Тканина"}
+                trigger={"Матеріал"}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[142px] py-5"}>
-                  <FilterCheckbox
-                    checked={fabric.velor}
-                    onChange={() =>
-                      setFabric((v) => ({ ...v, velor: !v.velor }))
-                    }
-                    label={"Велюр"}
-                  />
-                  <FilterCheckbox
-                    checked={fabric.microfiber}
-                    onChange={() =>
-                      setFabric((v) => ({
-                        ...v,
-                        microfiber: !v.microfiber,
-                      }))
-                    }
-                    label={"Мікрофібра"}
-                    className={{ wrapper: "mt-5" }}
-                  />
+                  {materials.map(m => 
+                    <FilterCheckbox
+                      checked={material[m.title]}
+                      onChange={() =>
+                        setMaterial((v) => ({ ...v, [m.title]: !v[m.title] }))
+                      }
+                      label={m[`title_${localization}` as keyof Material]}
+                    />
+                  )}
                 </div>
               </DisclosureItem>
               <DisclosureItem
@@ -244,46 +219,15 @@ export default function SearchFilters({
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[127px] py-5"}>
-                  <FilterCheckbox
-                    checked={size["150х210"]}
-                    onChange={() =>
-                      setSize((v) => ({ ...v, "150х210": !v["150х210"] }))
-                    }
-                    label={"150 х 210"}
-                  />
-                  <FilterCheckbox
-                    checked={size["180х240"]}
-                    onChange={() =>
-                      setSize((v) => ({
-                        ...v,
-                        "180х240": !v["180х240"],
-                      }))
-                    }
-                    label={"180 х 240"}
-                    className={{ wrapper: "mt-5" }}
-                  />
-                  <FilterCheckbox
-                    checked={size["220х240"]}
-                    onChange={() =>
-                      setSize((v) => ({
-                        ...v,
-                        "220х240": !v["220х240"],
-                      }))
-                    }
-                    label={"220 х 240"}
-                    className={{ wrapper: "mt-5" }}
-                  />
-                  <FilterCheckbox
-                    checked={size["240х260"]}
-                    onChange={() =>
-                      setSize((v) => ({
-                        ...v,
-                        "240х260": !v["240х260"],
-                      }))
-                    }
-                    label={"240 х 260"}
-                    className={{ wrapper: "mt-5" }}
-                  />
+                  {sizes.map(s => 
+                    <FilterCheckbox
+                      checked={size[s.title]}
+                      onChange={() =>
+                        setSize((v) => ({ ...v, [s.title]: !v[s.title] }))
+                      }
+                      label={s[`title_${localization}` as keyof Size]}
+                    />
+                  )}
                 </div>
               </DisclosureItem>
             </Disclosure>

@@ -6,3 +6,4 @@ export * from "./LightBlueCheckbox";
 export * from "./LightGreenCheckbox";
 export * from "./PinkCheckbox";
 export * from "./WhiteCheckbox";
+export * from "./ColorCheckBox";

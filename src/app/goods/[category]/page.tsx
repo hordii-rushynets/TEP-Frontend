@@ -20,44 +20,7 @@ import { useEffect, useState } from "react";
 import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 
-const randomInt = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-
-const sortings : { [key: string]: (a: ProductToShow, b: ProductToShow) => number }  = {
-  "suitable": (a: ProductToShow, b: ProductToShow) => {
-    return randomInt(-1, 1);
-    //TO DO
-  },
-  "asc": (a: ProductToShow, b: ProductToShow) => {
-    return a.price - b.price;
-  },
-  "desc": (a: ProductToShow, b: ProductToShow) => {
-    return b.price - a.price;
-  },
-  "new": (a: ProductToShow, b: ProductToShow) => {
-    if (a.date > b.date) {
-      return -1;
-    }
-    if (a.date < b.date) {
-      return 1;
-    }
-    return 0;
-  },
-  "title": (a: ProductToShow, b: ProductToShow) => {
-    if (a.title < b.title) {
-      return -1;
-    }
-    if (a.title > b.title) {
-      return 1;
-    }
-    return 0;
-  },
-  "popular": (a: ProductToShow, b: ProductToShow) => {
-    return b.number_of_views - a.number_of_views;
-  },
-}
+import { sortings } from "./defaultValues";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -159,6 +122,7 @@ export interface ProductWithVariant {
   title_en: string;
   title_uk: string;
   number_of_views: number;
+  average_rating: number
   last_modified: string;
   product_variants: ProductVariant[];
   is_favorite: boolean;
