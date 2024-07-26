@@ -30,10 +30,10 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
   useEffect(() => {
     const articleService = new ArticleService();
 
-    articleService.getArticles()
+    articleService.getArticles("1")
       .then(
         articles => {
-          setArticles(articles);
+          setArticles(articles.results);
           setLoading(false);
         }
       )

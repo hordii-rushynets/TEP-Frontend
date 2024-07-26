@@ -23,6 +23,9 @@ import TopicIMG8 from "components/Company/Blog/static/topic-img8.jpg";
 import { WithColorFillingBlock } from "components/WithColorFillingBlock";
 import { Article } from "./interfaces";
 import { useArticles } from "contexts/ArticlesContext";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+import { useLocalization } from "contexts/LocalizationContext";
 
 // export type Article = {
 //   id: string;
@@ -514,13 +517,28 @@ import { useArticles } from "contexts/ArticlesContext";
 // ];
 
 export default function BlogPage() {
-  const { articles } = useArticles();
+  const { articles, number_of_pages, refreshArticles } = useArticles();
   const [loading, setLoading] = useState(true);
+  const [activePage, setActivePage] = useState(1);
+  const { localization } = useLocalization();
 
   useEffect(() => {
     articles ? setLoading(false) : setLoading(true);
     console.log(articles);
   }, [articles]);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const handlePageChange = (page: string) => {
+      refreshArticles(page);
+    };
+
+    if (searchParams.get("page")) {
+      handlePageChange(searchParams.get("page") as string);
+      setActivePage(Number(searchParams.get("page")));
+    }
+  }, [searchParams]);
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data
@@ -528,31 +546,31 @@ export default function BlogPage() {
 
   return (
     <>
-      <BlogHead articles={articles.slice(0, 5)} />
-      <WithColorFillingBlock
-        image={TextilesIMG}
-        title={"Текстиль та тренди 2021"}
-        link={CompanyUrl.getArticle(articles[0].id)}
+      <BlogHead articles={articles.slice(0, 6)} />
+      {articles[6] && <WithColorFillingBlock
+        image={articles[6]?.image || ""}
+        title={articles[6]?.[`title_${localization}` as keyof Article] as string}
+        link={CompanyUrl.getArticle(articles[6]?.id)}
         bgColor={"bg-[#65A9A0]"}
-      />
+      />}
       <Section>
         <Container>
           <div className={"my-24"}>
-            <BlogGrid articles={articles.slice(2).reverse()} />
+            <BlogGrid articles={articles.slice(7, 13)} />
           </div>
         </Container>
       </Section>
-      <WithColorFillingBlock
-        image={CareOfPillowsIMG}
-        title={"Догляд за подушками"}
-        link={CompanyUrl.getArticle(articles[0].id)}
+      {articles[14] && <WithColorFillingBlock
+        image={articles[14]?.image || ""}
+        title={articles[14]?.[`title_${localization}` as keyof Article] as string}
+        link={CompanyUrl.getArticle(articles[14]?.id)}
         bgColor={"bg-[#703F4D]"}
-      />
+      />}
       <Section>
         <Container>
           <div className={"mb-24 mt-24 flex flex-col gap-y-[72px]"}>
-            <BlogGrid articles={articles.slice(3, 6)} />
-            <Pagination total={3} activePage={1} />
+            <BlogGrid articles={articles.slice(15)} />
+            <Pagination total={number_of_pages} activePage={activePage} />
           </div>
         </Container>
       </Section>
