@@ -30,8 +30,6 @@ export const technologies = [
   {
     id: "1",
     title: "Технологія пошиття ковдр Membrana Print",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: BlanketsIMG,
     details: [
       {
@@ -59,8 +57,6 @@ export const technologies = [
   {
     id: "2",
     title: "Технологія пошиття подушок Membrana Print",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: PillowsIMG,
     details: [
       {
@@ -83,8 +79,6 @@ export const technologies = [
   {
     id: "3",
     title: "Технологія Ultrasonic",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: UltrasonicIMG,
     details: [
       {
@@ -97,8 +91,6 @@ export const technologies = [
   {
     id: "4",
     title: "Технологія волокна Double Air/Quadra Air.",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: FibersIMG,
     details: [
       {
@@ -116,8 +108,6 @@ export const technologies = [
   {
     id: "5",
     title: "Технологія пошиття наматрацників",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: ToppersIMG,
     details: [
       {
@@ -145,8 +135,6 @@ export const technologies = [
   {
     id: "6",
     title: "Технологія пошиття постільної білизни",
-    description:
-      "Декілька слів про технологію без технічних подробиць. Декілька слів про технологію без жодних подробиць. Декілька слів про технологію без подробиць.",
     image: LinensIMG,
     details: [
       {
@@ -201,7 +189,6 @@ export function Technologies() {
             <SimpleCard
               key={tech.id}
               title={tech.title}
-              description={tech.description}
               source={tech.image}
               url={`${CompanyUrl.getTechnologies()}/${tech.id}`}
             />

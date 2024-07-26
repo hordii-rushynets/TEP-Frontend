@@ -30,6 +30,7 @@ import { FavouriteService } from "app/account/favourite/services";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
 import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
+import NotFound from "app/not-found";
 
 const product = {
   id: "1",
@@ -113,6 +114,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const [IsFavourite, setIsFavourite] = useState(false);
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const productService = new ProductService();
@@ -122,15 +124,17 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
       if (response.status === 200) {
         return response.json();
       }
-      return
+      setNotFound(true);
     })
     .then(data => {
-      setProductVariants(data.product_variants);
-      setProduct(data);
-      setIsFavourite(data.is_favorite);
-      productService.viewProduct(data.id);
-      if (!searchParams.article) {
-        router.push(`${pathname}?article=${data.product_variants[0].sku}`);
+      if (data !== undefined) {
+        setProductVariants(data.product_variants);
+        setProduct(data);
+        setIsFavourite(data.is_favorite);
+        productService.viewProduct(data.id);
+        if (!searchParams.article) {
+          router.push(`${pathname}?article=${data.product_variants[0].sku}`);
+        }
       }
     });
   }, []);
@@ -181,7 +185,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
     return filters.length === Object.keys(selectedFilters).length;
   }
 
-  return (
+  return !notFound ? (
     <>
       <Section>
         <Container>
@@ -193,7 +197,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               colors={colors}
               description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
               isInStock={currentVariant?.count && isCurrVariantFound ? true : false}
-              price={currentVariant?.default_price || 0}
+              price={currentVariant?.promotion ? currentVariant.promo_price : currentVariant?.default_price || 0}
               sizes={sizes}
               title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
               count={count}
@@ -268,5 +272,5 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
       </Section>
       <RecommendedGoods className={"mb-40 lg:mb-64"} />
     </>
-  );
+  ) : <NotFound />;
 }

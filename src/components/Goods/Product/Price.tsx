@@ -15,7 +15,7 @@ export function Price({
   salePrice,
   className,
 }: PriceProps) {
-  return !isSale && !salePrice ? (
+  return !isSale || !salePrice ? (
     <Title size={"2xl"} component={"h6"} className={className}>
       <span className={"whitespace-nowrap"}>
         {price}
