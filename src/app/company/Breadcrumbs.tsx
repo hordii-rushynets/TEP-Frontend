@@ -8,48 +8,46 @@ import { technologies } from "components/Company/Technologies/Technologies";
 import { useLocalization } from "contexts/LocalizationContext";
 
 import { useEffect, useState } from "react";
-import { Article } from "./blog/interfaces";
+import { Article, ArticleDefault } from "./blog/interfaces";
 import { useArticles } from "contexts/ArticlesContext";
 import { VacancyService } from "./vacancies/services";
-import { Vacancy } from "./vacancies/interfaces";
+import { Vacancy, VacancyDefault } from "./vacancies/interfaces";
+import { ArticleService } from "./blog/services";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params.slug as string;
 
-  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
-  const [filters, setFilters] = useState<{[key: string]: string}>({
-    "city": "",
-    "region": "",
-    "scope_of_work": "",
-    "type_of_work": "",
-    "type_of_employment": "",
-  });
-
   const vacancyService = new VacancyService();
+  const articleService = new ArticleService();
 
   useEffect(() => {
-    vacancyService.getVacancies(filters).then(data => setVacancies(data));
-  }, [filters]);
+    try {
+      vacancyService.getVacancy(slug).then(vacancy => setVacancy(vacancy));
+      articleService.getArticle(slug).then(article => setArticle(article));
+    }
+    catch {
+      
+    }
+  }, [slug]);
 
-  const { articles } = useArticles();
   const [loading, setLoading] = useState(true);
   const { localization } = useLocalization();
+  const [ article, setArticle] = useState<Article>(ArticleDefault);
+  const [ vacancyPosition, setVacancy ] = useState<Vacancy>(VacancyDefault);
 
   useEffect(() => {
-    articles ? setLoading(false) : setLoading(true);
-  }, [articles]);
+    article ? setLoading(false) : setLoading(true);
+  }, [article]);
   
-
-  const vacancyPosition = vacancies.find((v) => v.id.toString() === slug)!;
   const technology = technologies.find((t) => t.id === slug)!;
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data
   }
 
-  const article = articles.find((a) => a.id == slug)!;
+  
 
   const items = (() => {
     const base = [

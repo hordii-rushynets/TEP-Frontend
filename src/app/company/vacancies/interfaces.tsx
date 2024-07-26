@@ -12,6 +12,20 @@ export interface Vacancy {
     creation_time: string;
 }
 
+export const VacancyDefault = {
+    id: 0,
+    image: "",
+    title: "",
+    address: {city: "", region: ""},
+    description: "",
+    about_company: "",
+    scope_of_work: [],
+    type_of_work: [],
+    type_of_employment: [],
+    tag: [],
+    creation_time: "",
+}
+
 export interface Address {
     city: string;
     region: string;

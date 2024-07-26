@@ -22,7 +22,7 @@ export default function BlogGrid({ articles = [] }: BlogGridProps) {
           key={article.id}
           source={article.image}
           title={article[`title_${localization}` as keyof Article] as string}
-          url={CompanyUrl.getArticle(article.id)}
+          url={CompanyUrl.getArticle(article.slug)}
         />
       ))}
     </div>

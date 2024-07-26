@@ -12,4 +12,8 @@ export class ArticleService {
     public async getArticles(page: string): Promise<{count: number; next: string; prvious: string; results: Article[]}> {
         return this.daoService.getArticles(page)
     }
+
+    public async getArticle(slug: string): Promise<Article> {
+        return this.daoService.getArticle(slug)
+    }
 }

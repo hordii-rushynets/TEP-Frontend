@@ -6,26 +6,28 @@ import { MoreArticles } from "components/Company/Blog/MoreArticles";
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import { useEffect, useState } from "react";
-import { Article, Tag } from "../interfaces";
-import { useArticles } from "contexts/ArticlesContext";
+import { Article, ArticleDefault, Tag } from "../interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ArticleService } from "../services";
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const { articles } = useArticles();
+  const [article, setArticle] = useState<Article>(ArticleDefault);
   const [loading, setLoading] = useState(true);
+  const articleService = new ArticleService();
 
   useEffect(() => {
-    articles ? setLoading(false) : setLoading(true);
-  }, [articles]);
+    article.id ? setLoading(false) : setLoading(true);
+  }, [article]);
+
+  useEffect(() => {
+    articleService.getArticle(params.slug).then(article => setArticle(article));
+  }, [])
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data
   }
 
-  const article = articles.find((article) => article.id == params.slug)!;
   const { localization } = useLocalization();
-
-  console.log('\n\n ', localization, '\n\n ',)
 
   return (
     <>

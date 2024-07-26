@@ -8,6 +8,7 @@ export interface Tag {
 
 export type Article = {
   id: string;
+  slug: string;
   title_uk: string;
   title_en: string;
   tags: Tag[];
@@ -55,6 +56,7 @@ export type Article = {
 
 export const ArticleDefault : Article = {
   id: "",
+  slug: "",
   title_uk: "",
   title_en: "",
   tags: [],

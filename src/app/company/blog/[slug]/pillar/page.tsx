@@ -19,12 +19,12 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { useArticles } from "contexts/ArticlesContext";
 
 export default function PillarPage({ params }: { params: { slug: string } }) {
-  const { articles } = useArticles();
   const [article, setArticle] = useState<Article>(ArticleDefault);
+  const articleService = new ArticleService();
 
   useEffect(() => {
-    setArticle(articles.find((article) => article.id == params.slug)!);
-  } , [articles]);
+    articleService.getArticle(params.slug).then(article => setArticle(article));
+  } , []);
 
   const { localization } = useLocalization();
 
