@@ -54,7 +54,6 @@ export type ImagesSectionProps = {
   images: (StaticImageData | string)[];
 };
 export function ImagesSection({ images }: ImagesSectionProps) {
-  console.log(images);
   return (
     <div className={"columns-1 gap-6 md:columns-2 lg:columns-3"}>
       {images.map((image, Idx) => {

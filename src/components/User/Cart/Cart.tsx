@@ -5,7 +5,6 @@ import { AuthUrl, MainUrl, PurchaseUrl } from "route-urls";
 import { useState, useEffect } from "react";
 
 import { Button, ButtonBase, Container, Section, Title } from "common/ui";
-import { orders } from "components/User/OrderHistory/OrderHistory";
 
 import { CartList } from "./CartList";
 import { TotalPriceBlock } from "./TotalPriceBlock";
@@ -56,7 +55,7 @@ export function Cart() {
                     "flex flex-col gap-4 md:flex-row md:justify-center"
                   }
                 >
-                  <Link href={AuthUrl.getSignIn()}>
+                  {!authContext.isAuthenticated && <Link href={AuthUrl.getSignIn()}>
                     <Button
                       size={"super-large"}
                       fullWidth
@@ -64,7 +63,7 @@ export function Cart() {
                     >
                       Увійти
                     </Button>
-                  </Link>
+                  </Link>}
                   <Link href={MainUrl.getGoods()}>
                     <Button size={"large"} fullWidth>
                       Перейти до товарів

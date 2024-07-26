@@ -1,7 +1,7 @@
 "use client";
 
 import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,21 +10,37 @@ import { cn } from "utils/cn";
 import { Container, IconButton, Section, Title } from "common/ui";
 import ProductCard from "components/Home/ProductCard";
 
-import BlankedIMG from "./static/blanket.jpg";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { ProductService } from "app/goods/[category]/services";
+import { useLocalization } from "contexts/LocalizationContext";
+import { useAuth } from "contexts/AuthContext";
 
 type RecommendedGoodsProps = {
   title?: string;
+  product_slug? : string;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function RecommendedGoods({
   title = "Рекомендації для тебе",
+  product_slug = "",
   className,
 }: RecommendedGoodsProps) {
-  return (
+  const productService = new ProductService();
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+  const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
+  const { staticData } = useLocalization();
+  const authContext = useAuth();
+
+  useEffect(() => {
+    productService.getRecommendedGoods(staticData, authContext, product_slug).then(goods => {
+      setProducts(goods.productsToShow);
+      setProductsWithVariants(goods.productsWithVariant);
+    });
+  }, [product_slug]);
+
+  return products.length !== 0 ? (
     <Section className={cn("mb-[110px] overflow-hidden", className)}>
       <Container>
         <div>
@@ -64,7 +80,12 @@ export function RecommendedGoods({
           >
             {products.map((product) => (
               <SwiperSlide key={product.id}>
-                <ProductCard product={product} productWithVariant={{}as ProductWithVariant}/>
+                <ProductCard 
+                  product={product} 
+                  productWithVariant={productsWithVariants.find(productWithVariants => productWithVariants.slug === product.slug) as ProductWithVariant}
+                  hasFavourite={false}
+                  hasCompare={false}
+                />
               </SwiperSlide>
             ))}
             <IconButton
@@ -93,107 +114,5 @@ export function RecommendedGoods({
         </div>
       </Container>
     </Section>
-  );
+  ) : <></>;
 }
-
-export const products: ProductToShow[] = [
-  {
-    id: "1",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "2",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "3",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "4",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "5",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "6",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 699,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "7",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 1099,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "8",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 899,
-    number_of_views: 1,
-    date: ""
-  },
-  {
-    id: "9",
-    slug: "",
-    image: BlankedIMG,
-    title: "ВОРЕЛЬД",
-    category_title: "Ковдра",
-    category_slug: "sheets",
-    price: 299,
-    number_of_views: 1,
-    date: ""
-  },
-];
