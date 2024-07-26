@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import { useLocalization } from "contexts/LocalizationContext";
+import { useAuth } from "contexts/AuthContext";
 
 type PopularGoodsProps = {
   title?: string;
@@ -29,9 +30,10 @@ export function PopularGoods({
   const { staticData } = useLocalization();
   const [products, setProducts] = useState<ProductToShow[]>([]);
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
+  const authContext = useAuth();
 
   useEffect(() => {
-    productService.getPopularProducts(staticData).then(data => {
+    productService.getPopularProducts(staticData, authContext).then(data => {
       setProducts(data.productsToShow);
       setProductsWithVariants(data.productsWithVariant);
     })
@@ -79,9 +81,10 @@ export function PopularGoods({
               <SwiperSlide key={product.id}>
                 <ProductCard
                   product={product}
-                  productWithVariant={productsWithVariants.find(productWithVariants => productWithVariants.id.toString() === product.id) as ProductWithVariant}
+                  productWithVariant={productsWithVariants.find(productWithVariants => productWithVariants.slug === product.slug) as ProductWithVariant}
                   hasCompare={false}
                   hasFavourite={false}
+                  hasCart={product.count && product.count > 0 ? true : false}
                 />
               </SwiperSlide>
             ))}

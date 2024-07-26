@@ -66,7 +66,7 @@ export default function ProductCard({
   const router = useRouter();
   const { setIsOpen, setText } = useNotificationContext();
   const [IsFavourite, setIsFavourite] = useState(isFavourite);
-
+  const [IsInCart, setIsInCart] = useState(isInCart);
   const favouriteService = new FavouriteService();
   const authContext = useAuth();
   const { staticData } = useLocalization();
@@ -142,7 +142,7 @@ export default function ProductCard({
       </div>
       <div className={"flex items-end justify-between"}>
         <Price isSale={isSale} salePrice={salePrice} price={price} />
-        {hasCart && (
+        {hasCart && !IsInCart && (
           <IconButton
             size={"large"}
             onClick={() => {
@@ -162,14 +162,20 @@ export default function ProductCard({
                 if (response.ok) {
                   setTitle(title);
                   setIsOpenC(true);
+                  setIsInCart(true);
                 }});
             }}
           >
-            {!isInCart ? (
               <ShoppingBasket className={"size-6"} />
-            ) : (
+          </IconButton>
+        )}
+        {IsInCart && (
+          <IconButton
+            size={"large"}
+            onClick={() => {
+            }}
+          >
               <FiCheck className={"size-6"} />
-            )}
           </IconButton>
         )}
       </div>

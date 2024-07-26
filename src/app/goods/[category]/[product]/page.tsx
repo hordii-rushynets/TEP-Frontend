@@ -199,7 +199,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               count={count}
               setCount={setCount}
               images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
-              isInCart={isInCart}
+              isInCart={productWithVariant?.in_cart || false}
               isFavourite={IsFavourite}
               onCartClick={() => {
                 if (!selectedColor || !selectedSize || !isAllFiltersChoosen()) {

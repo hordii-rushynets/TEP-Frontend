@@ -25,7 +25,9 @@ export class ProductForSaleService {
                     isSale: variantOnPromotion?.promotion || false,
                     salePrice: variantOnPromotion?.promo_price || 0,
                     number_of_views: product.number_of_views,
-                    date: new Date(product.last_modified)
+                    date: new Date(product.last_modified),
+                    isFavourite: product.is_favorite,
+                    isInCart: product.in_cart
                 }
             })
             return {productsWithVariant: data, productsToShow: productsToShow};
