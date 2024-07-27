@@ -1,3 +1,5 @@
+import { fetchWithAuth } from "utils/helpers";
+
 export class ProductDAOService {
     private apiUrl: string;
   
@@ -20,6 +22,17 @@ export class ProductDAOService {
 
     public async getPopularProducts(): Promise<Response> {
       const response = await fetch(`${this.apiUrl}/api/store/products/?ordering=-number_of_add_to_cart,-number_of_views`);
+      return response;
+    }
+
+    public async getRecommendedGoods(authContext: any, product_slug = ""): Promise<Response> {
+      const url = `${this.apiUrl}/api/store/recommendation/${product_slug}${product_slug ? "/" : ""}`
+      const response = await fetchWithAuth(url, {}, authContext).then(response => {
+        if (response.status === 401) {
+          return fetch(url)
+        }
+        return response
+      });
       return response;
     }
   }

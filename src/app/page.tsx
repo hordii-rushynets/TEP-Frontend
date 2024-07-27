@@ -6,7 +6,7 @@ import { Inspiration } from "components/Home/Inspiration/Inspiration";
 import { MoreOffers } from "components/Home/MoreOffers/MoreOffers";
 import { Popular } from "components/Home/Popular/Popular";
 import { Presentation } from "components/Home/Presentation";
-import { Recomendations } from "components/Home/Recomendations/Recomendations";
+import { RecommendedGoods } from "components/Goods/RecommendedGoods";
 import { UsefullInfo } from "components/Home/UsefullInfo";
 import { WithColorFillingBlock } from "components/WithColorFillingBlock";
 
@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Hero />
       <Presentation />
-      <Recomendations />
+      <RecommendedGoods />
       <MoreOffers />
       <WithColorFillingBlock />
       <Popular />

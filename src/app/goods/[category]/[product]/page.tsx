@@ -270,7 +270,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
           </div>
         </Container>
       </Section>
-      <RecommendedGoods className={"mb-40 lg:mb-64"} />
+      {productWithVariant && <RecommendedGoods className={"mb-40 lg:mb-64"} product_slug={productWithVariant?.slug}/>}
     </>
   ) : <NotFound />;
 }
