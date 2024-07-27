@@ -41,5 +41,10 @@ export class ProductDAOService {
       });
       return response;
     }
+
+    public async getInspiration(): Promise<Response> {
+      const response = await fetch(`${this.apiUrl}/api/store/inspiration-image/`);
+      return response;
+    }
   }
   

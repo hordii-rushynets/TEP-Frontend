@@ -35,6 +35,7 @@ export function transformImagesArr(
       arr = [];
     }
   }
+  imgArr.push(arr);
   return imgArr;
 }
 
