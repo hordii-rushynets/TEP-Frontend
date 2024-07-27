@@ -38,7 +38,7 @@ export default function BlogPage() {
   }, [searchParams]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading state while fetching data
+    return <div>Loading...</div>;
   }
 
   return (

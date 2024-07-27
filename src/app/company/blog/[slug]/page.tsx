@@ -24,7 +24,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   }, [])
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading state while fetching data
+    return <div>Loading...</div>;
   }
 
   const { localization } = useLocalization();

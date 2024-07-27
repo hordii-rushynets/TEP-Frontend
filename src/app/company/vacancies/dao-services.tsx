@@ -52,9 +52,6 @@ export class VacancyDAOService {
     public async getVacancy(id: string): Promise<Vacancy> {
       try {
         const response = await fetch(`${this.apiUrl}/api/vacancy/vacancies/${id}/`);
-        // if (!response.ok) {
-        //     throw new Error("Failed to fetch vacancies");
-        //   }
 
         const vacancies : Vacancy = await response.json();
         return vacancies;

@@ -52,6 +52,7 @@ export class ProductService {
             salePrice: productVariant.promo_price,
             number_of_views: product.number_of_views,
             date: new Date(product.last_modified),
+            isFavourite: product.is_favorite,
             isInCart: product.in_cart
           }
         });
@@ -79,6 +80,8 @@ export class ProductService {
             salePrice: productVariant.promo_price,
             number_of_views: product.number_of_views,
             date: new Date(product.last_modified), 
+            isFavourite: product.is_favorite,
+            isInCart: product.in_cart
           }
         });
 

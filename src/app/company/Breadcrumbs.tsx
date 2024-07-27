@@ -44,7 +44,7 @@ export function Breadcrumbs() {
   const technology = technologies.find((t) => t.id === slug)!;
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading state while fetching data
+    return <div>Loading...</div>; 
   }
 
   

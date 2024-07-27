@@ -24,9 +24,6 @@ export class ArticleDAOService {
     public async getArticle(slug: string): Promise<Article> {
       try {
         const response = await fetch(`${this.apiUrl}/api/blog/post/${slug}/`);
-        // if (!response.ok) {
-        //   throw new Error(`Error fetching articles: ${response.statusText}`);
-        // }
         const articles: Article = await response.json();
         return articles;
       } catch (error) {
