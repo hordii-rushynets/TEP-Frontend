@@ -4,7 +4,7 @@ import Conditions from "components/Company/Cooperation/Conditions";
 import AboutCoIMG from "components/Company/Cooperation/static/about-cooperation.jpg";
 import AdvantageIMG from "components/Company/Cooperation/static/advantage.jpg";
 import MainIMG from "components/Company/Cooperation/static/cooperation.jpg";
-import WhoWeAreIMG from "components/Company/Cooperation/static/who-we-are.jpg";
+import WhoWeAreIMG from "components/Company/Cooperation/static/cooperation.png";
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 
