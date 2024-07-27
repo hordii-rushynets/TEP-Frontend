@@ -128,6 +128,7 @@ export interface ProductWithVariant {
   last_modified: string;
   product_variants: ProductVariant[];
   is_favorite: boolean;
+  in_cart: boolean;
   dimensional_grid: DimensionalGrid[];
 }
 
@@ -262,7 +263,8 @@ export default function CategoryPage({
             salePrice: productVariant.promo_price,
             number_of_views: product.number_of_views,
             date: new Date(product.last_modified),
-            isFavourite: product.is_favorite
+            isFavourite: product.is_favorite,
+            isInCart: product.in_cart
           }
         });
         setProductsToShow(productsToShow);
