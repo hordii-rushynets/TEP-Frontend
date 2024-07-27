@@ -94,7 +94,7 @@ export default function AccountPage() {
                 <UserAccount user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
               <>
-                <UserAddressForm />
+                <UserAddressForm user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
               // <>
               //   {/* <UserBankCardForm /> */}
