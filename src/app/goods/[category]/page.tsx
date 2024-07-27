@@ -21,6 +21,7 @@ import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 
 import { sortings } from "./defaultValues";
+import NotFound from "app/not-found";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -185,6 +186,7 @@ export default function CategoryPage({
       if (response.status === 200) {
         return response.json();
       }
+      setNotFound(true);
       return
     })
     .then(data => {
@@ -197,7 +199,7 @@ export default function CategoryPage({
         filter: data.filter
       });
 
-      setFilterParams({...filterParams, ["category_title"]: data.title});
+      data && setFilterParams({...filterParams, ["category_title"]: data.title});
     });
   }
 
@@ -224,6 +226,8 @@ export default function CategoryPage({
   }, [sort]);
 
   const authContext = useAuth();
+
+  const [notFound, setNotFound] = useState(false);
 
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
@@ -274,7 +278,7 @@ export default function CategoryPage({
     searchFetch();
   }, [filterParams]);
 
-  return (
+  return !notFound ? (
     <>
       <ProductHeader
         title={category.title}
@@ -301,5 +305,5 @@ export default function CategoryPage({
       <PopularGoods />
       <ProductDescriptions descriptions={productDescriptions} />
     </>
-  );
+  ) : <NotFound />;
 }
