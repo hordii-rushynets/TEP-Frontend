@@ -18,12 +18,14 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
   const [city, setCity] = useState(user.city);
   const [region, setRegion] = useState(user.region);
   const [postal, setPostal] = useState(user.index);
+  const [postalError, setPostalError] = useState(false);
   const accountService = new AccountService();
   const authContext = useAuth();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (Number(postal)) {
+        setPostalError(false);
         const addressInfo = new FormData();
         addressInfo.append("address", street);
         addressInfo.append("city", city);
@@ -32,6 +34,9 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
         accountService.profileUpdate(addressInfo, authContext).then(success => {
           setRefresh(!refresh);
         })
+      }
+      else {
+        setPostalError(true);
       }
     }, 500);
 
@@ -65,6 +70,7 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
           label={"Індекс"}
           placeholder={"Індекс"}
         />
+        {postalError && <span style={{color: "red", fontSize: "12px"}}>Будь ласка, введіть валідний поштовий індекс</span>}
       </div>
     </div>
   );

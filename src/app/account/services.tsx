@@ -33,4 +33,13 @@ export class AccountService {
     public async profileDelete(authContext: any): Promise<Response> {
         return await this.daoService.profileDelete(authContext);
     }
+
+    public async logout(authContext: any): Promise<Response> {
+        const response = await this.daoService.logout(authContext);
+        if (response.ok) {
+            localStorage.removeItem("TEPAccessToken");
+            localStorage.removeItem("TEPRefreshToken");
+        }
+        return response;
+    }
 }
