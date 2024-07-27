@@ -24,7 +24,7 @@ export function ImageSquare(props: ImageSquareProps) {
     >
       <Image
         onClick={onClick}
-        src={source}
+        src={source || ""}
         alt={alt}
         fill
         className={cn("object-cover", classes?.image)}

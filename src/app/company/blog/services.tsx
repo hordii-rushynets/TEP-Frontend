@@ -9,7 +9,11 @@ export class ArticleService {
         this.daoService = new ArticleDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getArticles(): Promise<Article[]> {
-        return this.daoService.getArticles()
+    public async getArticles(page: string): Promise<{count: number; next: string; prvious: string; results: Article[]}> {
+        return this.daoService.getArticles(page)
+    }
+
+    public async getArticle(slug: string): Promise<Article> {
+        return this.daoService.getArticle(slug)
     }
 }
