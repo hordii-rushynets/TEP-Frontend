@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
-import { Disclosure } from "common/Disclosure";
+import { Disclosure, DisclosureItem } from "common/Disclosure";
 import { Container, Section, Title } from "common/ui";
 
-import { info_links } from "./_data";
+import { info_links, servicesLinks } from "./_data";
+import { useId } from "react";
 
 export default function InformationForBuyersPage() {
+  const id = useId();
+
   return (
     <Section>
       <Container>
@@ -24,6 +27,25 @@ export default function InformationForBuyersPage() {
             демократичним дизайном своїх виробів.
           </p>
           <Disclosure>
+            <DisclosureItem
+                key={id}
+                trigger={
+                  <Title component={"h4"} size={"xl"}>
+                    {"Послуги"}
+                  </Title>
+                }
+              >
+                <ul className={"flex flex-col gap-y-[18px]"}>
+                  {servicesLinks.map((i, indx) => 
+                    <li key={indx}>
+                      <Link href={i.url} className={
+                        "underline-offset-[3px] transition-colors hover:text-tep_blue-500 hover:underline"
+                      }>{i.title}
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              </DisclosureItem>
             {info_links.map((link) => (
               <Link
                 href={link.url}
