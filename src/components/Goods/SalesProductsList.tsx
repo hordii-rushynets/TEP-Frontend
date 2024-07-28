@@ -5,9 +5,11 @@ import ProductCard from "components/Home/ProductCard";
 
 type SalesProductsListProps = {
   products: ProductToShow[];
+  productsWithVariants: ProductWithVariant[];
 };
 export default function SalesProductsList({
   products,
+  productsWithVariants
 }: SalesProductsListProps) {
   return (
     <Section className={"mb-[100px] lg:mb-40"}>
@@ -18,7 +20,12 @@ export default function SalesProductsList({
           }
         >
           {products.map((product) => {
-            return <ProductCard key={product.id} product={product} productWithVariant={{}as ProductWithVariant}/>;
+            return <ProductCard 
+              key={product.id} 
+              product={product} 
+              productWithVariant={productsWithVariants.find(productWithVariant => productWithVariant.id.toString() == product.id) || {} as ProductWithVariant}
+              hasCart={product.count && product.count > 0 ? true : false}
+            />;
           })}
         </div>
       </Container>
