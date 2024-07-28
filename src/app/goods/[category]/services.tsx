@@ -89,4 +89,14 @@ export class ProductService {
         return {productsWithVariant: data, productsToShow: productsToShow};
       });
     }
+
+    public async getInspiration(): Promise<{image: string}[]> {
+      const response = await this.daoService.getInspiration();
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const images:{image: string}[]= await response.json();
+      return images;
+    }
 }

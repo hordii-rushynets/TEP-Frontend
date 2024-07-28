@@ -12,16 +12,14 @@ export type BigGridProps = {
 };
 
 export function BigGrid({ images_array }: BigGridProps) {
-  const [count, setCount] = useState(6);
   const [images, setImages] = useState(transformImagesArr(images_array));
+  const [numberOfSections, setNumberOfSections] = useState(1);
 
   useEffect(() => {
     if (document.documentElement.clientWidth < 768) {
       setImages(transformImagesArr(images_array, 2));
-      setCount(2);
     } else if (document.documentElement.clientWidth < 1024) {
       setImages(transformImagesArr(images_array, 4));
-      setCount(4);
     } else {
       setImages(transformImagesArr(images_array));
     }
@@ -30,17 +28,16 @@ export function BigGrid({ images_array }: BigGridProps) {
   return (
     <>
       <div className={"mb-[72px]"}>
-        {images.map((image, Idx) => {
+        {images.slice(0, numberOfSections).map((image, Idx) => {
           return <ImagesSection key={Idx} images={image} />;
         })}
       </div>
-      {images_array.length > count && <Button
+      {images.length > numberOfSections && <Button
         colorVariant={"black"}
         size={"large"}
         className={{ button: "mx-auto" }}
         onClick={() => {
-          setImages((data) => [...data, images_array.slice(count, document.documentElement.clientWidth < 768 ? count + 2 : document.documentElement.clientWidth < 1024 ? count + 4 : count + 6)]);
-          setCount(document.documentElement.clientWidth < 768 ? count + 2 : document.documentElement.clientWidth < 1024 ? count + 4 : count + 6);
+          setNumberOfSections(numberOfSections+1);
         }}
       >
         Більше
