@@ -18,7 +18,7 @@ export default function SalesProductsList({
           }
         >
           {products.map((product) => {
-            return <ProductCard key={product.id} product={product} productWithVariant={{}as ProductWithVariant}/>;
+            return <ProductCard key={product.id} product={product} productWithVariant={{}as ProductWithVariant} hasCompare={false}/>;
           })}
         </div>
       </Container>

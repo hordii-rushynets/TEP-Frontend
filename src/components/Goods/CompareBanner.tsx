@@ -6,17 +6,14 @@ import { FiX } from "react-icons/fi";
 
 import { ImageSquare } from "common/ImageSquare";
 import { Button, Container, IconButton, Section } from "common/ui";
-import PillowIMG from "components/Goods/static/pillow.jpg";
 import { useCompareContext } from "contexts/CompareContext";
+import { useParams } from "next/navigation";
 
-export type CompareBannerProps = {
-  url: string;
-};
 
-export function CompareBanner({ url }: CompareBannerProps) {
-  const items = [PillowIMG, PillowIMG];
-
-  const { isOpen, setIsOpen } = useCompareContext();
+export function CompareBanner() {
+  const params = useParams();
+  const url = params.category;
+  const { isOpen, setIsOpen, products } = useCompareContext();
   return (
     <Transition
       show={isOpen}
@@ -36,13 +33,13 @@ export function CompareBanner({ url }: CompareBannerProps) {
           >
             <div className={"flex items-center gap-x-7"}>
               <p className={"text-sm font-bold text-tep_gray-500"}>
-                {items.length} обрано
+                {products.length} обрано
               </p>
               <div className={"flex items-center justify-between gap-x-4"}>
-                {items.map((item, Idx) => (
+                {products.map(item => (
                   <ImageSquare
-                    key={Idx}
-                    source={item}
+                    key={item.id}
+                    source={item.product_variants[0].main_image}
                     classes={{ wrapper: "size-10 pb-0 rounded" }}
                   />
                 ))}

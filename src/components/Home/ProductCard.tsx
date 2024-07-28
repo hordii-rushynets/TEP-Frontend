@@ -58,15 +58,15 @@ export default function ProductCard({
     salePrice,
     isFavourite = false,
     isInCart = false,
-    isInCompare = false,
   } = product;
   const { setIsOpen: setIsOpenC, setTitle } = useCartContext();
-  const { setIsOpen: setIsOpenCompare } = useCompareContext();
+  const { setIsOpen: setIsOpenCompare, isInCompare : IsInCompare, removeProduct, addProduct } = useCompareContext();
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
   const router = useRouter();
   const { setIsOpen, setText } = useNotificationContext();
   const [IsFavourite, setIsFavourite] = useState(isFavourite);
   const [IsInCart, setIsInCart] = useState(isInCart);
+  const [isInCompare, setIsInCompare] = useState(IsInCompare(id));
   const favouriteService = new FavouriteService();
   const authContext = useAuth();
   const { staticData } = useLocalization();
@@ -107,8 +107,10 @@ export default function ProductCard({
               <Checkbox
                 checked={isInCompare}
                 onChange={() => {
-                  onCompareClick(id);
-                  setIsOpenCompare(true);
+                  !isInCompare && addProduct(id);
+                  isInCompare && removeProduct(id);
+                  setIsInCompare(!isInCompare);
+                  !isInCompare && setIsOpenCompare(true);
                 }}
               />
             </div>
