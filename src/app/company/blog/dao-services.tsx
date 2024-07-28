@@ -1,4 +1,4 @@
-import { Article } from "./interfaces";
+import { Article, ArticleDefault } from "./interfaces";
 
 export class ArticleDAOService {
     private apiUrl: string;
@@ -23,9 +23,12 @@ export class ArticleDAOService {
 
     public async getArticle(slug: string): Promise<Article> {
       try {
-        const response = await fetch(`${this.apiUrl}/api/blog/post/${slug}/`);
-        const articles: Article = await response.json();
-        return articles;
+        let article = ArticleDefault;
+        if (slug !== undefined) {
+          const response = await fetch(`${this.apiUrl}/api/blog/post/${slug}/`);
+          article = await response.json();
+        }
+        return article;
       } catch (error) {
         console.error('Failed to fetch articles:', error);
         throw error;

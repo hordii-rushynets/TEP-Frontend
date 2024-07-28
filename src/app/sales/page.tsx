@@ -16,6 +16,7 @@ import IMG5 from "components/Goods/static/sales/img5.jpg";
 import IMG6 from "components/Goods/static/sales/img6.jpg";
 
 import { Breadcrumbs } from "./Breadcrumbs";
+import { useAuth } from "contexts/AuthContext";
 
 const images = [IMG1, IMG2, IMG3, IMG4, IMG5, IMG6];
 
@@ -24,10 +25,11 @@ export default function SalesPage() {
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [category, setCategory] = useState("");
   const { localization } = useLocalization();
+  const authContext = useAuth();
 
   useEffect(()=>{
     const productsService = new ProductForSaleService();
-    productsService.getProductsForSale(category, localization).then(products => {
+    productsService.getProductsForSale(category, localization, authContext).then(products => {
       setProducts(products.productsToShow);
       setProductsWithVariants(products.productsWithVariant);
     })
@@ -47,7 +49,7 @@ export default function SalesPage() {
           </div>
         </Container>
       </Section>
-      <SalesProductsList products={products} />
+      <SalesProductsList products={products} productsWithVariants={productsWithVariants}/>
       <Section className={"mb-40 lg:mb-64"}>
         <Container>
           <div>

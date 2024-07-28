@@ -78,6 +78,7 @@ export class ProductService {
             price: productVariant.default_price,
             isSale: productVariant.promotion,
             salePrice: productVariant.promo_price,
+            count: productVariant.count,
             number_of_views: product.number_of_views,
             date: new Date(product.last_modified), 
             isFavourite: product.is_favorite,

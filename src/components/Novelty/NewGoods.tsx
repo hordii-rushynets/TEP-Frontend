@@ -1,3 +1,5 @@
+"use client"
+
 import { Suspense } from "react";
 
 import { Container, Loader, Section, Title } from "common/ui";

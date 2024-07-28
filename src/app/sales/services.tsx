@@ -1,6 +1,7 @@
 import { ProductToShow, ProductWithVariant, ProductVariant } from "app/goods/[category]/page";
 import { Category } from "contexts/CategoriesContext"; 
 import { ProductForSaleDAOService } from "./dao-services";
+import { count } from "console";
 
 
 export class ProductForSaleService {
@@ -10,8 +11,8 @@ export class ProductForSaleService {
         this.daoService = new ProductForSaleDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getProductsForSale(category: string, localization: string): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
-        return await this.daoService.getProductsForSale(category).then(data => {
+    public async getProductsForSale(category: string, localization: string, authContext: any): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
+        return await this.daoService.getProductsForSale(category, authContext).then(data => {
             let productsToShow = data.map((product) => {
                 const variantOnPromotion : ProductVariant | undefined = product.product_variants.find((variant) => variant.promotion);
                 return {
@@ -24,6 +25,7 @@ export class ProductForSaleService {
                     price: variantOnPromotion?.default_price || 0,
                     isSale: variantOnPromotion?.promotion || false,
                     salePrice: variantOnPromotion?.promo_price || 0,
+                    count: variantOnPromotion?.count,
                     number_of_views: product.number_of_views,
                     date: new Date(product.last_modified),
                     isFavourite: product.is_favorite,

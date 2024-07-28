@@ -1,4 +1,4 @@
-import { Address, ScopeOfWork, TypeOfEmployement, TypeOfWork, Vacancy } from "./interfaces";
+import { Address, ScopeOfWork, TypeOfEmployement, TypeOfWork, Vacancy, VacancyDefault } from "./interfaces";
 
 export class VacancyDAOService {
     private apiUrl: string;
@@ -51,10 +51,12 @@ export class VacancyDAOService {
 
     public async getVacancy(id: string): Promise<Vacancy> {
       try {
-        const response = await fetch(`${this.apiUrl}/api/vacancy/vacancies/${id}/`);
-
-        const vacancies : Vacancy = await response.json();
-        return vacancies;
+        let vacancy = VacancyDefault;
+        if (id !== undefined) {
+          const response = await fetch(`${this.apiUrl}/api/vacancy/vacancies/${id}/`);
+          vacancy = await response.json();
+        }
+        return vacancy;
       } catch (error) {
         console.error('Failed to fetch vacancies:', error);
         throw error;

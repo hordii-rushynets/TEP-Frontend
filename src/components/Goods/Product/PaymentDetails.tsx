@@ -174,15 +174,20 @@ export function PaymentDetails({
           </div>
           {isInStock && (
             <div className={"mb-8 flex gap-x-2"}>
-              <Button
+              {!isInCart ? <Button
                 onClick={() => {
                   onCartClick(id);
                 }}
                 colorVariant={"black"}
                 fullWidth
               >
-                {!isInCart ? "Додати до кошика" : "Додано до кошика"}
-              </Button>
+                {"Додати до кошика"}
+              </Button> : <Button
+                colorVariant={"black"}
+                fullWidth
+              >
+                {"Додано до кошика"}
+              </Button>}
               <IconButton
                 className={{ button: "shrink-0" }}
                 size={"large"}

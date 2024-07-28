@@ -31,6 +31,7 @@ import { useFavouriteContext } from "contexts/FavouriteContext";
 import { FeedbackService } from "app/information-for-buyers/feedbacks/services";
 import { Feedback } from "app/information-for-buyers/feedbacks/interfaces";
 import NotFound from "app/not-found";
+import { useCartContext } from "contexts/CartContext";
 
 const product = {
   id: "1",
@@ -98,6 +99,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
 
   const router = useRouter();
   const { setText, setIsOpen } = useNotificationContext();
+  const { setIsOpen: setIsOpenC, setTitle: setTitleC } = useCartContext();
   const pathname = usePathname();
   const [productVariants, setProductVariants] = useState<ProductVariant[]>([]);
   const [productWithVariant, setProduct] = useState<ProductWithVariant>();
@@ -115,6 +117,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
   const { setIsOpen: setIsOpenF, setTitle: setTitleF } = useFavouriteContext();
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [notFound, setNotFound] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const productService = new ProductService();
@@ -137,7 +140,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
         }
       }
     });
-  }, []);
+  }, [refresh]);
 
   const setCurrVariant = () => {
     let currVar = findMatchingVariant(selectedColor, selectedSize, selectedFilters, productVariants, staticData, searchParams);
@@ -225,8 +228,13 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                     router.push('/sign-in');
                   }
                   if (response.ok) {
-                    setText("Продукт додано до кошику!");
-                    setIsOpen(true);
+                    setTitleC(currentVariant?.[`title_${localization}` as keyof ProductVariant] as string);
+                    setIsOpenC(true);
+                    setRefresh(!refresh);
+                  }
+                  else {
+                    setText("Щось пішло не так");
+                    setIsOpen(true)
                   }
                 });
               }}

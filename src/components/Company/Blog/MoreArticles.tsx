@@ -52,7 +52,7 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
     <Section className={cn("overflow-hidden", className)}>
       <Container>
         <div>
-          <Title className={"mb-12"}>Більше стеттей</Title>
+          <Title className={"mb-12"}>Більше статтей</Title>
           <Swiper
             className={"!overflow-visible"}
             modules={[Navigation, Autoplay]}
@@ -82,7 +82,7 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
                 <SimpleCard
                   source={article.image}
                   title={article[`title_${localization}` as keyof Article] as string}
-                  url={CompanyUrl.getArticle(id)}
+                  url={CompanyUrl.getArticle(article.slug)}
                   isIcon={false}
                 />
               </SwiperSlide>
