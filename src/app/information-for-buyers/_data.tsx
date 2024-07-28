@@ -2,10 +2,6 @@ import { InfoUrl, MainUrl, ServicesUrl } from "route-urls";
 
 export const info_links = [
   {
-    title: "Послуги",
-    url: MainUrl.getServices(),
-  },
-  {
     title: "Зв’яжись з нами",
     url: InfoUrl.getContactUs(),
   },
@@ -37,4 +33,19 @@ export const info_links = [
     title: "Політика конфіденційності",
     url: MainUrl.getPrivacyPolicy(),
   },
+];
+
+export const servicesLinks = [
+  {
+    title: "Відстежити замовлення",
+    url: ServicesUrl.getTracking(),
+  },
+  {
+    title: "Послуги доставки",
+    url: ServicesUrl.getDelivery(),
+  },
+  {
+    title: "Подарункові картки",
+    url: ServicesUrl.getGifts(),
+  }
 ];
