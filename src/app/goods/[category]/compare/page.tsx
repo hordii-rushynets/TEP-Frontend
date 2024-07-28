@@ -1,7 +1,9 @@
+"use client"
+
 import { productDescriptions } from "data";
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
-import { GoodsUrl } from "route-urls";
+import { GoodsUrl, MainUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { ImageSquare } from "common/ImageSquare";
@@ -10,96 +12,23 @@ import { PopularGoods } from "components/Goods/PopularGoods";
 import { Article } from "components/Goods/Product/Article";
 import { Price } from "components/Goods/Product/Price";
 import ProductDescriptions from "components/Goods/ProductDescriptions";
-import IMG1 from "components/Goods/static/covered.jpg";
-import IMG2 from "components/Goods/static/linens.jpg";
-
-const items = [
-  {
-    id: "1",
-    title: "Dream",
-    image: IMG1,
-    isInStock: true,
-    size: "150 х 210",
-    color: { label: "Сірий", value: "gray" },
-    fiber: { label: "Мікрофібра", value: "microfiber" },
-    packageDetails: {
-      width: 60,
-      height: 15,
-      length: 63,
-      weight: 0.87,
-      packageCount: 1,
-      article: "903.048.89",
-    },
-    price: 1199,
-  },
-  {
-    id: "2",
-    title: "Indigo",
-    label: "Покривало",
-    image: IMG2,
-    isInStock: true,
-    size: "180 х 240",
-    color: { label: "Рожевий", value: "pink" },
-    fiber: { label: "Велюр", value: "velor" },
-    packageDetails: {
-      width: 60,
-      height: 15,
-      length: 63,
-      weight: 0.87,
-      packageCount: 1,
-      article: "903.048.89",
-    },
-    price: 699,
-  },
-  {
-    id: "3",
-    title: "Dream",
-    image: IMG1,
-    isInStock: true,
-    size: "150 х 210",
-    color: { label: "Сірий", value: "gray" },
-    fiber: { label: "Мікрофібра", value: "microfiber" },
-    packageDetails: {
-      width: 60,
-      height: 15,
-      length: 63,
-      weight: 0.87,
-      packageCount: 1,
-      article: "903.048.89",
-    },
-    price: 1199,
-  },
-  {
-    id: "4",
-    title: "Indigo",
-    label: "Покривало",
-    image: IMG2,
-    isInStock: true,
-    size: "180 х 240",
-    color: { label: "Рожевий", value: "pink" },
-    fiber: { label: "Велюр", value: "velor" },
-    packageDetails: {
-      width: 60,
-      height: 15,
-      length: 63,
-      weight: 0.87,
-      packageCount: 1,
-      article: "903.048.89",
-    },
-    price: 699,
-  },
-];
+import { useCompareContext } from "contexts/CompareContext";
+import { useLocalization } from "contexts/LocalizationContext";
+import { Color, Material, ProductWithVariant, Size } from "../page";
 
 export default function ComparePage() {
+  const { products } = useCompareContext();
+  const { localization } = useLocalization();
+
   return (
     <>
-      <Section className={"mb-24 mt-6 md:mt-12 lg:mb-40"}>
+      {products.length > 0 ? <Section className={"mb-24 mt-6 md:mt-12 lg:mb-40"}>
         <Container>
           <div>
             <div className={"mb-[72px]"}>
               <Title className={"mb-3.5 text-3xl"}>Порівняння товарів</Title>
               <p className={"text-sm lg:font-extralight"}>
-                Порівняти {items.length} товари
+                Порівняти {products.length} товари
               </p>
             </div>
             <div
@@ -117,22 +46,21 @@ export default function ComparePage() {
                 </Button>
               </Link>
               <span className={"text-sm font-bold text-tep_gray-500"}>
-                {items.length} товара
+                {products.length} товара
               </span>
             </div>
 
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
-                const { id, image, title } = item;
+              {products.map((item) => {
                 return (
                   <div
-                    key={id}
+                    key={item.id}
                     className={
                       "min-w-[152px] md:min-w-[250px] lg:min-w-[288px]"
                     }
                   >
-                    <ImageSquare source={image} classes={{ wrapper: "mb-6" }} />
-                    <Title size={"xl"}>{title}</Title>
+                    <ImageSquare source={item.product_variants[0].main_image} classes={{ wrapper: "mb-6" }} />
+                    <Title size={"xl"}>{item[`title_${localization}` as keyof ProductWithVariant] as string}</Title>
                   </div>
                 );
               })}
@@ -145,7 +73,7 @@ export default function ComparePage() {
               Можна замовити
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
+              {products.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -155,17 +83,17 @@ export default function ComparePage() {
                   >
                     <div
                       className={cn("mb-5 flex items-center gap-x-3", {
-                        "mb-4": !item.isInStock,
+                        "mb-4": !(item.product_variants[0].count > 0),
                       })}
                     >
                       <span
                         className={cn("size-2 rounded-full", {
-                          "bg-tep_blue-500": item.isInStock,
-                          "bg-[#703F4D]": !item.isInStock,
+                          "bg-tep_blue-500": (item.product_variants[0].count > 0),
+                          "bg-[#703F4D]": !(item.product_variants[0].count > 0),
                         })}
                       ></span>
                       <span className={"text-sm font-extralight"}>
-                        {item.isInStock ? "В наявності" : "Немає в наявності"}
+                        {(item.product_variants[0].count > 0) ? "В наявності" : "Немає в наявності"}
                       </span>
                     </div>
                   </div>
@@ -180,7 +108,7 @@ export default function ComparePage() {
               Розміри
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
+              {products.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -188,7 +116,7 @@ export default function ComparePage() {
                       "min-w-[152px] md:min-w-[250px] lg:min-w-[288px]"
                     }
                   >
-                    <p className={"text-sm lg:font-extralight"}>{item.size}</p>
+                    <p className={"text-sm lg:font-extralight"}>{item.product_variants[0].sizes[0][`title_${localization}` as keyof Size]}</p>
                   </div>
                 );
               })}
@@ -201,7 +129,7 @@ export default function ComparePage() {
               Колір
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
+              {products.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -215,13 +143,11 @@ export default function ComparePage() {
                       }
                     >
                       <span
-                        className={cn("size-14 rounded-full", {
-                          "bg-tep_gray-700": item.color.value === "gray",
-                          "bg-[#EFD0C8]": item.color.value === "pink",
-                        })}
+                        className={cn("size-14 rounded-full")}
+                        style={{backgroundColor: item.product_variants[0].colors[0].hex}}
                       ></span>
                       <span className={"text-sm lg:font-extralight"}>
-                        {item.color.label}
+                        {item.product_variants[0].colors[0][`title_${localization}` as keyof Color]}
                       </span>
                     </div>
                   </div>
@@ -236,7 +162,7 @@ export default function ComparePage() {
               Тканина
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
+              {products.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -245,46 +171,33 @@ export default function ComparePage() {
                     }
                   >
                     <p className={"text-sm lg:font-extralight"}>
-                      {item.fiber.label}
+                      {item.product_variants[0].materials[0][`title_${localization}` as keyof Material]}
                     </p>
                   </div>
                 );
               })}
             </div>
-            <div
+            {/* <div
               className={
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
               Деталі упаковки
-            </div>
+            </div> */}
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
-                const { id, packageDetails } = item;
-                const { article, height, length, packageCount, weight, width } =
-                  packageDetails;
+              {products.map((item) => {
                 return (
                   <div
-                    key={id}
+                    key={item.id}
                     className={"w-[152px] md:w-[250px] lg:w-[288px]"}
                   >
-                    <p className={"mb-5 text-sm lg:font-extralight"}>
-                      Ергоном подушка, для сну на боці/спині
-                    </p>
                     <p className={"text-sm lg:font-extralight"}>
                       Артикул номер
                     </p>
                     <Article
-                      article={article}
+                      article={item.product_variants[0].sku}
                       className={"mb-6 inline-block bg-black"}
                     />
-                    <p className={"flex flex-col text-sm lg:font-extralight"}>
-                      <span>Ширина {width} см</span>
-                      <span>Висота {height} см</span>
-                      <span>Довжина {length} см</span>
-                      <span>Вага {weight} кг</span>
-                      <span>Упаковка {packageCount}</span>
-                    </p>
                   </div>
                 );
               })}
@@ -297,20 +210,35 @@ export default function ComparePage() {
               Ціна
             </div>
             <div className={"flex gap-x-6 overflow-x-scroll"}>
-              {items.map((item) => {
+              {products.map((item) => {
                 return (
                   <div
                     key={item.id}
                     className={"w-[152px] md:w-[250px] lg:w-[288px]"}
                   >
-                    <Price price={item.price} />
+                    <Price price={item.product_variants[0].promotion ? item.product_variants[0].promo_price : item.product_variants[0].default_price} />
                   </div>
                 );
               })}
             </div>
           </div>
         </Container>
-      </Section>
+      </Section> : <div className={"pb-32 pt-24 lg:pb-48"}>
+                <Title className={"mb-3.5 text-center text-3xl"}>
+                  Ви не вибрали продуктів для порівняння
+                </Title>
+                <div
+                  className={
+                    "flex flex-col gap-4 md:flex-row md:justify-center"
+                  }
+                >
+                  <Link href={MainUrl.getGoods()}>
+                    <Button size={"large"} fullWidth>
+                      Перейти до товарів
+                    </Button>
+                  </Link>
+                </div>
+              </div> }
       <PopularGoods />
       <ProductDescriptions descriptions={productDescriptions} />
     </>

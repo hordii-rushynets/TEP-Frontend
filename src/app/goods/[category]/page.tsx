@@ -297,7 +297,7 @@ export default function CategoryPage({
         setFilterParams={setFilterParams}
         filterParams={filterParams}
       />
-      <CompareBanner url={GoodsUrl.getBlankets()} />
+      <CompareBanner />
       <ProductsList
         className={"mt-12"}
         activePage={activePageNum}
