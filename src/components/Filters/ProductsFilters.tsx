@@ -18,6 +18,9 @@ import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
 import { useLocalization } from "contexts/LocalizationContext";
 import { generateDictionary, getTrueKeys } from "utils/helpers";
+import { GoodsUrl } from "route-urls";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export interface DynamicFilterField {
   id: number;
@@ -48,6 +51,7 @@ type PillowsFiltersProps = {
 export default function ProductsFilters({ count, sort, setSort, filters, sizes, setFilterParams, filterParams }: PillowsFiltersProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { staticData } = useLocalization();
+  const params = useParams();
 
   const [size, setSize] = useState(generateDictionary(sizes));
   const [dynamicFilterFields, setDynamicFilterFields] = useState<{ [key: string]: boolean }>({});
@@ -71,7 +75,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
           <div
             className={"-mb-2 flex flex-nowrap gap-x-4 overflow-x-scroll pb-2"}
           >
-            <Button size={"filter"}>Порівняти</Button>
+            <Link href={`${params.category}/compare`}><Button size={"filter"}>Порівняти</Button></Link>
             <Button
               onClick={() => setIsFilterOpen(true)}
               size={"filter"}
