@@ -44,8 +44,8 @@ export function UsefullInfo() {
                 }
               >
                 <ul className={"flex flex-col gap-y-[18px]"}>
-                  {item.links.map(i => 
-                    <li>
+                  {item.links.map((i, indx) => 
+                    <li key={indx}>
                       <Link href={i.url} className={
                         "underline-offset-[3px] transition-colors hover:text-tep_blue-500 hover:underline"
                       }>{i.text}
