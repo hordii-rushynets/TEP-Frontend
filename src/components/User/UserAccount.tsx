@@ -22,6 +22,8 @@ export interface User {
   region: string;
   city: string;
   index: string;
+  phone_communication: boolean;
+  email_communication: boolean;
 }
 
 export const UserDefaultValue : User = {
@@ -37,6 +39,8 @@ export const UserDefaultValue : User = {
   region: "",
   city: "",
   index: "",
+  phone_communication: false,
+  email_communication: false
 }
 
 export interface UserAccountProps {

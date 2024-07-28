@@ -102,7 +102,7 @@ export default function AccountPage() {
               //   {/* <UserBankCardForm /> */}
               // </>,
               <>
-                <UserSettings />
+                <UserSettings user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
             ]}
           />

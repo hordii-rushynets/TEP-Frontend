@@ -12,12 +12,11 @@ import { useAuth } from "contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import { MainUrl } from "route-urls";
 import { AccountService } from "app/account/services";
+import { UserAccountProps } from "./UserAccount";
 
-const APIurl = process.env.NEXT_PUBLIC_API_URL
-
-export function UserSettings() {
-  const [byEmail, setByEmail] = useState(false);
-  const [bySMS, setBySMS] = useState(true);
+export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
+  const [byEmail, setByEmail] = useState(user.email_communication);
+  const [bySMS, setBySMS] = useState(user.phone_communication);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const { setIsOpen, setText } = useNotificationContext();
@@ -42,8 +41,14 @@ export function UserSettings() {
   }
 
   useEffect(() => {
-    const data = { byEmail, bySMS };
-    data;
+    const timeout = setTimeout(() => {
+      const communicationInfo = new FormData();
+      communicationInfo.append("phone_communication", bySMS.toString());
+      communicationInfo.append("email_communication", byEmail.toString());
+      accountService.profileUpdate(communicationInfo, authContext).then(success => {
+        setRefresh(!refresh);
+      })
+    }, 500);
     // TODO send data
   }, [byEmail, bySMS]);
 
