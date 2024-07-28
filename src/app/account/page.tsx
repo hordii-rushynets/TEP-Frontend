@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 
 import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
+import { AccountService } from "./services";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
@@ -27,7 +28,7 @@ export default function AccountPage() {
   const { staticData } = useLocalization();
   const authContext = useAuth();
   const [refresh, setRefresh] = useState(false);
-
+  const accountService = new AccountService();
 
   const getUserInfo = () => {
     fetchWithAuth(`${APIurl}/api/account/profile/`, {
@@ -77,6 +78,7 @@ export default function AccountPage() {
                   className={
                     "underline underline-offset-2 transition-colors hover:text-tep_blue-500"
                   }
+                  onClick={() => {accountService.logout(authContext)}}
                 >
                   Змінити
                 </Link>
@@ -94,13 +96,13 @@ export default function AccountPage() {
                 <UserAccount user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
               <>
-                <UserAddressForm />
+                <UserAddressForm user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
               // <>
               //   {/* <UserBankCardForm /> */}
               // </>,
               <>
-                <UserSettings />
+                <UserSettings user={user} refresh={refresh} setRefresh={setRefresh}/>
               </>,
             ]}
           />

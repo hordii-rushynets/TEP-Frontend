@@ -3,17 +3,44 @@
 import { useEffect, useState } from "react";
 
 import { TextInput } from "common/ui";
+import { User } from "./UserAccount";
+import { AccountService } from "app/account/services";
+import { useAuth } from "contexts/AuthContext";
 
-export function UserAddressForm() {
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [region, setRegion] = useState("");
-  const [postal, setPostal] = useState("");
+export interface UserAccountProps {
+  user: User;
+  refresh: boolean;
+  setRefresh: (b: boolean) => void;
+}
+
+export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps) {
+  const [street, setStreet] = useState(user.address);
+  const [city, setCity] = useState(user.city);
+  const [region, setRegion] = useState(user.region);
+  const [postal, setPostal] = useState(user.index);
+  const [postalError, setPostalError] = useState(false);
+  const accountService = new AccountService();
+  const authContext = useAuth();
 
   useEffect(() => {
-    const data = { street, city, region, postal };
-    data;
-    // TODO send data
+    const timeout = setTimeout(() => {
+      if (Number(postal)) {
+        setPostalError(false);
+        const addressInfo = new FormData();
+        addressInfo.append("address", street);
+        addressInfo.append("city", city);
+        addressInfo.append("region", region);
+        addressInfo.append("index", postal);
+        accountService.profileUpdate(addressInfo, authContext).then(success => {
+          setRefresh(!refresh);
+        })
+      }
+      else {
+        setPostalError(true);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [street, city, region, postal]);
 
   return (
@@ -43,6 +70,7 @@ export function UserAddressForm() {
           label={"Індекс"}
           placeholder={"Індекс"}
         />
+        {postalError && <span style={{color: "red", fontSize: "12px"}}>Будь ласка, введіть валідний поштовий індекс</span>}
       </div>
     </div>
   );

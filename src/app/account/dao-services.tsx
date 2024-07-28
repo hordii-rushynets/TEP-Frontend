@@ -82,6 +82,25 @@ export class AccountDAOService {
       }
     }
 
+    public async logout(authContext: any): Promise<Response> {
+      try {
+        const response = await fetchWithAuth(`${this.apiUrl}/api/account/logout/`, {
+          method: "POST",
+          body: JSON.stringify({
+            "refresh": localStorage.getItem("TEPRefreshToken"),
+            "access": localStorage.getItem("TEPAccessToken")
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }, authContext);
+        return response;
+      } catch (error) {
+        console.error('Failed to logout', error);
+        throw error;
+      }
+    }
+
     public async profileDelete(authContext: any): Promise<Response> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/account/profile/`, {

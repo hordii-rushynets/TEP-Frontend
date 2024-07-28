@@ -18,6 +18,12 @@ export interface User {
   privacy_policy_accepted: boolean;
   phone_number: string;
   profile_picture: string;
+  address: string;
+  region: string;
+  city: string;
+  index: string;
+  phone_communication: boolean;
+  email_communication: boolean;
 }
 
 export const UserDefaultValue : User = {
@@ -28,7 +34,13 @@ export const UserDefaultValue : User = {
   birth_date: "",
   privacy_policy_accepted: false,
   phone_number: "",
-  profile_picture: ""
+  profile_picture: "",
+  address: "",
+  region: "",
+  city: "",
+  index: "",
+  phone_communication: false,
+  email_communication: false
 }
 
 export interface UserAccountProps {
