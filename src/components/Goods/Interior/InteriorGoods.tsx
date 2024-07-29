@@ -13,8 +13,20 @@ import { Tip } from "common/Tip";
 import { Container, IconButton, Section, Title } from "common/ui";
 import { Price } from "components/Goods/Product/Price";
 import IMG1 from "components/Home/Inspiration/static/img1.jpg";
+import { useEffect, useState } from "react";
+import { InteriorProductService } from "app/goods/interior/services";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function InteriorGoods() {
+
+  const { staticData } = useLocalization();
+  const [products, setProducts] = useState<ProductToShow[]>([]);
+  const interiorProductService = new InteriorProductService();
+
+  useEffect(() => {
+    interiorProductService.getInspirationProducts(staticData).then(products => setProducts(products));
+  }, []);
+
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -26,20 +38,8 @@ export function InteriorGoods() {
           >
             <Image src={IMG1} alt={"Image"} fill className={"object-cover"} sizes="100vw, 50vw, 33vw"/>
             <Tip
-              product={products[0]}
-              className={"absolute right-[7%] top-[10%]"}
-            />
-            <Tip
-              product={products[1]}
-              className={"absolute right-[12%] top-[50%]"}
-            />
-            <Tip
-              product={products[2]}
-              className={"absolute right-[32%] top-[55%]"}
-            />
-            <Tip
-              product={products[3]}
-              className={"absolute bottom-[15%] left-[17%]"}
+              product={products?.filter(product => product.category_slug === "blankets")[0] || products?.[0]}
+              className={"absolute right-[50%] top-[40%]"}
             />
           </div>
           <div
@@ -62,7 +62,7 @@ type InteriorCardProps = {
 };
 
 export function InteriorCard({ product }: InteriorCardProps) {
-  const { category_title, category_slug, price, title, color, image, size, id } = product;
+  const { category_title, category_slug, price, title, image, slug } = product;
   return (
     <div className={"flex gap-x-4 py-6 md:px-6 [&:not(:first-child)]:pt-8"}>
       <div className={"w-[134px]"}>
@@ -74,7 +74,7 @@ export function InteriorCard({ product }: InteriorCardProps) {
             {title}
           </Title>
           <p className={"text-sm font-light text-tep_gray-500"}>
-            {[category_title, color, size].join(", ")}
+            {category_title}
           </p>
         </div>
         <div className={"flex justify-between"}>
@@ -85,7 +85,7 @@ export function InteriorCard({ product }: InteriorCardProps) {
             </span>
           </div>
           <Link
-            href={`${MainUrl.getGoods()}/${category_slug}/${id}`}
+            href={`${MainUrl.getGoods()}/${category_slug}/${slug}`}
             className={"self-end"}
           >
             <IconButton size={"large"}>

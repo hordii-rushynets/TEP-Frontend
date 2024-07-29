@@ -4,8 +4,14 @@ import { Tip } from "common/Tip";
 import { Container, Section, Title } from "common/ui";
 
 import DesignIMG from "./static/design.jpg";
+import { ProductToShow } from "app/goods/[category]/page";
 
-export default function Design() {
+type DesignProps = {
+  pillow?: ProductToShow;
+  blanket?: ProductToShow;
+}
+
+export default function Design({ pillow, blanket }: DesignProps) {
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -21,7 +27,7 @@ export default function Design() {
             sizes="100vw, 50vw, 33vw"
           />
           <Tip
-            product={{
+            product={pillow || {
               id: "1",
               slug: "",
               category_slug: "pillows",
@@ -35,7 +41,7 @@ export default function Design() {
             className={"absolute right-[20%] top-[40%]"}
           />
           <Tip
-            product={{
+            product={blanket || {
               id: "1",
               slug: "",
               category_slug: "pillows",
@@ -46,10 +52,10 @@ export default function Design() {
               number_of_views: 1,
               date: ""
             }}
-            className={"absolute bottom-[10%] left-[20%]"}
+            className={"absolute bottom-[10%] left-[30%]"}
           />
           <Tip
-            product={{
+            product={pillow || {
               id: "1",
               slug: "",
               category_slug: "pillows",
