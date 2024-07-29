@@ -16,8 +16,6 @@ type TipProps = {
 } & Pick<HTMLAttributes<HTMLDivElement>, "className">;
 
 export function Tip({ product, className }: TipProps) {
-  const { id = "1", title, category_slug, category_title, price } = product;
-
   return (
     <div className={cn("inline-block", className)}>
       <HoverCard.Root openDelay={100} closeDelay={200}>
@@ -43,16 +41,16 @@ export function Tip({ product, className }: TipProps) {
                 "w-[217px] overflow-hidden rounded-3xl bg-white px-4 py-3 shadow-[0_0_24px_rgba(29,29,29,0.08)]"
               }
             >
-              <Title className={"mb-2"}>{title}</Title>
+              <Title className={"mb-2"}>{product?.title || ''}</Title>
               <p className={"mb-4 text-sm font-extralight text-[#A5A5A5]"}>
-                {category_title}
+                {product?.category_title || ""}
               </p>
               <div className={"flex items-end justify-between"}>
                 <span className={"text-2xl font-bold"}>
-                  {price}
+                  {product?.price || 0}
                   <span className={"align-top text-xs font-bold"}> грн</span>
                 </span>
-                <Link href={`${MainUrl.getGoods()}/${category_slug}/${id}`}>
+                <Link href={`${MainUrl.getGoods()}/${product?.category_slug || ""}/${product?.slug || ""}`}>
                   <IconButton colorVariant={"empty"}>
                     <FiChevronRight
                       className={

@@ -1,3 +1,5 @@
+"use client"
+
 import { Container, Section, Title } from "common/ui";
 import CategoriesFilter from "components/Filters/CategoriesFilter";
 import { BigGrid } from "components/Goods/BigGrid";

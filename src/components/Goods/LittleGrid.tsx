@@ -4,12 +4,14 @@ import { cn } from "utils/cn";
 import { ImageSquare } from "common/ImageSquare";
 import { Tip } from "common/Tip";
 import { Container, Section, Title } from "common/ui";
+import { ProductToShow } from "app/goods/[category]/page";
 
 type LittleGridProps = {
   images: StaticImageData[] | string[];
   title?: string;
   description?: string;
   reversed?: boolean;
+  product?: ProductToShow;
 };
 
 export function LittleGrid({
@@ -17,6 +19,7 @@ export function LittleGrid({
   title,
   description,
   reversed = false,
+  product,
 }: LittleGridProps) {
   return (
     <Section className={"mb-24 lg:mb-40"}>
@@ -38,7 +41,7 @@ export function LittleGrid({
               source={images[0]}
             />
             <Tip
-              product={{
+              product={product || {
                 id: "1",
                 slug: "",
                 category_slug: "pillows",
@@ -49,7 +52,7 @@ export function LittleGrid({
                 number_of_views: 1,
                 date: ""
               }}
-              className={"absolute left-[20%] top-[35%]"}
+              className={"absolute left-[20%] top-[45%]"}
             />
           </div>
           <div className={"flex flex-1 flex-col gap-6 md:flex-row"}>
