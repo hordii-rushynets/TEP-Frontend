@@ -29,12 +29,31 @@ export const stores = [
       {
         id: "1.1",
         address: {
-          street: "вул. Євгена Сверстюка 2Б",
-          mall: "ТЦ Лівобережний",
-          postalCode: "02002",
+          street: "проспект Степана Бандери, 36",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
         },
         schedule: "Понеділок - неділя",
-        workingHours: "10:00 - 20:00",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "1.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+      {
+        id: "1.3",
+        address: {
+          street: "проспект Лесі Українки, 36",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - субота",
+        workingHours: "9:00 - 23:00",
       },
     ],
   },
@@ -45,12 +64,57 @@ export const stores = [
       {
         id: "2.1",
         address: {
-          street: "вул. В’ячеслава Чорновола 63А",
-          mall: "",
-          postalCode: "79019",
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
         },
-        schedule: "Понеділок - п'ятниця",
-        workingHours: "9:00 - 18:00",
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "2.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+      {
+        id: "2.3",
+        address: {
+          street: "проспект Лесі Українки, 36",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - субота",
+        workingHours: "9:00 - 23:00",
+      },
+    ],
+  },
+  {
+    id: "3",
+    city: "Хмельницький",
+    stores: [
+      {
+        id: "3.1",
+        address: {
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "3.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
       },
     ],
   },
@@ -61,28 +125,127 @@ export const stores = [
       {
         id: "4.1",
         address: {
-          street: "вул. Комунальників 4Б",
-          mall: "",
-          postalCode: "58023",
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
         },
-        schedule: "Понеділок - п'ятниця",
-        workingHours: "9:00 - 18:00",
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
       },
     ],
   },
   {
     id: "5",
-    city: "Ужгород",
+    city: "Одеса",
     stores: [
       {
         id: "5.1",
         address: {
-          street: "вул. Корзо",
-          mall: "ринок Краснодонців, маг. 16-17",
-          postalCode: "88000",
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
         },
-        schedule: "Вівторок - неділя",
-        workingHours: "9:00 - 16:00",
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "5.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+      {
+        id: "5.3",
+        address: {
+          street: "проспект Лесі Українки, 36",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - субота",
+        workingHours: "9:00 - 23:00",
+      },
+      {
+        id: "5.4",
+        address: {
+          street: "проспект Степана Бандери, 123",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+      {
+        id: "5.5",
+        address: {
+          street: "проспект Лесі Українки, 3",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - субота",
+        workingHours: "9:00 - 23:00",
+      },
+    ],
+  },
+  {
+    id: "6",
+    city: "Дніпро",
+    stores: [
+      {
+        id: "6.1",
+        address: {
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "6.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+    ],
+  },
+  {
+    id: "7",
+    city: "Харків",
+    stores: [
+      {
+        id: "7.1",
+        address: {
+          street: "проспект Свободи, 9",
+          mall: "Blockbuster Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 22:00",
+      },
+      {
+        id: "7.2",
+        address: {
+          street: "проспект Степана Бандери, 6",
+          mall: "Lavina Mall",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - неділя",
+        workingHours: "10:00 - 21:00",
+      },
+      {
+        id: "7.3",
+        address: {
+          street: "проспект Лесі Українки, 36",
+          postalCode: "04073",
+        },
+        schedule: "Понеділок - субота",
+        workingHours: "9:00 - 23:00",
       },
     ],
   },
@@ -157,7 +320,7 @@ export function StoresInfo() {
                 </p>
                 <div className={"text-sm leading-normal lg:font-extralight"}>
                   <p>{currentStore.address.street}</p>
-                  <p>{city}, Україна, {currentStore.address.postalCode},</p>
+                  <p>Київ, Україна, {currentStore.address.postalCode},</p>
                   {currentStore.address.mall && (
                     <p>{currentStore.address.mall}</p>
                   )}
