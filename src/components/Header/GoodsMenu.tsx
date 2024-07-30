@@ -10,11 +10,19 @@ import { useCategories, Category } from 'contexts/CategoriesContext';
 
 import MainCompanyIMG from "./static/Logo.svg";
 import GoodsLinksIMG from "./static/goods.jpg";
+import { StaticImageData } from "next/image";
 
-const baseInfo = {
+type BaseInfo = {
+  slug: string;
+  title: string;
+  image: StaticImageData | string;
+  description: string;
+};
+
+const baseInfo: BaseInfo = {
   slug: "/",
-  title: "ТЕП",
-  image: MainCompanyIMG,
+  title: "Продукти",
+  image: GoodsLinksIMG,
   description: "Раді вітати Вас у ТЕП",
 };
 

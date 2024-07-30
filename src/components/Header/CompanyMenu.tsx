@@ -8,12 +8,20 @@ import { HoverMenuCard } from "./HoverMenuCard";
 import { HoverMenuTip } from "./HoverMenuTip";
 
 import MainCompanyIMG from "./static/Logo.svg";
-import CompanyLinksIMG from "./static/goods.jpg";
+import CompanyLinksIMG from "./static/company.jpg";
+import { StaticImageData } from "next/image";
 
-const baseInfo = {
+type BaseInfo = {
+  slug: string;
+  title: string;
+  image: StaticImageData | string;
+  description: string;
+};
+
+const baseInfo: BaseInfo = {
   slug: "/",
-  title: "ТЕП",
-  image: MainCompanyIMG,
+  title: "Компанія",
+  image: CompanyLinksIMG,
   description: "Раді вітати Вас у ТЕП",
 };
 
