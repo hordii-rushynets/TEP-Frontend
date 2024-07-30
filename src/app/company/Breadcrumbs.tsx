@@ -92,6 +92,32 @@ export function Breadcrumbs() {
           },
         ];
 
+      case CompanyUrl.getCooperationPrivateLabels():
+        return [
+          ...base,
+          {
+            name: "Співпраця та партнерство",
+            href: CompanyUrl.getCooperation(),
+          },
+          {
+            name: "Приватні марки",
+            href: CompanyUrl.getCooperationPrivateLabels(),
+          },
+        ];
+
+      case CompanyUrl.getCooperationWholesale():
+        return [
+          ...base,
+          {
+            name: "Співпраця та партнерство",
+            href: CompanyUrl.getCooperation(),
+          },
+          {
+            name: "Гуртові продажі",
+            href: CompanyUrl.getCooperationWholesale(),
+          },
+        ];
+
       case CompanyUrl.getVacancies():
         return [
           ...base,

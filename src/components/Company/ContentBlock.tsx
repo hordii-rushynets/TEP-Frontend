@@ -8,6 +8,7 @@ import { ImageBlock, ImageBlockProps } from "./ImageBlock";
 export type ContentBlockProps = {
   title?: string;
   text: string[];
+  haveImage?: boolean;
 } & ImageBlockProps &
   Pick<HTMLAttributes<HTMLElement>, "className">;
 
@@ -15,6 +16,7 @@ export function ContentBlock({
   title = "",
   text = [],
   className = "",
+  haveImage = true,
   ...props
 }: ContentBlockProps) {
   return (
@@ -35,7 +37,7 @@ export function ContentBlock({
           </div>
         </div>
       </Container>
-      <ImageBlock {...props} />
+      {haveImage && <ImageBlock {...props} />}
     </Section>
   );
 }
