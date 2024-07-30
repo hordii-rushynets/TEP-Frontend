@@ -4,7 +4,7 @@ import { Container, Section, Title } from "common/ui";
 
 import InfoCard from "../InfoCard";
 
-import IMG1 from "./static/img1.jpg";
+import IMG1 from "./static/img1.png";
 import IMG2 from "./static/img2.jpg";
 import IMG3 from "./static/img3.jpg";
 

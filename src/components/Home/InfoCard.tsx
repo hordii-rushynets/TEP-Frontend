@@ -25,7 +25,7 @@ export default function InfoCard({
           alt={"Background image"}
           fill
           className={
-            "object-cover transition-transform duration-300 group-hover:scale-105"
+            "object-cover transition-transform duration-300 group-hover:scale-105 brightness-75"
           }
           sizes="100vw, 50vw, 33vw"
         />
