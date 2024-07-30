@@ -13,7 +13,7 @@ import InfoIMG from "./static/info.jpg";
 const baseInfo = {
   slug: "/",
   title: "ТЕП",
-  image: MainCompanyIMG,
+  image: InfoIMG,
   description: "Раді вітати Вас у ТЕП",
 };
 export const infoLinks = [
