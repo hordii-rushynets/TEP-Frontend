@@ -9,9 +9,11 @@ import { Button, Dialog, Title } from "common/ui";
 import FlagRU from "./static/ru.png";
 import FlagUA from "./static/ua.png";
 import FlagUS from "./static/us.png";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function ChangeLanguage() {
   const [langIsOpen, setLangIsOpen] = useState(false);
+  const { setLocalization, staticData, localization } = useLocalization();
 
   return (
     <>
@@ -34,7 +36,10 @@ export function ChangeLanguage() {
               }
               size={"small"}
               colorVariant={"gray"}
-              className={{ button: "border-black" }}
+              className={localization === "uk" && { button: "border-black" }}
+              onClick={() => {
+                setLocalization("uk");
+              }}
             >
               Українська
             </Button>
@@ -44,6 +49,10 @@ export function ChangeLanguage() {
               }
               size={"small"}
               colorVariant={"gray"}
+              className={localization === "ru" && { button: "border-black" }}
+              onClick={() => {
+                setLocalization("ru");
+              }}
             >
               Русский
             </Button>
@@ -53,6 +62,10 @@ export function ChangeLanguage() {
               }
               size={"small"}
               colorVariant={"gray"}
+              className={localization === "en" && { button: "border-black" }}
+              onClick={() => {
+                setLocalization("en");
+              }}
             >
               English
             </Button>

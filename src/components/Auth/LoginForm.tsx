@@ -14,6 +14,7 @@ import { useAuth } from "contexts/AuthContext";
 import { Button, FormPasswordInput, FormTextInput } from "common/ui";
 
 import { SocialLogin } from "./SocialLogin";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
@@ -28,6 +29,7 @@ export function LoginForm() {
 
   const { setIsOpen, setTitle } = useAuthNotificationContext();
   const { login } = useAuth();
+  const { staticData } = useLocalization();
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -51,11 +53,11 @@ export function LoginForm() {
         else if (response.status === 401) {
           form.setError("email", {
             type: "manual",
-            message: "Неправильна адреса електронної пошти або пароль",
+            message: staticData.auth.loginForm.text1,
           });
           form.setError("password", {
             type: "manual",
-            message: "Неправильна адреса електронної пошти або пароль",
+            message: staticData.auth.loginForm.text1,
           });
         }
         else {
@@ -79,13 +81,13 @@ export function LoginForm() {
         <div className={"mb-[70px] flex flex-col gap-y-6"}>
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Введіть пошту"}
+            label={staticData.auth.loginForm.text2}
+            placeholder={staticData.auth.loginForm.text3}
           />
           <FormPasswordInput<Form>
             fieldName={"password"}
-            label={"Пароль"}
-            placeholder={"Введіть пароль"}
+            label={staticData.auth.loginForm.text4}
+            placeholder={staticData.auth.loginForm.text5}
           />
           <Link
             href={AuthUrl.getResetPassword()}
@@ -93,7 +95,7 @@ export function LoginForm() {
               "inline-block text-sm font-light underline underline-offset-2 transition-colors hover:text-tep_blue-500"
             }
           >
-            Забули пароль?
+            {staticData.auth.loginForm.text6}
           </Link>
         </div>
         <div className={"flex flex-col gap-y-6"}>
@@ -103,7 +105,7 @@ export function LoginForm() {
             colorVariant={"black"}
             fullWidth
           >
-            Увійти
+            {staticData.auth.loginForm.text7}
           </Button>
           <div
             className={
@@ -113,7 +115,7 @@ export function LoginForm() {
             <span
               className={"h-[1px] flex-1 rounded-full bg-tep_gray-200"}
             ></span>
-            <span>або</span>
+            <span>{staticData.auth.loginForm.text8}</span>
             <span
               className={"h-[1px] flex-1 rounded-full bg-tep_gray-200"}
             ></span>

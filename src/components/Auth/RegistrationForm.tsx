@@ -14,6 +14,7 @@ import {
   FormPasswordInput,
   FormTextInput,
 } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   first_name: z.string().default(""),
@@ -33,6 +34,7 @@ type Form = z.infer<typeof formSchema>;
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function RegistrationForm() {
+  const { staticData } = useLocalization();
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -55,7 +57,7 @@ export function RegistrationForm() {
           router.push('/email-confirmation');
         }
         else if (response.status === 409 || response.status === 400) {
-          form.setError("email", { type: "manual", message: "Ця електронна пошта вже зайнята" });
+          form.setError("email", { type: "manual", message: staticData.auth.registrationForm.text1 });
         }
         else {
             return;
@@ -72,48 +74,48 @@ export function RegistrationForm() {
         <div className={"mb-10 flex flex-col gap-y-6"}>
           <FormTextInput<Form>
             fieldName={"first_name"}
-            label={"Ім’я"}
-            placeholder={"Ваше ім’я"}
+            label={staticData.auth.registrationForm.text2}
+            placeholder={staticData.auth.registrationForm.text3}
           />
           <FormTextInput<Form>
             fieldName={"last_name"}
-            label={"Прізвище"}
-            placeholder={"Ваше прізвище"}
+            label={staticData.auth.registrationForm.text4}
+            placeholder={staticData.auth.registrationForm.text5}
           />
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Ваша пошта"}
+            label={staticData.auth.registrationForm.text6}
+            placeholder={staticData.auth.registrationForm.text7}
           />
           <FormPasswordInput<Form>
             fieldName={"password"}
-            label={"Пароль"}
-            placeholder={"Введіть пароль"}
+            label={staticData.auth.registrationForm.text8}
+            placeholder={staticData.auth.registrationForm.text9}
           />
         </div>
         <div className={"mb-14 flex flex-col gap-y-6"}>
           <FormCheckbox
             fieldName={"wholesale"}
-            label={"Я зацікавлений(-на) в оптових закупівлях"}
+            label={staticData.auth.registrationForm.text10 }
           />
           <FormCheckbox
             fieldName={"wantInfo"}
             label={
-              "Я хочу отримувати інформацію щодо новинок, акцій та пропозиції від ТЕП"
+              staticData.auth.registrationForm.text11
             }
           />
           <FormCheckbox
             fieldName={"policy"}
             label={
               <span>
-                Я прочитав(-ла) і зрозумів(-ла){" "}
+                {staticData.auth.registrationForm.text12}{" "}
                 <Link
                   className={
                     "underline underline-offset-2 transition-colors hover:text-tep_blue-500"
                   }
                   href={MainUrl.getPrivacyPolicy()}
                 >
-                  політику конфіденційності.
+                  {staticData.auth.registrationForm.text13}
                 </Link>
               </span>
             }
@@ -125,7 +127,7 @@ export function RegistrationForm() {
           colorVariant={"black"}
           fullWidth
         >
-          Створити профіль
+          {staticData.auth.registrationForm.text14}
         </Button>
       </form>
     </FormProvider>

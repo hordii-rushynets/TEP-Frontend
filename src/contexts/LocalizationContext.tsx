@@ -7,7 +7,7 @@ import data from "../locals/uk/data.json"
 export interface LocalizationContextType {
   localization: string;
   setLocalization: (value: string) => void;
-  staticData: StaticData;
+  staticData: any;
 }
 
 async function loadJSON(localization: string) {
@@ -28,11 +28,11 @@ interface LocalizationProviderProps {
 
 export const LocalizationProvider = ({ children }: LocalizationProviderProps) => {
   const [localization, setLocalization] = useState<string>("uk");
-  const [staticData, setStaticData] = useState<StaticData>(data);
+  const [staticData, setStaticData] = useState<any>(data);
 
   useEffect(() => {
       async function fetchData() {
-        const data: StaticData = await loadJSON(localization);
+        const data: any = await loadJSON(localization);
         setStaticData(data);
       }
   

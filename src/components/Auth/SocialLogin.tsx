@@ -2,6 +2,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 import { ButtonBase } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type SocialLoginProps = {
   onGoogleClick?: () => void;
@@ -9,6 +10,8 @@ export type SocialLoginProps = {
 };
 
 export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
+  const {staticData} = useLocalization();
+
   return (
     <>
       {onGoogleClick && (
@@ -20,7 +23,7 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           }}
         >
           <FcGoogle className={"size-4"} />
-          <span>Продовжити з Google</span>
+          <span>{staticData.auth.socialLogin.text1}</span>
         </ButtonBase>
       )}
       {onFBClick && (
@@ -32,7 +35,7 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           }}
         >
           <FaFacebookF className={"size-4"} />
-          <span>Продовжити з Facebook</span>
+          <span>{staticData.auth.socialLogin.text2}</span>
         </ButtonBase>
       )}
     </>

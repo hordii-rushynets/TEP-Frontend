@@ -1,16 +1,21 @@
+"use client"
+
 import Link from "next/link";
 import { AuthUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { LoginForm } from "components/Auth/LoginForm";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function CheckOut() {
+  const {staticData} = useLocalization();
+
   return (
     <Section>
       <Container>
         <div className={"pb-48 pt-8 md:pt-12"}>
           <Title className={"mb-3 text-3xl md:mb-[72px] lg:mb-16"}>
-            Оформлення покупки
+            {staticData.auth.checkout.text1}
           </Title>
           <div className={"flex justify-between gap-x-28"}>
             <div className={"flex-1 "}>
@@ -19,15 +24,14 @@ export default function CheckOut() {
                 size={"2xl"}
                 className={"mb-5 hidden md:block"}
               >
-                Я новий користувач
+                {staticData.auth.checkout.text2}
               </Title>
               <p
                 className={
                   "mb-32 max-w-[250px] text-sm md:mb-12 lg:mb-[72px] lg:max-w-[500px] lg:font-extralight"
                 }
               >
-                Увійдіть або зареєструйтеся до магазину ТЕП, щоб скористатися
-                персональними пропозиціями!
+                {staticData.auth.checkout.text3}
               </p>
               <div className={"flex flex-col gap-y-6 md:items-start"}>
                 <Link href={AuthUrl.getSignIn()} className={"md:hidden"}>
@@ -37,12 +41,12 @@ export default function CheckOut() {
                     fullWidth
                     className={"sm:w-auto"}
                   >
-                    Увійти
+                    {staticData.auth.checkout.text4}
                   </Button>
                 </Link>
                 <Link href={AuthUrl.getSignUp()}>
                   <Button size={"large"} fullWidth className={"sm:w-auto"}>
-                    Створити обліковий запис
+                  {staticData.auth.checkout.text5}
                   </Button>
                 </Link>
               </div>
@@ -53,7 +57,7 @@ export default function CheckOut() {
                 size={"2xl"}
                 className={"mb-5 hidden md:block"}
               >
-                Я вже зареєстрований
+                {staticData.auth.checkout.text6}
               </Title>
               <LoginForm />
             </div>

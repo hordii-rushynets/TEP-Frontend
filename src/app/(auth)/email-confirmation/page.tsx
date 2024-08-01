@@ -60,13 +60,13 @@ export default function EmailConfirmationPage() {
           }
         >
           <div className={"hidden w-1/3 md:block lg:w-1/2"}>
-            <Title className={"mb-5"}>Підтвердження емейлу</Title>
+            <Title className={"mb-5"}>{staticData.auth.emailconfirmation.text1}</Title>
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
-              Ми надіслали вам верифікаційний код на вашу електронну пошту
+              {staticData.auth.emailconfirmation.text2}
             </p>
-            <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+            <Button onClick={SendCode} size={"large"}>{staticData.auth.emailconfirmation.text3}</Button>
             {cooldown !== 0 && <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"} style={{color: "red"}}>
-              Спробуйте через {cooldown} секунд
+              {staticData.auth.emailconfirmation.text4} {cooldown} {staticData.auth.emailconfirmation.text5}
             </p>}
           </div>
           <div
@@ -76,14 +76,14 @@ export default function EmailConfirmationPage() {
           >
             <div className={"mb-16 md:hidden"}>
               <Title className={"mb-12 text-3xl"}>
-                Підтвердження емейлу
+                {staticData.auth.emailconfirmation.text1}
               </Title>
               <p className={"mb-2 text-sm"}>
-              Ми надіслали вам верифікаційний код на вашу електронну пошту
+              {staticData.auth.emailconfirmation.text2}
               </p>
-              <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+              <Button onClick={SendCode} size={"large"}>{staticData.auth.emailconfirmation.text3}</Button>
               {cooldown !== 0 && <p className={"mb-2 text-sm"} style={{color: "red"}}>
-                Спробуйте через {cooldown} секунд
+                {staticData.auth.emailconfirmation.text4} {cooldown} {staticData.auth.emailconfirmation.text5}
               </p>}
             </div>
             <EmailConfirmationForm />

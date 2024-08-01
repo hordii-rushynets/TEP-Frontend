@@ -51,12 +51,12 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
     updating ? accountService.emailUpdateConfirm(dataToSend.email || "", dataToSend.code, authContext).then(success => {
       if (success) {
         localStorage.removeItem("TEPemail");
-        setText("Ваш профіль успішно оновлено!");
+        setText(staticData.auth.emailConfirmationForm.text1);
         setIsOpen(true);
         router.push(AuthUrl.getAccount());
       }
       else {
-        form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
+        form.setError("verificationCode", { type: "manual", message: staticData.auth.emailConfirmationForm.text2 });
       }
     })
     : fetch(`${APIurl}/api/account/register/confirm/`, {
@@ -74,7 +74,7 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
           router.push(AuthUrl.getSignIn());
         }
         else if (response.status === 400) {
-          form.setError("verificationCode", { type: "manual", message: "Не вірний код доступу" });
+          form.setError("verificationCode", { type: "manual", message: staticData.auth.emailConfirmationForm.text2 });
         }
         else {
             return;
@@ -91,8 +91,8 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
         <div className={"flex flex-col gap-y-12 lg:gap-y-[72px]"}>
           <FormTextInput<Form>
             fieldName={"verificationCode"}
-            label={"Верифікаційний код"}
-            placeholder={"Введіть код"}
+            label={staticData.auth.emailConfirmationForm.text3}
+            placeholder={staticData.auth.emailConfirmationForm.text4}
           />
           <Button
             type={"submit"}
@@ -100,7 +100,7 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
             colorVariant={"black"}
             fullWidth
           >
-            Підтвердити
+            {staticData.auth.emailConfirmationForm.text5}
           </Button>
         </div>
       </form>
