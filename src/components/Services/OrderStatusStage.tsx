@@ -9,7 +9,7 @@ export type OrderStatusStageProps = {
   isLast: boolean;
   isDone: boolean;
   label: string;
-  date: Date;
+  date?: Date;
 };
 export function OrderStatusStage({
   isDone,
@@ -32,8 +32,8 @@ export function OrderStatusStage({
         {label}
       </Title>
       <p className={"flex gap-x-4 text-sm lg:font-extralight"}>
-        <span>{date.toLocaleDateString()}</span>
-        <span>{date.toLocaleTimeString().slice(0, 5)}</span>
+        <span>{date?.toLocaleDateString() || ""}</span>
+        <span>{date?.toLocaleTimeString().slice(0, 5) || ""}</span>
       </p>
       <Image
         src={Border}
