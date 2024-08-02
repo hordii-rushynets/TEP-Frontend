@@ -25,7 +25,7 @@ type PopularGoodsProps = {
 export function MoreArticles({ id, className }: PopularGoodsProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   useEffect(() => {
     const articleService = new ArticleService();
@@ -52,7 +52,7 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
     <Section className={cn("overflow-hidden", className)}>
       <Container>
         <div>
-          <Title className={"mb-12"}>Більше статтей</Title>
+          <Title className={"mb-12"}>{staticData.company.blog.moreArticles}</Title>
           <Swiper
             className={"!overflow-visible"}
             modules={[Navigation, Autoplay]}

@@ -1,18 +1,23 @@
+"use client"
+
 import Link from "next/link";
 import { CompanyUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Technologies() {
+  const { staticData } = useLocalization();
+  
   return (
     <Section className={"mb-40"}>
       <Container>
         <div>
-          <Title className={"mb-6 text-3xl"}>Технології</Title>
+          <Title className={"mb-6 text-3xl"}>{staticData.company.about.technologies.text1}</Title>
           <p
             className={"mb-7 max-w-[517px] text-sm md:mb-8 lg:font-extralight"}
           >
-            Balakkom використовує найсучасніші технології виробництва та забезпечує бренд ТЕП продуктами найвищої якості. До запатентованих технологій компанія відносить ефект мембрани в подушках та ковдрах, ультразвукова пайка для покривал, наповнювач Double Air для подушок та ковдр.{" "}
+            {staticData.company.about.technologies.text2}{" "}
           </p>
           <Link href={CompanyUrl.getTechnologies()}>
             <Button
@@ -21,7 +26,7 @@ export default function Technologies() {
               colorVariant={"black"}
               size={"super-large"}
             >
-              Дізнатись більше
+              {staticData.company.about.technologies.text3}
             </Button>
           </Link>
         </div>

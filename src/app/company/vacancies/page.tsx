@@ -9,6 +9,7 @@ import { VacanciesList } from "components/Company/Vacancies/VacanciesList";
 import VacanciesFilters from "components/Filters/VacanciesFilters";
 import { Vacancy } from "./interfaces";
 import { VacancyService } from "./services";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -44,12 +45,14 @@ export default function VacanciesPage({
     vacancyService.getVacancies(filters).then(data => setVacancies(data));
   }, [filters]);
 
+  const { staticData } = useLocalization();
+
   return (
     <>
       <Section className={"mt-12"}>
         <Container>
           <div>
-            <Title className={"mb-6 md:mb-8"}>Вакансії</Title>
+            <Title className={"mb-6 md:mb-8"}>{staticData.company.vacancies.text1}</Title>
             <Suspense fallback={<Loader />}>
               <VacanciesFilters count={vacancies.length} onFilterChange={handleFilterChange}/>
             </Suspense>
@@ -58,11 +61,11 @@ export default function VacanciesPage({
         </Container>
       </Section>
       <AnyQuestions
-        title={"Зацікавились?"}
+        title={staticData.company.vacancies.text2}
         description={
-          "Якщо ви зацікавились в співпраці з ТЕП ви можете зв’язатись з нами з вашою пропозицією."
+          staticData.company.vacancies.text3
         }
-        buttonText={"Залишити заявку"}
+        buttonText={staticData.company.vacancies.text4}
         buttonStyle={"black"}
         url={CompanyUrl.getCooperationRequest()}
       />
@@ -75,10 +78,12 @@ type ResultsProps = {
 };
 
 function Results({ vacancies }: ResultsProps) {
+  const { staticData } = useLocalization();
+
   if (!vacancies?.length) {
     return (
       <p className={"py-6 text-center text-lg"}>
-        По даному запиту вакансій не знайдено
+        {staticData.company.vacancies.text5}
       </p>
     );
   }

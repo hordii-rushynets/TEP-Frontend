@@ -6,8 +6,11 @@ import { CompanyUrl } from "route-urls";
 
 import { Disclosure, DisclosureItem } from "common/Disclosure";
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Conditions() {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
@@ -18,17 +21,16 @@ export default function Conditions() {
               trigger={
                 <div className={"flex items-center gap-x-4"}>
                   <FiExternalLink className={"size-6"} />
-                  <Title size={"base"}>Умови співпраці</Title>
+                  <Title size={"base"}>{staticData.company.cooperation.conditions.text1}</Title>
                 </div>
               }
             >
-              <p>Умови співпраці</p>
+              <p>{staticData.company.cooperation.conditions.text1}</p>
             </DisclosureItem>
           </Disclosure>
-          <div className={"mb-3.5 text-2xl font-bold"}>Зацікавились?</div>
+          <div className={"mb-3.5 text-2xl font-bold"}>{staticData.company.cooperation.conditions.text2}</div>
           <p className={"mb-7 text-sm md:mb-12 lg:font-extralight"}>
-            Якщо ви зацікавились в співпраці з ТЕП ви можете зв’язатись з нами з
-            вашою пропозицією.
+          {staticData.company.cooperation.conditions.text3}
           </p>
           <Link href={CompanyUrl.getCooperationRequest()}>
             <Button
@@ -37,7 +39,7 @@ export default function Conditions() {
               colorVariant={"black"}
               size={"super-large"}
             >
-              Залишити заявку
+              {staticData.company.cooperation.conditions.text4}
             </Button>
           </Link>
         </div>

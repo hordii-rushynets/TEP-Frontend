@@ -33,7 +33,7 @@ export function Breadcrumbs() {
   }, [slug]);
 
   const [loading, setLoading] = useState(true);
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
   const [ article, setArticle] = useState<Article>(ArticleDefault);
   const [ vacancyPosition, setVacancy ] = useState<Vacancy>(VacancyDefault);
 
@@ -52,11 +52,11 @@ export function Breadcrumbs() {
   const items = (() => {
     const base = [
       {
-        name: "Головна",
+        name: staticData.company.breadcrumbs.text1,
         href: MainUrl.getHome(),
       },
       {
-        name: "Компанія",
+        name: staticData.company.breadcrumbs.text2,
         href: MainUrl.getCompany(),
       },
     ];
@@ -66,7 +66,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Про бред ТЕП",
+            name: staticData.company.breadcrumbs.text3,
             href: CompanyUrl.getAbout(),
           },
         ];
@@ -74,7 +74,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Співпраця та партнерство",
+            name: staticData.company.breadcrumbs.text4,
             href: CompanyUrl.getCooperation(),
           },
         ];
@@ -83,11 +83,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Співпраця та партнерство",
+            name: staticData.company.breadcrumbs.text4,
             href: CompanyUrl.getCooperation(),
           },
           {
-            name: "Залишити заявку",
+            name: staticData.company.breadcrumbs.text5,
             href: CompanyUrl.getCooperationRequest(),
           },
         ];
@@ -96,11 +96,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Співпраця та партнерство",
+            name: staticData.company.breadcrumbs.text4,
             href: CompanyUrl.getCooperation(),
           },
           {
-            name: "Приватні марки",
+            name: staticData.company.breadcrumbs.text10,
             href: CompanyUrl.getCooperationPrivateLabels(),
           },
         ];
@@ -109,11 +109,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Співпраця та партнерство",
+            name: staticData.company.breadcrumbs.text4,
             href: CompanyUrl.getCooperation(),
           },
           {
-            name: "Гуртові продажі",
+            name: staticData.company.breadcrumbs.text11,
             href: CompanyUrl.getCooperationWholesale(),
           },
         ];
@@ -122,7 +122,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Робота в ТЕП",
+            name: staticData.company.breadcrumbs.text6,
             href: CompanyUrl.getVacancies(),
           },
         ];
@@ -131,7 +131,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Робота в ТЕП",
+            name: staticData.company.breadcrumbs.text6,
             href: CompanyUrl.getVacancies(),
           },
           {
@@ -143,7 +143,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Робота в ТЕП",
+            name: staticData.company.breadcrumbs.text6,
             href: CompanyUrl.getVacancies(),
           },
           {
@@ -151,7 +151,7 @@ export function Breadcrumbs() {
             href: `${CompanyUrl.getVacancies()}/${slug}`,
           },
           {
-            name: "Залишити заявку",
+            name: staticData.company.breadcrumbs.text5,
             href: CompanyUrl.getVacanciesRequest(slug),
           },
         ];
@@ -159,7 +159,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Робота в ТЕП",
+            name: staticData.company.breadcrumbs.text6,
             href: CompanyUrl.getVacancies(),
           },
           {
@@ -167,7 +167,7 @@ export function Breadcrumbs() {
             href: `${CompanyUrl.getVacancies()}/${slug}`,
           },
           {
-            name: "Залишити заявку",
+            name: staticData.company.breadcrumbs.text5,
             href: CompanyUrl.getVacanciesRequest(slug),
           },
         ];
@@ -175,7 +175,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Технології",
+            name: staticData.company.breadcrumbs.text7,
             href: CompanyUrl.getTechnologies(),
           },
         ];
@@ -183,11 +183,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Технології",
+            name: staticData.company.breadcrumbs.text7,
             href: CompanyUrl.getTechnologies(),
           },
           {
-            name: technology.title,
+            name: staticData.company.technologies.technologies.data[Number(technology?.id) - 1].title,
             href: CompanyUrl.getTechnology(slug),
           },
         ];
@@ -195,7 +195,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Блог",
+            name: staticData.company.breadcrumbs.text8,
             href: CompanyUrl.getBlog(),
           },
         ];
@@ -203,7 +203,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Блог",
+            name: staticData.company.breadcrumbs.text8,
             href: CompanyUrl.getBlog(),
           },
           {
@@ -215,7 +215,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Магазини ТЕП",
+            name: staticData.company.breadcrumbs.text9,
             href: CompanyUrl.getStores(),
           },
         ];

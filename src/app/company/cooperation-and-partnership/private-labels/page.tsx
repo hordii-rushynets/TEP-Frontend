@@ -1,3 +1,5 @@
+"use client"
+
 import { ContentBlock } from "components/Company/ContentBlock";
 import Conditions from "components/Company/Cooperation/Conditions";
 import MainIMG from "components/Company/Cooperation/static/private-labels.png";
@@ -13,6 +15,7 @@ import { OrderStatusStage } from "components/Services/OrderStatusStage";
 import Image from "next/image";
 import { cn } from "utils/cn";
 import Link from "next/link";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const stages = [
   {
@@ -50,15 +53,17 @@ const stages = [
 ]
 
 export default function PrivateLabelsPage() {
+  const { staticData } = useLocalization();
+
   return (
     <>
-      <MainImageBlock image={MainIMG} title={"Створення власної торгової марки"} />
+      <MainImageBlock image={MainIMG} title={staticData.company.cooperation.privatelabels.text1} />
       <ContentBlock
         className={"pt-24"}
         image={""}
-        title={"Про співпрацю"}
+        title={staticData.company.cooperation.privatelabels.text2}
         text={[
-          "Текстильна компанія Balakkom пропонує виробництво виробів домашнього текстилю під вашою торговою маркою. Ми працюємо з уже готовими специфікаціями, та за потреби можемо розробити новий продукт для вашої товарної лінійки. Балакком відповідає за повний виробничий цикл та доставку. Зацікавлені у створенні власної торгової марки текстилю або шукаєте виробника з високими стандартами якості? Звертайтесь до нас за розробкою та виготовленням товарів за наданими специфікаціями. Ми вже виконуємо замовлення для брендів з Німеччини, Австрії, Франції, Нідерландів, Румунії, Саудівської Аравії, Білорусі, Молдови, Болгарії та Ізраїлю.",
+          staticData.company.cooperation.privatelabels.text3
         ]}
         haveImage={false}
       />
@@ -82,21 +87,21 @@ export default function PrivateLabelsPage() {
               <div className="absolute inset-0 flex items-center justify-center p-10">
                 <p className={
                     "z-10 text-normal font-light text-white leading-tight"
-                  }><span className={"font-bold text-xl"}>Пропонуємо виготовлення:</span><br/><br/>
-                  -подушок<br/><br/>
-                  -ковдр<br/><br/>
-                  -постільної білизни<br/><br/>
-                  -покривала<br/><br/>
-                  -наматрацників<br/><br/>
-                  -простирадла<br/><br/>
-                  -розробка продукції по індивідуальному<br/>
-                   замовленню клієнта
+                  }><span className={"font-bold text-xl"}>{staticData.company.cooperation.privatelabels.text4}:</span><br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text5}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text6}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text7}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text8}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text9}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text10}<br/><br/>
+                  -{staticData.company.cooperation.privatelabels.text11}<br/>
+                  {staticData.company.cooperation.privatelabels.text12}
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <Title size="2xl">Алгоритм взаємодії з клієнтом:</Title>
+        <Title size="2xl">{staticData.company.cooperation.privatelabels.text13}:</Title>
         <div className={"mt-24"}>
           {stages.map((stage, Idx) => {
             const isLast = Idx === stages.length - 1;
@@ -105,7 +110,7 @@ export default function PrivateLabelsPage() {
                 key={stage?.label}
                 isLast={isLast}
                 isDone={stage.status}
-                label={stage.label}
+                label={staticData.company.cooperation.privatelabels.stages[Idx]}
               />
             );
           })}
@@ -122,12 +127,12 @@ export default function PrivateLabelsPage() {
               "flex flex-col items-center text-center lg:items-start lg:text-left"
             }
           >
-            <Title className={"mb-3.5"}>Мінімальна партія замовлення:</Title>
-            <p className={"mb-12 max-w-[324px] font-light"}>1. Ковдри - від 100 шт. одного розміру та виду<br/><br/>
-            2. Подушки, постільна білизна, простирадла, наматрацники, покривала - від 100 шт. одного розміру та виду</p>
-            <Title className={"mb-3.5"}>Пакування:</Title>
-            <p className={"mb-12 max-w-[324px] font-light"}>Можлива розробка власної етикетки та упаковки<br/><br/>
-            Індивідуальна упаковка товару (сумка, туб-пакет, сумка-економ, коробка, ПВХ-пакування)</p>
+            <Title className={"mb-3.5"}>{staticData.company.cooperation.privatelabels.text14}:</Title>
+            <p className={"mb-12 max-w-[324px] font-light"}>{staticData.company.cooperation.privatelabels.text15}<br/><br/>
+            {staticData.company.cooperation.privatelabels.text16}</p>
+            <Title className={"mb-3.5"}>{staticData.company.cooperation.privatelabels.text17}:</Title>
+            <p className={"mb-12 max-w-[324px] font-light"}>{staticData.company.cooperation.privatelabels.text18}<br/><br/>
+            {staticData.company.cooperation.privatelabels.text19}</p>
           </div>
         </div>
         <div className={"relative h-[500px] lg:h-auto lg:basis-[55%]"}>
@@ -160,9 +165,9 @@ export default function PrivateLabelsPage() {
               "flex flex-col items-center text-center lg:items-start lg:text-left"
             }
           >
-            <Title className={"mb-3.5"}>Сертифікати:</Title>
-            <p className={"mb-12 max-w-[442px] font-light"}>Сучасні технології, новітнє устаткування та потужна команда висококваліфікованих спеціалістів дають змогу позиціонувати нас як надійного виробника якісної продукції. <br/><br/>
-            Підтвердженням чого є наявність Сертифікату -Oeko-Tex  Standard 100. Компанія працює згідно стандартів погодженних Міністерством охорони здоров’я України: -ТУ У 30501814.002-99; -ТУ У 30501814.001-99; -ТУ У 17.4-30501814-005:2006. Перевірено на відповідність законодавству України  ДП “УКРМЕТРТЕСТСТАНДАРТ” 31.01.2024 року та внесено до книги обліку №105/000680/04.  </p>
+            <Title className={"mb-3.5"}>{staticData.company.cooperation.privatelabels.text20}:</Title>
+            <p className={"mb-12 max-w-[442px] font-light"}>{staticData.company.cooperation.privatelabels.text21} <br/><br/>
+            {staticData.company.cooperation.privatelabels.text22}  </p>
           </div>
         </div>
       </Section>
