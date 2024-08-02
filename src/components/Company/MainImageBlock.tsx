@@ -37,7 +37,7 @@ export function MainImageBlock({
           <Title
             size={"5xl"}
             component={"h1"}
-            className={"max-w-[520px] text-center !leading-tight text-white"}
+            className={"max-w-[1000px] text-center !leading-tight text-white"}
           >
             {title}
           </Title>
