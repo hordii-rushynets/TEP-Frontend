@@ -18,6 +18,7 @@ import { AccountService } from "app/account/services";
 import { useAuth } from "contexts/AuthContext";
 import { useNotificationContext } from "contexts/NotificationContext";
 import { useRouter } from 'next/navigation';
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   first_name: z.string().default(""),
@@ -33,6 +34,7 @@ type Form = z.infer<typeof formSchema>;
 export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) {
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [isDateOpen, setIsDateOpen] = useState(false);
+  const { staticData } = useLocalization();
 
   const accountService = new AccountService();
   const authContext = useAuth();
@@ -68,7 +70,7 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
 
     accountService.profileUpdate(formData, authContext).then(success => {
       if (success && !isEmailChanged) {
-        setText("Ваш профіль успішно оновлено!");
+        setText(staticData.account.userAccountForm.text1);
         setIsOpen(true);
       }
     });
@@ -79,7 +81,7 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
         router.push('/account/email-confirmation');
       }
       else {
-        form.setError("email", {type: "manual", message: "Пошта неправильна, або вже зареєстрована"});
+        form.setError("email", {type: "manual", message: staticData.account.userAccountForm.text2});
       }
     })
   }
@@ -94,18 +96,18 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
           <div className={"flex flex-col gap-y-6"}>
             <FormTextInput<Form>
               fieldName={"first_name"}
-              label={"Ім’я"}
-              placeholder={"Ваше ім’я"}
+              label={staticData.account.userAccountForm.text3}
+              placeholder={staticData.account.userAccountForm.text4}
             />
             <FormTextInput<Form>
               fieldName={"last_name"}
-              label={"Прізвище"}
-              placeholder={"Ваше прізвище"}
+              label={staticData.account.userAccountForm.text5}
+              placeholder={staticData.account.userAccountForm.text6}
             />
             <FormTextInput<Form>
               fieldName={"email"}
-              label={"Електронна пошта"}
-              placeholder={"Ваша пошта"}
+              label={staticData.account.userAccountForm.text7}
+              placeholder={staticData.account.userAccountForm.text8}
             />
             <InputMask
               mask={"+38 (099) 999-99-99"}
@@ -114,12 +116,12 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
               alwaysShowMask
               autoComplete={"off"}
             >
-              <TextInput label={"Телефон"} />
+              <TextInput label={staticData.account.userAccountForm.text9} />
             </InputMask>
             <FormTextInput<Form>
               fieldName={"birth_date"}
-              label={"День народження"}
-              placeholder={"pppp-мм-дд"}
+              label={staticData.account.userAccountForm.text10}
+              placeholder={staticData.account.userAccountForm.text11}
               endAdornment={
                 <FiCalendar className={"size-6 text-tep_gray-700"} />
               }
@@ -127,10 +129,10 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
             />
             <FormSelectInput
               fieldName={"profileType"}
-              label={"Профіль"}
+              label={staticData.account.userAccountForm.text12}
               options={[
-                { label: "Звичайний", value: "usual" },
-                { label: "Інший", value: "another" },
+                { label: staticData.account.userAccountForm.text13, value: "usual" },
+                { label: staticData.account.userAccountForm.text14, value: "another" },
               ]}
             />
             <UserSocials fbLink={"#"} googleLink={"#"} />
@@ -141,7 +143,7 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
               size={"super-large"}
               colorVariant={"black"}
             >
-              Змінити профіль
+              {staticData.account.userAccountForm.text15}
             </Button>
           </div>
         </form>

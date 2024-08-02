@@ -8,6 +8,7 @@ import { Button, Dialog } from "common/ui";
 import { ChangeAvatarForm } from "./ChangeAvatarForm";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { UserAccountForm } from "./UserAccountForm";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export interface User {
   email: string;
@@ -52,6 +53,8 @@ export interface UserAccountProps {
 export default function UserAccount({ user, refresh, setRefresh }: UserAccountProps) {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
 
+  const { staticData } = useLocalization();
+
   return (
     <>
       <div>
@@ -63,7 +66,7 @@ export default function UserAccount({ user, refresh, setRefresh }: UserAccountPr
             startIcon={<LuPenLine className={"size-4"} />}
             className={{ button: "hidden self-start md:flex" }}
           >
-            Змінити пароль
+            {staticData.account.userAccount.text1}
           </Button>
         </div>
         <UserAccountForm user={user} refresh={refresh} setRefresh={setRefresh}/>
@@ -74,7 +77,7 @@ export default function UserAccount({ user, refresh, setRefresh }: UserAccountPr
           startIcon={<LuPenLine className={"size-4"} />}
           className={{ button: "mt-12 md:hidden" }}
         >
-          Змінити пароль
+          {staticData.account.userAccount.text1}
         </Button>
       </div>
       <Dialog

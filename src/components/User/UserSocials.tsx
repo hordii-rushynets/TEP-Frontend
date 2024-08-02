@@ -1,3 +1,4 @@
+import { useLocalization } from "contexts/LocalizationContext";
 import Link from "next/link";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -8,10 +9,12 @@ export type UserSocialsProps = {
 };
 
 export function UserSocials({ fbLink, googleLink }: UserSocialsProps) {
+  const { staticData } = useLocalization();
+
   return (
     <div>
       <label className={"mb-2 block text-sm text-black lg:font-extralight"}>
-        Акаунт в соціальних мережах
+        {staticData.account.userSocials}
       </label>
       <div className={"mg:gap-x-8 flex flex-nowrap gap-x-4 sm:gap-x-7"}>
         {googleLink && (

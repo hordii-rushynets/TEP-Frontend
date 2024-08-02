@@ -6,6 +6,7 @@ import { TextInput } from "common/ui";
 import { User } from "./UserAccount";
 import { AccountService } from "app/account/services";
 import { useAuth } from "contexts/AuthContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export interface UserAccountProps {
   user: User;
@@ -21,6 +22,7 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
   const [postalError, setPostalError] = useState(false);
   const accountService = new AccountService();
   const authContext = useAuth();
+  const { staticData } = useLocalization();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -49,28 +51,28 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
         <TextInput
           value={street}
           onChange={(e) => setStreet(e.target.value)}
-          label={"Адреса"}
-          placeholder={"Адреса"}
+          label={staticData.account.userAddressForm.text1}
+          placeholder={staticData.account.userAddressForm.text1}
         />
         <TextInput
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          label={"Місто"}
-          placeholder={"Місто"}
+          label={staticData.account.userAddressForm.text2}
+          placeholder={staticData.account.userAddressForm.text2}
         />
         <TextInput
           value={region}
           onChange={(e) => setRegion(e.target.value)}
-          label={"Область"}
-          placeholder={"Область"}
+          label={staticData.account.userAddressForm.text3}
+          placeholder={staticData.account.userAddressForm.text3}
         />
         <TextInput
           value={postal}
           onChange={(e) => setPostal(e.target.value)}
-          label={"Індекс"}
-          placeholder={"Індекс"}
+          label={staticData.account.userAddressForm.text4}
+          placeholder={staticData.account.userAddressForm.text4}
         />
-        {postalError && <span style={{color: "red", fontSize: "12px"}}>Будь ласка, введіть валідний поштовий індекс</span>}
+        {postalError && <span style={{color: "red", fontSize: "12px"}}>{staticData.account.userAddressForm.text5}</span>}
       </div>
     </div>
   );

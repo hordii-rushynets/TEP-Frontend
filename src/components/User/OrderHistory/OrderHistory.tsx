@@ -7,6 +7,7 @@ import { OrderList } from "./OrderList";
 import IMG1 from "./static/id_1.jpg";
 import IMG2 from "./static/id_2.jpg";
 import IMG3 from "./static/id_3.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 // export type Status = "active" | "delivered" | "сanceled";
 export type Status =
@@ -162,11 +163,13 @@ export const orders: OrderType[] = [
 ];
 
 export function OrderHistory() {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
         <div className={"mb-40 mt-12 lg:mb-64"}>
-          <Title className={"mb-[70px] text-3xl"}>Історія замовлень</Title>
+          <Title className={"mb-[70px] text-3xl"}>{staticData.account.orderHistory}</Title>
           <OrderList orders={orders} />
         </div>
       </Container>

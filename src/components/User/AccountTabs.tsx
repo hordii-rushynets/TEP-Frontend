@@ -1,16 +1,17 @@
 "use client";
 
 import { Tab } from "@headlessui/react";
+import { useLocalization } from "contexts/LocalizationContext";
 import { ReactNode } from "react";
 import { cn } from "utils/cn";
-
-const tabs = ["Обліковий запис", "Адреса", "Налаштування"];
 
 export type AccountTabsProps = {
   tabsContent: ReactNode[];
 };
 
 export function AccountTabs({ tabsContent }: AccountTabsProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Tab.Group>
       <Tab.List
@@ -18,7 +19,7 @@ export function AccountTabs({ tabsContent }: AccountTabsProps) {
           "flex w-full flex-nowrap overflow-x-scroll border-b border-tep_gray-200"
         }
       >
-        {tabs.map((tab) => (
+        {staticData.account.accountTabs.map((tab: string) => (
           <Tab key={tab} className={"flex-1 outline-none"}>
             {({ selected }) => (
               <span

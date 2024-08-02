@@ -3,23 +3,9 @@
 import { useState } from "react";
 
 import { Button, SelectInput, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const date = new Date();
-
-const months = [
-  { value: "01", label: "Січень" },
-  { value: "02", label: "Лютий" },
-  { value: "03", label: "Березень" },
-  { value: "04", label: "Квітень" },
-  { value: "05", label: "Травень" },
-  { value: "06", label: "Червень" },
-  { value: "07", label: "Липень" },
-  { value: "08", label: "Серпень" },
-  { value: "09", label: "Вересень" },
-  { value: "10", label: "Жовтень" },
-  { value: "11", label: "Листопад" },
-  { value: "12", label: "Грудень" },
-];
 
 const getAllDaysInMonth = (month: number, year: number) =>
   Array.from(
@@ -36,12 +22,14 @@ export type BirthdayFormProps = {
 };
 
 export function BirthdayForm({ onSubmit }: BirthdayFormProps) {
+  const {staticData} = useLocalization();
+
   const [day, setDay] = useState(date.getDate().toString());
-  const [month, setMonth] = useState(months[date.getMonth()].value);
+  const [month, setMonth] = useState(staticData.account.birthdayForm.months[date.getMonth()].value);
   const [year, setYear] = useState(date.getFullYear().toString());
 
   const daysArr = getAllDaysInMonth(
-    months.findIndex((m) => m.value === month) + 1,
+    staticData.account.birthdayForm.months.findIndex((m: {value: string, label: string}) => m.value === month) + 1,
     parseInt(year),
   ).map((d) => ({
     label: d.toString(),
@@ -55,7 +43,7 @@ export function BirthdayForm({ onSubmit }: BirthdayFormProps) {
       }
     >
       <Title size={"2xl"} className={"mb-11 md:text-center"}>
-        День народження
+        {staticData.account.birthdayForm.text1}
       </Title>
       <div
         className={
@@ -63,24 +51,24 @@ export function BirthdayForm({ onSubmit }: BirthdayFormProps) {
         }
       >
         <SelectInput
-          label={"День"}
-          display={"День"}
+          label={staticData.account.birthdayForm.text2}
+          display={staticData.account.birthdayForm.text2}
           value={day}
           onChange={setDay}
           options={daysArr}
           className={{ wrapper: "order-1 flex-1 basis-1/3" }}
         />
         <SelectInput
-          label={"Місяць"}
-          display={"Місяць"}
+          label={staticData.account.birthdayForm.text3}
+          display={staticData.account.birthdayForm.text3}
           value={month}
           onChange={setMonth}
-          options={months}
+          options={staticData.account.birthdayForm.months}
           className={{ wrapper: "order-3 basis-full md:order-2" }}
         />
         <SelectInput
-          label={"Рік"}
-          display={"Рік"}
+          label={staticData.account.birthdayForm.text4}
+          display={staticData.account.birthdayForm.text4}
           value={year}
           onChange={setYear}
           options={years.map((y) => ({
@@ -96,10 +84,10 @@ export function BirthdayForm({ onSubmit }: BirthdayFormProps) {
         size={"super-large"}
         colorVariant={"black"}
         onClick={() =>
-          onSubmit([day, months.find((m) => m.value === month)!.value, year])
+          onSubmit([day, staticData.account.birthdayForm.months.find((m: { label: string, value: string }) => m.value === month)!.value, year])
         }
       >
-        Змінити
+        {staticData.account.birthdayForm.text5}
       </Button>
     </div>
   );
