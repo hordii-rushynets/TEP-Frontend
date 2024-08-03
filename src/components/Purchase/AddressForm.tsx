@@ -1,73 +1,52 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FormProvider } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { PurchaseUrl } from "route-urls";
-import { getDefaults } from "utils/zod";
-import { z } from "zod";
 
 import { Button, FormTextInput, TextInput } from "common/ui";
-
-const formSchema = z.object({
-  firstName: z.string().min(1, "Обовязково вкажіть ім'я").default(""),
-  lastName: z.string().min(1, "Обовязково вкажіть прізвище").default(""),
-  street: z.string().min(1, "Обовязково вкажіть вулицю").default(""),
-  city: z.string().min(1, "Обовязково вкажіть місто").default(""),
-  region: z.string().min(1, "Обовязково вкажіть область").default(""),
-  postal: z.string().min(1, "Обовязково вкажіть індекс").default(""),
-  phoneNumber: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { AddressForm as AddressFormType, usePostService } from "contexts/PostServiceContext";
 
 export function AddressForm() {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const router = useRouter();
 
-  const form = useForm<Form>({
-    resolver: zodResolver(formSchema),
-    defaultValues: getDefaults(formSchema),
-  });
+  const { addressForm } = usePostService();
 
-  function onSubmit(data: Form) {
-    const fullData = {
-      ...data,
-      phoneNumber: phoneNumber.match(/\d/g)?.join(""),
-    };
-    fullData;
-    // TODO
-    // ...
-    router.push(PurchaseUrl.getDelivery());
+  function onSubmit(data: AddressFormType) {
+    addressForm.clearErrors("phoneNumber");
+    const realPhone = phoneNumber.match(/\d/g)?.join("") || "";
+    if (realPhone.length === 12) {
+      addressForm.setValue("phoneNumber", realPhone);
+      router.push(PurchaseUrl.getDelivery());
+    }
+    else {
+      addressForm.setError("phoneNumber", { type: "manual", message: "Введіть дійсний номер телефону" });
+      setPhoneNumberError("Введіть дійсний номер телефону");
+    }
   }
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
+    <FormProvider {...addressForm}>
+      <form onSubmit={addressForm.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
         <div
           className={
             "mb-12 flex flex-col gap-y-6 border-b border-tep_gray-200 pb-24"
           }
         >
-          <FormTextInput<Form>
+          <FormTextInput<AddressFormType>
             fieldName={"firstName"}
             label={"Ім’я"}
             placeholder={"Ваше ім’я"}
           />
-          <FormTextInput<Form>
+          <FormTextInput<AddressFormType>
             fieldName={"lastName"}
             label={"Прізвище"}
             placeholder={"Ваше прізвище"}
           />
-          <FormTextInput
-            fieldName={"street"}
-            label={"Адреса"}
-            placeholder={"Ваша адреса"}
-          />
-
           <FormTextInput
             fieldName={"city"}
             label={"Місто"}
@@ -90,9 +69,9 @@ export function AddressForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} placeholder={"Ваш телефон"} />
+            <TextInput label={"Телефон"} placeholder={"Ваш телефон"} error={phoneNumberError !== ""} helperText={phoneNumberError}/>
           </InputMask>
-          <FormTextInput<Form>
+          <FormTextInput<AddressFormType>
             fieldName={"email"}
             label={"Електронна пошта"}
             placeholder={"Ваша пошта"}

@@ -9,60 +9,13 @@ import { Button, Container, Section, Title } from "common/ui";
 
 import { OrderStatusStage } from "./OrderStatusStage";
 import { TrackingForm } from "./TrackingForm";
-
-// function getOrderArticle(article: string) {...}
-
-type OrderDeliveryStages = {
-  label: string;
-  date: Date;
-  status: boolean;
-};
-
-const order_delivery_stages: OrderDeliveryStages[] = [
-  {
-    label: "Замовлення в обробці",
-    date: new Date(),
-    status: true,
-  },
-  {
-    label: "Замовлення готове до відправки",
-    date: new Date(),
-    status: true,
-  },
-  {
-    label: "Замовлення доставлено у відділення Нової пошти",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прибуло до вашого відділення",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення доставлено",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення протерміноване",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прямує до складу ТЕП",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прибуло до складу ТЕП",
-    date: new Date(),
-    status: false,
-  },
-];
+import { Stage } from "app/purchase/interfaces";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Tracking() {
-  const [stages, setStages] = useState<OrderDeliveryStages[] | undefined>();
+  const [stages, setStages] = useState<Stage[] | undefined>();
+  const { localization } = useLocalization();
+
   return (
     <>
       <Section className={"mb-24 lg:mb-40"}>
@@ -78,10 +31,10 @@ export default function Tracking() {
                 Хочеш дізнатися, де зараз товари, що ти замовив? Послуга
                 &quot;Відстежити замовлення&quot; тобі в цьому допоможе! Для
                 відстеження твого замовлення у полі &apos;Номер замовлення&apos;
-                введи номер свого замовлення, вказаний у листі (напр. SO123456)
+                введи номер свого замовлення, вказаний у листі
               </p>
             </div>
-            <TrackingForm onSending={() => setStages(order_delivery_stages)} />
+            <TrackingForm onSending={setStages} />
             {!!stages?.length && (
               <>
                 <div className={"mt-24"}>
@@ -89,11 +42,11 @@ export default function Tracking() {
                     const isLast = Idx === stages.length - 1;
                     return (
                       <OrderStatusStage
-                        key={stage?.label}
+                        key={stage?.status_uk}
                         isLast={isLast}
-                        isDone={stage.status}
-                        date={stage.date}
-                        label={stage.label}
+                        isDone={!isLast}
+                        date={new Date(stage.update_date)}
+                        label={stage[`status_${localization}` as keyof Stage]}
                       />
                     );
                   })}

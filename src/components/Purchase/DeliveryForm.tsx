@@ -1,49 +1,65 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { PurchaseUrl } from "route-urls";
-import { getDefaults } from "utils/zod";
-import { z } from "zod";
 
 import { Button, FormSelectInput, FormTextInput } from "common/ui";
-
-const formSchema = z.object({
-  delivery_service: z
-    .string()
-    .min(1, "Обовязково вкажіть службу доставки")
-    .default(""),
-  delivery_method: z
-    .string()
-    .min(1, "Обовязково вкажіть метод доставки")
-    .default(""),
-  department: z
-    .string()
-    .min(1, "Обовязково вкажіть номер відділення")
-    .default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { DeliveryForm as DeliveryFormType, usePostService } from "contexts/PostServiceContext";
+import { useEffect, useState } from "react";
+import { PurchaseService } from "app/purchase/services";
+import { Warehouse } from "app/purchase/interfaces";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function DeliveryForm() {
   const router = useRouter();
+  const { addressForm, deliveryForm } = usePostService();
+  const purchaseService = new PurchaseService();
+  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const { localization } = useLocalization();
 
-  const form = useForm<Form>({
-    resolver: zodResolver(formSchema),
-    defaultValues: getDefaults(formSchema),
-  });
+  useEffect(() => {
+    const city = addressForm.getValues().city;
+    const service = deliveryForm.getValues().delivery_service;
+    if (city !== "" && service !== "") {
+      purchaseService.getWarehouses(service, city).then(warehouses => setWarehouses(warehouses))
+    }
+    else if (city === "") {
+      addressForm.setError("city", { type: "manual", message: "Обовязково вкажіть місто" });
+      router.push(PurchaseUrl.getAddress());
+    }
+  }, [deliveryForm.watch("delivery_service"), addressForm.watch("city")]);
 
-  function onSubmit(data: Form) {
-    data;
-    // TODO
-    // ...
-    router.push(PurchaseUrl.getOrderData());
+  function onSubmit(data: DeliveryFormType) {
+    let validation = true;
+
+    if (data.delivery_method === "WarehouseDoors") {
+      if (data.street === "") {
+        deliveryForm.setError("street", {type: "manual", message: "Обов'язково вкажіть вулицю"})
+        validation = false;
+      }
+      if (data.house === "") {
+        deliveryForm.setError("house", {type: "manual", message: "Обов'язково вкажіть номер будинку"})
+        validation = false;
+      }
+      else if (isNaN(parseInt(data.house)) || parseInt(data.house) <= 0) {
+        deliveryForm.setError("house", {type: "manual", message: "Вкажіть справжній номер будинку"})
+        validation = false;
+      }
+      if (data.flat !== "" && (isNaN(parseInt(data.flat)) || parseInt(data.flat) <= 0)) {
+        deliveryForm.setError("flat", {type: "manual", message: "Вкажіть справжній номер квартири"})
+        validation = false;
+      }
+    }
+
+    if (validation) {
+      router.push(PurchaseUrl.getOrderData());
+    }
   }
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
+    <FormProvider {...deliveryForm}>
+      <form onSubmit={deliveryForm.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
         <div
           className={
             "mb-12 flex flex-col gap-y-6 border-b border-tep_gray-200 pb-24"
@@ -56,11 +72,11 @@ export function DeliveryForm() {
             options={[
               {
                 label: "Укр Пошта",
-                value: "ua_post",
+                value: "UkrPost",
               },
               {
                 label: "Нова Пошта",
-                value: "new_post",
+                value: "NovaPost",
               },
             ]}
           />
@@ -71,39 +87,49 @@ export function DeliveryForm() {
             options={[
               {
                 label:
-                  form.watch("delivery_service") === "new_post"
+                  deliveryForm.watch("delivery_service") === "NovaPost"
                     ? "Відділення Нової пошти"
                     : "Відділення Укр пошти",
-                value: "department",
+                value: "WarehouseWarehouse",
               },
               {
                 label:
-                  form.watch("delivery_service") === "new_post"
+                  deliveryForm.watch("delivery_service") === "NovaPost"
                     ? "Кур’єр Нової Пошти"
                     : "Кур’єр Укр Пошти",
-                value: "courier",
+                value: "WarehouseDoors",
               },
             ]}
           />
-          {form.watch("delivery_method") === "department" && (
+          {deliveryForm.watch("delivery_method") === "WarehouseWarehouse" && (
             <FormSelectInput
               fieldName={"department"}
               label={"Номер відділення"}
               display={"Оберіть номер відділення"}
-              options={[
-                {
-                  label: "Відділення №33, вул. Антоновича 90",
-                  value: "33",
-                },
-              ]}
+              options={warehouses.map(warehouse => ({
+                label: warehouse[`description_${localization}` as keyof Warehouse],
+                value: warehouse.number
+              }))}
             />
           )}
-          {form.watch("delivery_method") === "courier" && (
+          {deliveryForm.watch("delivery_method") === "WarehouseDoors" && (
+            <>
             <FormTextInput
-              fieldName={"department"}
-              label={"Адреса"}
-              placeholder={"Ваша адреса"}
+              fieldName={"street"}
+              label={"Вулиця"}
+              placeholder={"Ваша вулиця (введіть тільки назву, наприклад \"Залізняка\")"}
             />
+            <FormTextInput
+              fieldName={"house"}
+              label={"Номер будинку"}
+              placeholder={"Номер вашого будинку"}
+            />
+            <FormTextInput
+              fieldName={"flat"}
+              label={"Номер квартири"}
+              placeholder={"Номер вашої квартири"}
+            />
+            </>
           )}
         </div>
         <Button

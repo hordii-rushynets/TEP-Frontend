@@ -91,7 +91,6 @@ export function Cart() {
           <TotalPriceBlock
             hasTotalPrice={false}
             goods={cartItems}
-            isLoading={true}
           />
 
           <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}}/>
@@ -104,7 +103,7 @@ export function Cart() {
             Видалити всі товари
           </ButtonBase>
           <div className={"flex flex-col"}>
-            <TotalPriceBlock goods={cartItems} isLoading={true} />
+            <TotalPriceBlock goods={cartItems}/>
             <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
               <Button colorVariant={"black"} size={"super-large"}>
                 Оформити

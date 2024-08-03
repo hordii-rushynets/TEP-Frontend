@@ -68,7 +68,7 @@ export function CartProductCard({
             )} */}
           </div>
           <div>
-            <Price price={product.product_variants.default_price} className={"mb-2.5"} />
+            <Price price={product.product_variants.promotion ? product.product_variants.promo_price : product.product_variants.default_price} className={"mb-2.5"} />
             <div className={"text-sm leading-normal lg:font-extralight"}>
               <p>{product.color[`title_${localization}` as keyof Color]}</p>
               <p>{product.size[`title_${localization}` as keyof Size]} см</p>
@@ -99,7 +99,7 @@ export function CartProductCard({
           }
         >
           <span className={"text-sm lg:font-extralight"}>Разом</span>
-          <Price price={product.product_variants.default_price * product.quantity} />
+          <Price price={product.product_variants.promotion ? product.product_variants.promo_price : product.product_variants.default_price * product.quantity} />
         </div>
       </div>
     </div>
