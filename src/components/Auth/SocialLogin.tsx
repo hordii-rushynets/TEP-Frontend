@@ -2,7 +2,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 import { ButtonBase } from "common/ui";
-import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, CodeResponse } from '@react-oauth/google';
 import { useAuth } from "contexts/AuthContext";
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
 import { useRouter } from "next/navigation";
@@ -20,13 +20,13 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
   
   const router = useRouter();
 
-  const handleLoginSuccess = async (response: any) => {
+  const handleLoginSuccess = async (codeResponse: Omit<CodeResponse, "error" | "error_description" | "error_uri">) => {
     try {
-      const { credential } = response;
+      const credential = codeResponse.code;
       fetch(`${apiUrl}/api/account/auth/google/`, {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           token: credential,
