@@ -2,7 +2,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 import { ButtonBase } from "common/ui";
-import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, CodeResponse } from '@react-oauth/google';
+import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, CodeResponse, TokenResponse } from '@react-oauth/google';
 import { useAuth } from "contexts/AuthContext";
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export type SocialLoginProps = {
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
+const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
 export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
   const { setIsOpen, setTitle } = useAuthNotificationContext();
@@ -20,16 +21,37 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
   
   const router = useRouter();
 
+  const getIdToken = async (code: string): Promise<{id_token: string} | undefined> => {
+    const response = await fetch(GOOGLE_TOKEN_URL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        code,
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+        client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!,
+        redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI!,
+        grant_type: 'authorization_code',
+      }),
+    })
+
+    if (response.ok) {
+      return await response.json();
+    }
+  }
+
   const handleLoginSuccess = async (codeResponse: Omit<CodeResponse, "error" | "error_description" | "error_uri">) => {
     try {
-      const credential = codeResponse.code;
+      const code = codeResponse.code;
+      const tokens = await getIdToken(code);
       fetch(`${apiUrl}/api/account/auth/google/`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: credential,
+          token: tokens?.id_token,
         })
       }).then(response => {
         if (response.status === 200) {
@@ -57,7 +79,7 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
   const loginGoogle = useGoogleLogin({
     onSuccess: handleLoginSuccess,
     onError: handleLoginFailure,
-    flow: 'auth-code',
+    flow: "auth-code"
   });
 
   return (
