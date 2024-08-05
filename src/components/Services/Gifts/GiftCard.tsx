@@ -1,8 +1,11 @@
+"use client"
+
 import { StaticImageData } from "next/image";
 
 import { ImageSquare } from "common/ImageSquare";
 import { IconButton, Title } from "common/ui";
 import { ShoppingBasket } from "common/ui/icons/ShoppingBasket";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type GiftCardProps = {
   price: number;
@@ -17,6 +20,8 @@ export function GiftCard({
   image,
   onClick,
 }: GiftCardProps) {
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={
@@ -34,8 +39,8 @@ export function GiftCard({
         }
       >
         <Title size={"2xl"} className={"mb-4"}>
-          Картка на {price}
-          <span className={"align-top text-sm"}>грн</span>
+          {staticData.services.giftCard.text1} {price}
+          <span className={"align-top text-sm"}>{staticData.services.giftCard.text2}</span>
         </Title>
         <p className={"line-clamp-3 font-light"}>{description}</p>
       </div>

@@ -7,6 +7,7 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, Dialog, FormTextInput, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export const formSchema = z.object({
   email: z.string().email("Не коректна адреса електронної пошти").default(""),
@@ -37,6 +38,9 @@ export function Promocode10Percent() {
     setIsOpen(false);
     form.reset();
   }
+
+  const { staticData } = useLocalization();
+
   return (
     <Dialog
       open={isOpen}
@@ -48,11 +52,11 @@ export function Promocode10Percent() {
           "w-full px-6 py-20 text-center md:px-24 md:py-24 lg:px-24 lg:pb-28 lg:pt-36"
         }
       >
-        <Title className={"mb-3.5 text-3xl"}>Отакої!</Title>
+        <Title className={"mb-3.5 text-3xl"}>{staticData.purchase.promocode.text1}</Title>
         <p className={"mb-8 text-sm lg:font-extralight"}>
-          Вітаємо! Ви набрали більше{" "}
-          <span className={"font-bold"}>10 тис грн.</span> Отримайте{" "}
-          <span className={"font-bold"}>-10%</span> на наступну покупку!
+        {staticData.purchase.promocode.text2}{" "}
+          <span className={"font-bold"}>{staticData.purchase.promocode.text3}</span> {staticData.purchase.promocode.text4}{" "}
+          <span className={"font-bold"}>-10%</span> {staticData.purchase.promocode.text5}
         </p>
         <FormProvider {...form}>
           <form
@@ -61,7 +65,7 @@ export function Promocode10Percent() {
           >
             <FormTextInput<Form>
               fieldName={"email"}
-              placeholder={"Ваша пошта"}
+              placeholder={staticData.purchase.promocode.text6}
             />
             <Button
               type={"submit"}
@@ -69,7 +73,7 @@ export function Promocode10Percent() {
               colorVariant={"black"}
               fullWidth
             >
-              Отримати промокод
+              {staticData.purchase.promocode.text7}
             </Button>
           </form>
         </FormProvider>

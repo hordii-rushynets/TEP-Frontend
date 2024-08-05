@@ -1,13 +1,17 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import { ServicesUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 
-import NovaLogo from "./static/nova.png";
 import UkrLogo from "./static/ukr.png";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function UkrPost() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -20,7 +24,7 @@ export function UkrPost() {
             />
           </div>
           <Title size={"2xl"} className={"mb-8"}>
-            Вартість послуг доставки:
+            {staticData.services.ukrPost.text1}
           </Title>
           <div
             className={
@@ -36,10 +40,10 @@ export function UkrPost() {
                 component={"h6"}
                 className={"text-sm md:text-sm lg:font-normal"}
               >
-                Доставка «Укрпошта Стандарт»:
+                {staticData.services.ukrPost.text2}
               </Title>
-              <p>- у відділення — від 25 грн.</p>
-              <p>- адресна доставка кур'єром — від 50 грн.</p>
+              <p>{staticData.services.ukrPost.text3}</p>
+              <p>{staticData.services.ukrPost.text4}</p>
             </div>
             <div
               className={
@@ -50,10 +54,10 @@ export function UkrPost() {
                 component={"h6"}
                 className={"text-sm md:text-sm lg:font-normal"}
               >
-                Доставка «Укрпошта Експрес»:
+                {staticData.services.ukrPost.text5}
               </Title>
-              <p>-  у відділення - від 35 грн.              </p>
-              <p>- адресна доставка курʼєром - від 65 грн.</p>
+              <p>{staticData.services.ukrPost.text6}</p>
+              <p>{staticData.services.ukrPost.text7}</p>
             </div>
           </div>
           <Link href={ServicesUrl.getTracking()} className={"sm:inline-block"}>
@@ -63,7 +67,7 @@ export function UkrPost() {
               fullWidth
               className={{ button: "sm:w-auto" }}
             >
-              Відстежити замовлення
+              {staticData.services.ukrPost.text8}
             </Button>
           </Link>
         </div>

@@ -7,6 +7,7 @@ import CategoriesFilter from "components/Filters/CategoriesFilter";
 import ProductsList from "components/Goods/ProductsList";
 
 import PillowIMG from "./static/pillow.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const pillows = [...Array(9)].map((_, Idx) => ({
   id: (Idx + 1).toString(),
@@ -25,11 +26,13 @@ type NewGoodsProps = {
 };
 
 export const NewGoods = ({ activePage }: NewGoodsProps) => {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
         <div>
-          <Title className={"mb-9"}>Нові товари</Title>
+          <Title className={"mb-9"}>{staticData.novelty.newGoodsTitle}</Title>
           <div className={"mb-12 md:mb-6"}>
             <Suspense fallback={<Loader />}>
               <CategoriesFilter setCategory={(category) => {}}/>

@@ -9,6 +9,7 @@ import { Button, Container, Section, Title } from "common/ui";
 
 import { OrderStatusStage } from "./OrderStatusStage";
 import { TrackingForm } from "./TrackingForm";
+import { useLocalization } from "contexts/LocalizationContext";
 
 // function getOrderArticle(article: string) {...}
 
@@ -63,22 +64,20 @@ const order_delivery_stages: OrderDeliveryStages[] = [
 
 export default function Tracking() {
   const [stages, setStages] = useState<OrderDeliveryStages[] | undefined>();
+  const { staticData } = useLocalization();
   return (
     <>
       <Section className={"mb-24 lg:mb-40"}>
         <Container>
           <div className={"pt-8 md:pt-12"}>
             <div className={"mb-[72px]"}>
-              <Title className={"mb-3.5 text-3xl"}>Відстежити замовлення</Title>
+              <Title className={"mb-3.5 text-3xl"}>{staticData.services.tracking.title}</Title>
               <p
                 className={
                   "max-w-[713px] text-sm leading-normal lg:font-extralight"
                 }
               >
-                Хочеш дізнатися, де зараз товари, що ти замовив? Послуга
-                &quot;Відстежити замовлення&quot; тобі в цьому допоможе! Для
-                відстеження твого замовлення у полі &apos;Номер замовлення&apos;
-                введи номер свого замовлення, вказаний у листі (напр. SO123456)
+                {staticData.services.tracking.description}
               </p>
             </div>
             <TrackingForm onSending={() => setStages(order_delivery_stages)} />
@@ -102,7 +101,7 @@ export default function Tracking() {
                   href={InfoUrl.getLeaveFeedback()}
                   className={"mt-7 inline-block md:ml-7"}
                 >
-                  <Button size={"large"}>Залишити відгук</Button>
+                  <Button size={"large"}>{staticData.services.tracking.leaveFeedback}</Button>
                 </Link>
               </>
             )}

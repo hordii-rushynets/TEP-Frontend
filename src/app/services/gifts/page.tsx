@@ -1,3 +1,5 @@
+"use client"
+
 import AnyQuestions from "common/AnyQuestions";
 import { Container, Section, Title } from "common/ui";
 import { ImageBlock } from "components/Company/ImageBlock";
@@ -6,18 +8,21 @@ import { AboutGiftCards } from "components/Services/Gifts/AboutGiftCards";
 import { WantToBuy } from "components/Services/Gifts/WantToBuy";
 import CoffeeIMG from "components/Services/Gifts/static/coffee.jpg";
 import MainGiftsIMG from "components/Services/Gifts/static/gifts-image.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function GiftsPage() {
+  const { staticData } = useLocalization();
+
   return (
     <>
-      <MainImageBlock image={MainGiftsIMG} title={"Подарункові картки"} />
+      <MainImageBlock image={MainGiftsIMG} title={staticData.services.giftsPage.text1} />
       <AboutGiftCards />
       <ImageBlock image={CoffeeIMG} />
       <Section>
         <Container>
           <div className={"py-24"}>
             <Title className={"mb-3.5"} size={"2xl"}>
-              Вже маєш подарункову картку?
+            {staticData.services.giftsPage.text2}
             </Title>
             <ul
               className={
@@ -25,25 +30,22 @@ export default function GiftsPage() {
               }
             >
               <li>
-                - На картку можна зарахувати будь-яку суму від 100 до 15000
-                гривень.
+              {staticData.services.giftsPage.text3}
               </li>
               <li>
-                - Карткою можна користуватися поки вся сума не буде витрачена.
+              {staticData.services.giftsPage.text4}
               </li>
               <li>
-                - Термін придатності подарункової картки становить 3 роки.
+              {staticData.services.giftsPage.text5}
               </li>
-              <li>- ТЕП не може замінити втрачену або викрадену картку.</li>
+              <li>{staticData.services.giftsPage.text6}</li>
               <li>
-                - Кошти за товари, оплачені подарунковою картою, повертаються
-                виключно на карту відшкодування ТЕП.
+              {staticData.services.giftsPage.text7}
               </li>
               <li>
-                - Подарункову карту можна використаи виключно у фізичному
-                магазині ТЕП на території України.
+              {staticData.services.giftsPage.text8}
               </li>
-              <li>- Подарункова карта не підлягає поверненню.</li>
+              <li>{staticData.services.giftsPage.text9}</li>
             </ul>
           </div>
         </Container>

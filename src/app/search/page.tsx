@@ -70,14 +70,14 @@ export default function SearchPage() {
           <div>
             {products.length !== 0 && searchQuery ? (
               <Title className={"mb-10"}>
-                Результати пошуку для “{searchQuery}”
+                {staticData.search.searchPage.found} “{searchQuery}”
               </Title>
             ) : (
               <div className={"mb-24 lg:mb-40"}>
                 <Title className={"mb-16"}>
-                  Ми не знайшли збігів для “{searchQuery}”
+                {staticData.search.searchPage.notfound} “{searchQuery}”
                 </Title>
-                <p className={"mb-5 text-2xl font-bold"}>Малось на увазі?</p>
+                <p className={"mb-5 text-2xl font-bold"}>{staticData.search.searchPage.question}</p>
                 {tags.map(tag => 
                   <div>
                     <span className={"font-bold underline underline-offset-1"}>
@@ -101,7 +101,7 @@ export default function SearchPage() {
             <Container>
               <div>
                 <Title size={"2xl"} className={"mb-8"}>
-                  З цим товаром також шукають
+                {staticData.search.searchPage.title}
                 </Title>
                 <Link
                   href={"#"}

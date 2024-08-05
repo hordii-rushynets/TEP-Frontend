@@ -4,18 +4,21 @@ import { usePathname } from "next/navigation";
 import { MainUrl, ServicesUrl } from "route-urls";
 
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
 
+  const { staticData } = useLocalization();
+
   const items = (() => {
     const base = [
       {
-        name: "Головна",
+        name: staticData.services.breadcrumbs.home,
         href: MainUrl.getHome(),
       },
       {
-        name: "Послуги",
+        name: staticData.services.breadcrumbs.services,
         href: MainUrl.getServices(),
       },
     ];
@@ -25,7 +28,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Подарункові картки",
+            name: staticData.services.breadcrumbs.gifts,
             href: ServicesUrl.getGifts(),
           },
         ];
@@ -33,7 +36,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Послуги доставки",
+            name: staticData.services.breadcrumbs.delivery,
             href: ServicesUrl.getDelivery(),
           },
         ];

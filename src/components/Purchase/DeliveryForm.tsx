@@ -8,6 +8,7 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormSelectInput, FormTextInput } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   delivery_service: z
@@ -41,6 +42,8 @@ export function DeliveryForm() {
     router.push(PurchaseUrl.getOrderData());
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
@@ -51,36 +54,36 @@ export function DeliveryForm() {
         >
           <FormSelectInput
             fieldName={"delivery_service"}
-            label={"Служба доставки"}
-            display={"Оберіть службу"}
+            label={staticData.purchase.deliveryForm.text1}
+            display={staticData.purchase.deliveryForm.text2}
             options={[
               {
-                label: "Укр Пошта",
+                label: staticData.purchase.deliveryForm.text3,
                 value: "ua_post",
               },
               {
-                label: "Нова Пошта",
+                label: staticData.purchase.deliveryForm.text4,
                 value: "new_post",
               },
             ]}
           />
           <FormSelectInput
             fieldName={"delivery_method"}
-            label={"Спосіб доставки"}
-            display={"Оберіть спосіб"}
+            label={staticData.purchase.deliveryForm.text5}
+            display={staticData.purchase.deliveryForm.text6}
             options={[
               {
                 label:
                   form.watch("delivery_service") === "new_post"
-                    ? "Відділення Нової пошти"
-                    : "Відділення Укр пошти",
+                    ? staticData.purchase.deliveryForm.text7
+                    : staticData.purchase.deliveryForm.text8,
                 value: "department",
               },
               {
                 label:
                   form.watch("delivery_service") === "new_post"
-                    ? "Кур’єр Нової Пошти"
-                    : "Кур’єр Укр Пошти",
+                    ? staticData.purchase.deliveryForm.text9
+                    : staticData.purchase.deliveryForm.text10,
                 value: "courier",
               },
             ]}
@@ -88,8 +91,8 @@ export function DeliveryForm() {
           {form.watch("delivery_method") === "department" && (
             <FormSelectInput
               fieldName={"department"}
-              label={"Номер відділення"}
-              display={"Оберіть номер відділення"}
+              label={staticData.purchase.deliveryForm.text11}
+              display={staticData.purchase.deliveryForm.text12}
               options={[
                 {
                   label: "Відділення №33, вул. Антоновича 90",
@@ -101,8 +104,8 @@ export function DeliveryForm() {
           {form.watch("delivery_method") === "courier" && (
             <FormTextInput
               fieldName={"department"}
-              label={"Адреса"}
-              placeholder={"Ваша адреса"}
+              label={staticData.purchase.deliveryForm.text13}
+              placeholder={staticData.purchase.deliveryForm.text14}
             />
           )}
         </div>
@@ -113,7 +116,7 @@ export function DeliveryForm() {
           size={"large"}
           colorVariant={"black"}
         >
-          Зберегти та продовжити
+          {staticData.purchase.deliveryForm.text15}
         </Button>
       </form>
     </FormProvider>

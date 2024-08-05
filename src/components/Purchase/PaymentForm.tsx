@@ -17,6 +17,7 @@ import {
   TextInput,
 } from "common/ui";
 import { QuestionTip } from "components/User/QuestionTip";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   payment_method: z
@@ -58,6 +59,8 @@ export function PaymentForm() {
     router.push(PurchaseUrl.getConfirmation());
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
@@ -68,15 +71,15 @@ export function PaymentForm() {
         >
           <FormSelectInput
             fieldName={"payment_method"}
-            label={"Споіб оплати"}
-            display={"Оберіть спосіб оплати"}
+            label={staticData.purchase.paymentForm.text1}
+            display={staticData.purchase.paymentForm.text2}
             options={[
               {
-                label: "Оплата картою он-лайн",
+                label: staticData.purchase.paymentForm.text3,
                 value: "by_card",
               },
               {
-                label: "Оплата при доставці",
+                label: staticData.purchase.paymentForm.text4,
                 value: "upon_delivery",
               },
             ]}
@@ -90,7 +93,7 @@ export function PaymentForm() {
                 alwaysShowMask
                 autoComplete={"off"}
               >
-                <TextInput label={"Номер банківської картки"} />
+                <TextInput label={staticData.purchase.paymentForm.text5} />
               </ReactInputMask>
               <div className={"flex flex-wrap gap-6"}>
                 <ReactInputMask
@@ -100,11 +103,11 @@ export function PaymentForm() {
                   autoComplete={"off"}
                 >
                   <TextInput
-                    placeholder={"мм/рр"}
+                    placeholder={staticData.purchase.paymentForm.text6}
                     className={{
                       inputWrapper: "max-w-[184px]",
                     }}
-                    label={"Дійсний до"}
+                    label={staticData.purchase.paymentForm.text7}
                   />
                 </ReactInputMask>
                 <div className={"flex items-end gap-x-4"}>
@@ -126,7 +129,7 @@ export function PaymentForm() {
                   <div className={"py-3.5 leading-[0]"}>
                     <QuestionTip
                       text={
-                        "CVV/CVC2 - це код безпеки вашої картки. Це три останні цифри в полі підпису на зворотному боці Вашої картки."
+                        staticData.purchase.paymentForm.text8
                       }
                     />
                   </div>
@@ -134,21 +137,21 @@ export function PaymentForm() {
               </div>
               <FormCheckbox
                 fieldName={"add_card"}
-                label={"Додати картку до шаблану"}
+                label={staticData.purchase.paymentForm.text9}
               />
             </div>
           )}
 
           <FormTextInput
             fieldName={"promo_code"}
-            label={"Промокод*"}
-            placeholder={"Ваш промокод"}
+            label={staticData.purchase.paymentForm.text10}
+            placeholder={staticData.purchase.paymentForm.text11}
           />
           <FormTextInput
             multiline
             fieldName={"comment"}
-            label={"Коментар до замовлення*"}
-            placeholder={"Ваш коментар"}
+            label={staticData.purchase.paymentForm.text12}
+            placeholder={staticData.purchase.paymentForm.text13}
           />
         </div>
         <Button
@@ -158,7 +161,7 @@ export function PaymentForm() {
           size={"large"}
           colorVariant={"black"}
         >
-          Оплатити та продовжити
+          {staticData.purchase.paymentForm.text14}
         </Button>
       </form>
     </FormProvider>

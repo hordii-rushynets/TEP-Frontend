@@ -11,6 +11,7 @@ import { CartService } from "app/account/cart/services";
 import { CartItem } from "app/account/cart/interfaces";
 import { useAuth } from "contexts/AuthContext";
 import { useState, useEffect } from "react";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function OrderData() {
   const cartService = new CartService();
@@ -22,12 +23,14 @@ export function OrderData() {
     cartService.getCart(authContext).then(items => setCartItems(items));
   }, [cartRefresh]);
 
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
         <div className={"mb-40 pt-6 lg:mb-64 lg:pt-12"}>
           <Title size={"2xl"} className={"mb-11"}>
-            Дані замовлення
+            {staticData.purchase.orderData.title}
           </Title>
           <TotalPriceBlock hasTotalPrice={false} goods={cartItems} />
 
@@ -38,13 +41,13 @@ export function OrderData() {
                 "mb-8 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
             }}
           >
-            Видалити всі товари
+            {staticData.purchase.orderData.deleteButton}
           </ButtonBase>
           <div>
             <TotalPriceBlock goods={cartItems} />
             <Link href={PurchaseUrl.getPayment()} className={"sm:inline-block"}>
               <Button fullWidth colorVariant={"black"} size={"super-large"}>
-                Зберегти та продовжити
+              {staticData.purchase.orderData.saveButton}
               </Button>
             </Link>
           </div>
