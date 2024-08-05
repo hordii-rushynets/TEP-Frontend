@@ -1,42 +1,110 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
 import { MainUrl } from "route-urls";
 
-import { Button, Container, Section, Title } from "common/ui";
+import { IconButton, Section } from "common/ui";
+import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
 
 import MainIMG from "./static/main-bg.jpg";
+import AppIMG from "./static/main-app.png";
+import TowelIMG from "./static/main-towel.png"
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { HeroCard } from "./HeroCard";
+
+const heros = [
+  {
+    id: 1,
+    image: MainIMG,
+    title: "Тепло твого дому з ТЕП",
+    link: MainUrl.getGoods(),
+    buttonText: "Переглянути товари"
+  },
+  {
+    id: 2,
+    image: TowelIMG,
+    title: "Рушники Honey - Дотик Ніжності.",
+    link: MainUrl.getGoods(),
+    buttonText: "Переглянути товари" 
+  },
+  {
+    id: 3,
+    image: AppIMG,
+    title: "Додаток ТЕП для зручного замовлення",
+    link: "https://apps.apple.com/ua/app/%D1%82%D0%B5%D0%BF/id1631160979",
+    buttonText: "Скачати" 
+  }
+]
 
 export function Hero() {
   return (
-    <Section className={"relative bg-black"}>
-      <Image
-        src={MainIMG}
-        alt={"Main Background image"}
-        fill
-        className={"select-none object-cover opacity-85"}
-        aria-hidden
-        sizes="100vw, 50vw, 33vw"
-      />
-      <Container>
-        <div
-          className={
-            "relative z-10 flex min-h-[80vh] flex-col items-center justify-center gap-y-7 md:min-h-[90vh]"
-          }
-        >
-          <Title
-            className={"text-center text-white"}
-            component={"h1"}
-            size={"5xl"}
+    <Section className={"relative bg-black overflow-hidden"}>
+      <Swiper
+            className={"!overflow-visible"}
+            modules={[Navigation, Autoplay]}
+            navigation={{
+              nextEl: "#recomendations-next-btn",
+              prevEl: "#recomendations-prev-btn",
+            }}
+            speed={1000}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            spaceBetween={0}
+            breakpoints={{
+              425: {
+                slidesPerView: 1,
+              },
+              576: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 1,
+              },
+              1024: {
+                slidesPerView: 1,
+              },
+            }}
           >
-            Тепло твого дому із ТЕП
-          </Title>
-          <Link href={MainUrl.getGoods()}>
-            <Button size={"large"} colorVariant={"white"}>
-              Переглянути товари
-            </Button>
-          </Link>
-        </div>
-      </Container>
+            {heros.map((hero) => (
+              <SwiperSlide key={hero.id}>
+                <HeroCard 
+                  image={hero.image}
+                  title={hero.title}
+                  link={hero.link}
+                  buttonText={hero.buttonText}
+                />
+              </SwiperSlide>
+            ))}
+            <IconButton
+              id={"recomendations-prev-btn"}
+              className={{
+                button:
+                  "absolute left-0 top-1/2 z-40 translate-x-1/2 -translate-y-1/2",
+              }}
+              size={"large"}
+              colorVariant={"ghost"}
+            >
+              <FiChevronLeft className={"size-6"} />
+            </IconButton>
+            <IconButton
+              id={"recomendations-next-btn"}
+              className={{
+                button:
+                  "absolute right-0 top-1/2 z-40 -translate-y-1/2 -translate-x-1/2",
+              }}
+              size={"large"}
+              colorVariant={"ghost"}
+            >
+              <FiChevronRight className={"size-6"} />
+            </IconButton>
+          </Swiper>
     </Section>
   );
 }
