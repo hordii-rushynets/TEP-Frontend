@@ -1,3 +1,5 @@
+"use client"
+
 import { Disclosure as BaseDisclosure, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,30 +18,58 @@ import { Socials } from "components/Socials";
 import MaestroIMG from "./static/maestro.svg";
 import MastercardIMG from "./static/mastercard.svg";
 import VisaIMG from "./static/visa.svg";
+import { useLocalization } from "contexts/LocalizationContext";
 
-const companyFooterLinks = companyLinks.map((link) => ({
-  name: link.slug,
-  title: link.title,
-}));
-companyFooterLinks.splice(3, 0, {
-  name: "stores",
-  title: "Магазини ТЕП",
-});
+const companyFooterLinks = [
+  {
+    name: "about"
+  },
+  {
+    name: "cooperation-and-partnership"
+  },
+  {
+    name: "vacancies"
+  },
+  {
+    name: "stores"
+  },
+  {
+    name: "technologies"
+  },
+  {
+    name: "blog"
+  }
+]
 
-const servicesFooterLinks = servicesLinks
-  .map((link) => ({ name: link.slug, title: link.title }))
-  .reverse();
+// companyFooterLinks.splice(3, 0, {
+//   name: "stores",
+//   title: "Магазини ТЕП",
+// });
+
+const servicesFooterLinks = [
+  {
+    name: "tracking"
+  },
+  {
+    name: "delivery"
+  },
+  {
+    name: "gifts"
+  }
+]
 
 const infoFooterLinks = [
-  { url: InfoUrl.getQuestionsAndAnswers(), title: "Питання та відповіді" },
-  { url: InfoUrl.getFAQ(), title: "Інформація для покупців" },
-  { url: InfoUrl.getProductReturn(), title: "Повернення товару" },
-  { url: InfoUrl.getContactUs(), title: "Зв’язатись з нами" },
-  { url: InfoUrl.getFeedbacks(), title: "Відгуки" },
-  { url: InfoUrl.getCare(), title: "Догляд" },
+  { url: InfoUrl.getQuestionsAndAnswers() },
+  { url: InfoUrl.getFAQ() },
+  { url: InfoUrl.getProductReturn() },
+  { url: InfoUrl.getContactUs() },
+  { url: InfoUrl.getFeedbacks() },
+  { url: InfoUrl.getCare() },
 ];
 
 export function Footer() {
+  const { staticData } = useLocalization();
+
   return (
     <footer className={"bg-tep_gray-200 text-sm md:font-extralight"}>
       <Container>
@@ -48,27 +78,27 @@ export function Footer() {
             <nav className={"flex items-start gap-x-4 whitespace-nowrap"}>
               <div className={"basis-1/4"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  Товари
+                  {staticData.header.goodsLabel}
                 </Title>
                 <GoodsLinksList />
               </div>
               <div className={"basis-1/4"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  Компанія
+                  {staticData.header.companyLabel}
                 </Title>
-                {companyLinksList}
+                <CompanyLinksList />
               </div>
               <div className={"basis-1/4 md:hidden lg:block"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  Послуги
+                {staticData.header.serviceLabel}
                 </Title>
-                {servicesLinksList}
+                <ServicesLinksList />
               </div>
               <div className={"flex-1 md:basis-1/2 lg:basis-auto"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  Інформація для покупців
+                {staticData.header.infoLabel}
                 </Title>
-                {infoLinksList}
+                <InfoLinksList />
               </div>
             </nav>
           </div>
@@ -78,14 +108,14 @@ export function Footer() {
           <div className={"hidden gap-x-4 pb-5 pt-7 md:flex lg:hidden"}>
             <div className={"basis-1/2"}>
               <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                Послуги
+              {staticData.header.serviceLabel}
               </Title>
-              {servicesLinksList}
+              <ServicesLinksList />
             </div>
             <div className={"flex flex-1 flex-col gap-y-[22px]"}>
               <div className={"flex items-center gap-x-2"}>
                 <FiMapPin className={"size-4"} />
-                <span>Чернівці, вул. Комунальників 4Б</span>
+                <span>{staticData.footer.address}</span>
               </div>
               <div className={"flex items-center gap-x-2"}>
                 <FiPhone className={"size-4"} />
@@ -130,7 +160,7 @@ export function Footer() {
             >
               <div className={"flex items-center gap-x-2"}>
                 <FiMapPin className={"size-4"} />
-                <span>Чернівці, вул. Комунальників 4Б</span>
+                <span>{staticData.footer.address}</span>
               </div>
               <div className={"flex items-center gap-x-2"}>
                 <FiPhone className={"size-4"} />
@@ -160,7 +190,7 @@ export function Footer() {
               "flex flex-wrap items-center justify-between gap-x-7 gap-y-4 whitespace-nowrap border-t border-tep_gray-700/20 pb-6 pt-5 text-[10px]"
             }
           >
-            <span>© ТЕП Україна 2021</span>
+            <span>{staticData.footer.credentials}</span>
             <div className={"flex items-center gap-x-7"}>
               <Link
                 href={MainUrl.getTermsOfUse()}
@@ -168,7 +198,7 @@ export function Footer() {
                   "underline-offset-2 transition-colors hover:text-tep_blue-500 hover:underline"
                 }
               >
-                Умови користування
+                {staticData.footer.termsOfUse}
               </Link>
               <Link
                 href={MainUrl.getPrivacyPolicy()}
@@ -176,7 +206,7 @@ export function Footer() {
                   "underline-offset-2 transition-colors hover:text-tep_blue-500 hover:underline"
                 }
               >
-                Політика конфіденційності
+                {staticData.footer.policyPrivacy}
               </Link>
             </div>
           </div>
@@ -207,7 +237,7 @@ export const FooterLiLink = ({
 
 export const GoodsLinksList : React.FC = () => {
   const { categories } = useCategories();
-
+  const { staticData } = useLocalization();
   return (
   <ul className={"flex flex-col gap-y-[18px]"}>
     {categories.map((category: Category) => (
@@ -218,91 +248,105 @@ export const GoodsLinksList : React.FC = () => {
         {category.title}
       </FooterLiLink>
     ))}
-    <FooterLiLink url={MainUrl.getSales()}>Акції</FooterLiLink>
+    <FooterLiLink url={MainUrl.getSales()}>{staticData.header.salesTitle}</FooterLiLink>
   </ul>
   );
 };
-export const companyLinksList = (
-  <ul className={"flex flex-col gap-y-[18px]"}>
-    {companyFooterLinks.map((link) => (
-      <FooterLiLink
-        key={link.name}
-        url={`${MainUrl.getCompany()}/${link.name}`}
-      >
-        {link.title}
-      </FooterLiLink>
-    ))}
-  </ul>
-);
-export const servicesLinksList = (
-  <ul className={"flex flex-col gap-y-[18px]"}>
-    {servicesFooterLinks.map((link) => (
-      <FooterLiLink
-        key={link.name}
-        url={`${MainUrl.getServices()}/${link.name}`}
-      >
-        {link.title}
-      </FooterLiLink>
-    ))}
-  </ul>
-);
-export const infoLinksList = (
-  <ul className={"flex flex-col gap-y-[18px]"}>
-    {infoFooterLinks.map((link) => (
-      <FooterLiLink key={link.title} url={link.url}>
-        {link.title}
-      </FooterLiLink>
-    ))}
-  </ul>
-);
-
-const links = [
-  { triger: "Товари", list: <GoodsLinksList/> },
-  { triger: "Компанія", list: companyLinksList },
-  { triger: "Послуги", list: servicesLinksList },
-  { triger: "Інформація для покупців", list: infoLinksList },
-];
-
-export const FooterDiclosureNavigation = () => (
-  <div className={"pb-14 pt-24 md:hidden"}>
-    <Disclosure>
-      {links.map((block) => (
-        <BaseDisclosure key={block.triger}>
-          {({ open }) => (
-            <>
-              <BaseDisclosure.Button
-                className={
-                  "flex w-full items-center justify-between py-6 transition-colors hover:text-tep_blue-500"
-                }
-              >
-                <Title component={"h4"} size={"xl"}>
-                  {block.triger}
-                </Title>
-                <FiChevronDown
-                  className={cn(
-                    {
-                      "rotate-180 transform": open,
-                    },
-                    "size-6 transition-all hover:text-tep_blue-500",
-                  )}
-                />
-              </BaseDisclosure.Button>
-              <Transition
-                enter={"transition duration-100 ease-out"}
-                enterFrom={"transform scale-95 opacity-0"}
-                enterTo={"transform scale-100 opacity-100"}
-                leave={"transition duration-75 ease-out"}
-                leaveFrom={"transform scale-100 opacity-100"}
-                leaveTo={"transform scale-95 opacity-0"}
-              >
-                <BaseDisclosure.Panel className={"py-4"}>
-                  {block.list}
-                </BaseDisclosure.Panel>
-              </Transition>
-            </>
-          )}
-        </BaseDisclosure>
+export const CompanyLinksList : React.FC = () => {
+  const { staticData } = useLocalization();
+  return (
+    <ul className={"flex flex-col gap-y-[18px]"}>
+      {companyFooterLinks.map((link, indx) => (
+        <FooterLiLink
+          key={link.name}
+          url={`${MainUrl.getCompany()}/${link.name}`}
+        >
+          {staticData.footer.companyLinks[indx]}
+        </FooterLiLink>
       ))}
-    </Disclosure>
-  </div>
-);
+    </ul>
+  );
+};
+export const ServicesLinksList : React.FC = () => {
+  const { staticData } = useLocalization();
+
+  return (
+    <ul className={"flex flex-col gap-y-[18px]"}>
+      {servicesFooterLinks.map((link, indx) => (
+        <FooterLiLink
+          key={link.name}
+          url={`${MainUrl.getServices()}/${link.name}`}
+        >
+          {staticData.footer.servicesLinks[indx]}
+        </FooterLiLink>
+      ))}
+    </ul>
+  );
+};
+export const InfoLinksList : React.FC = () => {
+  const { staticData } = useLocalization();
+
+  return (
+    <ul className={"flex flex-col gap-y-[18px]"}>
+      {infoFooterLinks.map((link, indx) => (
+        <FooterLiLink key={indx} url={link.url}>
+          {staticData.footer.infoLinks[indx]}
+        </FooterLiLink>
+      ))}
+    </ul>
+  );
+};
+
+export const FooterDiclosureNavigation: React.FC = () => {
+  const { staticData } = useLocalization();
+  const links = [
+    { triger: staticData.header.goodsLabel, list: <GoodsLinksList/> },
+    { triger: staticData.header.companyLabel, list: <CompanyLinksList /> },
+    { triger: staticData.header.serviceLabel, list: <ServicesLinksList /> },
+    { triger: staticData.header.infoLabel, list: <InfoLinksList /> },
+  ];
+
+  return (
+    <div className={"pb-14 pt-24 md:hidden"}>
+      <Disclosure>
+        {links.map((block) => (
+          <BaseDisclosure key={block.triger}>
+            {({ open }) => (
+              <>
+                <BaseDisclosure.Button
+                  className={
+                    "flex w-full items-center justify-between py-6 transition-colors hover:text-tep_blue-500"
+                  }
+                >
+                  <Title component={"h4"} size={"xl"}>
+                    {block.triger}
+                  </Title>
+                  <FiChevronDown
+                    className={cn(
+                      {
+                        "rotate-180 transform": open,
+                      },
+                      "size-6 transition-all hover:text-tep_blue-500",
+                    )}
+                  />
+                </BaseDisclosure.Button>
+                <Transition
+                  enter={"transition duration-100 ease-out"}
+                  enterFrom={"transform scale-95 opacity-0"}
+                  enterTo={"transform scale-100 opacity-100"}
+                  leave={"transition duration-75 ease-out"}
+                  leaveFrom={"transform scale-100 opacity-100"}
+                  leaveTo={"transform scale-95 opacity-0"}
+                >
+                  <BaseDisclosure.Panel className={"py-4"}>
+                    {block.list}
+                  </BaseDisclosure.Panel>
+                </Transition>
+              </>
+            )}
+          </BaseDisclosure>
+        ))}
+      </Disclosure>
+    </div>
+  );
+};

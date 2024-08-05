@@ -8,17 +8,9 @@ import { useState, useEffect } from "react";
 import { ProductForSaleService } from "./services"; 
 import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 import { useLocalization } from "contexts/LocalizationContext";
-import IMG1 from "components/Goods/static/sales/img1.jpg";
-import IMG2 from "components/Goods/static/sales/img2.jpg";
-import IMG3 from "components/Goods/static/sales/img3.jpg";
-import IMG4 from "components/Goods/static/sales/img4.jpg";
-import IMG5 from "components/Goods/static/sales/img5.jpg";
-import IMG6 from "components/Goods/static/sales/img6.jpg";
 
 import { Breadcrumbs } from "./Breadcrumbs";
 import { useAuth } from "contexts/AuthContext";
-
-const images = [IMG1, IMG2, IMG3, IMG4, IMG5, IMG6];
 
 export default function SalesPage() {
   const [products, setProducts] = useState<ProductToShow[]>([]);

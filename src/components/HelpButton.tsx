@@ -12,6 +12,7 @@ import { z } from "zod";
 import { Button, ButtonBase, FormTextInput, Title } from "common/ui";
 
 import AvatarIMG from "./static/chat-avatar.png";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
   message: z.string().min(1).default(""),
@@ -34,6 +35,8 @@ export function HelpButton() {
     }
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <>
       {!isOpen && (
@@ -46,7 +49,7 @@ export function HelpButton() {
           }}
           onClick={() => setIsOpen(true)}
         >
-          <span className={"hidden md:block"}>Допомога</span>
+          <span className={"hidden md:block"}>{staticData.helpButton.name}</span>
         </Button>
       )}
 
@@ -71,7 +74,7 @@ export function HelpButton() {
                 size={"xl"}
                 component={"h4"}
               >
-                Обслуговування клієнтів
+                {staticData.helpButton.title}
               </Title>
               <div className={"flex flex-1 flex-col gap-y-2"}>
                 <div className={"flex items-start gap-x-2"}>
@@ -82,7 +85,7 @@ export function HelpButton() {
                         "mb-1 rounded-2xl bg-tep_gray-200 px-4 py-3 text-xs font-extralight"
                       }
                     >
-                      Привіт! Ви звернулись в центр обслуговування клієнтів.
+                      {staticData.helpButton.greeting}
                     </div>
                     <div
                       className={
@@ -109,7 +112,7 @@ export function HelpButton() {
                         "mb-1 rounded-2xl bg-tep_gray-200 px-4 py-3 text-xs font-extralight"
                       }
                     >
-                      Привіт! Ви звернулись в центр обслуговування клієнтів.
+                      {staticData.helpButton.greeting}
                     </div>
                     <div
                       className={
@@ -136,7 +139,7 @@ export function HelpButton() {
                         "mb-1 rounded-2xl bg-tep_gray-200 px-4 py-3 text-xs font-extralight"
                       }
                     >
-                      Привіт! Ви звернулись в центр обслуговування клієнтів.
+                      {staticData.helpButton.greeting}
                     </div>
                     <div
                       className={
@@ -158,7 +161,7 @@ export function HelpButton() {
                       input:
                         "h-full resize-none placeholder:text-sm placeholder:text-tep_gray-700/50",
                     }}
-                    placeholder={"Введіть ваш запит ..."}
+                    placeholder={staticData.helpButton.placeholder}
                     endAdornment={
                       <ButtonBase type={"submit"}>
                         <FiSend

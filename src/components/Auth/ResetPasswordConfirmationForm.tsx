@@ -13,7 +13,6 @@ import { useLocalization } from "contexts/LocalizationContext";
 import {
   Button,
   FormTextInput,
-  FormPasswordInput
 } from "common/ui";
 
 const formSchema = z.object({

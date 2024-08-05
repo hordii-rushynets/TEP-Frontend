@@ -8,6 +8,7 @@ import { z } from "zod";
 
 import { Button, FormTextInput, Title } from "common/ui";
 import FormIMG from "components/Company/Blog/static/form-img.png";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export const getInstructionsSchema = z.object({
   fullname: z.string().default(""),
@@ -29,20 +30,19 @@ export function GetInstructionsForm() {
     form.reset();
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <div className={"mb-24 lg:mb-40"}>
       <Title className={"mb-4 text-3xl"}>
-        Отримай PDF інструкцію по пранню ковдр в якості бонусу
+        {staticData.forms.getInstructionsForm.title}
       </Title>
       <p
         className={
           "mb-8 text-lg md:mb-3 md:text-sm lg:mb-14 lg:font-extralight "
         }
       >
-        Шукаєш внформацію по тому як правильно прати дитячі ковдри? Заповни
-        форму та клікай завантажити, щоб отримати інструкцію! Шукаєш внформацію
-        по тому як правильно прати дитячі ковдри? Заповни форму та клікай
-        завантажити, щоб отримати інструкцію!
+        {staticData.forms.getInstructionsForm.description}
       </p>
       <div
         className={
@@ -54,12 +54,12 @@ export function GetInstructionsForm() {
             <div className={"mb-[72px] flex flex-col gap-y-6"}>
               <FormTextInput<Form>
                 fieldName={"fullname"}
-                label={"Ім’я"}
-                placeholder={"Тарас Шевченко"}
+                label={staticData.forms.getInstructionsForm.nameLabel}
+                placeholder={staticData.forms.getInstructionsForm.nameDisplay}
               />
               <FormTextInput<Form>
                 fieldName={"email"}
-                label={"Пошта"}
+                label={staticData.forms.getInstructionsForm.emailLabel}
                 placeholder={"taras@gmail.com"}
               />
             </div>
@@ -70,7 +70,7 @@ export function GetInstructionsForm() {
               fullWidth
               className={{ button: "sm:w-auto" }}
             >
-              Завантажити
+              {staticData.forms.getInstructionsForm.button}
             </Button>
           </form>
         </FormProvider>

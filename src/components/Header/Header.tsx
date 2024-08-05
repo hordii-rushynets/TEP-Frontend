@@ -25,6 +25,7 @@ import { useAuth } from "contexts/AuthContext";
 
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Header() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -36,6 +37,7 @@ export function Header() {
   }, [menuIsOpen]);
 
   const { isAuthenticated } = useAuth();
+  const { staticData } = useLocalization();
 
   return (
     <header
@@ -99,7 +101,7 @@ export function Header() {
           <ButtonBase
             className={{ button: "order-6 lg:order-1" }}
             onClick={() => setMenuIsOpen(true)}
-            title={"Відкрити меню"}
+            title={staticData.header.headerButton}
           >
             <FiMenu
               className={"size-6 transition-colors hover:text-tep_blue-500"}

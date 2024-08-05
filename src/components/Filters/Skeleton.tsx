@@ -1,4 +1,7 @@
+"use client"
+
 import { Button, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type SkeletonProps = {
   title?: string;
@@ -11,7 +14,7 @@ export type SkeletonProps = {
 };
 
 export function Skeleton({
-  title = "Фільтр та сортування",
+  title = "",
   children,
   count = 12,
   isSelected = true,
@@ -19,10 +22,12 @@ export function Skeleton({
   onClick,
   cleanFIlter,
 }: SkeletonProps) {
+
+  const { staticData } = useLocalization();
   return (
     <div className={"flex h-full w-full flex-col"}>
       <Title size={"2xl"} className={"md:mb-8"}>
-        {title}
+        {title !== "" ? title : staticData.filters.skeleton.title}
       </Title>
       <div className={"-mr-4 flex-1 overflow-y-scroll pr-4"}>{children}</div>
       <div className={"flex w-full gap-x-2 overflow-auto pt-2"}>
@@ -32,7 +37,7 @@ export function Skeleton({
           onClick={cleanFIlter}
           className={{ button: "px-2 py-3" }}
         >
-          Очистити все
+          {staticData.filters.skeleton.clear}
         </Button>
         <Button
           className={{ button: "px-2 py-3" }}
@@ -41,7 +46,7 @@ export function Skeleton({
           disabled={!isSelected}
           onClick={onClick}
         >
-          Переглянути {count}
+          {staticData.filters.skeleton.view} {count}
         </Button>
       </div>
     </div>

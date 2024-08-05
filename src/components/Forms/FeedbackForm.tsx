@@ -87,14 +87,16 @@ export function FeedbackForm() {
     })
   }, [form.watch().category]);
 
+  const { staticData } = useLocalization();
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
-        <Title className={"mb-[62px] text-3xl"}>Залишити відгук</Title>
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.feedbackForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormRatingSelect
             fieldName={"rating"}
-            label={"Оцінка"}
+            label={staticData.forms.feedbackForm.text2}
             transition={"zoom"}
             spaceInside={"small"}
             spaceBetween={"small"}
@@ -110,8 +112,8 @@ export function FeedbackForm() {
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={"Повідомлення *"}
-            placeholder={"Не обов’язково *"}
+            label={staticData.forms.feedbackForm.text3}
+            placeholder={staticData.forms.feedbackForm.text4}
           />
           <div className={"flex flex-wrap gap-2"}>
             {selectedFiles.map((file, Idx) => 
@@ -131,7 +133,7 @@ export function FeedbackForm() {
               }
             >
               <FiPaperclip className={"size-4"} />
-              <span className={"text-sm font-bold"}>Файли</span>
+              <span className={"text-sm font-bold"}>{staticData.forms.feedbackForm.text5}</span>
             </label>
             <input id={id} type={"file"} className={"hidden"} multiple onChange={handleFileChange} accept={"image/jpeg,image/png"}/>
           </div>
@@ -143,7 +145,7 @@ export function FeedbackForm() {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Надіслати
+          {staticData.forms.feedbackForm.text6}
         </Button>
       </form>
     </FormProvider>
@@ -153,12 +155,13 @@ export function FeedbackForm() {
 
 const CategoriesFormSelect : React.FC = () => {
   const { categories } = useCategories();
+  const { staticData } = useLocalization();
 
   return (
       <FormSelectInput
           fieldName={"category"}
-          label={"Категорія"}
-          display={"Обрати категорію"}
+          label={staticData.forms.categoriesFormSelect.label}
+          display={staticData.forms.categoriesFormSelect.display}
           options={categories.map((category) => ({
             value: category.slug,
             label: category.title,
@@ -172,13 +175,13 @@ type ProductsFormSelectProps = {
 }
 
 const ProductsFormSelect : React.FC<ProductsFormSelectProps> = ({products}: ProductsFormSelectProps) => {
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   return (
       <FormSelectInput
           fieldName={"product"}
-          label={"Товари"}
-          display={"Оберіть товар"}
+          label={staticData.forms.productsFormSelect.label}
+          display={staticData.forms.productsFormSelect.display}
           options={products.map((product) => ({
             value: product.id.toString(),
             label: product[`title_${localization}` as keyof ProductWithVariant] as string,

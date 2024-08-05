@@ -10,11 +10,10 @@ import CertificateImage from "components/Company/Cooperation/static/private-labe
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import { ImageSquare } from "common/ImageSquare";
-import { Button, Container, Section, Title } from "common/ui";
+import { Container, Section, Title } from "common/ui";
 import { OrderStatusStage } from "components/Services/OrderStatusStage";
 import Image from "next/image";
 import { cn } from "utils/cn";
-import Link from "next/link";
 import { useLocalization } from "contexts/LocalizationContext";
 
 const stages = [

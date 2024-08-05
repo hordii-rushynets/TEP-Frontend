@@ -1,20 +1,23 @@
+"use client"
+
 import { Button, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type DeleteAccountConfirmProps = {
   onClick: () => void;
 };
 
 export function DeleteAccountConfirm({ onClick }: DeleteAccountConfirmProps) {
+  const { staticData } = useLocalization();
   return (
     <div
       className={
         "w-full px-6 pb-14 pt-24 text-center md:w-[700px] md:px-24 md:py-36"
       }
     >
-      <Title className={"mb-3.5 text-3xl"}>Видалити профіль?</Title>
+      <Title className={"mb-3.5 text-3xl"}>{staticData.account.deleteAccountConfirm.text1}</Title>
       <p className={"mb-[72px] text-sm lg:font-extralight"}>
-        Ви дійсно хочете видалити свій обліковий запис ТЕП? Це призведе до
-        видалення особистого профілю та пов&apos;язаної з ним інформації.
+        {staticData.account.deleteAccountConfirm.text2}
       </p>
       <div className={"flex justify-center gap-x-4"}>
         <Button
@@ -25,7 +28,7 @@ export function DeleteAccountConfirm({ onClick }: DeleteAccountConfirmProps) {
           colorVariant={"black"}
           onClick={onClick}
         >
-          Ні
+          {staticData.account.deleteAccountConfirm.text3}
         </Button>
         <Button
           type={"submit"}
@@ -34,7 +37,7 @@ export function DeleteAccountConfirm({ onClick }: DeleteAccountConfirmProps) {
           size={"large"}
           onClick={onClick}
         >
-          Так
+          {staticData.account.deleteAccountConfirm.text4}
         </Button>
       </div>
     </div>

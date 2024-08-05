@@ -3,7 +3,7 @@
 import { MainUrl } from "route-urls";
 
 import { IconButton, Section } from "common/ui";
-import { Autoplay, Navigation, Scrollbar } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -15,32 +15,28 @@ import AppIMG from "./static/main-app.png";
 import TowelIMG from "./static/main-towel.png"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { HeroCard } from "./HeroCard";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const heros = [
   {
     id: 1,
     image: MainIMG,
-    title: "Тепло твого дому з ТЕП",
     link: MainUrl.getGoods(),
-    buttonText: "Переглянути товари"
   },
   {
     id: 2,
     image: TowelIMG,
-    title: "Рушники Honey - Дотик Ніжності.",
     link: MainUrl.getGoods(),
-    buttonText: "Переглянути товари" 
   },
   {
     id: 3,
     image: AppIMG,
-    title: "Додаток ТЕП для зручного замовлення",
     link: "https://apps.apple.com/ua/app/%D1%82%D0%B5%D0%BF/id1631160979",
-    buttonText: "Скачати" 
   }
 ]
 
 export function Hero() {
+  const { staticData } = useLocalization();
   return (
     <Section className={"relative bg-black overflow-hidden"}>
       <Swiper
@@ -72,13 +68,13 @@ export function Hero() {
               },
             }}
           >
-            {heros.map((hero) => (
+            {heros.map((hero, indx) => (
               <SwiperSlide key={hero.id}>
                 <HeroCard 
                   image={hero.image}
-                  title={hero.title}
+                  title={staticData.home.heroInfo[indx].title}
                   link={hero.link}
-                  buttonText={hero.buttonText}
+                  buttonText={staticData.home.heroInfo[indx].buttonText}
                 />
               </SwiperSlide>
             ))}

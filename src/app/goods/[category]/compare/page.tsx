@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
-import { GoodsUrl, MainUrl } from "route-urls";
+import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { ImageSquare } from "common/ImageSquare";

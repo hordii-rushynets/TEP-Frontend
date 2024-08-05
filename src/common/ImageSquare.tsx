@@ -11,8 +11,6 @@ export type ImageSquareProps = {
   };
 };
 
-const APIurl = process.env.NEXT_PUBLIC_API_URL;
-
 export function ImageSquare(props: ImageSquareProps) {
   const { source, alt = "Image", classes, onClick, ...imageProps } = props;
   return (

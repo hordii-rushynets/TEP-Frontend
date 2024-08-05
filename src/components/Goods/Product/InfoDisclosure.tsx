@@ -13,8 +13,6 @@ import { DimensionalGrid, DimensionalGridSize, VariantInfo } from "app/goods/[ca
 
 import { useLocalization } from "contexts/LocalizationContext";
 
-import { Article } from "./Article";
-
 type InfoDisclosure = {
   feedbacks: Feedback[];
   info: VariantInfo;

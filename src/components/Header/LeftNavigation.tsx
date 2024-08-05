@@ -5,6 +5,7 @@ import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { useCategories, Category } from 'contexts/CategoriesContext';
+import { useLocalization } from "contexts/LocalizationContext";
 
 interface Props {
     setMenuIsOpen: any;
@@ -14,6 +15,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
     const pathname = usePathname();
 
     const { categories } = useCategories();
+    const { staticData } = useLocalization();
 
     return (
         <nav className={"flex flex-col gap-y-[30px]"}>
@@ -47,7 +49,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
                   },
                 )}
               >
-                Акції
+                {staticData.header.salesTitle}
               </Link>
             </li>
           </ul>
@@ -67,7 +69,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
                 onClick={() => setMenuIsOpen(false)}
                 href={MainUrl.getCompany()}
               >
-                Компанія
+                {staticData.header.companyLabel}
               </Link>
             </li>
             <li
@@ -81,7 +83,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
                 onClick={() => setMenuIsOpen(false)}
                 href={MainUrl.getInfoForBuyers()}
               >
-                Інформація для покупців
+                {staticData.header.infoLabel}
               </Link>
             </li>
             <li
@@ -95,7 +97,7 @@ const LeftNavigation : React.FC<Props> = ({ setMenuIsOpen }) => {
                 onClick={() => setMenuIsOpen(false)}
                 href={MainUrl.getServices()}
               >
-                Послуги
+                {staticData.header.serviceLabel}
               </Link>
             </li>
           </ul>

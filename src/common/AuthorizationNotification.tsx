@@ -6,9 +6,11 @@ import { FiX } from "react-icons/fi";
 import { ButtonBase } from "common/ui";
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
 import { Fragment } from "react";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function AuthorizationNotification() {
   const { isOpen, email, setIsOpen, setTitle } = useAuthNotificationContext();
+  const { staticData } = useLocalization();
   return (
     <Transition
       as={Fragment}
@@ -26,7 +28,7 @@ export function AuthorizationNotification() {
         }
       >
         <p className={"basis-1/2 leading-normal lg:font-extralight"}>
-          <span className={"text-xl"}>Ви успішно авторизувались на {email}!</span> 
+          <span className={"text-xl"}>{staticData.common.authNotificationMessage} {email}!</span> 
         </p>
         <div className={"flex items-center gap-x-4"}>
           <ButtonBase

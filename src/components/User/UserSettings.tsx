@@ -7,7 +7,6 @@ import { Button, Checkbox, Dialog, Title } from "common/ui";
 import { DeleteAccountConfirm } from "./DeleteAccountConfirm";
 
 import { useNotificationContext } from "contexts/NotificationContext";
-import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import { MainUrl } from "route-urls";

@@ -9,12 +9,8 @@ import { Container, Section, Title } from "common/ui";
 import BlanketsIMG from "./static/blankets.jpg";
 import DetailsIMG1 from "./static/details/point1.jpg";
 import DetailsIMG2 from "./static/details/point2.jpg";
-import DetailsIMG3 from "./static/details/point3.jpg";
-import DetailsIMG4 from "./static/details/point4.jpg";
 import FibersIMG from "./static/fibers.jpg";
-import LinensIMG from "./static/linens.jpg";
 import PillowsIMG from "./static/pillows.jpg";
-import ToppersIMG from "./static/toppers.jpg";
 import UltrasonicIMG from "./static/ultrasonic.jpg";
 import { useLocalization } from "contexts/LocalizationContext";
 

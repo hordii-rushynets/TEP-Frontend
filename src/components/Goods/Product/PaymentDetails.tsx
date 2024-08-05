@@ -1,14 +1,12 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { cn } from "utils/cn";
-import { translateCategory } from "utils/helpers";
 import { toTitleCase } from "utils/string";
 
 import { Button, IconButton, SelectInput, TextInput, Title } from "common/ui";
-import { useCartContext } from "contexts/CartContext";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 import { useLocalization } from "contexts/LocalizationContext";
 

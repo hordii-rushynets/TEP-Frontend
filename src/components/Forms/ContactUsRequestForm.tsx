@@ -16,6 +16,7 @@ import {
   TextInput,
   Title,
 } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export const contactUsRequestSchema = z.object({
   fullname: z.string().default(""),
@@ -46,19 +47,21 @@ export function ContactUsRequestForm() {
     router.push(`${InfoUrl.getContactUsRequest()}/success`);
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Title className={"mb-[62px] text-3xl"}>Залишити заявку</Title>
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.contactUsRequestForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormTextInput<Form>
             fieldName={"fullname"}
-            label={"Ім’я"}
-            placeholder={"Тарас Шевченко"}
+            label={staticData.forms.contactUsRequestForm.text2}
+            placeholder={staticData.forms.contactUsRequestForm.text3}
           />
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Пошта"}
+            label={staticData.forms.contactUsRequestForm.text4}
             placeholder={"taras@gmail.com"}
           />
           <InputMask
@@ -68,22 +71,22 @@ export function ContactUsRequestForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} />
+            <TextInput label={staticData.forms.contactUsRequestForm.text5} />
           </InputMask>
           <FormSelectInput
-            label={"Спосіб зв'язку"}
-            display={"Обрати"}
+            label={staticData.forms.contactUsRequestForm.text6}
+            display={staticData.forms.contactUsRequestForm.text7}
             fieldName={"communication_method"}
             options={[
-              { label: "За номером телефону", value: "by_phone" },
-              { label: "Електронною поштою", value: "by_email" },
+              { label: staticData.forms.contactUsRequestForm.text8, value: "by_phone" },
+              { label: staticData.forms.contactUsRequestForm.text9, value: "by_email" },
             ]}
           />
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={"Повідомлення *"}
-            placeholder={"Не обов’язково *"}
+            label={staticData.forms.contactUsRequestForm.text10}
+            placeholder={staticData.forms.contactUsRequestForm.text11}
           />
         </div>
         <Button
@@ -93,7 +96,7 @@ export function ContactUsRequestForm() {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Надіслати
+          {staticData.forms.contactUsRequestForm.text12}
         </Button>
       </form>
     </FormProvider>

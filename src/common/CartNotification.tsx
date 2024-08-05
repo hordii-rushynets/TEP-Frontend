@@ -8,9 +8,11 @@ import { UserUrl } from "route-urls";
 import { ButtonBase } from "common/ui";
 import { useCartContext } from "contexts/CartContext";
 import { Fragment } from "react";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function CartNotification() {
   const { isOpen, title, setIsOpen, setTitle } = useCartContext();
+  const { staticData } = useLocalization();
   return (
     <Transition
       as={Fragment}
@@ -28,7 +30,7 @@ export function CartNotification() {
         }
       >
         <p className={"basis-1/2 leading-normal lg:font-extralight"}>
-          <span className={"text-xl"}>{title}</span> було додано у твій кошик
+          <span className={"text-xl"}>{title}</span> {staticData.common.cartNotification.message}
         </p>
         <div className={"flex items-center gap-x-4"}>
           <Link
@@ -41,7 +43,7 @@ export function CartNotification() {
               "text-sm font-bold transition-colors hover:text-blue-300"
             }
           >
-            Переглянути
+            {staticData.common.cartNotification.link}
           </Link>
           <ButtonBase
             onClick={() => {

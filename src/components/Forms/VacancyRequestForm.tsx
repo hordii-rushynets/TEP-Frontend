@@ -11,6 +11,7 @@ import { z } from "zod";
 
 import { Button, FormTextInput, TextInput, Title } from "common/ui";
 import { VacancyService } from "app/company/vacancies/services";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export const vacancyRequestSchema = z.object({
   fullname: z.string().default(""),
@@ -62,20 +63,22 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
     });
   }
 
+  const { staticData } = useLocalization();
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
-        <Title className={"mb-[62px] text-3xl"}>Залишити заявку</Title>
-        {error && <span style={{color: "red"}}>Виникла помилка, спробуйте пізніше</span>}
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.vacancyRequestForm.title}</Title>
+        {error && <span style={{color: "red"}}>{staticData.forms.vacancyRequestForm.errorTitle}</span>}
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormTextInput<Form>
             fieldName={"fullname"}
-            label={"Ім’я"}
-            placeholder={"Тарас Шевченко"}
+            label={staticData.forms.vacancyRequestForm.nameLabel}
+            placeholder={staticData.forms.vacancyRequestForm.nameDisplay}
           />
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Пошта"}
+            label={staticData.forms.vacancyRequestForm.emailLabel}
             placeholder={"taras@gmail.com"}
           />
           <InputMask
@@ -85,13 +88,13 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} />
+            <TextInput label={staticData.forms.vacancyRequestForm.phoneLabel} />
           </InputMask>
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={"Повідомлення *"}
-            placeholder={"Не обов’язково *"}
+            label={staticData.forms.vacancyRequestForm.messageLabel}
+            placeholder={staticData.forms.vacancyRequestForm.messageDisplay}
           />
           <div className={"self-end"}>
             <label
@@ -101,7 +104,7 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
               }
             >
               <FiPaperclip className={"size-4"} />
-              <span className={"text-sm font-bold"}>Файли</span>
+              <span className={"text-sm font-bold"}>{staticData.forms.vacancyRequestForm.files}</span>
             </label>
             <input id={id} type={"file"} className={"hidden"} multiple onChange={handleFileChange}/>
           </div>
@@ -114,7 +117,7 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Надіслати
+          {staticData.forms.vacancyRequestForm.button}
         </Button>
       </form>
     </FormProvider>

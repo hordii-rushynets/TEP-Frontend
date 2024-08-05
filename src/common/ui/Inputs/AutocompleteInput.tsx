@@ -153,7 +153,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                                 {g[`title_${localization}` as keyof ProductWithVariant] as string}
                               </Title>
                               <span className={"text-sm"}>
-                                {staticData.autocompleteInput.common.text1}{g.product_variants[0].sku}
+                                {staticData.common.autocompleteInput.text1}{g.product_variants[0].sku}
                               </span>
                             </div>
                             <div

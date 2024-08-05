@@ -1,12 +1,10 @@
 "use client";
 
 import { ProductToShow } from "app/goods/[category]/page";
-import { products } from "data";
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 import { MainUrl } from "route-urls";
-import { translateCategory } from "utils/helpers";
 
 import { ImageSquare } from "common/ImageSquare";
 import { Tip } from "common/Tip";

@@ -1,3 +1,5 @@
+"use client"
+
 import { MainUrl, ServicesUrl } from "route-urls";
 
 import { Container, Section, Title } from "common/ui";
@@ -7,37 +9,39 @@ import InfoCard from "../InfoCard";
 import IMG1 from "./static/img1.png";
 import IMG2 from "./static/img2.jpg";
 import IMG3 from "./static/img3.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function MoreOffers() {
+  const { staticData } = useLocalization();
   return (
     <Section className={"mb-24"}>
       <Container>
         <div>
-          <Title className={"mb-7"}>Більше пропозицій</Title>
+          <Title className={"mb-7"}>{staticData.home.moreOffers.title}</Title>
           <div
             className={"grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"}
           >
             <InfoCard
               url={ServicesUrl.getGifts()}
-              title={"Подарункові карти"}
+              title={staticData.home.moreOffers.infoTitle1}
               description={
-                "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке..."
+                staticData.home.moreOffers.infoDescription1
               }
               bg={IMG1}
             />
             <InfoCard
               url={MainUrl.getGoods()}
-              title={"Каталоги ТЕП"}
+              title={staticData.home.moreOffers.infoTitle2}
               description={
-                "В нашому магазині можна придбати товари за акційною пропозицією..."
+                staticData.home.moreOffers.infoDescription2
               }
               bg={IMG2}
             />
             <InfoCard
               url={ServicesUrl.getDelivery()}
-              title={"Послуги доставки"}
+              title={staticData.home.moreOffers.infoTitle3}
               description={
-                "Для будь-якого товару можна замовити доставку кур’єра..."
+                staticData.home.moreOffers.infoDescription3
               }
               bg={IMG3}
             />

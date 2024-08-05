@@ -8,9 +8,11 @@ import { UserUrl } from "route-urls";
 import { ButtonBase } from "common/ui";
 import { useFavouriteContext } from "contexts/FavouriteContext";
 import { Fragment } from "react";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function FavouriteNotification() {
   const { isOpen, title, setIsOpen, setTitle } = useFavouriteContext();
+  const { staticData } = useLocalization();
   return (
     <Transition
       as={Fragment}
@@ -28,8 +30,7 @@ export function FavouriteNotification() {
         }
       >
         <p className={"basis-1/2 leading-normal lg:font-extralight"}>
-          <span className={"text-xl"}>{title}</span> було збережено до
-          улюбленого
+          <span className={"text-xl"}>{title}</span> {staticData.common.favNotification.message}
         </p>
         <div className={"flex items-center gap-x-4"}>
           <Link
@@ -42,7 +43,7 @@ export function FavouriteNotification() {
               "text-sm font-bold transition-colors hover:text-blue-300"
             }
           >
-            Переглянути
+            {staticData.common.favNotification.link}
           </Link>
           <ButtonBase
             onClick={() => {

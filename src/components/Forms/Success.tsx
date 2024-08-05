@@ -1,7 +1,10 @@
+"use client"
+
 import Link from "next/link";
 import { MainUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type SuccessProps = {
   title?: string;
@@ -11,11 +14,13 @@ export type SuccessProps = {
 };
 
 export function Success({
-  title = "Ваша заявка надіслана",
-  description = "Дякую за заявку! Наш менеджер зв’яжеться з Вами найближчим часом, щоб обговорити деталі.",
-  buttonTitle = "На головну",
+  title = "",
+  description = "",
+  buttonTitle = "",
   url = MainUrl.getHome(),
 }: SuccessProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
@@ -25,10 +30,10 @@ export function Success({
           }
         >
           <Title component={"h3"} className={"mb-5 text-3xl md:mb-6"}>
-            {title}
+            {title !== "" ? title : staticData.forms.success.title}
           </Title>
           <p className={"mb-12 text-sm md:mb-[72px] lg:font-extralight"}>
-            {description}
+            {description !== "" ? description : staticData.forms.success.description}
           </p>
           <Link href={url} className={"w-full sm:w-auto"}>
             <Button
@@ -37,7 +42,7 @@ export function Success({
               size={"super-large"}
               colorVariant={"black"}
             >
-              {buttonTitle}
+              {buttonTitle !== "" ? buttonTitle : staticData.forms.success.buttonTitle}
             </Button>
           </Link>
         </div>

@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link";
-import { AuthUrl } from "route-urls";
 import { useState, useEffect } from "react";
 
 import { Button, Container, Section, Title } from "common/ui";
