@@ -1,6 +1,5 @@
 "use client"
 
-import { productDescriptions } from "data";
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
 import { GoodsUrl, MainUrl } from "route-urls";
@@ -18,7 +17,7 @@ import { Color, Material, ProductWithVariant, Size } from "../page";
 
 export default function ComparePage() {
   const { products } = useCompareContext();
-  const { localization } = useLocalization();
+  const { localization, staticData} = useLocalization();
 
   return (
     <>
@@ -26,9 +25,9 @@ export default function ComparePage() {
         <Container>
           <div>
             <div className={"mb-[72px]"}>
-              <Title className={"mb-3.5 text-3xl"}>Порівняння товарів</Title>
+              <Title className={"mb-3.5 text-3xl"}>{staticData.goods.comparePage.text1}</Title>
               <p className={"text-sm lg:font-extralight"}>
-                Порівняти {products.length} товари
+              {staticData.goods.comparePage.text2} {products.length} {staticData.goods.comparePage.text3}
               </p>
             </div>
             <div
@@ -36,17 +35,17 @@ export default function ComparePage() {
                 "mb-8 flex flex-col-reverse justify-between gap-6 md:mb-12 lg:flex-row lg:items-center"
               }
             >
-              <Link href={GoodsUrl.getBlankets()}>
+              <Link href={MainUrl.getGoods()}>
                 <Button
                   className={{ button: "px-8 py-2" }}
                   colorVariant={"filter"}
                   startIcon={<FiArrowLeft className={"size-6 "} />}
                 >
-                  змінити
+                  {staticData.goods.comparePage.text4}
                 </Button>
               </Link>
               <span className={"text-sm font-bold text-tep_gray-500"}>
-                {products.length} товара
+                {products.length} {staticData.goods.comparePage.text5}
               </span>
             </div>
 
@@ -70,7 +69,7 @@ export default function ComparePage() {
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
-              Можна замовити
+              {staticData.goods.comparePage.text6}
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
               {products.map((item) => {
@@ -93,7 +92,7 @@ export default function ComparePage() {
                         })}
                       ></span>
                       <span className={"text-sm font-extralight"}>
-                        {(item.product_variants[0].count > 0) ? "В наявності" : "Немає в наявності"}
+                        {(item.product_variants[0].count > 0) ? staticData.goods.comparePage.text7 : staticData.goods.comparePage.text8}
                       </span>
                     </div>
                   </div>
@@ -105,7 +104,7 @@ export default function ComparePage() {
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
-              Розміри
+              {staticData.goods.comparePage.text9}
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
               {products.map((item) => {
@@ -126,7 +125,7 @@ export default function ComparePage() {
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
-              Колір
+              {staticData.goods.comparePage.text10}
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
               {products.map((item) => {
@@ -159,7 +158,7 @@ export default function ComparePage() {
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
-              Тканина
+              {staticData.goods.comparePage.text11}
             </div>
             <div className={"mb-24 flex gap-x-6 overflow-x-scroll"}>
               {products.map((item) => {
@@ -192,7 +191,7 @@ export default function ComparePage() {
                     className={"w-[152px] md:w-[250px] lg:w-[288px]"}
                   >
                     <p className={"text-sm lg:font-extralight"}>
-                      Артикул номер
+                    {staticData.goods.comparePage.text12}
                     </p>
                     <Article
                       article={item.product_variants[0].sku}
@@ -207,7 +206,7 @@ export default function ComparePage() {
                 "mb-6 border-b border-tep_gray-200 pb-6 text-2xl font-bold"
               }
             >
-              Ціна
+              {staticData.goods.comparePage.text13}
             </div>
             <div className={"flex gap-x-6 overflow-x-scroll"}>
               {products.map((item) => {
@@ -225,7 +224,7 @@ export default function ComparePage() {
         </Container>
       </Section> : <div className={"pb-32 pt-24 lg:pb-48"}>
                 <Title className={"mb-3.5 text-center text-3xl"}>
-                  Ви не вибрали продуктів для порівняння
+                {staticData.goods.comparePage.text14}
                 </Title>
                 <div
                   className={
@@ -234,13 +233,13 @@ export default function ComparePage() {
                 >
                   <Link href={MainUrl.getGoods()}>
                     <Button size={"large"} fullWidth>
-                      Перейти до товарів
+                    {staticData.goods.comparePage.text15}
                     </Button>
                   </Link>
                 </div>
               </div> }
       <PopularGoods />
-      <ProductDescriptions descriptions={productDescriptions} />
+      <ProductDescriptions descriptions={staticData.goods.productDescriptions} />
     </>
   );
 }

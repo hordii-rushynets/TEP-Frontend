@@ -6,9 +6,9 @@ export const MainUrl = {
   getInfoForBuyers: () => "/information-for-buyers",
   getNovelty: () => "/novelty",
   getInspiration: () => "/inspiration",
-  getSales: () => "/sales",
+  getSales: () => "/akcii",
   getSearch: () => "/search",
-  getPrivacyPolicy: () => "/privacy-policy",
+  getPrivacyPolicy: () => "/publichnaja-oferta",
   getTermsOfUse: () => "/terms-of-use",
   // Additional
   getProductReturnPolicy: () => "/product-return-policy",
@@ -23,7 +23,7 @@ export const AuthUrl = {
   getResetPassword: () => "/reset-password",
   getResetSuccess: () => `${AuthUrl.getResetPassword()}/success`,
   getAccount: () => `/account`,
-  getEmailConfirmation: () => "email-confirmation"
+  getEmailConfirmation: () => "/email-confirmation"
 };
 
 export const PurchaseUrl = {

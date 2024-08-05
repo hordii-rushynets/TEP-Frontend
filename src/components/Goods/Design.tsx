@@ -5,6 +5,7 @@ import { Container, Section, Title } from "common/ui";
 
 import DesignIMG from "./static/design.jpg";
 import { ProductToShow } from "app/goods/[category]/page";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type DesignProps = {
   pillow?: ProductToShow;
@@ -12,11 +13,13 @@ type DesignProps = {
 }
 
 export default function Design({ pillow, blanket }: DesignProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
         <Title size={"2xl"} className={"mb-11 md:mb-12"}>
-          Дизайни для будь-якого інтер’єру
+          {staticData.goods.design}
         </Title>
         <div className={"relative h-[500px] overflow-hidden rounded-3xl"}>
           <Image

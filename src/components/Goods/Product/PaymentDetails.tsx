@@ -114,9 +114,9 @@ export function PaymentDetails({
               <p className={"text-sm font-light text-tep_gray-500"}>
                 {category},{" "}
                 {
-                  selectedColor || "Колір"
+                  selectedColor || staticData.goods.paymentDetails.text1
                 }
-                , {selectedSize || "Розмір"}
+                , {selectedSize || staticData.goods.paymentDetails.text2}
               </p>
             </div>
             <Article className={"hidden lg:block"} article={article} />
@@ -133,8 +133,8 @@ export function PaymentDetails({
           <div className={"mb-[65px] flex flex-col gap-y-6"}>
             {colors.length > 0 && (
               <SelectInput
-                label={"Колір"}
-                display={"Оберіть колір"}
+                label={staticData.goods.paymentDetails.text1}
+                display={staticData.goods.paymentDetails.text3}
                 options={colorOptions}
                 value={selectedColor || ""}
                 onChange={handleColorChange}
@@ -145,8 +145,8 @@ export function PaymentDetails({
             )}
             {sizes.length > 0 && (
               <SelectInput
-                label={"Розмір"}
-                display={"Оберіть розмір"}
+                label={staticData.goods.paymentDetails.text2}
+                display={staticData.goods.paymentDetails.text4}
                 options={sizeOptions}
                 value={selectedSize||""}
                 onChange={handleSizeChange}
@@ -158,7 +158,7 @@ export function PaymentDetails({
                 <SelectInput
                   key={filter.id}
                   label={filter[`name_${localization}` as keyof DynamicFilter] as string}
-                  display={"Оберіть варіант"}
+                  display={staticData.goods.paymentDetails.text5}
                   options={filter.filter_field.map(field => ({
                     label: toTitleCase(field[(`value_${staticData.backendPostfix}` || "value") as keyof DynamicFilterField] as string),
                     value: field[(`value_${staticData.backendPostfix}` || "value") as keyof DynamicFilterField] as string,
@@ -181,12 +181,12 @@ export function PaymentDetails({
                 colorVariant={"black"}
                 fullWidth
               >
-                {"Додати до кошика"}
+                {staticData.goods.paymentDetails.text6}
               </Button> : <Button
                 colorVariant={"black"}
                 fullWidth
               >
-                {"Додано до кошика"}
+                {staticData.goods.paymentDetails.text7}
               </Button>}
               <IconButton
                 className={{ button: "shrink-0" }}
@@ -214,10 +214,10 @@ export function PaymentDetails({
                 }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={"Ваша пошта"}
+                placeholder={staticData.goods.paymentDetails.text8}
               />
               <Button size={"small"} colorVariant={"black"} fullWidth>
-                Повідомити про наявність
+                {staticData.goods.paymentDetails.text9}
               </Button>
               <Button
                 size={"small"}
@@ -235,7 +235,7 @@ export function PaymentDetails({
                   />
                 }
               >
-                Додати в список покупок
+                {staticData.goods.paymentDetails.text10}
               </Button>
             </div>
           )}
@@ -251,7 +251,7 @@ export function PaymentDetails({
               })}
             ></span>
             <span className={"text-sm font-extralight"}>
-              {isInStock ? "В наявності" : "Немає в наявності"}
+              {isInStock ? staticData.goods.paymentDetails.text11 : staticData.goods.paymentDetails.text12}
             </span>
           </div>
 
@@ -268,7 +268,7 @@ export function PaymentDetails({
               >
                 <Image src={DeliveryIcon} alt={"Icon"} className={"flex-1"} />
                 <span className={"text-[11px] font-semibold"}>
-                  Доставка з трекінгом
+                  {staticData.goods.paymentDetails.text13}
                 </span>
               </div>
               <div
@@ -278,7 +278,7 @@ export function PaymentDetails({
               >
                 <Image src={GaranteeIcon} alt={"Icon"} className={"flex-1"} />
                 <span className={"text-[11px] font-semibold"}>
-                  Гарантія якості
+                  {staticData.goods.paymentDetails.text14}
                 </span>
               </div>
               <div
@@ -288,7 +288,7 @@ export function PaymentDetails({
               >
                 <Image src={SupportIcon} alt={"Icon"} className={"flex-1"} />
                 <span className={"text-[11px] font-semibold"}>
-                  Служба підтримки
+                  {staticData.goods.paymentDetails.text15}
                 </span>
               </div>
             </div>

@@ -67,7 +67,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
     <Section className={"mb-24"}>
       <Container>
         <div>
-          <Title className={"mb-12"}>Подібні товари</Title>
+          <Title className={"mb-12"}>{staticData.goods.similarGoods}</Title>
           <Swiper
             className={"!pb-6"}
             modules={[Navigation, Scrollbar, Autoplay]}
@@ -140,6 +140,7 @@ type ProductCardProps = {
 
 export default function Card({ product }: ProductCardProps) {
   const { id, slug, image, price, category_title, category_slug, title } = product;
+  const { staticData } = useLocalization();
   return (
     <Link
       href={`${GoodsUrl.getPillows()}/${slug}`}
@@ -182,7 +183,7 @@ export default function Card({ product }: ProductCardProps) {
       <div className={"flex items-end justify-between"}>
         <span className={"text-xl font-bold"}>
           {price}
-          <span className={"align-top text-[10px] font-bold"}> грн</span>
+          <span className={"align-top text-[10px] font-bold"}> {staticData.goods.price}</span>
         </span>
       </div>
     </Link>

@@ -23,7 +23,7 @@ type RecommendedGoodsProps = {
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function RecommendedGoods({
-  title = "Рекомендації для тебе",
+  title = "",
   product_slug = "",
   className,
 }: RecommendedGoodsProps) {
@@ -44,7 +44,7 @@ export function RecommendedGoods({
     <Section className={cn("mb-[110px] overflow-hidden", className)}>
       <Container>
         <div>
-          <Title className={"mb-12"}>{title}</Title>
+          <Title className={"mb-12"}>{title !== "" ? title : staticData.goods.recommendedGoods}</Title>
           <Swiper
             className={"!overflow-visible !pb-8"}
             modules={[Navigation, Scrollbar, Autoplay]}

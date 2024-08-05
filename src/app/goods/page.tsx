@@ -34,17 +34,17 @@ export default function GoodsPage() {
       <Categories />
       <LittleGrid
         images={[IMG1, IMG2, IMG3, IMG4, IMG5]}
-        title={"Зручна постільна білизна для кращого сну"}
+        title={staticData.goods.text1}
         description={
-          "Отримайте необхідний комфорт разом з м’якими простирадлами, ковдрами, які підходять саме вам, та подушками з правильною підтримкою. Усі вони зроблені з екологічних і якісних матеріалів, таких як органічно чиста бавовна, тому ви можете повністю їм довіритись."
+          staticData.goods.text2
         }
         product={products?.filter(product => product.category_slug === "blankets")[0] || products?.[0]}
       />
       <Design pillow={products?.filter(product => product.category_slug === "pillows")[0] || products?.[0]} blanket={products?.filter(product => product.category_slug === "blankets")[0] || products?.[0]}/>
       <LittleGrid
-        title={"Оновлення постільної білизни без шкоди гаманцю"}
+        title={staticData.goods.text3}
         description={
-          "Затишні пледи, постільна білизна у свіжих нових дизайнах, ергономічні подушки та багато іншого, що допоможе вам добре висипатись та прокидатися сповненими енергії. А їх ціни не змусять вас не спати ночами."
+          staticData.goods.text4
         }
         images={[IMG6, IMG7, IMG8, IMG9, IMG10]}
         reversed

@@ -63,6 +63,7 @@ type InteriorCardProps = {
 
 export function InteriorCard({ product }: InteriorCardProps) {
   const { category_title, category_slug, price, title, image, slug } = product;
+  const { staticData } = useLocalization();
   return (
     <div className={"flex gap-x-4 py-6 md:px-6 [&:not(:first-child)]:pt-8"}>
       <div className={"w-[134px]"}>
@@ -81,7 +82,7 @@ export function InteriorCard({ product }: InteriorCardProps) {
           <div>
             <Price price={price} className={"mb-4 text-[26px]"} />
             <span className={"text-xs font-light text-tep_gray-500"}>
-              Більше варіантів
+              {staticData.goods.interiorCard}
             </span>
           </div>
           <Link

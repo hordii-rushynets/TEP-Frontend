@@ -14,6 +14,7 @@ import { useAuth } from "contexts/AuthContext";
 import { Button, FormPasswordInput, FormTextInput } from "common/ui";
 
 import { SocialLogin } from "./SocialLogin";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useLocalization } from "contexts/LocalizationContext";
 
 const formSchema = z.object({
@@ -120,7 +121,9 @@ export function LoginForm() {
               className={"h-[1px] flex-1 rounded-full bg-tep_gray-200"}
             ></span>
           </div>
-          <SocialLogin onFBClick={() => {}} onGoogleClick={() => {}} />
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+            <SocialLogin onFBClick={() => {}} onGoogleClick={() => {}} />
+          </GoogleOAuthProvider>
         </div>
       </form>
     </FormProvider>
