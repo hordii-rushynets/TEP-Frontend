@@ -12,6 +12,7 @@ import { FeedbacksList } from "components/Info/Feedbacks/FeedbacksList";
 import { Feedback } from "./interfaces";
 import { FeedbackService } from "./services";
 import { useAuth } from "contexts/AuthContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -30,6 +31,7 @@ export default function FeedbacksPage({
   const [refresh, setRefresh] = useState(false);
   const feedbackService = new FeedbackService();
   const authContext = useAuth();
+  const { staticData } = useLocalization();
 
   const handleRefresh = () => {
     setRefresh(!refresh);
@@ -48,13 +50,13 @@ export default function FeedbacksPage({
               "flex flex-col items-start justify-between gap-x-6 gap-y-5 md:flex-row md:items-center"
             }
           >
-            <Title className={"text-3xl"}>Відгуки</Title>
+            <Title className={"text-3xl"}>{staticData.info_for_buyers.feedbacksPage.title}</Title>
             <Link href={InfoUrl.getLeaveFeedback()}>
               <Button
                 size={"small"}
                 startIcon={<FiPlus className={"mb-0.5 size-4 stroke-[3px]"} />}
               >
-                Залишити відгук
+                {staticData.info_for_buyers.feedbacksPage.leaveFeedback}
               </Button>
             </Link>
           </div>

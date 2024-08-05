@@ -24,7 +24,7 @@ export default function SalesPage() {
   const [products, setProducts] = useState<ProductToShow[]>([]);
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [category, setCategory] = useState("");
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
   const authContext = useAuth();
 
   useEffect(()=>{
@@ -41,7 +41,7 @@ export default function SalesPage() {
       <Section className={"my-12"}>
         <Container>
           <div>
-            <Title className={"mb-[38px] text-3xl"}>Акції</Title>
+            <Title className={"mb-[38px] text-3xl"}>{staticData.sales.text1}</Title>
             <div className={"border-b border-tep_gray-200 pb-6"}>
               
               <CategoriesFilter setCategory={setCategory}/>
@@ -54,7 +54,7 @@ export default function SalesPage() {
         <Container>
           <div>
             <Title className={"mb-[38px] text-3xl"}>
-              Більше акційних товарів
+            {staticData.sales.text2}
             </Title>
             <div className={"mb-6"}>
               <CategoriesFilter setCategory={setCategory}/>
