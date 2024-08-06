@@ -6,9 +6,9 @@ export const MainUrl = {
   getInfoForBuyers: () => "/information-for-buyers",
   getNovelty: () => "/novelty",
   getInspiration: () => "/inspiration",
-  getSales: () => "/sales",
+  getSales: () => "/akcii",
   getSearch: () => "/search",
-  getPrivacyPolicy: () => "/privacy-policy",
+  getPrivacyPolicy: () => "/publichnaja-oferta",
   getTermsOfUse: () => "/terms-of-use",
   // Additional
   getProductReturnPolicy: () => "/product-return-policy",
@@ -23,7 +23,7 @@ export const AuthUrl = {
   getResetPassword: () => "/reset-password",
   getResetSuccess: () => `${AuthUrl.getResetPassword()}/success`,
   getAccount: () => `/account`,
-  getEmailConfirmation: () => "email-confirmation"
+  getEmailConfirmation: () => "/email-confirmation"
 };
 
 export const PurchaseUrl = {
@@ -54,6 +54,8 @@ export const GoodsUrl = {
 export const CompanyUrl = {
   getAbout: () => `${MainUrl.getCompany()}/about`,
   getCooperation: () => `${MainUrl.getCompany()}/cooperation-and-partnership`,
+  getCooperationWholesale: () => `${MainUrl.getCompany()}/cooperation-and-partnership/wholesale`,
+  getCooperationPrivateLabels: () => `${MainUrl.getCompany()}/cooperation-and-partnership/private-labels`,
   getCooperationRequest: () => `${CompanyUrl.getCooperation()}/leave-a-request`,
   getCooperationSuccess: () => `${CompanyUrl.getCooperationRequest()}/success`,
   getVacancies: () => `${MainUrl.getCompany()}/vacancies`,
