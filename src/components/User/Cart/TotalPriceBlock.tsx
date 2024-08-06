@@ -23,8 +23,9 @@ export function TotalPriceBlock({
   useEffect(() => {
     const service = deliveryForm.getValues().delivery_service;
     const city = addressForm.getValues().city;
+    const weight = goods.reduce((acc, el) => acc + el?.product_variants?.weight, 0)
     if (city !== "" && service !== "") {
-      purchaseService.getDeliveryPrice(service, totalPrice, city).then(cost => setDeliveryPrice(cost));
+      purchaseService.getDeliveryPrice(service, totalPrice, city, weight).then(cost => setDeliveryPrice(cost));
     }
   }, []);
 

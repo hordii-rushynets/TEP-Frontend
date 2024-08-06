@@ -1,5 +1,5 @@
 import { fetchWithAuth } from "utils/helpers";
-import { Stage, Warehouse } from "./interfaces";
+import { Error, Stage, Warehouse } from "./interfaces";
 
 export class PurchaseDAOService {
     private apiUrl: string;
@@ -24,7 +24,7 @@ export class PurchaseDAOService {
         return [];
     }
 
-    public async getDeliveryPrice(service: string, cost: number, city: string): Promise<{cost: number | undefined}> {
+    public async getDeliveryPrice(service: string, cost: number, city: string, weight: number): Promise<{cost: number | undefined}> {
         const response = await fetch(`${this.apiUrl}/api/post/calculate-delivery-cost/${service}/`, {
             method: "POST",
             headers: {
@@ -32,7 +32,7 @@ export class PurchaseDAOService {
             },
             body: JSON.stringify({
                 "city_recipient": city,
-                "weight": "5",
+                "weight": weight,
                 "cost": cost
             })
         });
@@ -42,14 +42,18 @@ export class PurchaseDAOService {
         return {cost: undefined};
     }
 
-    public async createParcel(body: Object, service: string): Promise<void> {
-        const response = await fetch(`${this.apiUrl}/api/post/create-parcel/${service}/`, {
+    public async createParcel(body: Object, service: string, authContext: any): Promise<void | Error[]> {
+        const response = await fetchWithAuth(`${this.apiUrl}/api/post/create-parcel/${service}/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
-        })
+        }, authContext)
+        if (!response.ok) {
+            const errors: Error[] = await response.json();
+            return errors;
+        }
     }
   }
   

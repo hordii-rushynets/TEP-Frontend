@@ -11,3 +11,10 @@ export interface Stage {
     "status_ru": string;
     "update_date": string;
 }
+
+export interface Error {
+    "error": string;
+    "uk": string;
+    "ru": string;
+    "en": string;
+}

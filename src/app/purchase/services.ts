@@ -1,5 +1,5 @@
 import { PurchaseDAOService } from "./dao-services";
-import { Stage, Warehouse } from "./interfaces";
+import { Error, Stage, Warehouse } from "./interfaces";
 
 export class PurchaseService {
     private daoService: PurchaseDAOService;
@@ -18,12 +18,15 @@ export class PurchaseService {
         return data;
     }
 
-    public async getDeliveryPrice(service: string, cost: number, city: string): Promise<number | undefined> {
-        const data = await this.daoService.getDeliveryPrice(service, cost, city);
+    public async getDeliveryPrice(service: string, cost: number, city: string, weight: number): Promise<number | undefined> {
+        const data = await this.daoService.getDeliveryPrice(service, cost, city, weight);
         return data.cost;
     }
 
-    public async createParcel(body: Object, service: string): Promise<void> {
-        await this.daoService.createParcel(body, service);
+    public async createParcel(body: Object, service: string, authContext: any): Promise<void | Error[]> {
+        const response = await this.daoService.createParcel(body, service, authContext);
+        if (response) {
+            return response;
+        }
     }
 }

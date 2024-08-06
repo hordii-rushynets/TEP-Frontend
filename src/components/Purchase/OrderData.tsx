@@ -14,6 +14,9 @@ import { useState, useEffect } from "react";
 import { usePostService } from "contexts/PostServiceContext";
 import { useRouter } from "next/navigation";
 import { PurchaseService } from "app/purchase/services";
+import { Error } from "app/purchase/interfaces";
+import { useLocalization } from "contexts/LocalizationContext";
+import { useNotificationContext } from "contexts/NotificationContext";
 
 export function OrderData() {
   const cartService = new CartService();
@@ -21,6 +24,7 @@ export function OrderData() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartRefresh, setCartRefresh] = useState(false);
   const router = useRouter();
+  const { setIsOpen, setText } = useNotificationContext();
 
   const { addressForm, deliveryForm } = usePostService();
   const purchaseService = new PurchaseService();
@@ -30,9 +34,13 @@ export function OrderData() {
     router.push(PurchaseUrl.getDelivery());
   }
 
+  const { localization } = useLocalization();
+
   useEffect(() => {
     cartService.getCart(authContext).then(items => setCartItems(items));
   }, [cartRefresh]);
+
+  const [ errors, setErrors ] = useState<Error[]>([]);
 
   const SubmitParcel = () => {
     const addressValues = addressForm.getValues();
@@ -47,12 +55,49 @@ export function OrderData() {
       "recipient_name": `${addressValues.firstName} ${addressValues.lastName}`,
       "description": "TEST TEST TEST",
       "cost": cartItems.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19,
-      "weight": "5",
+      "weight": cartItems.reduce((acc, el) => acc + el?.product_variants?.weight, 0),
       "settlemen_type": "місто",
       "recipients_phone": addressValues.phoneNumber,
       "service_type": deliveryValues.delivery_method,
-    }, deliveryValues.delivery_service);
+    }, deliveryValues.delivery_service, authContext).then(errors => {
+      if (errors) {
+        setErrors(errors);
+      } else {
+        router.push(PurchaseUrl.getPayment());
+      }
+    });
   }
+
+  useEffect(() => {
+    let pageToRedirect = PurchaseUrl.getDelivery();
+    errors.forEach(error => {
+      const errorMessage = {
+        type: "manual", 
+        message: error[localization as keyof Error]
+      }
+
+      switch (error.error) {
+        case "city_error":
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("city", errorMessage);
+        case "recipient_branch_or_street_error":
+          deliveryForm.setError("street", errorMessage);
+        case "delivery_type_error":
+          deliveryForm.setError("delivery_method", errorMessage);
+        case "phone_number_error": 
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("phoneNumber", errorMessage);
+        case "person_error":
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("firstName", errorMessage);
+          addressForm.setError("lastName", errorMessage);
+      }
+    });
+
+    if ( errors.length !== 0 ) {
+      router.push(pageToRedirect)
+    }
+  }, [errors]);
 
   if (!cartItems.length) {
     return (
@@ -125,11 +170,11 @@ export function OrderData() {
           </ButtonBase>
           <div>
             <TotalPriceBlock goods={cartItems} />
-            <Link href={PurchaseUrl.getPayment()} className={"sm:inline-block"}>
+            <div className={"sm:inline-block"}>
               <Button fullWidth colorVariant={"black"} size={"super-large"} onClick={SubmitParcel}>
                 Зберегти та продовжити
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </Container>
