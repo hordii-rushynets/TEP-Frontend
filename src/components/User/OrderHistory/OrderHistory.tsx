@@ -1,3 +1,5 @@
+"use client"
+
 import { ProductToShow } from "app/goods/[category]/page";
 
 import { Container, Section, Title } from "common/ui";

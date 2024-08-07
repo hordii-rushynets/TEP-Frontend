@@ -1,4 +1,4 @@
-{
+export default {
     "backendPostfix": "uk",
     "auth": {
         "notifications": {
