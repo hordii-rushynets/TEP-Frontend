@@ -10,14 +10,16 @@ import { Button, FormTextInput, Title } from "common/ui";
 import FormIMG from "components/Company/Blog/static/form-img.png";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const getInstructionsSchema = z.object({
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof getInstructionsSchema>;
-
 export function GetInstructionsForm() {
+  const { staticData } = useLocalization();
+
+  const getInstructionsSchema = z.object({
+    fullname: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof getInstructionsSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(getInstructionsSchema),
     defaultValues: getDefaults(getInstructionsSchema),
@@ -29,8 +31,6 @@ export function GetInstructionsForm() {
 
     form.reset();
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <div className={"mb-24 lg:mb-40"}>

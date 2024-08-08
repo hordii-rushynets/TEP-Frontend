@@ -10,22 +10,21 @@ import { z } from "zod";
 import { Button, FormTextInput } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function ResetPasswordForm() {
   const router = useRouter();
+  const { staticData } = useLocalization();
+  const formSchema = z.object({
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
-
-  const { staticData } = useLocalization();
 
   function onSubmit(dataToSend: Form) {
     fetch(`${APIurl}/api/account/password/forget/`, {

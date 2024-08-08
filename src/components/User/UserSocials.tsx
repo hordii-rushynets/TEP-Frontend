@@ -29,7 +29,7 @@ export function UserSocials({ fbLink, googleLink }: UserSocialsProps) {
             <span>Google</span>
           </Link>
         )}
-        {fbLink && (
+        {/* {fbLink && (
           <Link
             target={"_blank"}
             href={fbLink}
@@ -40,7 +40,7 @@ export function UserSocials({ fbLink, googleLink }: UserSocialsProps) {
             <FaFacebookF className={"size-4 text-[#496bb5]"} />
             <span>Facebook</span>
           </Link>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -1361,6 +1361,22 @@ export default {
       ]
     },
     "forms": {// Generated with AI
+      "emailError": "Invalid email address",
+      "passwordLengthError": "Password must be at least 8 characters long",
+      "ratingError": "Rate the product from 1 to 5",
+      "categoryError": "Select a category",
+      "productError": "Select a product",
+      "firstNameError": "First name is required",
+      "lastNameError": "Last name is required",
+      "streetError": "Street is required",
+      "cityError": "City is required",
+      "regionError": "Region is required",
+      "postalError": "Postal code is required",
+      "deliveryServiceError": "Delivery service is required",
+      "deliveryMethodError": "Delivery method is required",
+      "departmentError": "Department number is required",
+      "paymentError": "Payment method is required",
+      "orderNumberError": "Order number is invalid. Please check the entered data.",      
       "contactUsRequestForm": {
         "text1": "Submit request",
         "text2": "Name",

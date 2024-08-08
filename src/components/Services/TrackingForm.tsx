@@ -8,20 +8,21 @@ import { z } from "zod";
 import { Button, FormTextInput } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const formSchema = z.object({
-  order_number: z
-    .string()
-    .min(8, "Номер замовлення не коректний. Перевірте будь ласка введені дані.")
-    .default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export type TrackingFormProps = {
   onSending: (v: string) => void;
 };
 
 export function TrackingForm({ onSending }: TrackingFormProps) {
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    order_number: z
+      .string()
+      .min(8, staticData.forms.orderNumberError)
+      .default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
@@ -29,8 +30,6 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
   function onSubmit(data: Form) {
     onSending(data.order_number);
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

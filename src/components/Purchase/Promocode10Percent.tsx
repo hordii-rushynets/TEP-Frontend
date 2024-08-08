@@ -9,14 +9,16 @@ import { z } from "zod";
 import { Button, Dialog, FormTextInput, Title } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const formSchema = z.object({
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export function Promocode10Percent() {
   const [isOpen, setIsOpen] = useState(false);
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
@@ -38,8 +40,6 @@ export function Promocode10Percent() {
     setIsOpen(false);
     form.reset();
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <Dialog

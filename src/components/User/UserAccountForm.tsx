@@ -20,17 +20,6 @@ import { useNotificationContext } from "contexts/NotificationContext";
 import { useRouter } from 'next/navigation';
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  first_name: z.string().default(""),
-  last_name: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  phone_number: z.string().default(""),
-  birth_date: z.string().default(""),
-  profileType: z.string().default("usual"),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) {
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -39,6 +28,17 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
   const accountService = new AccountService();
   const authContext = useAuth();
   const { setText, setIsOpen } = useNotificationContext();
+
+  const formSchema = z.object({
+    first_name: z.string().default(""),
+    last_name: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    phone_number: z.string().default(""),
+    birth_date: z.string().default(""),
+    profileType: z.string().default("usual"),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),

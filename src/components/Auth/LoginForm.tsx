@@ -17,20 +17,20 @@ import { SocialLogin } from "./SocialLogin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  password: z.string().default(""),
-});
-
 const APIurl = process.env.NEXT_PUBLIC_API_URL
-
-type Form = z.infer<typeof formSchema>;
 
 export function LoginForm() {
 
   const { setIsOpen, setTitle } = useAuthNotificationContext();
   const { login } = useAuth();
   const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    email: z.string().email(staticData.forms.emailError).default(""),
+    password: z.string().default(""),
+  });
+
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),

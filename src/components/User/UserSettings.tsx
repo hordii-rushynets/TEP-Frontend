@@ -71,7 +71,7 @@ export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
               checked={byEmail}
               onChange={setByEmail}
             />
-            <Checkbox label={staticData.account.userSettings.text6} checked={bySMS} onChange={setBySMS} />
+            {/* <Checkbox label={staticData.account.userSettings.text6} checked={bySMS} onChange={setBySMS} /> */}
           </div>
         </div>
         <div>

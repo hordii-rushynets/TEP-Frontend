@@ -18,18 +18,20 @@ import {
 } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const contactUsRequestSchema = z.object({
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  communication_method: z.string().default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof contactUsRequestSchema>;
-
 export function ContactUsRequestForm() {
   const [phone, setPhone] = useState("");
   const router = useRouter();
+
+  const { staticData } = useLocalization();
+  
+  const contactUsRequestSchema = z.object({
+    fullname: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    communication_method: z.string().default(""),
+    message: z.string().default(""),
+  });
+
+  type Form = z.infer<typeof contactUsRequestSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(contactUsRequestSchema),
@@ -46,8 +48,6 @@ export function ContactUsRequestForm() {
     setPhone("");
     router.push(`${InfoUrl.getContactUsRequest()}/success`);
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

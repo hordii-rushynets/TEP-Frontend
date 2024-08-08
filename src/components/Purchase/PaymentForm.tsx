@@ -19,22 +19,24 @@ import {
 import { QuestionTip } from "components/User/QuestionTip";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  payment_method: z
-    .string()
-    .min(1, "Обовязково оберіть спосіб оплати")
-    .default(""),
-  add_card: z.boolean().default(true),
-  promo_code: z.string().default(""),
-  comment: z.string().default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export function PaymentForm() {
   const [cardNumber, setCardNumber] = useState("");
   const [date, setDate] = useState("");
   const [cvv, setCvv] = useState("");
+  
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    payment_method: z
+      .string()
+      .min(1, staticData.forms.paymentError)
+      .default(""),
+    add_card: z.boolean().default(true),
+    promo_code: z.string().default(""),
+    comment: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const router = useRouter();
 
@@ -58,8 +60,6 @@ export function PaymentForm() {
     // ...
     router.push(PurchaseUrl.getConfirmation());
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

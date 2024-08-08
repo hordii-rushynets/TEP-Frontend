@@ -27,16 +27,8 @@ import { AuthUrl } from "route-urls";
 import { useNotificationContext } from "contexts/NotificationContext";
 import { ImageSquare } from "common/ImageSquare";
 
-export const feedbackSchema = z.object({
-  rating: z.number().min(1, "Оцініть товар від 1 до 5").default(0),
-  category: z.string().min(1, "Оберіть категорію").default(""),
-  product: z.string().min(1, "Оберіть товар").default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof feedbackSchema>;
-
 export function FeedbackForm() {
+  const { staticData } = useLocalization();
   const router = useRouter();
   const pathname = usePathname();
   const id = useId();
@@ -45,6 +37,15 @@ export function FeedbackForm() {
   const authContext = useAuth();
   const {setText, setIsOpen} = useNotificationContext();
   const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
+
+  const feedbackSchema = z.object({
+    rating: z.number().min(1, staticData.forms.ratingError).default(0),
+    category: z.string().min(1, staticData.forms.categoryError).default(""),
+    product: z.string().min(1, staticData.forms.productError).default(""),
+    message: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof feedbackSchema>;
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFiles(Array.from(event.target.files || []));
@@ -86,8 +87,6 @@ export function FeedbackForm() {
       setProducts(data);
     })
   }, [form.watch().category]);
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

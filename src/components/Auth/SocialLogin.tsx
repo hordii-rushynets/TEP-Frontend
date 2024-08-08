@@ -98,7 +98,7 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           <span>{staticData.auth.socialLogin.text1}</span>
         </ButtonBase>
       )}
-      {onFBClick && (
+      {/* {onFBClick && (
         <ButtonBase
           onClick={() => onFBClick()}
           className={{
@@ -109,7 +109,7 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           <FaFacebookF className={"size-4"} />
           <span>{staticData.auth.socialLogin.text2}</span>
         </ButtonBase>
-      )}
+      )} */}
     </>
   );
 }

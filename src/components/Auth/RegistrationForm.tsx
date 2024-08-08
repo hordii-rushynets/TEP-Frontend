@@ -16,25 +16,25 @@ import {
 } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  first_name: z.string().default(""),
-  last_name: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  password: z
-    .string()
-    .min(8, "Пароль повинен містити хоча б 8 символів")
-    .default(""),
-  wholesale: z.boolean().default(false),
-  wantInfo: z.boolean().default(false),
-  policy: z.boolean().default(true),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function RegistrationForm() {
   const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    first_name: z.string().default(""),
+    last_name: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    password: z
+      .string()
+      .min(8, staticData.forms.passwordLengthError)
+      .default(""),
+    wholesale: z.boolean().default(false),
+    wantInfo: z.boolean().default(false),
+    policy: z.boolean().default(true),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),

@@ -13,14 +13,6 @@ import { Button, FormTextInput, TextInput, Title } from "common/ui";
 import { VacancyService } from "app/company/vacancies/services";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const vacancyRequestSchema = z.object({
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof vacancyRequestSchema>;
-
 export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
   const [phone, setPhone] = useState("");
   const router = useRouter();
@@ -28,6 +20,15 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
   const id = useId();
   const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
   const vacancyService = new VacancyService();
+  const { staticData } = useLocalization();
+
+  const vacancyRequestSchema = z.object({
+    fullname: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    message: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof vacancyRequestSchema>;
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFiles(Array.from(event.target.files || []));
@@ -62,8 +63,6 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
       }
     });
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

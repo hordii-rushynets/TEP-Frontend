@@ -12,22 +12,23 @@ import { z } from "zod";
 import { Button, FormTextInput, TextInput } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  firstName: z.string().min(1, "Обовязково вкажіть ім'я").default(""),
-  lastName: z.string().min(1, "Обовязково вкажіть прізвище").default(""),
-  street: z.string().min(1, "Обовязково вкажіть вулицю").default(""),
-  city: z.string().min(1, "Обовязково вкажіть місто").default(""),
-  region: z.string().min(1, "Обовязково вкажіть область").default(""),
-  postal: z.string().min(1, "Обовязково вкажіть індекс").default(""),
-  phoneNumber: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export function AddressForm() {
+  const { staticData } = useLocalization();
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
+
+  const formSchema = z.object({
+    firstName: z.string().min(1, staticData.forms.firstNameError).default(""),
+    lastName: z.string().min(1, staticData.forms.secondNameError).default(""),
+    street: z.string().min(1, staticData.forms.streetError).default(""),
+    city: z.string().min(1, staticData.forms.cityError).default(""),
+    region: z.string().min(1, staticData.forms.regionError).default(""),
+    postal: z.string().min(1, staticData.forms.postalError).default(""),
+    phoneNumber: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -44,8 +45,6 @@ export function AddressForm() {
     // ...
     router.push(PurchaseUrl.getDelivery());
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

@@ -10,25 +10,26 @@ import { z } from "zod";
 import { Button, FormSelectInput, FormTextInput } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  delivery_service: z
-    .string()
-    .min(1, "Обовязково вкажіть службу доставки")
-    .default(""),
-  delivery_method: z
-    .string()
-    .min(1, "Обовязково вкажіть метод доставки")
-    .default(""),
-  department: z
-    .string()
-    .min(1, "Обовязково вкажіть номер відділення")
-    .default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export function DeliveryForm() {
   const router = useRouter();
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    delivery_service: z
+      .string()
+      .min(1, staticData.forms.deliveryServiceError)
+      .default(""),
+    delivery_method: z
+      .string()
+      .min(1, staticData.forms.deliveryMethodError)
+      .default(""),
+    department: z
+      .string()
+      .min(1, staticData.forms.departmentError)
+      .default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -41,8 +42,6 @@ export function DeliveryForm() {
     // ...
     router.push(PurchaseUrl.getOrderData());
   }
-
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

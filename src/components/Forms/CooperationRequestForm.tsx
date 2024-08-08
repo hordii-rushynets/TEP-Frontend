@@ -12,17 +12,18 @@ import { z } from "zod";
 import { Button, FormTextInput, TextInput, Title } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
 
-export const leaveRequestSchema = z.object({
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof leaveRequestSchema>;
-
 export function CooperationRequestForm() {
   const [phone, setPhone] = useState("");
   const router = useRouter();
+  const { staticData } = useLocalization();
+
+  const leaveRequestSchema = z.object({
+    fullname: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    message: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof leaveRequestSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(leaveRequestSchema),
@@ -39,7 +40,6 @@ export function CooperationRequestForm() {
     setPhone("");
     router.push(CompanyUrl.getCooperationSuccess());
   }
-  const { staticData } = useLocalization();
 
   return (
     <FormProvider {...form}>

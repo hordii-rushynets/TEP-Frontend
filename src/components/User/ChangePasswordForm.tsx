@@ -11,29 +11,29 @@ import { AccountService } from "app/account/services";
 import { useAuth } from "contexts/AuthContext";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const formSchema = z.object({
-  old_password: z.string().default(""),
-  new_password: z
-    .string()
-    .min(8, "Пароль повинен містити хоча б 8 символів")
-    .default(""),
-  repeat_password: z.string().default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
-
 export type ChangePasswordFormProps = {
   onSubmit: () => void;
 };
 
 export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    old_password: z.string().default(""),
+    new_password: z
+      .string()
+      .min(8, staticData.forms.passwordLengthError)
+      .default(""),
+    repeat_password: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
-
-  const { staticData } = useLocalization();
 
   const accountService = new AccountService();
   const authContext = useAuth();
