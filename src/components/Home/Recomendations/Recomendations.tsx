@@ -18,13 +18,15 @@ import IMG5 from "./static/img5.jpg";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Recomendations() {
+  const { staticData } = useLocalization();
   return (
     <Section className={"overflow-hidden mb-24"}>
       <Container>
         <div>
-          <Title className={"mb-7"}>Рекомендації для тебе</Title>
+          <Title className={"mb-7"}>{staticData.home.recomendationsTitle}</Title>
           <Swiper
             className={"!overflow-visible"}
             modules={[Navigation, Scrollbar, Autoplay]}

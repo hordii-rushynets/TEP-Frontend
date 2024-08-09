@@ -153,7 +153,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                                 {g[`title_${localization}` as keyof ProductWithVariant] as string}
                               </Title>
                               <span className={"text-sm"}>
-                                Артикул №{g.product_variants[0].sku}
+                                {staticData.common.autocompleteInput.text1}{g.product_variants[0].sku}
                               </span>
                             </div>
                             <div
@@ -207,7 +207,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
                         className={"flex items-center gap-x-4 px-6 py-3"}
                       >
                         <FiGrid className={"size-6"} />
-                        <span className={"text-sm font-bold"}>Всі товари</span>
+                        <span className={"text-sm font-bold"}>{staticData.common.autocompleteInput.text2}</span>
                       </Link>
                     </Combobox.Option>
                   </>

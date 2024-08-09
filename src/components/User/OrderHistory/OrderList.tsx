@@ -2,16 +2,19 @@ import { cn } from "utils/cn";
 
 import { Order } from "./Order";
 import { type OrderType } from "./OrderHistory";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type OrderListProps = {
   orders: OrderType[];
 };
 
 export function OrderList({ orders }: OrderListProps) {
+  const { staticData } = useLocalization();
+
   if (!orders.length)
     return (
       <p className={"py-10 text-center text-2xl font-medium"}>
-        У вас ще немає замовлень
+        {staticData.account.orderList}
       </p>
     );
   return (

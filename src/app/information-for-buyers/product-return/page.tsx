@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { FiArrowRight, FiExternalLink } from "react-icons/fi";
 import { MainUrl } from "route-urls";
@@ -7,21 +9,23 @@ import { Disclosure } from "common/Disclosure";
 import { Container, Section, Title } from "common/ui";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import ProductReturnMainIMG from "components/Info/static/product-return.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function ProductReturnPage() {
+  const { staticData } = useLocalization();
+
   return (
     <>
       <MainImageBlock
         image={ProductReturnMainIMG}
-        title={"Повернення товару"}
+        title={staticData.info_for_buyers.productReturnPage.text1}
       />
       <Section className={"mt-24"}>
         <Container>
           <div>
-            <Title className={"mb-3.5 text-3xl"}>Повернення</Title>
+            <Title className={"mb-3.5 text-3xl"}>{staticData.info_for_buyers.productReturnPage.text2}</Title>
             <p className={"mb-4 text-sm leading-normal lg:font-extralight"}>
-              Іноді ти можеш змінити думку. У тебе є 20 днів, щоб повернути
-              товар. Зберігай чек, який підтверджує покупку.
+            {staticData.info_for_buyers.productReturnPage.text3}
             </p>
             <Link
               href={MainUrl.getProductReturnPolicy()}
@@ -29,7 +33,7 @@ export default function ProductReturnPage() {
                 "mb-10 inline-block text-sm font-semibold leading-normal underline-offset-2 hover:underline"
               }
             >
-              Політика повернення товарів
+              {staticData.info_for_buyers.productReturnPage.text4}
             </Link>
             <Disclosure>
               <Link
@@ -40,7 +44,7 @@ export default function ProductReturnPage() {
               >
                 <FiExternalLink className={"size-6"} />
                 <Title size={"xl"} className={"flex-1"}>
-                  Акт (заява) на повернення
+                {staticData.info_for_buyers.productReturnPage.text5}
                 </Title>
                 <FiArrowRight
                   className={
@@ -54,7 +58,7 @@ export default function ProductReturnPage() {
       </Section>
       <AnyQuestions
         hasBorder={false}
-        title={"З’явились запитання?"}
+        title={staticData.info_for_buyers.productReturnPage.text6}
         buttonSize={"large"}
       />
     </>

@@ -38,7 +38,7 @@ export default function SearchFilters({
   sort, 
   setSort
 }: SearchFiltersProps) {
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [color, setColor] = useState<{[key: string]: boolean}>({});
@@ -109,7 +109,7 @@ export default function SearchFilters({
                 <FiChevronDown aria-hidden className={"size-6 select-none"} />
               }
             >
-              Сортувати
+              {staticData.filters.searchFilter.text1}
             </Button>
 
             <Button
@@ -117,7 +117,7 @@ export default function SearchFilters({
               size={"filter"}
               colorVariant={"filter"}
             >
-              Розмір
+              {staticData.filters.searchFilter.text2}
             </Button>
 
             <Button
@@ -125,14 +125,14 @@ export default function SearchFilters({
               size={"filter"}
               colorVariant={"filter"}
             >
-              Колір
+              {staticData.filters.searchFilter.text3}
             </Button>
             <Button
               onClick={() => setIsFilterOpen(true)}
               size={"filter"}
               colorVariant={"filter"}
             >
-              Тканина
+              {staticData.filters.searchFilter.text4}
             </Button>
             <Button
               onClick={() => setIsFilterOpen(true)}
@@ -140,11 +140,11 @@ export default function SearchFilters({
               size={"filter"}
               colorVariant={"filter"}
             >
-              Всі фільтри
+              {staticData.filters.searchFilter.text5}
             </Button>
           </div>
           <div className={"text-sm font-bold text-tep_gray-700"}>
-            {count} товара
+            {count} {staticData.filters.searchFilter.text6}
           </div>
         </div>
         <FilterDialog
@@ -158,7 +158,7 @@ export default function SearchFilters({
             }}>
             <Disclosure>
               <DisclosureItem
-                trigger={"Сортувати"}
+                trigger={staticData.filters.searchFilter.text1}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
@@ -167,21 +167,21 @@ export default function SearchFilters({
                     value={sort}
                     onChange={setSort}
                     options={[
-                      { label: "Найкраще підходять", value: "suitable" },
+                      { label: staticData.filters.searchFilter.text7, value: "suitable" },
                       {
-                        label: "Ціна: від низької до високої",
+                        label: staticData.filters.searchFilter.text8,
                         value: "asc",
                       },
-                      { label: "Ціна: від високої до низької", value: "desc" },
-                      { label: "Новинка", value: "new" },
-                      { label: "Назва", value: "title" },
-                      { label: "Найпопулярніше", value: "popular" },
+                      { label: staticData.filters.searchFilter.text9, value: "desc" },
+                      { label: staticData.filters.searchFilter.text10, value: "new" },
+                      { label: staticData.filters.searchFilter.text11, value: "title" },
+                      { label: staticData.filters.searchFilter.text12, value: "popular" },
                     ]}
                   />
                 </div>
               </DisclosureItem>
               <DisclosureItem
-                trigger={"Колір"}
+                trigger={staticData.filters.searchFilter.text3}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
@@ -197,7 +197,7 @@ export default function SearchFilters({
                 </div>
               </DisclosureItem>
               <DisclosureItem
-                trigger={"Матеріал"}
+                trigger={staticData.filters.searchFilter.text13}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
@@ -214,7 +214,7 @@ export default function SearchFilters({
                 </div>
               </DisclosureItem>
               <DisclosureItem
-                trigger={"Розмір "}
+                trigger={staticData.filters.searchFilter.text2}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >

@@ -2,20 +2,21 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import StaticData from "../locals/dataInterface";
-import data from "../locals/uk/data.json"
+import data from "../locals/uk/data"
+import local from 'next/font/local';
 
 export interface LocalizationContextType {
   localization: string;
   setLocalization: (value: string) => void;
-  staticData: StaticData;
+  staticData: any;
 }
 
 async function loadJSON(localization: string) {
     try {
-      const module = await import(`../locals/${localization}/data.json`);
+      const module = await import(`../locals/${localization}/data.js`);
       return module.default;
     } catch (error) {
-      console.error(`Error loading ${localization}/data.json:`, error);
+      console.error(`Error loading ${localization}/data.js:`, error);
       return null;
     }
   }
@@ -27,16 +28,24 @@ interface LocalizationProviderProps {
 }
 
 export const LocalizationProvider = ({ children }: LocalizationProviderProps) => {
-  const [localization, setLocalization] = useState<string>("uk");
-  const [staticData, setStaticData] = useState<StaticData>(data);
+  const [localization, setLocalization] = useState<string>("");
+  const [staticData, setStaticData] = useState<any>(data);
 
   useEffect(() => {
-      async function fetchData() {
-        const data: StaticData = await loadJSON(localization);
-        setStaticData(data);
-      }
+    const userLanguage = localStorage.getItem("TEPlocals") || navigator.language.split("-")[0] || "uk"
+    setLocalization(userLanguage);
+  }, [])
+
+  useEffect(() => {
+    async function fetchData() {
+      const data: any = await loadJSON(localization);
+      setStaticData(data);
+    }
+    if (localization !== "") {
+      localStorage.setItem("TEPlocals", localization)
   
       fetchData();
+    }
   }, [localization]);
 
   return (

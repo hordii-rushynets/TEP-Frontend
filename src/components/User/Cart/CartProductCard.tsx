@@ -36,7 +36,7 @@ export function CartProductCard({
   setCartRefresh,
   trashClassName,
 }: OrderProductCardProps) {
-  const {localization} = useLocalization();
+  const {localization, staticData} = useLocalization();
   const authContext = useAuth();
   const cartService = new CartService();
   const [quantity, setQuantity] = useState(product.quantity);
@@ -71,9 +71,9 @@ export function CartProductCard({
             <Price price={product.product_variants.default_price} className={"mb-2.5"} />
             <div className={"text-sm leading-normal lg:font-extralight"}>
               <p>{product.color[`title_${localization}` as keyof Color]}</p>
-              <p>{product.size[`title_${localization}` as keyof Size]} см</p>
+              <p>{product.size[`title_${localization}` as keyof Size]} {staticData.account.cartProductCard.text1}</p>
               {product.filter_field.map(field => <p>{field[`value_${localization}` as keyof DynamicFilterField]}</p>)}
-              <p>товар {product.product_variants.sku}</p>
+              <p>{staticData.account.cartProductCard.text2} {product.product_variants.sku}</p>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function CartProductCard({
             "flex flex-col gap-x-4 gap-y-1.5 md:flex-row md:items-end md:self-end"
           }
         >
-          <span className={"text-sm lg:font-extralight"}>Разом</span>
+          <span className={"text-sm lg:font-extralight"}>{staticData.account.cartProductCard.text3}</span>
           <Price price={product.product_variants.default_price * product.quantity} />
         </div>
       </div>

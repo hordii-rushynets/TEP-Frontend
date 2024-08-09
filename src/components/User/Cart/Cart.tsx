@@ -12,6 +12,7 @@ import { TotalPriceBlock } from "./TotalPriceBlock";
 import { CartService } from "app/account/cart/services";
 import { CartItem } from "app/account/cart/interfaces";
 import { useAuth } from "contexts/AuthContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Cart() {
   const cartService = new CartService();
@@ -23,14 +24,16 @@ export function Cart() {
     cartService.getCart(authContext).then(items => setCartItems(items));
   }, [cartRefresh]);
 
+  const { staticData } = useLocalization();
+
   if (!cartItems.length) {
     return (
       <Section>
         <Container>
           <div className={"mt-8 md:mt-12"}>
-            <Title className={"mb-2 text-3xl md:mb-1.5"}>Кошик</Title>
+            <Title className={"mb-2 text-3xl md:mb-1.5"}>{staticData.account.cart.text1}</Title>
             <p className={"text-sm lg:font-extralight"}>
-              {cartItems.length} товарів у кошику
+              {cartItems.length} {staticData.account.cart.text2}
             </p>
             <div
               className={
@@ -39,16 +42,14 @@ export function Cart() {
             >
               <div className={"pb-32 pt-24 lg:pb-48"}>
                 <Title className={"mb-3.5 text-center text-3xl"}>
-                  Кошик порожній
+                {staticData.account.cart.text3}
                 </Title>
                 <p
                   className={
                     "mb-12 max-w-[496px] text-center text-sm leading-normal lg:font-extralight"
                   }
                 >
-                  На жаль, твій кошик порожній. Але ще не пізно це виправити!
-                  Увійдіть, щоб додати товари зі списку &quot;Улюблене&quot; або
-                  перейдіть до списку товарів, щоб ознайомитись з асортиментом.
+                  {staticData.account.cart.text4}
                 </p>
                 <div
                   className={
@@ -61,12 +62,12 @@ export function Cart() {
                       fullWidth
                       colorVariant={"black"}
                     >
-                      Увійти
+                      {staticData.account.cart.text5}
                     </Button>
                   </Link>}
                   <Link href={MainUrl.getGoods()}>
                     <Button size={"large"} fullWidth>
-                      Перейти до товарів
+                    {staticData.account.cart.text6}
                     </Button>
                   </Link>
                 </div>
@@ -83,9 +84,9 @@ export function Cart() {
       <Container>
         <div className={"mb-40 mt-8 md:mt-12 lg:mb-64"}>
           <div className={"mb-12"}>
-            <Title className={"mb-2 text-3xl md:mb-1.5"}>Кошик</Title>
+            <Title className={"mb-2 text-3xl md:mb-1.5"}>{staticData.account.cart.text1}</Title>
             <p className={"text-sm lg:font-extralight"}>
-              {cartItems.length} товарів у кошику
+              {cartItems.length} {staticData.account.cart.text2}
             </p>
           </div>
           <TotalPriceBlock
@@ -101,13 +102,13 @@ export function Cart() {
                 "mb-8 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
             }}
           >
-            Видалити всі товари
+            {staticData.account.cart.text7}
           </ButtonBase>
           <div className={"flex flex-col"}>
             <TotalPriceBlock goods={cartItems} isLoading={true} />
             <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
               <Button colorVariant={"black"} size={"super-large"}>
-                Оформити
+              {staticData.account.cart.text8}
               </Button>
             </Link>
           </div>

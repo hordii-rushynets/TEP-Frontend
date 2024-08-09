@@ -42,11 +42,11 @@ export default function ResetPasswordConfirmationPage() {
           }
         >
           <div className={"hidden w-1/3 md:block lg:w-1/2"}>
-            <Title className={"mb-5"}>Ми отримали ваш запит на відновлення паролю</Title>
+            <Title className={"mb-5"}>{staticData.auth.resetpassword.success.text1}</Title>
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
-              Перегляньте електронну пошту, вам повинен прийти код доступу
+            {staticData.auth.resetpassword.success.text2}
             </p>
-            <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+            <Button onClick={SendCode} size={"large"}>{staticData.auth.resetpassword.success.text3}</Button>
           </div>
           <div
             className={
@@ -55,12 +55,12 @@ export default function ResetPasswordConfirmationPage() {
           >
             <div className={"mb-16 md:hidden"}>
               <Title className={"mb-12 text-3xl"}>
-              Ми отримали ваш запит на відновлення паролю
+              {staticData.auth.resetpassword.success.text1}
               </Title>
               <p className={"mb-2 text-sm"}>
-              Перегляньте електронну пошту, вам повинен прийти код доступу
+              {staticData.auth.resetpassword.success.text2}
               </p>
-              <Button size={"large"}>Надіслати код повторно</Button>
+              <Button size={"large"}>{staticData.auth.resetpassword.success.text3}</Button>
             </div>
             <ResetPasswordConfirmationForm />
           </div>

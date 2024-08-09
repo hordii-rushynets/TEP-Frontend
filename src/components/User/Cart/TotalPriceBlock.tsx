@@ -1,6 +1,7 @@
 import { Price } from "components/Goods/Product/Price";
 
 import { CartItem } from "app/account/cart/interfaces";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type TotalPriceBlockProps = {
   hasTotalPrice?: boolean;
@@ -18,6 +19,8 @@ export function TotalPriceBlock({
   const totalPriceWithVAT =
     goods.reduce((acc, el) => acc + el?.product_variants?.default_price, 0) * 1.19 + goods.length * 70;
 
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={
@@ -26,16 +29,16 @@ export function TotalPriceBlock({
     >
       {hasTotalPrice && (
         <div className={"flex justify-between gap-x-3"}>
-          <span className={"font-light"}>Повна сума</span>
+          <span className={"font-light"}>{staticData.account.totalPriceBlock.text1}</span>
           <Price className={"text-base"} price={totalPrice} />
         </div>
       )}
       <div className={"flex justify-between gap-x-3"}>
         <span className={"font-light"}>
-          Доставка&nbsp;&nbsp;&nbsp;&nbsp;
+        {staticData.account.totalPriceBlock.text2}&nbsp;&nbsp;&nbsp;&nbsp;
           {isLoading && (
             <span className={"text-sm text-tep_gray-500 lg:font-extralight"}>
-              (Ще не прорахована)
+              ({staticData.account.totalPriceBlock.text3})
             </span>
           )}
         </span>
@@ -46,7 +49,7 @@ export function TotalPriceBlock({
         )}
       </div>
       <div className={"flex items-end justify-between gap-x-3"}>
-        <span className={"font-bold"}>Разом по замовленню із ПДВ</span>
+        <span className={"font-bold"}>{staticData.account.totalPriceBlock.text4}</span>
         <Price price={isLoading ? totalPrice : totalPriceWithVAT} />
       </div>
     </div>

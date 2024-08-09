@@ -1,9 +1,14 @@
+"use client"
+
 import Link from "next/link";
 import { MainUrl, ServicesUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Confirmation() {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
@@ -13,15 +18,13 @@ export function Confirmation() {
               "mx-auto flex max-w-[500px] flex-col items-center text-center"
             }
           >
-            <Title className={"mb-3.5 text-3xl"}>Замовлення оформлено</Title>
+            <Title className={"mb-3.5 text-3xl"}>{staticData.purchase.confirmation.text1}</Title>
             <p
               className={
                 "mb-7 text-sm leading-normal md:mb-12 lg:font-extralight"
               }
             >
-              Ваше замовлення успішно оформлене! Очікуйте новин щодо доставки.
-              Ви можете відсліткувати статус Вашого замовлення завдяки
-              трекінг-номеру у розділі “Відтежити замовлення”
+              {staticData.purchase.confirmation.text2}
             </p>
             <div
               className={
@@ -30,12 +33,12 @@ export function Confirmation() {
             >
               <Link href={ServicesUrl.getTracking()}>
                 <Button colorVariant={"black"} fullWidth size={"large"}>
-                  Відстежити замовлення
+                {staticData.purchase.confirmation.text3}
                 </Button>
               </Link>
               <Link href={MainUrl.getHome()}>
                 <Button size={"large"} fullWidth>
-                  На головну
+                {staticData.purchase.confirmation.text4}
                 </Button>
               </Link>
             </div>

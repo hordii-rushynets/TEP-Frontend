@@ -1,30 +1,34 @@
+"use client"
+
 import Link from "next/link";
 import { InfoUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import ContactUsIMG from "components/Info/static/contact-us.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Page() {
+  const { staticData } = useLocalization();
+
   return (
     <>
-      <MainImageBlock image={ContactUsIMG} title={"Зв’яжись з нами"} />
+      <MainImageBlock image={ContactUsIMG} title={staticData.info_for_buyers.contactUsPage.text1} />
       <Section className={"mb-40 mt-24 lg:mb-64"}>
         <Container>
           <div className={"max-w-[615px] lg:max-w-[685px]"}>
             <div className={"mb-20 lg:mb-24"}>
               <Title component={"h5"} size={"xl"} className={"mb-3.5"}>
-                Телефон
+              {staticData.info_for_buyers.contactUsPage.text2}
               </Title>
               <div
                 className={"flex flex-col gap-y-6 text-sm lg:font-extralight"}
               >
                 <p>
-                  Бажаєш почути голос на іншому кінці слухавки? Ми допоможемо
-                  тобі у будь-якій справі.
+                {staticData.info_for_buyers.contactUsPage.text3}
                 </p>
                 <p className={"mb-6"}>
-                  Телефонуй{" "}
+                {staticData.info_for_buyers.contactUsPage.text4}{" "}
                   <Link
                     href={"tel:+380443910000"}
                     target={"_blank"}
@@ -32,30 +36,29 @@ export default function Page() {
                       "underline-offset-[3px] transition-all hover:text-tep_blue-500 hover:underline"
                     }
                   >
-                    +38 (044) 391-00-00
+                    {staticData.info_for_buyers.contactUsPage.text5}
                   </Link>
                 </p>
-                <p>Вартість дзвінків згідно з тарифами твого оператора</p>
+                <p>{staticData.info_for_buyers.contactUsPage.text6}</p>
                 <p>
-                  Понеділок – П'ятниця
+                {staticData.info_for_buyers.contactUsPage.text7}
                   <br />
-                  09:00 - 18:00
+                  {staticData.info_for_buyers.contactUsPage.text8}
                 </p>
               </div>
             </div>
             <div className={"mb-12"}>
               <Title component={"h5"} size={"xl"} className={"mb-3.5"}>
-                Електронна пошта
+              {staticData.info_for_buyers.contactUsPage.text9}
               </Title>
               <div
                 className={"flex flex-col gap-y-6 text-sm lg:font-extralight"}
               >
                 <p>
-                  Якщо тобі знадобиться допомога, напиши нам електронного листа
-                  у будь-яку пору доби, і ми відповімо за першої ж нагоди.
+                {staticData.info_for_buyers.contactUsPage.text10}
                 </p>
                 <p>
-                  Або напиши нам листа на адресу{" "}
+                {staticData.info_for_buyers.contactUsPage.text11}{" "}
                   <Link
                     href={"mailto:info@tep.ua"}
                     target={"_blank"}
@@ -63,7 +66,7 @@ export default function Page() {
                       "underline-offset-[3px] transition-all hover:text-tep_blue-500 hover:underline"
                     }
                   >
-                    info@tep.ua
+                    {staticData.info_for_buyers.contactUsPage.text12}
                   </Link>
                 </p>
               </div>
@@ -78,7 +81,7 @@ export default function Page() {
                 className={"sm:w-auto"}
                 colorVariant={"black"}
               >
-                Залишити заявку
+                {staticData.info_for_buyers.contactUsPage.text13}
               </Button>
             </Link>
           </div>

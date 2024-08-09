@@ -11,24 +11,19 @@ import { ImageSquare } from "common/ImageSquare";
 import { Button, Container, IconButton, Section, Title } from "common/ui";
 import { useCategories } from "contexts/CategoriesContext";
 
-import IMG1 from "./static/img1.jpg";
-import IMG2 from "./static/img2.jpg";
-import IMG3 from "./static/img3.jpg";
-import IMG4 from "./static/img4.jpg";
-import IMG5 from "./static/img5.jpg";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Popular() {
   const { categories } = useCategories();
-
+  const { staticData } = useLocalization();
   return (
     <Section className={"my-24 overflow-hidden"}>
       <Container>
         <div>
-          <Title className={"mb-7"}>Популярне</Title>
+          <Title className={"mb-7"}>{staticData.home.popularTitle}</Title>
           <Swiper
             className={"!overflow-visible"}
             modules={[Navigation, Scrollbar, Autoplay]}

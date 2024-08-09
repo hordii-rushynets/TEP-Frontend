@@ -8,17 +8,19 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormTextInput } from "common/ui";
-
-const formSchema = z.object({
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { useLocalization } from "contexts/LocalizationContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function ResetPasswordForm() {
   const router = useRouter();
+  const { staticData } = useLocalization();
+  const formSchema = z.object({
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
@@ -38,7 +40,7 @@ export function ResetPasswordForm() {
           router.push(AuthUrl.getResetSuccess());
         }
         else if (response.status === 400) {
-          form.setError("email", {type: "manual", message: "Неправильне ім'я електронної пошти"})
+          form.setError("email", {type: "manual", message: staticData.auth.resetPasswordForm.text1})
         }
         else {
             return;
@@ -55,8 +57,8 @@ export function ResetPasswordForm() {
         <div className={"flex flex-col gap-y-12 lg:gap-y-[72px]"}>
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Введіть пошту"}
+            label={staticData.auth.resetPasswordForm.text2}
+            placeholder={staticData.auth.resetPasswordForm.text3}
           />
           <Button
             type={"submit"}
@@ -64,7 +66,7 @@ export function ResetPasswordForm() {
             colorVariant={"black"}
             fullWidth
           >
-            Продовжити
+            {staticData.auth.resetPasswordForm.text4}
           </Button>
         </div>
       </form>

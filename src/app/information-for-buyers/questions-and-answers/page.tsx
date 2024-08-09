@@ -4,11 +4,7 @@ import { QAACategories } from "components/Info/QuestionsAndAnswers/QAACategories
 import { qaa_categories } from "./_data";
 
 export type QAACategory = {
-  topic: string;
-  data?: {
-    question: string;
-    answer: string[];
-  }[];
+  id: number;
   url: string;
   icon: React.ReactNode;
 };

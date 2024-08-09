@@ -27,16 +27,8 @@ import { AuthUrl } from "route-urls";
 import { useNotificationContext } from "contexts/NotificationContext";
 import { ImageSquare } from "common/ImageSquare";
 
-export const feedbackSchema = z.object({
-  rating: z.number().min(1, "Оцініть товар від 1 до 5").default(0),
-  category: z.string().min(1, "Оберіть категорію").default(""),
-  product: z.string().min(1, "Оберіть товар").default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof feedbackSchema>;
-
 export function FeedbackForm() {
+  const { staticData } = useLocalization();
   const router = useRouter();
   const pathname = usePathname();
   const id = useId();
@@ -45,6 +37,15 @@ export function FeedbackForm() {
   const authContext = useAuth();
   const {setText, setIsOpen} = useNotificationContext();
   const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
+
+  const feedbackSchema = z.object({
+    rating: z.number().min(1, staticData.forms.ratingError).default(0),
+    category: z.string().min(1, staticData.forms.categoryError).default(""),
+    product: z.string().min(1, staticData.forms.productError).default(""),
+    message: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof feedbackSchema>;
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFiles(Array.from(event.target.files || []));
@@ -90,11 +91,11 @@ export function FeedbackForm() {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
-        <Title className={"mb-[62px] text-3xl"}>Залишити відгук</Title>
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.feedbackForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormRatingSelect
             fieldName={"rating"}
-            label={"Оцінка"}
+            label={staticData.forms.feedbackForm.text2}
             transition={"zoom"}
             spaceInside={"small"}
             spaceBetween={"small"}
@@ -110,8 +111,8 @@ export function FeedbackForm() {
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={"Повідомлення *"}
-            placeholder={"Не обов’язково *"}
+            label={staticData.forms.feedbackForm.text3}
+            placeholder={staticData.forms.feedbackForm.text4}
           />
           <div className={"flex flex-wrap gap-2"}>
             {selectedFiles.map((file, Idx) => 
@@ -131,7 +132,7 @@ export function FeedbackForm() {
               }
             >
               <FiPaperclip className={"size-4"} />
-              <span className={"text-sm font-bold"}>Файли</span>
+              <span className={"text-sm font-bold"}>{staticData.forms.feedbackForm.text5}</span>
             </label>
             <input id={id} type={"file"} className={"hidden"} multiple onChange={handleFileChange} accept={"image/jpeg,image/png"}/>
           </div>
@@ -143,7 +144,7 @@ export function FeedbackForm() {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Надіслати
+          {staticData.forms.feedbackForm.text6}
         </Button>
       </form>
     </FormProvider>
@@ -153,12 +154,13 @@ export function FeedbackForm() {
 
 const CategoriesFormSelect : React.FC = () => {
   const { categories } = useCategories();
+  const { staticData } = useLocalization();
 
   return (
       <FormSelectInput
           fieldName={"category"}
-          label={"Категорія"}
-          display={"Обрати категорію"}
+          label={staticData.forms.categoriesFormSelect.label}
+          display={staticData.forms.categoriesFormSelect.display}
           options={categories.map((category) => ({
             value: category.slug,
             label: category.title,
@@ -172,13 +174,13 @@ type ProductsFormSelectProps = {
 }
 
 const ProductsFormSelect : React.FC<ProductsFormSelectProps> = ({products}: ProductsFormSelectProps) => {
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   return (
       <FormSelectInput
           fieldName={"product"}
-          label={"Товари"}
-          display={"Оберіть товар"}
+          label={staticData.forms.productsFormSelect.label}
+          display={staticData.forms.productsFormSelect.display}
           options={products.map((product) => ({
             value: product.id.toString(),
             label: product[`title_${localization}` as keyof ProductWithVariant] as string,

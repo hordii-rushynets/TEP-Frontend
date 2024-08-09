@@ -9,59 +9,64 @@ import { HoverMenuTip } from "./HoverMenuTip";
 
 import MainCompanyIMG from "./static/Logo.svg";
 import ServicesIMG from "./static/info.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const baseInfo = {
   slug: "/",
-  title: "ТЕП",
   image: MainCompanyIMG,
-  description: "Раді вітати Вас у ТЕП",
 };
 export const servicesLinks = [
   {
     slug: "gifts",
-    title: "Подарункові картки",
     image: ServicesIMG,
-    description:
-      "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке ... ",
   },
   {
     slug: "delivery",
-    title: "Послуги доставки",
-
     image: ServicesIMG,
-    description:
-      "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке ... ",
   },
   {
     slug: "tracking",
-    title: "Відстежити замовлення",
     image: ServicesIMG,
-    description:
-      "Ви можете придбати у нас подарункові карти, в якості подарунку на будь-яке ... ",
   },
 ];
 
 export function ServicesMenu() {
-  const [cardInfo, setCardInfo] = useState(baseInfo);
+  const {staticData} = useLocalization();
+  const [cardInfo, setCardInfo] = useState({
+    slug: baseInfo.slug,
+    image: baseInfo.image,
+    title: staticData.header.serviceBaseInfo.title,
+    description: staticData.header.serviceBaseInfo.description,
+  });
 
   return (
     <HoverMenuTip
-      onClose={() => setCardInfo(baseInfo)}
-      label={"Послуги"}
+      onClose={() => setCardInfo({
+        slug: baseInfo.slug,
+        image: baseInfo.image,
+        title: staticData.header.serviceBaseInfo.title,
+        description: staticData.header.serviceBaseInfo.description,
+      })}
+      label={staticData.header.serviceLabel}
       url={MainUrl.getServices()}
     >
       <div className={"flex basis-[345px] flex-col gap-y-4"}>
-        {servicesLinks.map((link) => {
+        {servicesLinks.map((link, indx) => {
           return (
             <Link
-              onMouseOver={() => setCardInfo(link)}
+              onMouseOver={() => setCardInfo({
+                slug: link.slug,
+                image: link.image,
+                title: staticData.header.serviceLinks[indx].title,
+                description: staticData.header.serviceLinks[indx].description
+              })}
               key={link.slug}
               href={`${MainUrl.getServices()}/${link.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }
             >
-              {link.title}
+              {staticData.header.serviceLinks[indx].title}
             </Link>
           );
         })}

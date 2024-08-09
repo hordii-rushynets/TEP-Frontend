@@ -3,9 +3,11 @@ import { SimpleCard } from "common/Cards/SimpleCard";
 import { MainUrl } from "route-urls";
 
 import IMG7 from "./static/categories/cat7.jpg";
+import { useLocalization } from 'contexts/LocalizationContext';
 
 const CategoriesGrid:React.FC = () => {
     const { categories } = useCategories();
+    const { staticData } = useLocalization();
 
     return (
         <div
@@ -24,7 +26,7 @@ const CategoriesGrid:React.FC = () => {
           ))}
           <SimpleCard
             url={MainUrl.getSales()}
-            title={"Акції"}
+            title={staticData.goods.categoriesGrid}
             source={IMG7}
             isIcon={false}
           />

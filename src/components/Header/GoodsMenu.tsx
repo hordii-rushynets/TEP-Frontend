@@ -8,33 +8,39 @@ import { HoverMenuCard } from "./HoverMenuCard";
 import { HoverMenuTip } from "./HoverMenuTip";
 import { useCategories, Category } from 'contexts/CategoriesContext';
 
-import MainCompanyIMG from "./static/Logo.svg";
 import GoodsLinksIMG from "./static/goods.jpg";
 import { StaticImageData } from "next/image";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type BaseInfo = {
   slug: string;
-  title: string;
   image: StaticImageData | string;
-  description: string;
 };
 
-const baseInfo: BaseInfo = {
+const baseInfo = {
   slug: "/",
-  title: "Продукти",
   image: GoodsLinksIMG,
-  description: "Раді вітати Вас у ТЕП",
 };
 
 export function GoodsMenu() {
-  const [cardInfo, setCardInfo] = useState(baseInfo);
-
   const { categories } = useCategories();
+  const { staticData } = useLocalization();
+  const [cardInfo, setCardInfo] = useState<{slug: string, image: string | StaticImageData; title: string; description: string}>({
+    slug: baseInfo.slug,
+    image: baseInfo.image,
+    title: staticData.header.goodsBaseInfo.title,
+    description: staticData.header.goodsBaseInfo.description,
+  });
 
   return (
     <HoverMenuTip
-      onClose={() => setCardInfo(baseInfo)}
-      label={"Товари"}
+      onClose={() => setCardInfo({
+        slug: baseInfo.slug,
+        image: baseInfo.image,
+        title: staticData.header.goodsBaseInfo.title,
+        description: staticData.header.goodsBaseInfo.description,
+      })}
+      label={staticData.header.goodsLabel}
       url={MainUrl.getGoods()}
     >
       <div className={"flex basis-[345px] flex-col gap-y-4"}>
@@ -56,10 +62,10 @@ export function GoodsMenu() {
           onMouseOver={() =>
             setCardInfo({
               slug: "sales",
-              title: "Акції",
+              title: staticData.header.salesTitle,
               image: GoodsLinksIMG,
               description:
-                "Квадратні, прямокутні або подушки циліндричної форми — всі вони забезпечують оптимальну підтримку вашого тіла.",
+              staticData.header.salesDescription,
             })
           }
           href={MainUrl.getSales()}
@@ -67,7 +73,7 @@ export function GoodsMenu() {
             "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
           }
         >
-          Акції
+          {staticData.header.salesTitle}
         </Link>
       </div>
       <div>

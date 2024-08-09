@@ -13,18 +13,21 @@ import { Technology } from "./Technologies";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type MoreTechnologiesProps = {
   data: Technology[];
 };
 
 export function MoreTechnologies({ data }: MoreTechnologiesProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"overflow-hidden pb-40 pt-24"}>
       <Container>
         <div>
           <Title size={"2xl"} className={"mb-8 md:mb-12"}>
-            Більше технологій
+            {staticData.company.technologies.moreTechnologies}
           </Title>
           <Swiper
             className={"!overflow-visible"}
@@ -50,11 +53,11 @@ export function MoreTechnologies({ data }: MoreTechnologiesProps) {
               },
             }}
           >
-            {data.map((i) => (
+            {data.map((i, Idx) => (
               <SwiperSlide key={i.id}>
                 <SimpleCard
                   url={`${CompanyUrl.getTechnologies()}/${i.id}`}
-                  title={i.title}
+                  title={staticData.company.technologies.technologies.data.find((data: {id: string, title: string}) => data.id === i.id).title}
                   source={i.image}
                   isIcon={false}
                   cardClasses={{ title: "text-xl" }}

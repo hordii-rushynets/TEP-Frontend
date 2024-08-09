@@ -8,12 +8,15 @@ import { ImageSquare } from "common/ImageSquare";
 import { Button, Container, IconButton, Section } from "common/ui";
 import { useCompareContext } from "contexts/CompareContext";
 import { useParams } from "next/navigation";
+import { useLocalization } from "contexts/LocalizationContext";
 
 
 export function CompareBanner() {
   const params = useParams();
   const url = params.category;
   const { isOpen, setIsOpen, products } = useCompareContext();
+  const { staticData } = useLocalization();
+
   return (
     <Transition
       show={isOpen}
@@ -33,7 +36,7 @@ export function CompareBanner() {
           >
             <div className={"flex items-center gap-x-7"}>
               <p className={"text-sm font-bold text-tep_gray-500"}>
-                {products.length} обрано
+                {products.length} {staticData.goods.compareBanner.select}
               </p>
               <div className={"flex items-center justify-between gap-x-4"}>
                 {products.map(item => (
@@ -52,7 +55,7 @@ export function CompareBanner() {
                   colorVariant={"black"}
                   size={"small"}
                 >
-                  Порівняти товари
+                  {staticData.goods.compareBanner.compare}
                 </Button>
               </Link>
               <IconButton

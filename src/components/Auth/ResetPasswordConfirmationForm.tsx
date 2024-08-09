@@ -13,7 +13,6 @@ import { useLocalization } from "contexts/LocalizationContext";
 import {
   Button,
   FormTextInput,
-  FormPasswordInput
 } from "common/ui";
 
 const formSchema = z.object({
@@ -71,8 +70,8 @@ export function ResetPasswordConfirmationForm() {
         <div className={"flex flex-col gap-y-12 lg:gap-y-[45px]"}>
           <FormTextInput<Form>
             fieldName={"verificationCode"}
-            label={"Верифікаційний код"}
-            placeholder={"Введіть код"}
+            label={staticData.auth.resetPasswordConfirmationForm.text1}
+            placeholder={staticData.auth.resetPasswordConfirmationForm.text2}
           />
           <Button
             type={"submit"}
@@ -80,7 +79,7 @@ export function ResetPasswordConfirmationForm() {
             colorVariant={"black"}
             fullWidth
           >
-            Підтвердити
+            {staticData.auth.resetPasswordConfirmationForm.text3}
           </Button>
         </div>
       </form>

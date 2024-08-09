@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link";
-import { AuthUrl } from "route-urls";
 import { useState, useEffect } from "react";
 
 import { Button, Container, Section, Title } from "common/ui";
@@ -10,8 +8,6 @@ import { useNotificationContext } from "contexts/NotificationContext";
 import { useLocalization } from "contexts/LocalizationContext";
 import { AccountService } from "../services";
 import { useAuth } from "contexts/AuthContext";
-
-const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EmailConfirmationPage() {
   const { setIsOpen, setText } = useNotificationContext();
@@ -39,7 +35,7 @@ export default function EmailConfirmationPage() {
         setIsOpen(true);
       }
       else {
-        setText("Сталася помилка, будь-ласка, спробуйте ще раз");
+        setText(staticData.account.emailconfirmation.text1);
         setIsOpen(true);
       }
       setCooldown(60);
@@ -55,13 +51,13 @@ export default function EmailConfirmationPage() {
           }
         >
           <div className={"hidden w-1/3 md:block lg:w-1/2"}>
-            <Title className={"mb-5"}>Підтвердження емейлу</Title>
+            <Title className={"mb-5"}>{staticData.account.emailconfirmation.text2}</Title>
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
-              Ми надіслали вам верифікаційний код на вашу електронну пошту
+            {staticData.account.emailconfirmation.text3}
             </p>
-            <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+            <Button onClick={SendCode} size={"large"}>{staticData.account.emailconfirmation.text4}</Button>
             {cooldown !== 0 && <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"} style={{color: "red"}}>
-              Спробуйте через {cooldown} секунд
+            {staticData.account.emailconfirmation.text5} {cooldown} {staticData.account.emailconfirmation.text6}
             </p>}
           </div>
           <div
@@ -71,14 +67,14 @@ export default function EmailConfirmationPage() {
           >
             <div className={"mb-16 md:hidden"}>
               <Title className={"mb-12 text-3xl"}>
-                Підтвердження емейлу
+              {staticData.account.emailconfirmation.text2}
               </Title>
               <p className={"mb-2 text-sm"}>
-              Ми надіслали вам верифікаційний код на вашу електронну пошту
+              {staticData.account.emailconfirmation.text3}
               </p>
-              <Button onClick={SendCode} size={"large"}>Надіслати код повторно</Button>
+              <Button onClick={SendCode} size={"large"}>{staticData.account.emailconfirmation.text4}</Button>
               {cooldown !== 0 && <p className={"mb-2 text-sm"} style={{color: "red"}}>
-                Спробуйте через {cooldown} секунд
+              {staticData.account.emailconfirmation.text5} {cooldown} {staticData.account.emailconfirmation.text6}
               </p>}
             </div>
             <EmailConfirmationForm updating={true}/>

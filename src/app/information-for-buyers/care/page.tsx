@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { FiArrowRight, FiExternalLink } from "react-icons/fi";
 import { MainUrl } from "route-urls";
@@ -7,31 +9,24 @@ import { Disclosure } from "common/Disclosure";
 import { Container, Section, Title } from "common/ui";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import CareMainIMG from "components/Info/static/care.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function CarePage() {
+  const { staticData } = useLocalization();
+
   return (
     <>
-      <MainImageBlock image={CareMainIMG} title={"Догляд за продукцією"} />
+      <MainImageBlock image={CareMainIMG} title={staticData.info_for_buyers.carePage.text1} />
       <Section className={"mt-24"}>
         <Container>
           <div>
-            <Title className={"mb-3.5 text-3xl"}>Догляд</Title>
+            <Title className={"mb-3.5 text-3xl"}>{staticData.info_for_buyers.carePage.text2}</Title>
             <p
               className={
                 "mb-5 max-w-[818px] text-sm leading-normal lg:mb-10 lg:font-extralight"
               }
             >
-              Сон займає близько третини тривалості життя людини.
-              Ваше ліжко – це храм домашнього спокою, і щоб цей
-              храм був гармонійний, дарував якісний відпочинок та
-              лише примножував здоров'я, а не відбавляв його, варто
-              знати як правильно підтримувати гігієну домашнього
-              текстилю.
-              Оскільки різноманіття тканин та наповнювачів велике,
-              можна легко заплутатись. Ми створили цей гайд, щоб
-              допомогти вам зорієнтуватися в темі догляду та
-              зрозуміти, що все не так складно, як може здаватись, на
-              перший погляд!
+              {staticData.info_for_buyers.carePage.text3}
             </p>
             <Disclosure>
               <Link
@@ -42,7 +37,7 @@ export default function CarePage() {
               >
                 <FiExternalLink className={"size-6"} />
                 <Title size={"xl"} className={"flex-1"}>
-                  Правила догляду
+                {staticData.info_for_buyers.carePage.text4}
                 </Title>
                 <FiArrowRight
                   className={
@@ -56,7 +51,7 @@ export default function CarePage() {
       </Section>
       <AnyQuestions
         hasBorder={false}
-        title={"З’явились запитання?"}
+        title={staticData.info_for_buyers.carePage.text5}
         buttonSize={"large"}
       />
     </>

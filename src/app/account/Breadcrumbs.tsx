@@ -4,18 +4,20 @@ import { usePathname } from "next/navigation";
 import { MainUrl, UserUrl } from "route-urls";
 
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
+  const { staticData } = useLocalization();
 
   const items = (() => {
     const base = [
       {
-        name: "Головна",
+        name: staticData.account.breadcrumbs.text1,
         href: MainUrl.getHome(),
       },
       {
-        name: "Профіль",
+        name: staticData.account.breadcrumbs.text2,
         href: UserUrl._getRoot(),
       },
     ];
@@ -25,7 +27,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Історія замовлень",
+            name: staticData.account.breadcrumbs.text3,
             href: UserUrl.getOrderHistory(),
           },
         ];

@@ -10,18 +10,20 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormTextInput, TextInput, Title } from "common/ui";
-
-export const leaveRequestSchema = z.object({
-  fullname: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-  message: z.string().default(""),
-});
-
-type Form = z.infer<typeof leaveRequestSchema>;
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function CooperationRequestForm() {
   const [phone, setPhone] = useState("");
   const router = useRouter();
+  const { staticData } = useLocalization();
+
+  const leaveRequestSchema = z.object({
+    fullname: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+    message: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof leaveRequestSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(leaveRequestSchema),
@@ -42,16 +44,16 @@ export function CooperationRequestForm() {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Title className={"mb-[62px] text-3xl"}>Залишити заявку</Title>
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.cooperationequestForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormTextInput<Form>
             fieldName={"fullname"}
-            label={"Ім’я"}
-            placeholder={"Тарас Шевченко"}
+            label={staticData.forms.cooperationequestForm.text2}
+            placeholder={staticData.forms.cooperationequestForm.text3}
           />
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Пошта"}
+            label={staticData.forms.cooperationequestForm.text4}
             placeholder={"taras@gmail.com"}
           />
           <InputMask
@@ -61,14 +63,14 @@ export function CooperationRequestForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} />
+            <TextInput label={staticData.forms.cooperationequestForm.text5} />
           </InputMask>
 
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={"Повідомлення *"}
-            placeholder={"Не обов’язково *"}
+            label={staticData.forms.cooperationequestForm.text6}
+            placeholder={staticData.forms.cooperationequestForm.text7}
           />
         </div>
         <Button
@@ -78,7 +80,7 @@ export function CooperationRequestForm() {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Надіслати
+          {staticData.forms.cooperationequestForm.text8}
         </Button>
       </form>
     </FormProvider>

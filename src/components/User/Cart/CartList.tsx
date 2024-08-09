@@ -5,6 +5,7 @@ import { Button } from "common/ui";
 
 import { CartItem } from "app/account/cart/interfaces";
 import { CartProductCard } from "./CartProductCard";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type CartListProps = {
   goods: CartItem[];
@@ -15,6 +16,8 @@ export type CartListProps = {
 };
 
 export function CartList({ goods, hasButton = true, trashAction, cartRefresh, setCartRefresh }: CartListProps) {
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={
@@ -32,7 +35,7 @@ export function CartList({ goods, hasButton = true, trashAction, cartRefresh, se
           className={"self-end lg:self-start"}
         >
           <Button colorVariant={"black"} size={"super-large"}>
-            Оформити
+            {staticData.account.cartList}
           </Button>
         </Link>
       )}

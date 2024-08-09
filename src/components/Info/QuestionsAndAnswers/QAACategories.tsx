@@ -1,27 +1,32 @@
+"use client"
+
 import { QAACategory } from "app/information-for-buyers/questions-and-answers/page";
 import Link from "next/link";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type QAACategoriesProps = {
   categories: QAACategory[];
 };
 
 export function QAACategories({ categories }: QAACategoriesProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24 mt-12 lg:mb-40"}>
       <Container>
         <div>
           <Title className={"mb-7 text-3xl md:mb-[70px]"}>
-            Питання та відповіді
+            {staticData.info_for_buyers.qaaCategoriesTitle}
           </Title>
           <div
             className={"grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"}
           >
-            {categories.map((category) => (
+            {categories.map((category, indx) => (
               <Card
-                key={category.topic}
-                title={category.topic}
+                key={staticData.info_for_buyers.qaa_categories[indx].topic}
+                title={staticData.info_for_buyers.qaa_categories[indx].topic}
                 icon={category.icon}
                 url={category.url}
               />
@@ -40,6 +45,8 @@ type CardProps = {
 };
 
 function Card({ title, icon, url }: CardProps) {
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={
@@ -57,7 +64,7 @@ function Card({ title, icon, url }: CardProps) {
         </Title>
         <Link href={url}>
           <Button size={"small"} colorVariant={"white"}>
-            Більше
+            {staticData.info_for_buyers.qaaCardText}
           </Button>
         </Link>
       </div>

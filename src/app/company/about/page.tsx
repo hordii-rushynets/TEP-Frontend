@@ -1,3 +1,5 @@
+"use client"
+
 import { OurHistory } from "components/Company/About/OurHistory";
 import Technologies from "components/Company/About/Technologies";
 import Advantages from "components/Company/About/Advantages";
@@ -10,17 +12,20 @@ import ProductionIMG from "components/Company/About/static/production.jpg";
 import { ContentBlock } from "components/Company/ContentBlock";
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Page() {
+  const { staticData } = useLocalization();
+
   return (
     <>
-      <MainImageBlock image={MainIMG} title={"Бренд ТЕП"} />
+      <MainImageBlock image={MainIMG} title={staticData.company.about.text1} />
       <ContentBlock
         className={"py-32"}
         text={[
-          "Наша місія - нести затишок і тепло в дім – місце, де комфортно та можна бути собою. Назва ТЕП походить від слова \"тепло\" (укр.). Наші цінності: тепло рідного дому, вдячність, сім’я, здоров’я, турбота та гармонія.",
+          staticData.company.about.text2
         ]}
-        title={"Місія та бренд ідея"}
+        title={staticData.company.about.text3}
         image={MissionIMG}
       />
       <OurHistory />
@@ -29,14 +34,14 @@ export default function Page() {
         size={"large"}
         image={DreamsIMG}
         description={
-          "Будь собою та поводься справжньо, здійснюй будь-які мрії, ти зможеш і ніхто тебе не зупинить. Постіль — місце сили для справжнього тебе із власними мріями!"
+          staticData.company.about.text4
         }
       />
       <ContentBlock
         className={"mb-24"}
-        title={"Наші цілі та мрії"}
+        title={staticData.company.about.text5}
         text={[
-          "Ми дбаємо про те, щоб створювати для клієнта найкомфортніші умови відпочинку. Наша мета — допомогти нашому аватару створити найліпше місце відпочинку, в якому людина зможе відчути себе справжньою та наповненою силю Ми хочемо, щоб ви любили, насолоджувалися життям, здійснювали мрії та були щасливі.",
+          staticData.company.about.text6
         ]}
         image={GoalsIMG}
       />
@@ -51,9 +56,9 @@ export default function Page() {
       />
       <ContentBlock
         className={"mb-24 lg:mb-40"}
-        title={"Виробництво"}
+        title={staticData.company.about.text7}
         text={[
-          "Досвідчені працівники Balakkom дійсно люблять домашній текстиль. Ми піклуємось про екологічність продукції, що виготовляємо, і маємо сертифікацію OEKO-TEX Standard 100. Балакком використовує безпечні технології виробництва та сучасне устаткування. Для нас важливе самопочуття і добробут кожного клієнта та працівника. Ми підтримуємо відповідальне виробництво і споживання, а наші вироби – довговічні і стійкі до зношування. Турбота про довкілля та думка про майбутні покоління дають нам наснагу і натхнення розвиватись безпечно та відповідально, впроваджуючи нові тенденції сталого розвитку.",
+          staticData.company.about.text8
         ]}
         image={ProductionIMG}
       />

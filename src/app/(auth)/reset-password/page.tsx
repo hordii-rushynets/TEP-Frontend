@@ -1,10 +1,15 @@
+"use client"
+
 import Link from "next/link";
 import { AuthUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { ResetPasswordForm } from "components/Auth/ResetPasswordForm";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function ResetPasswordPage() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"overflow-hidden"}>
       <Container>
@@ -14,13 +19,12 @@ export default function ResetPasswordPage() {
           }
         >
           <div className={"hidden w-1/3 md:block lg:w-1/2"}>
-            <Title className={"mb-5"}>Встановити новий пароль</Title>
+            <Title className={"mb-5"}>{staticData.auth.resetpassword.text1}</Title>
             <p className={"text-sm md:mb-12 lg:mb-[72px] lg:font-light"}>
-              Введіть свою адресу електронної пошти і ми надішлемо тобі новий
-              пароль.
+              {staticData.auth.resetpassword.text2}
             </p>
             <Link href={AuthUrl.getSignIn()} className={"inline-block"}>
-              <Button size={"large"}>Повернутись до входу</Button>
+              <Button size={"large"}>{staticData.auth.resetpassword.text3}</Button>
             </Link>
           </div>
           <div
@@ -30,11 +34,10 @@ export default function ResetPasswordPage() {
           >
             <div className={"mb-16 md:hidden"}>
               <Title className={"mb-12 text-3xl"}>
-                Встановити новий пароль
+              {staticData.auth.resetpassword.text1}
               </Title>
               <p className={"mb-2 text-sm"}>
-                Введіть свою адресу електронної пошти і ми надішлемо тобі новий
-                пароль.
+              {staticData.auth.resetpassword.text2}
               </p>
               <Link
                 href={AuthUrl.getSignIn()}
@@ -42,7 +45,7 @@ export default function ResetPasswordPage() {
                   "inline-block text-sm font-bold underline underline-offset-2"
                 }
               >
-                Повернутись до входу
+                {staticData.auth.resetpassword.text3}
               </Link>
             </div>
             <ResetPasswordForm />

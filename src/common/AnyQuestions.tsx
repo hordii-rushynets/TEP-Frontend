@@ -1,9 +1,12 @@
+"use client"
+
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 import { InfoUrl } from "route-urls";
 import { cn } from "utils/cn";
 
 import { Button, Container, Section, Title } from "./ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type AnyQuestionsProps = {
   title?: string;
@@ -16,15 +19,17 @@ export type AnyQuestionsProps = {
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export default function AnyQuestions({
-  title = "Залишились питання?",
-  description = "Якщо тобі потрібно терміново щось нам повідомити, зв'яжись з нами зручним способом.",
+  title = "",
+  description = "",
   url = InfoUrl.getContactUs(),
   buttonStyle = "outlined",
   buttonSize = "super-large",
-  buttonText = "Зв’яжись з нами",
+  buttonText = "",
   hasBorder = true,
   className,
 }: AnyQuestionsProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
@@ -36,10 +41,10 @@ export default function AnyQuestions({
           )}
         >
           <Title size={"2xl"} className={"mb-3.5"}>
-            {title}
+            {title !== "" ? title : staticData.common.anyQuestions.title}
           </Title>
           <p className={"mb-7 text-sm md:mb-12 lg:font-extralight"}>
-            {description}
+            {description !== "" ? description : staticData.common.anyQuestions.description}
           </p>
           <Link href={url}>
             <Button
@@ -48,7 +53,7 @@ export default function AnyQuestions({
               className={{ button: "sm:w-auto" }}
               colorVariant={buttonStyle}
             >
-              {buttonText}
+              {buttonText !== "" ? buttonText : staticData.common.anyQuestions.buttonText}
             </Button>
           </Link>
         </div>

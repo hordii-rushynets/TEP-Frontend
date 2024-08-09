@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Button, Dialog, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type Wholesale10K = {
   onYes?: () => void;
@@ -22,6 +23,8 @@ export function Wholesale10K({
   //     clearTimeout(timeout);
   //   };
   // }, []);
+
+  const { staticData } = useLocalization();
   return (
     <Dialog
       open={isOpen}
@@ -33,10 +36,9 @@ export function Wholesale10K({
           "w-full px-6 py-20 text-center md:px-24 md:py-28 lg:px-24 lg:py-36"
         }
       >
-        <Title className={"mb-3.5 text-3xl"}>Режим оптової закупівлі</Title>
+        <Title className={"mb-3.5 text-3xl"}>{staticData.purchase.wholesale10k.title}</Title>
         <p className={"mb-[72px] text-sm lg:font-extralight"}>
-          Ви набрали товар на суму більше 10 000 гривень, тому ви перейшли в
-          режим оптової закупівлі. Ви оптовий покупець?
+        {staticData.purchase.wholesale10k.description}
         </p>
         <div
           className={
@@ -51,7 +53,7 @@ export function Wholesale10K({
             size={"super-large"}
             colorVariant={"black"}
           >
-            Так
+            {staticData.purchase.wholesale10k.yes}
           </Button>
           <Button
             onClick={() => {
@@ -60,7 +62,7 @@ export function Wholesale10K({
             }}
             size={"super-large"}
           >
-            Ні
+            {staticData.purchase.wholesale10k.no}
           </Button>
         </div>
       </div>

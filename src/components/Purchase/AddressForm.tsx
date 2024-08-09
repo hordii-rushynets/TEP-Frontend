@@ -10,23 +10,25 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormTextInput, TextInput } from "common/ui";
-
-const formSchema = z.object({
-  firstName: z.string().min(1, "Обовязково вкажіть ім'я").default(""),
-  lastName: z.string().min(1, "Обовязково вкажіть прізвище").default(""),
-  street: z.string().min(1, "Обовязково вкажіть вулицю").default(""),
-  city: z.string().min(1, "Обовязково вкажіть місто").default(""),
-  region: z.string().min(1, "Обовязково вкажіть область").default(""),
-  postal: z.string().min(1, "Обовязково вкажіть індекс").default(""),
-  phoneNumber: z.string().default(""),
-  email: z.string().email("Не коректна адреса електронної пошти").default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function AddressForm() {
+  const { staticData } = useLocalization();
   const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
+
+  const formSchema = z.object({
+    firstName: z.string().min(1, staticData.forms.firstNameError).default(""),
+    lastName: z.string().min(1, staticData.forms.secondNameError).default(""),
+    street: z.string().min(1, staticData.forms.streetError).default(""),
+    city: z.string().min(1, staticData.forms.cityError).default(""),
+    region: z.string().min(1, staticData.forms.regionError).default(""),
+    postal: z.string().min(1, staticData.forms.postalError).default(""),
+    phoneNumber: z.string().default(""),
+    email: z.string().email(staticData.forms.emailError).default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
 
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
@@ -54,34 +56,34 @@ export function AddressForm() {
         >
           <FormTextInput<Form>
             fieldName={"firstName"}
-            label={"Ім’я"}
-            placeholder={"Ваше ім’я"}
+            label={staticData.purchase.addressForm.text1}
+            placeholder={staticData.purchase.addressForm.text2}
           />
           <FormTextInput<Form>
             fieldName={"lastName"}
-            label={"Прізвище"}
-            placeholder={"Ваше прізвище"}
+            label={staticData.purchase.addressForm.text3}
+            placeholder={staticData.purchase.addressForm.text4}
           />
           <FormTextInput
             fieldName={"street"}
-            label={"Адреса"}
-            placeholder={"Ваша адреса"}
+            label={staticData.purchase.addressForm.text5}
+            placeholder={staticData.purchase.addressForm.text6}
           />
 
           <FormTextInput
             fieldName={"city"}
-            label={"Місто"}
-            placeholder={"Ваше місто"}
+            label={staticData.purchase.addressForm.text7}
+            placeholder={staticData.purchase.addressForm.text8}
           />
           <FormTextInput
             fieldName={"region"}
-            label={"Область"}
-            placeholder={"Ваша область"}
+            label={staticData.purchase.addressForm.text9}
+            placeholder={staticData.purchase.addressForm.text10}
           />
           <FormTextInput
             fieldName={"postal"}
-            label={"Індекс"}
-            placeholder={"Ваш індекс"}
+            label={staticData.purchase.addressForm.text11}
+            placeholder={staticData.purchase.addressForm.text12}
           />
           <InputMask
             mask={"+38 (099) 999 99 99"}
@@ -90,12 +92,12 @@ export function AddressForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} placeholder={"Ваш телефон"} />
+            <TextInput label={staticData.purchase.addressForm.text13} placeholder={staticData.purchase.addressForm.text14} />
           </InputMask>
           <FormTextInput<Form>
             fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Ваша пошта"}
+            label={staticData.purchase.addressForm.text15}
+            placeholder={staticData.purchase.addressForm.text16}
           />
         </div>
         <Button
@@ -105,7 +107,7 @@ export function AddressForm() {
           size={"large"}
           colorVariant={"black"}
         >
-          Зберегти та продовжити
+          {staticData.purchase.addressForm.text17}
         </Button>
       </form>
     </FormProvider>

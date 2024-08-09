@@ -6,22 +6,24 @@ import { InfoUrl, MainUrl } from "route-urls";
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
 
 import { qaa_categories } from "./questions-and-answers/_data";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params.slug as string;
+  const { staticData } = useLocalization();
 
   const category = qaa_categories.find((c) => c.url === pathname)!;
 
   const items = (() => {
     const base = [
       {
-        name: "Головна",
+        name: staticData.info_for_buyers.breadcrumbs.home,
         href: MainUrl.getHome(),
       },
       {
-        name: "Інформація для покупців",
+        name: staticData.info_for_buyers.breadcrumbs.infoForBuyers,
         href: MainUrl.getInfoForBuyers(),
       },
     ];
@@ -31,7 +33,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Зв’яжись з нами",
+            name: staticData.info_for_buyers.breadcrumbs.contactUs,
             href: InfoUrl.getContactUs(),
           },
         ];
@@ -39,11 +41,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Зв’яжись з нами",
+            name: staticData.info_for_buyers.breadcrumbs.contactUs,
             href: InfoUrl.getContactUs(),
           },
           {
-            name: "Залишити заявку",
+            name: staticData.info_for_buyers.breadcrumbs.leaveRequest,
             href: InfoUrl.getContactUsRequest(),
           },
         ];
@@ -51,11 +53,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Зв’яжись з нами",
+            name: staticData.info_for_buyers.breadcrumbs.contactUs,
             href: InfoUrl.getContactUs(),
           },
           {
-            name: "Залишити заявку",
+            name: staticData.info_for_buyers.breadcrumbs.leaveRequest,
             href: InfoUrl.getContactUsRequest(),
           },
         ];
@@ -63,7 +65,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Повернення товару",
+            name: staticData.info_for_buyers.breadcrumbs.productReturn,
             href: InfoUrl.getProductReturn(),
           },
         ];
@@ -71,7 +73,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Питання та відповіді",
+            name: staticData.info_for_buyers.breadcrumbs.questionsAndAnswers,
             href: InfoUrl.getQuestionsAndAnswers(),
           },
         ];
@@ -79,7 +81,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Питання та відповіді",
+            name: staticData.info_for_buyers.breadcrumbs.questionsAndAnswers,
             href: InfoUrl.getQuestionsAndAnswers(),
           },
           {
@@ -91,7 +93,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Догляд за продукцією",
+            name: staticData.info_for_buyers.breadcrumbs.care,
             href: InfoUrl.getCare(),
           },
         ];
@@ -99,7 +101,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Відгуки",
+            name: staticData.info_for_buyers.breadcrumbs.feedbacks,
             href: InfoUrl.getFeedbacks(),
           },
         ];
@@ -107,11 +109,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Відгуки",
+            name: staticData.info_for_buyers.breadcrumbs.feedbacks,
             href: InfoUrl.getFeedbacks(),
           },
           {
-            name: "Залишити відгук",
+            name: staticData.info_for_buyers.breadcrumbs.leaveFeedback,
             href: InfoUrl.getLeaveFeedback(),
           },
         ];
@@ -119,11 +121,11 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Відгуки",
+            name: staticData.info_for_buyers.breadcrumbs.feedbacks,
             href: InfoUrl.getFeedbacks(),
           },
           {
-            name: "Залишити відгук",
+            name: staticData.info_for_buyers.breadcrumbs.leaveFeedback,
             href: InfoUrl.getLeaveFeedback(),
           },
         ];
