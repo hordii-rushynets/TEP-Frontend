@@ -4,20 +4,23 @@ import { useParams, usePathname } from "next/navigation";
 import { GoodsUrl, MainUrl } from "route-urls";
 
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params.slug as string;
 
+  const { staticData } = useLocalization();
+
   const items = (() => {
     const base = [
       {
-        name: "Головна",
+        name: staticData.goods.breadcrumbs.main,
         href: MainUrl.getHome(),
       },
       {
-        name: "Товари",
+        name: staticData.goods.breadcrumbs.goods,
         href: MainUrl.getGoods(),
       },
     ];
@@ -27,7 +30,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Фото в інтер’єрі",
+            name: staticData.goods.breadcrumbs.interior,
             href: GoodsUrl.getInterior(),
           },
         ];
@@ -35,7 +38,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Подушки",
+            name: staticData.goods.breadcrumbs.pillows,
             href: GoodsUrl.getPillows(),
           },
         ];
@@ -43,7 +46,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Подушки",
+            name: staticData.goods.breadcrumbs.pillows,
             href: `${GoodsUrl.getPillows()}/${slug}`,
           },
         ];
@@ -51,7 +54,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Ковдри",
+            name: staticData.goods.breadcrumbs.blankets,
             href: GoodsUrl.getBlankets(),
           },
         ];
@@ -59,7 +62,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Ковдри",
+            name: staticData.goods.breadcrumbs.blankets,
             href: `${GoodsUrl.getBlankets()}/${slug}`,
           },
         ];
@@ -67,7 +70,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Покривала",
+            name: staticData.goods.breadcrumbs.covered,
             href: GoodsUrl.getCovered(),
           },
         ];
@@ -75,7 +78,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Покривала",
+            name: staticData.goods.breadcrumbs.covered,
             href: `${GoodsUrl.getCovered()}/${slug}`,
           },
         ];
@@ -83,7 +86,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Постільна білизна",
+            name: staticData.goods.breadcrumbs.linens,
             href: GoodsUrl.getLinens(),
           },
         ];
@@ -91,7 +94,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Постільна білизна",
+            name: staticData.goods.breadcrumbs.linens,
             href: `${GoodsUrl.getLinens()}/${slug}`,
           },
         ];
@@ -99,7 +102,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Наматрацники",
+            name: staticData.goods.breadcrumbs.toppers,
             href: GoodsUrl.getToppers(),
           },
         ];
@@ -107,7 +110,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Наматрацники",
+            name: staticData.goods.breadcrumbs.toppers,
             href: `${GoodsUrl.getToppers()}/${slug}`,
           },
         ];
@@ -115,7 +118,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Простирадла",
+            name: staticData.goods.breadcrumbs.sheets,
             href: GoodsUrl.getSheets(),
           },
         ];
@@ -123,7 +126,7 @@ export function Breadcrumbs() {
         return [
           ...base,
           {
-            name: "Простирадла",
+            name: staticData.goods.breadcrumbs.sheets,
             href: `${GoodsUrl.getSheets()}/${slug}`,
           },
         ];

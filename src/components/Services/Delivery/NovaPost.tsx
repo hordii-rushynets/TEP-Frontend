@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import { ServicesUrl } from "route-urls";
@@ -5,8 +7,11 @@ import { ServicesUrl } from "route-urls";
 import { Button, Container, Section, Title } from "common/ui";
 
 import NovaLogo from "./static/nova.png";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function NovaPost() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -19,7 +24,7 @@ export function NovaPost() {
             />
           </div>
           <Title size={"2xl"} className={"mb-8"}>
-            Вартість послуг доставки:
+            {staticData.services.novaPost.text1}
           </Title>
           <div
             className={
@@ -35,18 +40,18 @@ export function NovaPost() {
                 component={"h6"}
                 className={"text-sm md:text-sm lg:font-normal"}
               >
-                Замовлення до 15 кг та певних розмірів*:
+                {staticData.services.novaPost.text2}
               </Title>
               <p>
-                Доставка до дверей твого дому
+              {staticData.services.novaPost.text3}
                 <br />
-                Звичайний час доставки становить від 1 до 5 днів
-                <br />З понеділка по суботу з 8:00 до 17:00
+                {staticData.services.novaPost.text4}
+                <br />{staticData.services.novaPost.text5}
               </p>
-              <p>Зона доставки №1 (Київ та Київська область) - 99 грн</p>
-              <p>Зона доставки №2 - 149 грн</p>
-              <p>Зона доставки №3 - 199 грн</p>
-              <p>Зона доставки №4 - 299 грн</p>
+              <p>{staticData.services.novaPost.text6}</p>
+              <p>{staticData.services.novaPost.text7}</p>
+              <p>{staticData.services.novaPost.text8}</p>
+              <p>{staticData.services.novaPost.text9}</p>
             </div>
             <div
               className={
@@ -57,18 +62,18 @@ export function NovaPost() {
                 component={"h6"}
                 className={"text-sm md:text-sm lg:font-normal"}
               >
-                Замовлення від 15 до 30 кг та певних розмірів*:
+                {staticData.services.novaPost.text10}
               </Title>
               <p>
-                Доставка до дверей твого дому
+              {staticData.services.novaPost.text11}
                 <br />
-                Звичайний час доставки становить від 1 до 5 днів
-                <br />З понеділка по суботу з 8:00 до 17:00
+                {staticData.services.novaPost.text12}
+                <br />{staticData.services.novaPost.text13}
               </p>
-              <p>Зона доставки №1 (Київ та Київська область) - 149 грн</p>
-              <p>Зона доставки №2 - 299 грн</p>
-              <p>Зона доставки №3 - 399 грн</p>
-              <p>Зона доставки №4 - 499 грн</p>
+              <p>{staticData.services.novaPost.text14}</p>
+              <p>{staticData.services.novaPost.text15}</p>
+              <p>{staticData.services.novaPost.text16}</p>
+              <p>{staticData.services.novaPost.text17}</p>
             </div>
             <div
               className={
@@ -79,21 +84,21 @@ export function NovaPost() {
                 component={"h6"}
                 className={"text-sm md:text-sm lg:font-normal"}
               >
-                Замовлення більше 30кг
+                {staticData.services.novaPost.text18}
               </Title>
               <p>
-                Доставка до обраної кімнати**, вдома або на роботі
+              {staticData.services.novaPost.text19}
                 <br />
-                Дата та час доставки на твій вибір
+                {staticData.services.novaPost.text20}
                 <br />
-                Доставка здійснюється з понеділка по суботу з 8:00 до 17:00
+                {staticData.services.novaPost.text21}
               </p>
               <p>
-                Ціна в межах міста Києва 699 грн
+              {staticData.services.novaPost.text22}
                 <br />
-                Ціна за межами Києва 1599 грн
+                {staticData.services.novaPost.text23}
                 <br />
-                Кожна додаткова тонна оплачується за ціною повної доставки
+                {staticData.services.novaPost.text24}
               </p>
             </div>
           </div>
@@ -104,7 +109,7 @@ export function NovaPost() {
               fullWidth
               className={{ button: "sm:w-auto" }}
             >
-              Відстежити замовлення
+              {staticData.services.novaPost.text25}
             </Button>
           </Link>
         </div>

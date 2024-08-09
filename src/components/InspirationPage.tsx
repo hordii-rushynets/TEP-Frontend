@@ -15,6 +15,7 @@ import IMG3 from "components/Home/Inspiration/static/img3.jpg";
 import IMG4 from "components/Home/Inspiration/static/img4.jpg";
 import IMG5 from "components/Home/Inspiration/static/img5.jpg";
 import IMG6 from "components/Home/Inspiration/static/img6.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 const images = [
   IMG1,
@@ -32,11 +33,13 @@ const images = [
 ];
 
 export function InspirationPage() {
+  const { staticData } = useLocalization();
+
   return (
     <Section>
       <Container>
         <div className={"pb-40 pt-12 lg:pb-64"}>
-          <Title className={"mb-[38px] text-3xl"}>Натхнення</Title>
+          <Title className={"mb-[38px] text-3xl"}>{staticData.inspiration.inspirationPageTitle}</Title>
           <div className={"mb-6"}>
             <CategoriesFilter setCategory={(category) => {}}/>
           </div>

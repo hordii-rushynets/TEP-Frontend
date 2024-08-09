@@ -1,7 +1,6 @@
 import { HTMLAttributes } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { cn } from "utils/cn";
-import { translateCategory } from "utils/helpers";
 
 import { ImageSquare } from "common/ImageSquare";
 import { IconButton, Title } from "common/ui";
@@ -9,6 +8,7 @@ import { Counter } from "components/Goods/Product/Counter";
 import { Price } from "components/Goods/Product/Price";
 
 import { OrderedProduct } from "./OrderHistory";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type OrderProductCardProps = {
   product: OrderedProduct;
@@ -26,6 +26,9 @@ export function OrderProductCard({
 }: OrderProductCardProps) {
   const { category_title, category_slug, image, price, title, article, color, count, size } =
     product;
+
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={cn(
@@ -52,8 +55,8 @@ export function OrderProductCard({
             <Price price={price} className={"mb-2.5"} />
             <div className={"text-sm leading-normal lg:font-extralight"}>
               <p>{color}</p>
-              <p>{size} см</p>
-              <p>товар {article}</p>
+              <p>{size} {staticData.account.orderProductCard.text1}</p>
+              <p>{staticData.account.orderProductCard.text2} {article}</p>
             </div>
           </div>
         </div>
@@ -76,7 +79,7 @@ export function OrderProductCard({
             "flex flex-col gap-x-4 gap-y-1.5 md:flex-row md:items-end md:self-end"
           }
         >
-          <span className={"text-sm lg:font-extralight"}>Разом</span>
+          <span className={"text-sm lg:font-extralight"}>{staticData.account.orderProductCard.text3}</span>
           <Price price={price} />
         </div>
       </div>

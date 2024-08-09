@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { useNotificationContext } from './NotificationContext';
 import { useRouter } from 'next/navigation';
 import { AuthUrl } from 'route-urls';
+import { useLocalization } from './LocalizationContext';
 
 export interface AuthContextType {
   isAuthenticated: boolean;
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { setIsOpen, setText } = useNotificationContext();
   const router = useRouter();
+  const { staticData } = useLocalization(); 
 
   useEffect(() => {
     const token = localStorage.getItem('TEPAccessToken');
@@ -62,7 +64,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
         else if (response.status === 400) {
           logout();
-          setText("Будь ласка, авторизуйтесь");
+          setText(staticData.auth.notifications.unautorized);
           setIsOpen(true);
           router.push(AuthUrl.getSignIn());
         }

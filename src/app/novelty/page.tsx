@@ -1,3 +1,5 @@
+"use client"
+
 import { isStr } from "utils/js-types";
 
 import { PopularGoods } from "components/Goods/PopularGoods";
@@ -6,6 +8,7 @@ import { Images } from "components/Novelty/Images";
 import { NewGoods } from "components/Novelty/NewGoods";
 
 import { Breadcrumbs } from "./Breadcrumbs";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -21,13 +24,15 @@ export default function NoveltyPage({
   let activePageNum = 1;
   if (isStr(page) && !isNaN(parseInt(page))) activePageNum = parseInt(page);
 
+  const { staticData } = useLocalization();
+
   return (
     <>
       <Breadcrumbs />
       <ProductHeader
-        title={"Новинки"}
+        title={staticData.novelty.noveltyPage.title}
         description={
-          "Привіт, подушки! Привіт, комфорт! Квадратні, прямокутні або подушки циліндричної форми — всі вони забезпечують оптимальну підтримку вашого тіла. Покладіть їх на диван, крісло або ліжко — і кімната одразу набуде стильного вигляду. Ознайомтесь з нашим широким асортиментом подушок різних кольорів і з різними візерунками та деталями, такими як китиці і ґудзики."
+          staticData.novelty.noveltyPage.description
         }
       />
       <Images />

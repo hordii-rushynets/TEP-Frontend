@@ -6,6 +6,7 @@ import { cn } from "utils/cn";
 import { Button } from "common/ui";
 import { useCategories} from "contexts/CategoriesContext";
 import { useEffect } from "react";
+import { useLocalization } from "contexts/LocalizationContext";
 
 interface CategoryFiltersProps {
   setCategory: (value: string) => void;
@@ -25,6 +26,8 @@ export default function CategoriesFilter({setCategory}: CategoryFiltersProps) {
     setCategory(filter.category);
   }, [filter]);
 
+  const { staticData } = useLocalization();
+
   return (
     <div className={"-mb-3 flex flex-nowrap gap-x-6 overflow-scroll pb-3"}>
       <Button
@@ -37,7 +40,7 @@ export default function CategoriesFilter({setCategory}: CategoryFiltersProps) {
         colorVariant={"filter"}
         onClick={() => setFilter({ category: "" })}
       >
-        Всі
+        {staticData.filters.categoriesFilterAll}
       </Button>
       <CategoryButtonsList filter={filter} setFilter={setFilter} />
     </div>

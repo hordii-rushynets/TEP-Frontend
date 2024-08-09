@@ -6,6 +6,7 @@ import { cn } from "utils/cn";
 import { transformImagesArr } from "utils/helpers";
 
 import { Button } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type BigGridProps = {
   images_array: (StaticImageData | string)[];
@@ -14,6 +15,7 @@ export type BigGridProps = {
 export function BigGrid({ images_array }: BigGridProps) {
   const [images, setImages] = useState(transformImagesArr(images_array));
   const [numberOfSections, setNumberOfSections] = useState(1);
+  const { staticData } = useLocalization();
 
   useEffect(() => {
     if (document.documentElement.clientWidth < 768) {
@@ -40,7 +42,7 @@ export function BigGrid({ images_array }: BigGridProps) {
           setNumberOfSections(numberOfSections+1);
         }}
       >
-        Більше
+        {staticData.goods.bigGrid}
       </Button>
       }
     </>

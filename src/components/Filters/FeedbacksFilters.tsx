@@ -4,6 +4,7 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { Button, Container, Section } from "common/ui";
 import { Category } from "contexts/CategoriesContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type FeedbacksFiltersProps = {
   categories: Category[];
@@ -20,6 +21,8 @@ export default function FeedbacksFilters({
     { removeDefaultsFromUrl: true },
   );
 
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"relative mb-12 overflow-hidden"}>
       <Container>
@@ -35,7 +38,7 @@ export default function FeedbacksFilters({
                 }))
               }
             >
-              Всі
+              {staticData.filters.feedbacksFilterAll}
             </Button>
             {categories.map((category) => (
               <Button

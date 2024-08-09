@@ -1,10 +1,14 @@
+"use client"
+
 import Link from "next/link";
 import { FiFrown } from "react-icons/fi";
 import { MainUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function NotFound() {
+  const { staticData } = useLocalization();
   return (
     <Section>
       <Container>
@@ -23,15 +27,14 @@ export default function NotFound() {
             <span>4</span>
           </div>
           <Title className={"mb-3 text-3xl md:mb-3.5"}>
-            Сторінка не знайдена
+            {staticData.notFound.title}
           </Title>
           <p className={"mb-16 max-w-[604px] text-sm md:mb-20 lg:font-light"}>
-            Можливо, Ви вказали не існуючу адресу, сторінка була видалена,
-            переміщена або тимчасово недоступна!
+          {staticData.notFound.description}
           </p>
           <Link className={"w-full sm:w-auto"} href={MainUrl.getHome()}>
             <Button colorVariant={"black"} fullWidth size={"super-large"}>
-              На головну
+            {staticData.notFound.buttonText}
             </Button>
           </Link>
         </div>

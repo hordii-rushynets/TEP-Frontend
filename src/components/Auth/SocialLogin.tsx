@@ -6,6 +6,7 @@ import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, CodeResponse, TokenRe
 import { useAuth } from "contexts/AuthContext";
 import { useAuthNotificationContext } from "contexts/AuthNotificationContext";
 import { useRouter } from "next/navigation";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type SocialLoginProps = {
   onGoogleClick?: () => void;
@@ -18,6 +19,7 @@ const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
   const { setIsOpen, setTitle } = useAuthNotificationContext();
   const { login } = useAuth();
+  const {staticData} = useLocalization();
   
   const router = useRouter();
 
@@ -93,10 +95,10 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           }}
         >
           <FcGoogle className={"size-4"} />
-          <span>Продовжити з Google</span>
+          <span>{staticData.auth.socialLogin.text1}</span>
         </ButtonBase>
       )}
-      {onFBClick && (
+      {/* {onFBClick && (
         <ButtonBase
           onClick={() => onFBClick()}
           className={{
@@ -105,9 +107,9 @@ export function SocialLogin({ onFBClick, onGoogleClick }: SocialLoginProps) {
           }}
         >
           <FaFacebookF className={"size-4"} />
-          <span>Продовжити з Facebook</span>
+          <span>{staticData.auth.socialLogin.text2}</span>
         </ButtonBase>
-      )}
+      )} */}
     </>
   );
 }

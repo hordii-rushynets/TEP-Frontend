@@ -14,7 +14,7 @@ import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Tracking() {
   const [stages, setStages] = useState<Stage[] | undefined>();
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   return (
     <>
@@ -22,16 +22,13 @@ export default function Tracking() {
         <Container>
           <div className={"pt-8 md:pt-12"}>
             <div className={"mb-[72px]"}>
-              <Title className={"mb-3.5 text-3xl"}>Відстежити замовлення</Title>
+              <Title className={"mb-3.5 text-3xl"}>{staticData.services.tracking.title}</Title>
               <p
                 className={
                   "max-w-[713px] text-sm leading-normal lg:font-extralight"
                 }
               >
-                Хочеш дізнатися, де зараз товари, що ти замовив? Послуга
-                &quot;Відстежити замовлення&quot; тобі в цьому допоможе! Для
-                відстеження твого замовлення у полі &apos;Номер замовлення&apos;
-                введи номер свого замовлення, вказаний у листі
+                {staticData.services.tracking.description}
               </p>
             </div>
             <TrackingForm onSending={setStages} />
@@ -55,7 +52,7 @@ export default function Tracking() {
                   href={InfoUrl.getLeaveFeedback()}
                   className={"mt-7 inline-block md:ml-7"}
                 >
-                  <Button size={"large"}>Залишити відгук</Button>
+                  <Button size={"large"}>{staticData.services.tracking.leaveFeedback}</Button>
                 </Link>
               </>
             )}

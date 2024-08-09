@@ -8,8 +8,10 @@ import { PurchaseUrl } from "route-urls";
 
 import { Button, FormTextInput, TextInput } from "common/ui";
 import { AddressForm as AddressFormType, usePostService } from "contexts/PostServiceContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function AddressForm() {
+  const { staticData } = useLocalization();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const router = useRouter();
@@ -39,28 +41,28 @@ export function AddressForm() {
         >
           <FormTextInput<AddressFormType>
             fieldName={"firstName"}
-            label={"Ім’я"}
-            placeholder={"Ваше ім’я"}
+            label={staticData.purchase.addressForm.text1}
+            placeholder={staticData.purchase.addressForm.text2}
           />
           <FormTextInput<AddressFormType>
             fieldName={"lastName"}
-            label={"Прізвище"}
-            placeholder={"Ваше прізвище"}
+            label={staticData.purchase.addressForm.text3}
+            placeholder={staticData.purchase.addressForm.text4}
           />
           <FormTextInput
             fieldName={"city"}
-            label={"Місто"}
-            placeholder={"Ваше місто"}
+            label={staticData.purchase.addressForm.text7}
+            placeholder={staticData.purchase.addressForm.text8}
           />
           <FormTextInput
             fieldName={"region"}
-            label={"Область"}
-            placeholder={"Ваша область"}
+            label={staticData.purchase.addressForm.text9}
+            placeholder={staticData.purchase.addressForm.text10}
           />
           <FormTextInput
             fieldName={"postal"}
-            label={"Індекс"}
-            placeholder={"Ваш індекс"}
+            label={staticData.purchase.addressForm.text11}
+            placeholder={staticData.purchase.addressForm.text12}
           />
           <InputMask
             mask={"+38 (099) 999 99 99"}
@@ -69,12 +71,12 @@ export function AddressForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={"Телефон"} placeholder={"Ваш телефон"} error={phoneNumberError !== ""} helperText={phoneNumberError}/>
+            <TextInput label={staticData.purchase.addressForm.text13} placeholder={staticData.purchase.addressForm.text14} error={phoneNumberError !== ""} helperText={phoneNumberError}/>
           </InputMask>
           <FormTextInput<AddressFormType>
             fieldName={"email"}
-            label={"Електронна пошта"}
-            placeholder={"Ваша пошта"}
+            label={staticData.purchase.addressForm.text15}
+            placeholder={staticData.purchase.addressForm.text16}
           />
         </div>
         <Button
@@ -84,7 +86,7 @@ export function AddressForm() {
           size={"large"}
           colorVariant={"black"}
         >
-          Зберегти та продовжити
+          {staticData.purchase.addressForm.text17}
         </Button>
       </form>
     </FormProvider>

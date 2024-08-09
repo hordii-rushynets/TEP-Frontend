@@ -1,48 +1,20 @@
+"use client"
+
 import { cn } from "utils/cn";
 
 import { Container, Section, Title } from "common/ui";
-
-const content = [
-  {
-    text: "Оформлення замовлення на сайті та в додатку 24/7",
-  },
-  {
-    text: "Допомога консультанти через чат або дзвінок",
-  },
-  {
-    text: "Розрахуватися зручним для вас способом: Apple/Google Pay, Visa/Mastercard",
-  },
-  {
-    text: "Можливість співпраці та бути нашим офіційним дистриб’ютором в Україні чи закордоном",
-  },
-  {
-    text: "Наявна пропозиція франшизи ТЕП",
-  },
-  {
-    text: "Сезонні, солодкі знижки. Чим вище сума закупівлі, тим істотніша знижка. Чим довша історія спільної роботи, тим вигідніші умови для співпрацію",
-  },
-  {
-    text: "Швидка обробка та відправка замовлення",
-  },
-  {
-    text: "Швидко повернути товар при наявності нарікань до його якості.",
-  },
-  {
-    text: "Більше ніж 100+ різних дизайнів постільної білизни, інноваційні подушки та ковдри, наматрацники, простирадла"
-  },
-  {
-    text: "ТЕП – це про любов до наших клієнтів та створення історій, де затишок, комфорт та здоров’я передусім."
-  }
-];
+import { useLocalization } from "contexts/LocalizationContext";
 
 export default function Advantages() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-10 md:mb-24"}>
       <Container>
         <div>
-          <Title className={"mb-20 text-3xl md:mb-24"}>Переваги: </Title>
+          <Title className={"mb-20 text-3xl md:mb-24"}>{staticData.company.about.advantages.text1}: </Title>
           <div className={"pl-3"}>
-            {content.map((el, Idx, arr) => (
+            {staticData.company.about.advantages.content.map((el: {text: string}, Idx: number, arr: []) => (
               <div
                 key={Idx}
                 className={cn("min-h-[100px] pl-8 md:pl-12", {

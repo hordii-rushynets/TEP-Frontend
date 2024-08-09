@@ -8,25 +8,27 @@ import { z } from "zod";
 import { Button, FormSelectInput, FormTextInput } from "common/ui";
 import { PurchaseService } from "app/purchase/services";
 import { Stage } from "app/purchase/interfaces";
-
-export const formSchema = z.object({
-  order_number: z
-    .string()
-    .min(14, "Номер замовлення не коректний. Перевірте будь ласка введені дані.")
-    .default(""),
-  delivery_service: z
-    .string()
-    .min(1, "Обовязково вкажіть службу доставки")
-    .default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type TrackingFormProps = {
   onSending: (v: Stage[]) => void;
 };
 
 export function TrackingForm({ onSending }: TrackingFormProps) {
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    order_number: z
+      .string()
+      .min(8, staticData.forms.orderNumberError)
+      .default(""),
+      delivery_service: z
+      .string()
+      .min(1, "Обовязково вкажіть службу доставки")
+      .default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
@@ -60,8 +62,8 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
         <FormTextInput<Form>
           className={{ wrapper: "mb-12" }}
           fieldName={"order_number"}
-          label={"Номер замовлення"}
-          placeholder={"Ваш номер"}
+          label={staticData.services.trackingForm.label}
+          placeholder={staticData.services.trackingForm.placeholder}
         />
         <Button
           type={"submit"}
@@ -70,7 +72,7 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          Відстежити
+          {staticData.services.trackingForm.button}
         </Button>
       </form>
     </FormProvider>

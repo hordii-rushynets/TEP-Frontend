@@ -7,15 +7,16 @@ import { HTMLAttributes } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { MainUrl } from "route-urls";
 import { cn } from "utils/cn";
-import { translateCategory } from "utils/helpers";
 
 import { IconButton, Title } from "./ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type TipProps = {
   product: ProductToShow;
 } & Pick<HTMLAttributes<HTMLDivElement>, "className">;
 
 export function Tip({ product, className }: TipProps) {
+  const { staticData } = useLocalization();
   return (
     <div className={cn("inline-block", className)}>
       <HoverCard.Root openDelay={100} closeDelay={200}>
@@ -48,7 +49,7 @@ export function Tip({ product, className }: TipProps) {
               <div className={"flex items-end justify-between"}>
                 <span className={"text-2xl font-bold"}>
                   {product?.price || 0}
-                  <span className={"align-top text-xs font-bold"}> грн</span>
+                  <span className={"align-top text-xs font-bold"}> {staticData.common.tipCurrency}</span>
                 </span>
                 <Link href={`${MainUrl.getGoods()}/${product?.category_slug || ""}/${product?.slug || ""}`}>
                   <IconButton colorVariant={"empty"}>

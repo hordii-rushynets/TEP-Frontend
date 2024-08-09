@@ -6,6 +6,7 @@ import { FiX } from "react-icons/fi";
 
 import { Container, IconButton, Section, Title } from "common/ui";
 import { useBannerContext } from "contexts/BannerContext";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Banner() {
   const { isOpen, setIsOpen } = useBannerContext();
@@ -13,6 +14,8 @@ export function Banner() {
   useEffect(() => {
     setIsOpen(true);
   }, [setIsOpen]);
+
+  const { staticData } = useLocalization();
 
   return (
     <Transition
@@ -33,7 +36,7 @@ export function Banner() {
           <div className={"py-12"}>
             <div className={"flex items-center justify-between"}>
               <Title size={"2xl"} component={"h5"} className={"mb-3.5"}>
-                Шановні покупці!
+                {staticData.common.banner.title}
               </Title>
               <IconButton
                 onClick={() => setIsOpen(false)}
@@ -44,13 +47,7 @@ export function Banner() {
               </IconButton>
             </div>
             <p className={"text-sm lg:font-extralight"}>
-              Під час карантину ми залишаємось доступними для вас 24/7.
-              Замовляйте товари в інтернет-магазині та забирайте у пунктах
-              видачі біля свого дому. Пункти видачі замовлень на пошті
-              продовжують працювати у звичайному режимі. Дізнатися, як забрати
-              своє замовлення можна за посиланням. Потрібного товару немає в
-              наявності? Звернись за консультацією онлайн! Пиши на адресу
-              support.tep@gmail.com
+            {staticData.common.banner.description}
             </p>
           </div>
         </Container>

@@ -34,7 +34,7 @@ export function OrderData() {
     router.push(PurchaseUrl.getDelivery());
   }
 
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   useEffect(() => {
     cartService.getCart(authContext).then(items => setCartItems(items));
@@ -155,7 +155,7 @@ export function OrderData() {
       <Container>
         <div className={"mb-40 pt-6 lg:mb-64 lg:pt-12"}>
           <Title size={"2xl"} className={"mb-11"}>
-            Дані замовлення
+            {staticData.purchase.orderData.title}
           </Title>
           <TotalPriceBlock hasTotalPrice={false} goods={cartItems} />
 
@@ -166,13 +166,13 @@ export function OrderData() {
                 "mb-8 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
             }}
           >
-            Видалити всі товари
+            {staticData.purchase.orderData.deleteButton}
           </ButtonBase>
           <div>
             <TotalPriceBlock goods={cartItems} />
             <div className={"sm:inline-block"}>
               <Button fullWidth colorVariant={"black"} size={"super-large"} onClick={SubmitParcel}>
-                Зберегти та продовжити
+              {staticData.purchase.orderData.saveButton}
               </Button>
             </div>
           </div>

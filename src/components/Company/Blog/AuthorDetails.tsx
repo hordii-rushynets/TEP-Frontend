@@ -1,5 +1,8 @@
+"use client"
+
 import { Title } from "common/ui";
 import { Socials } from "components/Socials";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type AuthorDetailsProps = {
   author: string;
@@ -12,6 +15,8 @@ export function AuthorDetails({
   date,
   socialLinks,
 }: AuthorDetailsProps) {
+  const { staticData } = useLocalization();
+
   return (
     <div
       className={
@@ -19,7 +24,7 @@ export function AuthorDetails({
       }
     >
       <div className={"order-1"}>
-        <div className={"mb-4 lg:font-extralight"}>Автор статті</div>
+        <div className={"mb-4 lg:font-extralight"}>{staticData.company.blog.authorDetails.text1}</div>
         <Title component={"h5"} size={"2xl"}>
           {author}
         </Title>
@@ -27,15 +32,15 @@ export function AuthorDetails({
       <div className={"order-3 flex gap-x-7 md:order-2"}>
         <div className={"flex-1"}>
           <div className={"mb-4 whitespace-nowrap lg:font-extralight"}>
-            Дата
+          {staticData.company.blog.authorDetails.text2}
           </div>
           <div className={"whitespace-nowrap font-bold"}>{date}</div>
         </div>
         <div className={"flex-1"}>
           <div className={"mb-4 whitespace-nowrap lg:font-extralight"}>
-            Час читання
+          {staticData.company.blog.authorDetails.text3}
           </div>
-          <div className={"whitespace-nowrap font-bold"}>10 хв</div>
+          <div className={"whitespace-nowrap font-bold"}>{staticData.company.blog.authorDetails.text4}</div>
         </div>
       </div>
       <Socials

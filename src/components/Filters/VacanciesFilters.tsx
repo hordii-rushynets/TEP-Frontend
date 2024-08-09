@@ -27,7 +27,7 @@ type VacanciesFiltersProps = {
 
 export default function VacanciesFilters({ count, onFilterChange }: VacanciesFiltersProps) {
   const vacancyService = new VacancyService();
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   const [filter, setFilter] = useQueryParams(
     {
@@ -121,7 +121,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
           }}
           value={searchInputValue}
           onChange={(e) => setSearchInputValue(e.target.value)}
-          placeholder={"Вакансія"}
+          placeholder={staticData.filters.vacancyFilter.text1}
           startAdornment={
             <IconButton colorVariant={"empty"}>
               <FiSearch className={"size-6"} />
@@ -141,37 +141,37 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
               size={"filter"}
               onClick={() => setIsOpen(true)}
             >
-              Сфера роботи
+             {staticData.filters.vacancyFilter.text2}
             </Button>
             <Button
               onClick={() => setIsOpen(true)}
               colorVariant={"filter"}
               size={"filter"}
             >
-              Тип зайнятості
+              {staticData.filters.vacancyFilter.text3}
             </Button>
             <Button
               onClick={() => setIsOpen(true)}
               colorVariant={"filter"}
               size={"filter"}
             >
-              Область
+              {staticData.filters.vacancyFilter.text4}
             </Button>
             <Button
               onClick={() => setIsOpen(true)}
               colorVariant={"filter"}
               size={"filter"}
             >
-              Місто
+              {staticData.filters.vacancyFilter.text5}
             </Button>
           </div>
           <span className={"text-sm font-bold text-tep_gray-500"}>
-            {count} знайдено
+            {count} {staticData.filters.vacancyFilter.text7}
           </span>
         </div>
       </div>
       <FilterDialog open={isOpen} onClose={() => setIsOpen(false)}>
-        <Skeleton count={count} title={"Фільтр"} onClick={() => setIsOpen(false)} isCleanButtonDisabled={isCleanButtonDisabled} cleanFIlter={() => {
+        <Skeleton count={count} title={staticData.filters.vacancyFilter.text6} onClick={() => setIsOpen(false)} isCleanButtonDisabled={isCleanButtonDisabled} cleanFIlter={() => {
           setScope(generateDictionary(scopesOfWork.map(scope => scope.name)));
           setType(generateDictionary(typesOfWork.map(type => type.name)));
           setOccupation(generateDictionary(typesOfEmployement.map(occup => occup.name)));
@@ -180,7 +180,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
         }}>
           <Disclosure>
             <DisclosureItem
-              trigger={"Сфера роботи"}
+              trigger={staticData.filters.vacancyFilter.text2}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
@@ -198,7 +198,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
               </div>
             </DisclosureItem>
             <DisclosureItem
-              trigger={"Вид роботи"}
+              trigger={staticData.filters.vacancyFilter.text8}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
@@ -216,7 +216,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
               </div>
             </DisclosureItem>
             <DisclosureItem
-              trigger={"Тип зайнятості"}
+              trigger={staticData.filters.vacancyFilter.text3}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
@@ -234,7 +234,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
               </div>
             </DisclosureItem>
             <DisclosureItem
-              trigger={"Область"}
+              trigger={staticData.filters.vacancyFilter.text4}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
@@ -242,7 +242,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
                 <SelectInput
                   value={region}
                   onChange={setRegion}
-                  display={"Ваша область"}
+                  display={staticData.filters.vacancyFilter.text9}
                   options={addresses.map(address => ({
                     label: address[`region_${localization}` as keyof Address],
                     value: address.region
@@ -251,7 +251,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
               </div>
             </DisclosureItem>
             <DisclosureItem
-              trigger={"Місто"}
+              trigger={staticData.filters.vacancyFilter.text5}
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
@@ -259,7 +259,7 @@ export default function VacanciesFilters({ count, onFilterChange }: VacanciesFil
                 <SelectInput
                   value={city}
                   onChange={setCity}
-                  display={"Ваше місто"}
+                  display={staticData.filters.vacancyFilter.text10}
                   options={addresses.map(address => ({
                     label: address[`city_${localization}` as keyof Address],
                     value: address.city

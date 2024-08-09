@@ -9,17 +9,7 @@ import { z } from "zod";
 import { Button, FormPasswordInput, Title } from "common/ui";
 import { AccountService } from "app/account/services";
 import { useAuth } from "contexts/AuthContext";
-
-const formSchema = z.object({
-  old_password: z.string().default(""),
-  new_password: z
-    .string()
-    .min(8, "Пароль повинен містити хоча б 8 символів")
-    .default(""),
-  repeat_password: z.string().default(""),
-});
-
-type Form = z.infer<typeof formSchema>;
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type ChangePasswordFormProps = {
   onSubmit: () => void;
@@ -27,6 +17,19 @@ export type ChangePasswordFormProps = {
 
 export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
+  const { staticData } = useLocalization();
+
+  const formSchema = z.object({
+    old_password: z.string().default(""),
+    new_password: z
+      .string()
+      .min(8, staticData.forms.passwordLengthError)
+      .default(""),
+    repeat_password: z.string().default(""),
+  });
+  
+  type Form = z.infer<typeof formSchema>;
+
   const form = useForm<Form>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
@@ -37,9 +40,9 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
 
   function onSubmitHandler(data: Form) {
     accountService.passwordUpdate(data.old_password, data.new_password, data.repeat_password, () => {
-      form.setError("repeat_password", {type: "manual", message: "Паролі не співпадають"});
+      form.setError("repeat_password", {type: "manual", message: staticData.account.changePasswordForm.text1});
     }, () => {
-      form.setError("old_password", {type: "manual", message: "Неправильний пароль"});
+      form.setError("old_password", {type: "manual", message: staticData.account.changePasswordForm.text2});
     }, authContext)
     .then(success => {
       if (success) {
@@ -52,10 +55,9 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
   if (isSuccess) {
     return (
       <div className={"w-full px-6 py-36 text-center md:w-[700px] md:px-24"}>
-        <Title className={"mb-3.5 text-3xl"}>Пароль змінено</Title>
+        <Title className={"mb-3.5 text-3xl"}>{staticData.account.changePasswordForm.text3}</Title>
         <p className={"mb-[72px] text-sm lg:font-extralight"}>
-          Ваш пароль був зміненний на новий, тепер Ви зможете зайти в обліковий
-          запис використовуючи новий пароль.
+          {staticData.account.changePasswordForm.text4}
         </p>
         <Button
           type={"submit"}
@@ -67,7 +69,7 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
             onSubmit();
           }}
         >
-          Добре
+          {staticData.account.changePasswordForm.text5}
         </Button>
       </div>
     );
@@ -82,23 +84,23 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
         }
       >
         <Title size={"2xl"} className={"mb-8 md:text-center"}>
-          Змінити пароль
+          {staticData.account.changePasswordForm.text6}
         </Title>
         <div className={"mb-12 flex flex-col gap-6"}>
           <FormPasswordInput<Form>
             fieldName={"old_password"}
-            label={"Старий пароль"}
-            placeholder={"Введіть старий пароль"}
+            label={staticData.account.changePasswordForm.text7}
+            placeholder={staticData.account.changePasswordForm.text8}
           />
           <FormPasswordInput<Form>
             fieldName={"new_password"}
-            label={"Новий пароль"}
-            placeholder={"Введіть новий пароль"}
+            label={staticData.account.changePasswordForm.text9}
+            placeholder={staticData.account.changePasswordForm.text10}
           />
           <FormPasswordInput<Form>
             fieldName={"repeat_password"}
-            label={"Повторіть новий пароль"}
-            placeholder={"Введіть новий пароль"}
+            label={staticData.account.changePasswordForm.text11}
+            placeholder={staticData.account.changePasswordForm.text12}
           />
         </div>
         <Button
@@ -108,7 +110,7 @@ export function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps) {
           size={"super-large"}
           colorVariant={"black"}
         >
-          Змінити
+          {staticData.account.changePasswordForm.text13}
         </Button>
       </form>
     </FormProvider>

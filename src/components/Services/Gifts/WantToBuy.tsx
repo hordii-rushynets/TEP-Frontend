@@ -1,11 +1,16 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button, Container, Section, Title } from "common/ui";
 
 import WhantToBuyIMG from "./static/want-to-buy.jpg";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function WantToBuy() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"relative mb-24 lg:mb-40"}>
       <Container>
@@ -15,15 +20,14 @@ export function WantToBuy() {
           }
         >
           <Title className={"mb-3.5 text-3xl lg:text-[40px]"}>
-            Бажаєш придбати подарункову картку?
+            {staticData.services.wantToBuy.title}
           </Title>
           <p
             className={
               "mb-8 max-w-[582px] leading-normal md:mb-16 lg:font-extralight"
             }
           >
-            Зробити це дуже легко - відвідай магазин ТЕП, щоб придбати
-            подарункову картку або замовляй он-лайн!
+            {staticData.services.wantToBuy.description}
           </p>
           <Link href={"#gift-cards"}>
             <Button
@@ -32,7 +36,7 @@ export function WantToBuy() {
               colorVariant={"black"}
               size={"super-large"}
             >
-              Замовити
+              {staticData.services.wantToBuy.button}
             </Button>
           </Link>
         </div>

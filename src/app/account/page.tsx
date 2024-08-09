@@ -70,9 +70,9 @@ export default function AccountPage() {
             }
           >
             <div>
-              <Title className={"mb-3.5 text-3xl"}>Привіт, {user.first_name}!</Title>
+              <Title className={"mb-3.5 text-3xl"}>{staticData.account.text1} {user.first_name}!</Title>
               <p className={"text-sm lg:font-extralight"}>
-                Бажаєш змінити обліковий запис?{" "}
+              {staticData.account.text2}{" "}
                 <Link
                   href={AuthUrl.getSignIn()}
                   className={
@@ -80,13 +80,13 @@ export default function AccountPage() {
                   }
                   onClick={() => {accountService.logout(authContext)}}
                 >
-                  Змінити
+                  {staticData.account.text3}
                 </Link>
               </p>
             </div>
             <Link href={UserUrl.getOrderHistory()}>
               <Button colorVariant={"black"} size={"large"}>
-                Історія покупок
+              {staticData.account.text4}
               </Button>
             </Link>
           </div>

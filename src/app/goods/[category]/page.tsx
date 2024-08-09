@@ -1,7 +1,5 @@
 "use client"
 
-import { productDescriptions } from "data";
-import { GoodsUrl } from "route-urls";
 import { isStr } from "utils/js-types";
 
 import ProductsFilters from "components/Filters/ProductsFilters";
@@ -10,7 +8,6 @@ import { PopularGoods } from "components/Goods/PopularGoods";
 import ProductDescriptions from "components/Goods/ProductDescriptions";
 import ProductHeader from "components/Goods/ProductHeader";
 import ProductsList from "components/Goods/ProductsList";
-import BlanketIMG from "components/Goods/static/blanket.jpg";
 import { Category, DefaultCategory } from "contexts/CategoriesContext"
 import { StaticImageData } from "next/image";
 import { useLocalization } from "contexts/LocalizationContext";
@@ -306,7 +303,7 @@ export default function CategoryPage({
         productsWithVariants={productsWithVariants}
       />
       <PopularGoods />
-      <ProductDescriptions descriptions={productDescriptions} />
+      <ProductDescriptions descriptions={staticData.goods.productDescriptions} />
     </>
   ) : <NotFound />;
 }

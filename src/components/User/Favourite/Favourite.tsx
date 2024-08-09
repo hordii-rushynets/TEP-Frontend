@@ -33,25 +33,23 @@ export function Favourite() {
       <Section>
         <Container>
           <div className={"mb-40 mt-8 md:mb-64 md:mt-12"}>
-            <Title className={"mb-24 text-3xl md:mb-40"}>Улюблене</Title>
+            <Title className={"mb-24 text-3xl md:mb-40"}>{staticData.account.favourite.text1}</Title>
             <div
               className={
                 "mx-auto flex max-w-[500px] flex-col items-center text-center"
               }
             >
-              <Title className={"mb-3.5 text-3xl"}>Ваш список пустий</Title>
+              <Title className={"mb-3.5 text-3xl"}>{staticData.account.favourite.text2}</Title>
               <p
                 className={
                   "mb-[72px] text-sm leading-normal md:mb-12 lg:font-extralight"
                 }
               >
-                Ще не готові зробити покупку? Збережіть тут, поки не вирішите.
-                Ви можете переглянути наш асортимент та обрати товари, які Вам
-                до вподоби!
+                {staticData.account.favourite.text3}
               </p>
               <Link href={MainUrl.getHome()}>
                 <Button colorVariant={"black"} size={"super-large"} fullWidth>
-                  На головну
+                {staticData.account.favourite.text4}
                 </Button>
               </Link>
             </div>
@@ -65,7 +63,7 @@ export function Favourite() {
     <Section>
       <Container>
         <div className={"mb-40 pt-8 md:pt-12 lg:mb-64"}>
-          <Title className={"mb-12 text-3xl"}>Улюблене</Title>
+          <Title className={"mb-12 text-3xl"}>{staticData.account.favourite.text1}</Title>
           <div
             className={
               "mb-24 grid grid-cols-1 gap-x-6 gap-y-11 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-[72px]"
@@ -84,12 +82,12 @@ export function Favourite() {
               favouriteService.deleteAllFavourite(authContext, ()=>{}).then(() => {setRefresh(!refresh)})
             }}
           >
-            Видалити всі товари
+            {staticData.account.favourite.text5}
           </ButtonBase>
           <div className={"mb-12 h-[1px] bg-tep_gray-200"}></div>
           <div className={"flex justify-between"}>
             <Title component={"h6"} size={"base"}>
-              Загальна вартість
+            {staticData.account.favourite.text6}
             </Title>
             <Price
               price={favourite_goods.reduce((acc, p) => acc + p.price, 0)}

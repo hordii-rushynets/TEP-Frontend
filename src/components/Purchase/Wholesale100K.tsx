@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Button, Dialog, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Wholesale100K() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,8 @@ export function Wholesale100K() {
   //     clearTimeout(timeout);
   //   };
   // }, []);
+
+  const { staticData } = useLocalization();
   return (
     <Dialog
       open={isOpen}
@@ -25,11 +28,9 @@ export function Wholesale100K() {
           "w-full px-6 py-20 text-center md:px-24 md:py-28 lg:px-24 lg:py-36"
         }
       >
-        <Title className={"mb-3.5 text-3xl"}>Режим оптової закупівлі</Title>
+        <Title className={"mb-3.5 text-3xl"}>{staticData.purchase.wholesale100k.title}</Title>
         <p className={"mb-[72px] text-sm lg:font-extralight"}>
-          Ви набрали товар на суму більше 100 000 гривень, тому ви автоматично
-          перейшли в режим оптової закупівлі. Ціни на сайті було оновлено згідно
-          з умов оптової купівлі товару.
+        {staticData.purchase.wholesale100k.description}
         </p>
         <Button
           onClick={() => {
@@ -40,7 +41,7 @@ export function Wholesale100K() {
           fullWidth
           className={{ button: "mx-auto sm:w-auto" }}
         >
-          Добре
+          {staticData.purchase.wholesale100k.accept}
         </Button>
       </div>
     </Dialog>

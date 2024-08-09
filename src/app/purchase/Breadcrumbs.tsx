@@ -4,18 +4,15 @@ import { usePathname } from "next/navigation";
 import { PurchaseUrl } from "route-urls";
 
 import { PurchaseBreadcrumbs as BaseBreadcrumbs } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
 
+  const { staticData } = useLocalization();
+
   const items = (() => {
-    const stages = [
-      "Адреса",
-      "Доставка",
-      "Дані замовлення",
-      "Оплата замовлення",
-      "Підтвердження замовлення",
-    ];
+    const stages = staticData.purchase.stages;
     switch (pathname) {
       case PurchaseUrl.getAddress():
         return {

@@ -7,89 +7,90 @@ import { MainUrl } from "route-urls";
 import { HoverMenuCard } from "./HoverMenuCard";
 import { HoverMenuTip } from "./HoverMenuTip";
 
-import MainCompanyIMG from "./static/Logo.svg";
 import CompanyLinksIMG from "./static/company.jpg";
 import { StaticImageData } from "next/image";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type BaseInfo = {
   slug: string;
-  title: string;
   image: StaticImageData | string;
-  description: string;
 };
 
 const baseInfo: BaseInfo = {
   slug: "/",
-  title: "Компанія",
   image: CompanyLinksIMG,
-  description: "Раді вітати Вас у ТЕП",
 };
 
 export const companyLinks = [
   {
     slug: "about",
-    title: "Про бренд ТЕП",
     image: CompanyLinksIMG,
-    description:
-      "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
     slug: "cooperation-and-partnership",
-    title: "Співпраця та партнерство",
-
     image: CompanyLinksIMG,
-    description:
-      "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
     slug: "vacancies",
-    title: "Робота в ТЕП",
     image: CompanyLinksIMG,
-    description:
-      "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
     slug: "technologies",
-    title: "Технології",
     image: CompanyLinksIMG,
-    description:
-      "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
   {
     slug: "blog",
-    title: "Блог",
     image: CompanyLinksIMG,
-    description:
-      "Ми починали як невелика чернівецька компанія, що відправляє поштою замовлення через каталог ...",
   },
 ];
 export function CompanyMenu() {
-  const [cardInfo, setCardInfo] = useState(baseInfo);
+  const { staticData } = useLocalization();
+  const [cardInfo, setCardInfo] = useState({
+    slug: baseInfo.slug,
+    image: baseInfo.image,
+    title: staticData.header.companyBaseInfo.title,
+    description: staticData.header.companyBaseInfo.description,
+  });
 
   return (
     <HoverMenuTip
-      onClose={() => setCardInfo(baseInfo)}
-      label={"Компанія"}
+      onClose={() => setCardInfo({
+        slug: baseInfo.slug,
+        image: baseInfo.image,
+        title: staticData.header.companyBaseInfo.title,
+        description: staticData.header.companyBaseInfo.description,
+      })}
+      label={staticData.header.companyLabel}
       url={MainUrl.getCompany()}
     >
       <div className={"flex basis-[345px] flex-col gap-y-4"}>
-        {companyLinks.map((link) => {
+        {companyLinks.map((link, indx) => {
           return (
             <Link
-              onMouseOver={() => setCardInfo(link)}
+              onMouseOver={() => setCardInfo({
+                slug: link.slug,
+                image: link.image,
+                title: staticData.header.companyLinks[indx].title,
+                description: staticData.header.companyLinks[indx].description
+              })}
               key={link.slug}
               href={`${MainUrl.getCompany()}/${link.slug}`}
               className={
                 "text-lg font-semibold transition-colors duration-200 hover:font-bold hover:text-tep_blue-500"
               }
             >
-              {link.title}
+              {staticData.header.companyLinks[indx].title}
             </Link>
           );
         })}
       </div>
       <div>
-        <HoverMenuCard info={cardInfo} url={MainUrl.getCompany()} />
+        <HoverMenuCard info={{
+          slug: baseInfo.slug,
+          image: baseInfo.image,
+          title: staticData.header.companyBaseInfo.title,
+          description: staticData.header.companyBaseInfo.description,
+        }} url={MainUrl.getCompany()} />
       </div>
     </HoverMenuTip>
   );

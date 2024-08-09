@@ -1,12 +1,15 @@
 import Image from "next/image";
 
 import { Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function InteriorLook({images}: {images: {image: string}[]}) {
+  const { staticData } = useLocalization();
+
   return (
     <div className={"mb-24"}>
       <Title className={"mb-6"} size={"2xl"}>
-        Вигляд в інтер’єрі
+        {staticData.goods.interiorLook}
       </Title>
       <div className={"grid grid-cols-1 gap-6 lg:grid-cols-2"}>
         {images.map(i => 

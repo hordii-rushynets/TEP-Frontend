@@ -7,12 +7,12 @@ import { Button, Checkbox, Dialog, Title } from "common/ui";
 import { DeleteAccountConfirm } from "./DeleteAccountConfirm";
 
 import { useNotificationContext } from "contexts/NotificationContext";
-import { fetchWithAuth } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import { MainUrl } from "route-urls";
 import { AccountService } from "app/account/services";
 import { UserAccountProps } from "./UserAccount";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
   const [byEmail, setByEmail] = useState(user.email_communication);
@@ -25,12 +25,14 @@ export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
   const router = useRouter();
   const accountService = new AccountService();
 
+  const { staticData } = useLocalization();
+
   function DeleteAccount() {
     accountService.profileDelete(authContext)
       .then(response => {
         if (response.ok) {
             authContext.logout();
-            setText("Ваш акаунт успішно видалено!");
+            setText(staticData.account.userSettings.text1);
             setIsOpen(true);
             router.push(MainUrl.getHome());
         }
@@ -49,7 +51,6 @@ export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
         setRefresh(!refresh);
       })
     }, 500);
-    // TODO send data
   }, [byEmail, bySMS]);
 
   return (
@@ -57,32 +58,31 @@ export function UserSettings({ user, refresh, setRefresh }: UserAccountProps) {
       <div className={"max-w-[496px]"}>
         <div className={"mb-24"}>
           <Title component={"h5"} size={"xl"} className={"mb-1.5"}>
-            Спосіб комунікації
+            {staticData.account.userSettings.text2}
           </Title>
           <p className={"mb-3 text-sm leading-normal lg:font-extralight"}>
-            Отримання пропозицій і новин
+          {staticData.account.userSettings.text3}
             <br />
-            через:
+            {staticData.account.userSettings.text4}
           </p>
           <div className={"flex flex-col gap-y-6"}>
             <Checkbox
-              label={"Електронна пошта"}
+              label={staticData.account.userSettings.text5}
               checked={byEmail}
               onChange={setByEmail}
             />
-            <Checkbox label={"СМС"} checked={bySMS} onChange={setBySMS} />
+            {/* <Checkbox label={staticData.account.userSettings.text6} checked={bySMS} onChange={setBySMS} /> */}
           </div>
         </div>
         <div>
           <Title component={"h5"} size={"xl"} className={"mb-1.5"}>
-            Видалити профіль
+            {staticData.account.userSettings.text7}
           </Title>
           <p className={"mb-8 text-sm leading-normal lg:font-extralight"}>
-            Ви можете видалити свій обліковий запис ТЕП у будь-який момент. Це
-            призведе до видалення профілю та пов&apos;язаної з ним інформації.
+          {staticData.account.userSettings.text8}
           </p>
           <Button onClick={() => setIsConfirmOpen(true)} size={"large"}>
-            Видалити профіль
+          {staticData.account.userSettings.text7}
           </Button>
         </div>
       </div>

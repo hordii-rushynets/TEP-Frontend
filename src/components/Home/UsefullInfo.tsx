@@ -2,44 +2,45 @@
 
 import { Disclosure, DisclosureItem } from "common/Disclosure";
 import { Container, Section, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 import Link from "next/link";
 import { InfoUrl, ServicesUrl } from "route-urls";
 
 const content = [
   {
-    title: "Послуги",
     links: [
-      { url: ServicesUrl.getTracking(), text: "Відстежити замовлення" },
-      { url: ServicesUrl.getDelivery(), text: "Послуги доставки" },
-      { url: ServicesUrl.getGifts(), text: "Подарункові картки" },
+      { url: ServicesUrl.getTracking() },
+      { url: ServicesUrl.getDelivery() },
+      { url: ServicesUrl.getGifts() },
     ],
   },
   {
-    title: "Інформація для покупців",
     links: [
-      { url: InfoUrl.getQuestionsAndAnswers(), text: "Питання та відповіді" },
-      { url: InfoUrl.getFAQ(), text: "Інформація для покупців" },
-      { url: InfoUrl.getProductReturn(), text: "Повернення товару" },
-      { url: InfoUrl.getContactUs(), text: "Зв’язатись з нами" },
-      { url: InfoUrl.getFeedbacks(), text: "Відгуки" },
-      { url: InfoUrl.getCare(), text: "Догляд" },
+      { url: InfoUrl.getQuestionsAndAnswers() },
+      { url: InfoUrl.getFAQ() },
+      { url: InfoUrl.getProductReturn() },
+      { url: InfoUrl.getContactUs()},
+      { url: InfoUrl.getFeedbacks()},
+      { url: InfoUrl.getCare()},
     ],
   }
 ];
 
 export function UsefullInfo() {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"mb-24"}>
       <Container>
         <div>
-          <Title className={"mb-7"}>Корисна інформація</Title>
+          <Title className={"mb-7"}>{staticData.home.usefulInfo.title}</Title>
           <Disclosure>
-            {content.map((item) => (
+            {content.map((item, ind) => (
               <DisclosureItem
-                key={item.title}
+                key={ind}
                 trigger={
                   <Title component={"h4"} size={"xl"}>
-                    {item.title}
+                    {staticData.home.usefulInfo.content[ind].title}
                   </Title>
                 }
               >
@@ -48,7 +49,7 @@ export function UsefullInfo() {
                     <li key={indx}>
                       <Link href={i.url} className={
                         "underline-offset-[3px] transition-colors hover:text-tep_blue-500 hover:underline"
-                      }>{i.text}
+                      }>{staticData.home.usefulInfo.content[ind].links[indx].text}
                       </Link>
                     </li>
                   )}
@@ -57,10 +58,10 @@ export function UsefullInfo() {
             ))}
             <Link href={ServicesUrl.getGifts()}>
               <DisclosureItem
-                key={"Подарункові картки"}
+                key={staticData.home.usefulInfo.giftCards}
                 trigger={
                   <Title component={"h4"} size={"xl"}>
-                    Подарункові картки
+                    {staticData.home.usefulInfo.giftCards}
                   </Title>
                 }
               >

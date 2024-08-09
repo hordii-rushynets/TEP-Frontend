@@ -1,5 +1,8 @@
+"use client"
+
 import { Container, Section, Title } from "common/ui";
 import { Socials } from "components/Socials";
+import { useLocalization } from "contexts/LocalizationContext";
 
 type AuthorProps = {
   author: string;
@@ -9,6 +12,8 @@ type AuthorProps = {
 };
 
 export function Author({ author, date, tags, socialLinks }: AuthorProps) {
+  const { staticData } = useLocalization();
+
   return (
     <Section className={"bg-tep_gray-200"}>
       <Container>
@@ -18,26 +23,26 @@ export function Author({ author, date, tags, socialLinks }: AuthorProps) {
           }
         >
           <div className={"lg:flex-1 lg:grow-[2]"}>
-            <div className={"mb-4 lg:font-extralight"}>Автор статті</div>
+            <div className={"mb-4 lg:font-extralight"}>{staticData.company.blog.author.text1}</div>
             <Title component={"h5"} size={"2xl"}>
               {author}
             </Title>
           </div>
 
           <div className={"lg:flex-1 lg:grow-[2]"}>
-            <div className={"mb-4 lg:font-extralight"}>Теги</div>
+            <div className={"mb-4 lg:font-extralight"}>{staticData.company.blog.author.text2}</div>
             <div className={"max-w-[288px] font-bold first-letter:uppercase"}>
               {tags?.join(", ")}
             </div>
           </div>
 
           <div className={"lg:flex-1"}>
-            <div className={"mb-4 lg:font-extralight"}>Дата</div>
+            <div className={"mb-4 lg:font-extralight"}>{staticData.company.blog.author.text3}</div>
             <div className={"whitespace-nowrap font-bold"}>{date}</div>
           </div>
 
           <div className={"lg:flex-1"}>
-            <div className={"mb-4 lg:font-extralight"}>Поділитись</div>
+            <div className={"mb-4 lg:font-extralight"}>{staticData.company.blog.author.text4}</div>
             <Socials links={socialLinks} className={""} />
           </div>
         </div>

@@ -18,7 +18,6 @@ import { FilterDialog } from "./FilterDialog";
 import { Skeleton } from "./Skeleton";
 import { useLocalization } from "contexts/LocalizationContext";
 import { generateDictionary, getTrueKeys } from "utils/helpers";
-import { GoodsUrl } from "route-urls";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -75,7 +74,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
           <div
             className={"-mb-2 flex flex-nowrap gap-x-4 overflow-x-scroll pb-2"}
           >
-            <Link href={`${params.category}/compare`}><Button size={"filter"}>Порівняти</Button></Link>
+            <Link href={`${params.category}/compare`}><Button size={"filter"}>{staticData.filters.productsFilter.text1}</Button></Link>
             <Button
               onClick={() => setIsFilterOpen(true)}
               size={"filter"}
@@ -84,7 +83,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 <FiChevronDown aria-hidden className={"size-6 select-none"} />
               }
             >
-              Сортувати
+              {staticData.filters.productsFilter.text2}
             </Button>
 
             <Button
@@ -92,7 +91,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
               size={"filter"}
               colorVariant={"filter"}
             >
-              Розмір
+              {staticData.filters.productsFilter.text3}
             </Button>
             {filters.slice(0, Math.floor(filters.length/2)).map((filter) =>
             <Button
@@ -110,11 +109,11 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
               size={"filter"}
               colorVariant={"filter"}
             >
-              Всі фільтри
+              {staticData.filters.productsFilter.text4}
             </Button>
           </div>
           <div className={"text-sm font-bold text-tep_gray-700"}>
-            {count} товара
+            {count} {staticData.filters.productsFilter.text5}
           </div>
         </div>
         <FilterDialog
@@ -127,7 +126,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
           }}>
             <Disclosure>
               <DisclosureItem
-                trigger={"Сортувати"}
+                trigger={staticData.filters.productsFilter.text2}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
@@ -136,21 +135,21 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                     value={sort}
                     onChange={setSort}
                     options={[
-                      { label: "Найкраще підходять", value: "suitable" },
+                      { label: staticData.filters.productsFilter.text6, value: "suitable" },
                       {
-                        label: "Ціна: від низької до високої",
+                        label: staticData.filters.productsFilter.text7,
                         value: "asc",
                       },
-                      { label: "Ціна: від високої до низької", value: "desc" },
-                      { label: "Новинка", value: "new" },
-                      { label: "Назва", value: "title" },
-                      { label: "Найпопулярніше", value: "popular" },
+                      { label: staticData.filters.productsFilter.text8, value: "desc" },
+                      { label: staticData.filters.productsFilter.text9, value: "new" },
+                      { label: staticData.filters.productsFilter.text10, value: "title" },
+                      { label: staticData.filters.productsFilter.text11, value: "popular" },
                     ]}
                   />
                 </div>
               </DisclosureItem>
               <DisclosureItem
-                trigger={"Розмір "}
+                trigger={staticData.filters.productsFilter.text3}
                 endIcon={<FiChevronDown className={"size-6"} />}
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >

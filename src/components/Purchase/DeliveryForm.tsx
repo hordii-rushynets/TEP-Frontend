@@ -16,7 +16,7 @@ export function DeliveryForm() {
   const { addressForm, deliveryForm } = usePostService();
   const purchaseService = new PurchaseService();
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   useEffect(() => {
     const city = addressForm.getValues().city;
@@ -67,36 +67,36 @@ export function DeliveryForm() {
         >
           <FormSelectInput
             fieldName={"delivery_service"}
-            label={"Служба доставки"}
-            display={"Оберіть службу"}
+            label={staticData.purchase.deliveryForm.text1}
+            display={staticData.purchase.deliveryForm.text2}
             options={[
               {
-                label: "Укр Пошта",
+                label: staticData.purchase.deliveryForm.text3,
                 value: "UkrPost",
               },
               {
-                label: "Нова Пошта",
+                label: staticData.purchase.deliveryForm.text4,
                 value: "NovaPost",
               },
             ]}
           />
           <FormSelectInput
             fieldName={"delivery_method"}
-            label={"Спосіб доставки"}
-            display={"Оберіть спосіб"}
+            label={staticData.purchase.deliveryForm.text5}
+            display={staticData.purchase.deliveryForm.text6}
             options={[
               {
                 label:
                   deliveryForm.watch("delivery_service") === "NovaPost"
-                    ? "Відділення Нової пошти"
-                    : "Відділення Укр пошти",
+                    ? staticData.purchase.deliveryForm.text7
+                    : staticData.purchase.deliveryForm.text8,
                 value: "WarehouseWarehouse",
               },
               {
                 label:
                   deliveryForm.watch("delivery_service") === "NovaPost"
-                    ? "Кур’єр Нової Пошти"
-                    : "Кур’єр Укр Пошти",
+                    ? staticData.purchase.deliveryForm.text9
+                    : staticData.purchase.deliveryForm.text10,
                 value: "WarehouseDoors",
               },
             ]}
@@ -104,8 +104,8 @@ export function DeliveryForm() {
           {deliveryForm.watch("delivery_method") === "WarehouseWarehouse" && (
             <FormSelectInput
               fieldName={"department"}
-              label={"Номер відділення"}
-              display={"Оберіть номер відділення"}
+              label={staticData.purchase.deliveryForm.text11}
+              display={staticData.purchase.deliveryForm.text12}
               options={warehouses.map(warehouse => ({
                 label: warehouse[`description_${localization}` as keyof Warehouse],
                 value: warehouse.number
@@ -139,7 +139,7 @@ export function DeliveryForm() {
           size={"large"}
           colorVariant={"black"}
         >
-          Зберегти та продовжити
+          {staticData.purchase.deliveryForm.text15}
         </Button>
       </form>
     </FormProvider>

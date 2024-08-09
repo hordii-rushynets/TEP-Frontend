@@ -1,3 +1,5 @@
+"use client"
+
 import { Address, Tag, TypeOfEmployement, Vacancy } from "app/company/vacancies/interfaces";
 import Link from "next/link";
 import { FiClock, FiMapPin, FiTag } from "react-icons/fi";
@@ -12,7 +14,7 @@ type VacancyInfoProps = {
 };
 
 export function VacancyInfo({ vacancy }: VacancyInfoProps) {
-  const { localization } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   return (
     <Section>
@@ -53,7 +55,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
           {vacancy?.description && (
             <div className={"mb-7 lg:mb-12"}>
               <Title size={"xl"} className={"mb-5"}>
-                Опис
+                {staticData.company.vacancies.vacancyInfo.text1}
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
                 {vacancy?.[`description_${localization}` as keyof Vacancy] as string}
@@ -63,7 +65,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
           {vacancy?.about_company && (
             <div className={"mb-10 md:mb-20 lg:mb-24"}>
               <Title size={"xl"} className={"mb-5"}>
-                Про компанію
+              {staticData.company.vacancies.vacancyInfo.text2}
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
                 {vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}
@@ -77,7 +79,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
               colorVariant={"black"}
               size={"super-large"}
             >
-              Залишити заявку
+               {staticData.company.vacancies.vacancyInfo.text3}
             </Button>
           </Link>
         </div>

@@ -6,6 +6,7 @@ import { Button, Title } from "common/ui";
 
 import { OrderType } from "./OrderHistory";
 import { OrderProductCard } from "./OrderProductCard";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type OrderProps = {
   order: OrderType;
@@ -13,6 +14,8 @@ export type OrderProps = {
 
 export function Order({ order, className }: OrderProps) {
   const { article, date, id, products, status } = order;
+
+  const { staticData } = useLocalization();
 
   return (
     <div className={className}>
@@ -23,14 +26,14 @@ export function Order({ order, className }: OrderProps) {
       >
         <div>
           <Title size={"2xl"} component={"h6"} className={"mb-1.5"}>
-            Замовлення № {article}
+            {staticData.account.order.text1} {article}
           </Title>
           <span className={"text-sm lg:font-extralight"}>
             {date.toLocaleString("uk").slice(0, 10)}
           </span>
         </div>
         <p className={"text-sm lg:font-extralight"}>
-          Статус:{" "}
+        {staticData.account.order.text2}{" "}
           <span className={"font-bold lg:font-extralight"}>{status.label}</span>
         </p>
       </div>
@@ -51,7 +54,7 @@ export function Order({ order, className }: OrderProps) {
             fullWidth
             className={{ button: "md:w-auto" }}
           >
-            Відстежити
+            {staticData.account.order.text3}
           </Button>
         </Link>
       ) : (
@@ -61,7 +64,7 @@ export function Order({ order, className }: OrderProps) {
             fullWidth
             className={{ button: "md:w-auto" }}
           >
-            Детальніше
+            {staticData.account.order.text4}
           </Button>
         </Link>
       )}

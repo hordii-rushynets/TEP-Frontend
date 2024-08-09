@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Container, Section, SelectInput, Title } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export type StoreAddress = {
   id: string;
@@ -21,124 +22,54 @@ export type CityStores = {
   stores: StoreAddress[];
 };
 
-export const stores = [
-  {
-    id: "1",
-    city: "Киів",
-    stores: [
-      {
-        id: "1.1",
-        address: {
-          street: "вул. Євгена Сверстюка 2Б",
-          mall: "ТЦ Лівобережний",
-          postalCode: "02002",
-        },
-        schedule: "Понеділок - неділя",
-        workingHours: "10:00 - 20:00",
-      },
-    ],
-  },
-  {
-    id: "2",
-    city: "Львів",
-    stores: [
-      {
-        id: "2.1",
-        address: {
-          street: "вул. В’ячеслава Чорновола 63А",
-          mall: "",
-          postalCode: "79019",
-        },
-        schedule: "Понеділок - п'ятниця",
-        workingHours: "9:00 - 18:00",
-      },
-    ],
-  },
-  {
-    id: "4",
-    city: "Чернівці",
-    stores: [
-      {
-        id: "4.1",
-        address: {
-          street: "вул. Комунальників 4Б",
-          mall: "",
-          postalCode: "58023",
-        },
-        schedule: "Понеділок - п'ятниця",
-        workingHours: "9:00 - 18:00",
-      },
-    ],
-  },
-  {
-    id: "5",
-    city: "Ужгород",
-    stores: [
-      {
-        id: "5.1",
-        address: {
-          street: "вул. Корзо",
-          mall: "ринок Краснодонців, маг. 16-17",
-          postalCode: "88000",
-        },
-        schedule: "Вівторок - неділя",
-        workingHours: "9:00 - 16:00",
-      },
-    ],
-  },
-];
 
 export function StoresInfo() {
   const [city, setSity] = useState("");
   const [street, setStreet] = useState("");
+  const { staticData } = useLocalization();
 
   useEffect(() => {
     if (city)
       setStreet(
-        stores.find((c) => c.city === city)?.stores[0].address.street ?? "",
+        staticData.company.stores.storesInfo.stores.find((c: CityStores) => c.city === city)?.stores[0].address.street ?? "",
       );
   }, [city]);
 
-  const currentStore = stores
-    .find((c) => c.city === city)
-    ?.stores.find((s) => s.address.street === street);
+  const currentStore = staticData.company.stores.storesInfo.stores
+    .find((c: CityStores) => c.city === city)
+    ?.stores.find((s: StoreAddress) => s.address.street === street);
 
   return (
     <Section>
       <Container>
         <div className={"mb-24 md:mb-40"}>
           <Title size={"2xl"} className={"mb-3 md:mb-3.5"}>
-            Тут ви можете знайти магазин з товарами ТЕП
+            {staticData.company.stores.storesInfo.text1}
           </Title>
           <p
             className={
               "mb-7 max-w-[704px] text-sm leading-normal lg:mb-12 lg:font-extralight"
             }
           >
-            Ми починали як невелика чернівецька компанія, що відправляє поштою
-            замовлення через каталог і стали одним із найбільш відомих в Україні
-            брендів текстильних товарів. Сьогодні у різних країнах починають
-            працювати магазини ТЕП, і ми плануємо збільшити цю кількість.
-            Дізнайтесь більше про нашу захопливу історію – з самого початку до
-            сьогодення.
+            {staticData.company.stores.storesInfo.text2}
           </p>
 
           <div className={"mb-16 flex max-w-[392px] flex-col gap-y-6"}>
             <SelectInput
-              label={"Місто"}
-              display={"Обрати місто"}
+              label={staticData.company.stores.storesInfo.text3}
+              display={staticData.company.stores.storesInfo.text4}
               value={city}
-              options={stores.map((s) => ({ value: s.city, label: s.city }))}
+              options={staticData.company.stores.storesInfo.stores.map((s: CityStores) => ({ value: s.city, label: s.city }))}
               onChange={setSity}
             />
             <SelectInput
-              label={"Адреса"}
-              display={"Обрати адресу"}
+              label={staticData.company.stores.storesInfo.text5}
+              display={staticData.company.stores.storesInfo.text6}
               value={street}
               options={
-                stores
-                  .find((c) => c.city === city)
-                  ?.stores.map((a) => ({
+                staticData.company.stores.storesInfo.stores
+                  .find((c: CityStores) => c.city === city)
+                  ?.stores.map((a: StoreAddress) => ({
                     value: a.address.street,
                     label: a.address.street,
                   })) ?? []
@@ -150,14 +81,14 @@ export function StoresInfo() {
             <div className={"flex flex-col gap-x-8 gap-y-14 md:flex-row"}>
               <div className={"flex flex-col gap-y-6"}>
                 <Title component={"h6"} size={"lg"} className={"lg:font-light"}>
-                  Адреса
+                  {staticData.company.stores.storesInfo.text5}
                 </Title>
                 <p className={"text-sm lg:font-extralight"}>
-                  Магазин ТЕП знаходиться за адресою:
+                {staticData.company.stores.storesInfo.text7}:
                 </p>
                 <div className={"text-sm leading-normal lg:font-extralight"}>
                   <p>{currentStore.address.street}</p>
-                  <p>{city}, Україна, {currentStore.address.postalCode},</p>
+                  <p>{city}, {staticData.company.stores.storesInfo.text8}, {currentStore.address.postalCode},</p>
                   {currentStore.address.mall && (
                     <p>{currentStore.address.mall}</p>
                   )}
@@ -165,7 +96,7 @@ export function StoresInfo() {
               </div>
               <div className={"flex flex-col gap-y-6"}>
                 <Title component={"h6"} size={"lg"} className={"lg:font-light"}>
-                  Графік роботи
+                  {staticData.company.stores.storesInfo.text9}
                 </Title>
                 <div className={"text-sm leading-normal lg:font-extralight"}>
                   <p>{currentStore.schedule}</p>
