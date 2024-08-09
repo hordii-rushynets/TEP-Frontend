@@ -101,6 +101,7 @@ export interface ProductVariant {
   title: string;
   title_en: string;
   title_uk: string;
+  weight: number;
   variant_order: number;
   wholesale_price: number;
   variant_images: VariantImages[];

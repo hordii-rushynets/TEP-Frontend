@@ -68,7 +68,7 @@ export function CartProductCard({
             )} */}
           </div>
           <div>
-            <Price price={product.product_variants.default_price} className={"mb-2.5"} />
+            <Price price={product.product_variants.promotion ? product.product_variants.promo_price : product.product_variants.default_price} className={"mb-2.5"} />
             <div className={"text-sm leading-normal lg:font-extralight"}>
               <p>{product.color[`title_${localization}` as keyof Color]}</p>
               <p>{product.size[`title_${localization}` as keyof Size]} {staticData.account.cartProductCard.text1}</p>

@@ -12,6 +12,7 @@ import { TotalPriceBlock } from "./TotalPriceBlock";
 import { CartService } from "app/account/cart/services";
 import { CartItem } from "app/account/cart/interfaces";
 import { useAuth } from "contexts/AuthContext";
+import { PostServiceProvider } from "contexts/PostServiceContext";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export function Cart() {
@@ -81,39 +82,40 @@ export function Cart() {
 
   return (
     <Section>
-      <Container>
-        <div className={"mb-40 mt-8 md:mt-12 lg:mb-64"}>
-          <div className={"mb-12"}>
-            <Title className={"mb-2 text-3xl md:mb-1.5"}>{staticData.account.cart.text1}</Title>
-            <p className={"text-sm lg:font-extralight"}>
-              {cartItems.length} {staticData.account.cart.text2}
-            </p>
+      <PostServiceProvider>
+        <Container>
+          <div className={"mb-40 mt-8 md:mt-12 lg:mb-64"}>
+            <div className={"mb-12"}>
+              <Title className={"mb-2 text-3xl md:mb-1.5"}>{staticData.account.cart.text1}</Title>
+              <p className={"text-sm lg:font-extralight"}>
+                {cartItems.length} {staticData.account.cart.text2}
+              </p>
+            </div>
+            <TotalPriceBlock
+              hasTotalPrice={false}
+              goods={cartItems}
+            />
+  
+            <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}}/>
+            <ButtonBase
+              className={{
+                button:
+                  "mb-8 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
+              }}
+            >
+              {staticData.account.cart.text7}
+            </ButtonBase>
+            <div className={"flex flex-col"}>
+              <TotalPriceBlock goods={cartItems}/>
+              <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
+                <Button colorVariant={"black"} size={"super-large"}>
+                {staticData.account.cart.text8}
+                </Button>
+              </Link>
+            </div>
           </div>
-          <TotalPriceBlock
-            hasTotalPrice={false}
-            goods={cartItems}
-            isLoading={true}
-          />
-
-          <CartList goods={cartItems} cartRefresh={cartRefresh} setCartRefresh={setCartRefresh} trashAction={(id: number, authContext: any) => {cartService.deleteItemFromCart(id, authContext).then(() => {setCartRefresh(!cartRefresh)})}}/>
-          <ButtonBase
-            className={{
-              button:
-                "mb-8 text-sm font-semibold underline underline-offset-2 transition-colors hover:text-tep_blue-500",
-            }}
-          >
-            {staticData.account.cart.text7}
-          </ButtonBase>
-          <div className={"flex flex-col"}>
-            <TotalPriceBlock goods={cartItems} isLoading={true} />
-            <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
-              <Button colorVariant={"black"} size={"super-large"}>
-              {staticData.account.cart.text8}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Container>
+        </Container>
+      </PostServiceProvider>
     </Section>
   );
 }

@@ -4,17 +4,15 @@ import { ServicesUrl } from "route-urls";
 
 import { Button, Title } from "common/ui";
 
-import { OrderType } from "./OrderHistory";
 import { OrderProductCard } from "./OrderProductCard";
 import { useLocalization } from "contexts/LocalizationContext";
+import { Order as OrderInterface } from "app/account/order-history/interfaces";
 
 export type OrderProps = {
-  order: OrderType;
+  order: OrderInterface;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function Order({ order, className }: OrderProps) {
-  const { article, date, id, products, status } = order;
-
   const { staticData } = useLocalization();
 
   return (
@@ -26,19 +24,19 @@ export function Order({ order, className }: OrderProps) {
       >
         <div>
           <Title size={"2xl"} component={"h6"} className={"mb-1.5"}>
-            {staticData.account.order.text1} {article}
+            {staticData.account.order.text1} {order.number}
           </Title>
           <span className={"text-sm lg:font-extralight"}>
-            {date.toLocaleString("uk").slice(0, 10)}
+            {order.date && new Date(order.date).toLocaleString("uk").slice(0, 10) || ""}
           </span>
         </div>
         <p className={"text-sm lg:font-extralight"}>
         {staticData.account.order.text2}{" "}
-          <span className={"font-bold lg:font-extralight"}>{status.label}</span>
+          <span className={"font-bold lg:font-extralight"}>{order.status || "В обробці"}</span>
         </p>
       </div>
       <div className={"mb-16 flex flex-col gap-y-24 md:gap-y-12"}>
-        {products.map((product) => (
+        {order.order_item.map((product) => (
           <OrderProductCard
             trashClassName={"md:hidden"}
             key={product.id}
@@ -46,8 +44,7 @@ export function Order({ order, className }: OrderProps) {
           />
         ))}
       </div>
-      {status.value === "active" ? (
-        <Link href={`${ServicesUrl.getTracking()}?order_id=${id}`}>
+        <Link href={`${ServicesUrl.getTracking()}?order_id=${order.number}`}>
           <Button
             size={"super-large"}
             colorVariant={"black"}
@@ -57,17 +54,6 @@ export function Order({ order, className }: OrderProps) {
             {staticData.account.order.text3}
           </Button>
         </Link>
-      ) : (
-        <Link href={`${ServicesUrl.getTracking()}?order_id=${id}`}>
-          <Button
-            size={"super-large"}
-            fullWidth
-            className={{ button: "md:w-auto" }}
-          >
-            {staticData.account.order.text4}
-          </Button>
-        </Link>
-      )}
     </div>
   );
 }

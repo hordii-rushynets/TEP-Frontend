@@ -1,23 +1,36 @@
 import { Price } from "components/Goods/Product/Price";
 
 import { CartItem } from "app/account/cart/interfaces";
+import { PurchaseService } from "app/purchase/services";
+import { useEffect, useState } from "react";
+import { usePostService } from "contexts/PostServiceContext";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export type TotalPriceBlockProps = {
   hasTotalPrice?: boolean;
   goods: CartItem[];
-  isLoading?: boolean;
 };
 
 export function TotalPriceBlock({
   hasTotalPrice = true,
-  isLoading = false,
   goods,
 }: TotalPriceBlockProps) {
-  const deliveryPrice = goods.length * 70;
-  const totalPrice = goods.reduce((acc, el) => acc + el?.product_variants?.default_price * el.quantity, 0) * 1.19;
-  const totalPriceWithVAT =
-    goods.reduce((acc, el) => acc + el?.product_variants?.default_price, 0) * 1.19 + goods.length * 70;
+  const totalPrice = goods.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19;
+
+  const [deliveryPrice, setDeliveryPrice] = useState<number | undefined>();
+  const purchaseService = new PurchaseService();
+  const { addressForm, deliveryForm } = usePostService();
+
+  useEffect(() => {
+    const addressValues = addressForm.getValues();
+
+    const service = deliveryForm.getValues().delivery_service;
+    const city = service === "NovaPost" ? addressValues.city : addressValues.postal;
+    const weight = goods.reduce((acc, el) => acc + el?.product_variants?.weight, 0)
+    if (city !== "" && service !== "") {
+      purchaseService.getDeliveryPrice(service, totalPrice, city, weight).then(cost => setDeliveryPrice(cost));
+    }
+  }, []);
 
   const { staticData } = useLocalization();
 
@@ -36,13 +49,13 @@ export function TotalPriceBlock({
       <div className={"flex justify-between gap-x-3"}>
         <span className={"font-light"}>
         {staticData.account.totalPriceBlock.text2}&nbsp;&nbsp;&nbsp;&nbsp;
-          {isLoading && (
+          {!deliveryPrice && (
             <span className={"text-sm text-tep_gray-500 lg:font-extralight"}>
               ({staticData.account.totalPriceBlock.text3})
             </span>
           )}
         </span>
-        {isLoading ? (
+        {!deliveryPrice ? (
           <span className={"font-bold"}>?</span>
         ) : (
           <Price className={"text-base"} price={deliveryPrice} />
@@ -50,7 +63,7 @@ export function TotalPriceBlock({
       </div>
       <div className={"flex items-end justify-between gap-x-3"}>
         <span className={"font-bold"}>{staticData.account.totalPriceBlock.text4}</span>
-        <Price price={isLoading ? totalPrice : totalPriceWithVAT} />
+        <Price price={!deliveryPrice ? totalPrice : totalPrice + deliveryPrice} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { PropsWithChildren } from "react";
 import { Container, Section, Title } from "common/ui";
 
 import { Breadcrumbs } from "./Breadcrumbs";
+import { PostServiceProvider } from "contexts/PostServiceContext";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export default function PurchaseLayout({ children }: PropsWithChildren) {
@@ -22,7 +23,9 @@ export default function PurchaseLayout({ children }: PropsWithChildren) {
         </Container>
       </Section>
       <Breadcrumbs />
-      {children}
+      <PostServiceProvider>
+        {children}
+      </PostServiceProvider>
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InfoUrl } from "route-urls";
 
 import AnyQuestions from "common/AnyQuestions";
@@ -9,62 +9,21 @@ import { Button, Container, Section, Title } from "common/ui";
 
 import { OrderStatusStage } from "./OrderStatusStage";
 import { TrackingForm } from "./TrackingForm";
+import { Stage } from "app/purchase/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
-
-// function getOrderArticle(article: string) {...}
-
-type OrderDeliveryStages = {
-  label: string;
-  date: Date;
-  status: boolean;
-};
-
-const order_delivery_stages: OrderDeliveryStages[] = [
-  {
-    label: "Замовлення в обробці",
-    date: new Date(),
-    status: true,
-  },
-  {
-    label: "Замовлення готове до відправки",
-    date: new Date(),
-    status: true,
-  },
-  {
-    label: "Замовлення доставлено у відділення Нової пошти",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прибуло до вашого відділення",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення доставлено",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення протерміноване",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прямує до складу ТЕП",
-    date: new Date(),
-    status: false,
-  },
-  {
-    label: "Замовлення прибуло до складу ТЕП",
-    date: new Date(),
-    status: false,
-  },
-];
+import { PurchaseService } from "app/purchase/services";
 
 export default function Tracking() {
-  const [stages, setStages] = useState<OrderDeliveryStages[] | undefined>();
-  const { staticData } = useLocalization();
+  const [stages, setStages] = useState<Stage[] | undefined>();
+  const { localization, staticData } = useLocalization();
+
+  const purchaseService = new PurchaseService();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    purchaseService.getTracking(queryParams.get('order_id') || "").then(stages => setStages(stages));
+  }, []);
+
   return (
     <>
       <Section className={"mb-24 lg:mb-40"}>
@@ -80,7 +39,7 @@ export default function Tracking() {
                 {staticData.services.tracking.description}
               </p>
             </div>
-            <TrackingForm onSending={() => setStages(order_delivery_stages)} />
+            <TrackingForm onSending={setStages} />
             {!!stages?.length && (
               <>
                 <div className={"mt-24"}>
@@ -88,11 +47,11 @@ export default function Tracking() {
                     const isLast = Idx === stages.length - 1;
                     return (
                       <OrderStatusStage
-                        key={stage?.label}
+                        key={stage?.status_uk}
                         isLast={isLast}
-                        isDone={stage.status}
-                        date={stage.date}
-                        label={stage.label}
+                        isDone={!isLast}
+                        date={new Date(stage.update_date)}
+                        label={stage[`status_${localization}` as keyof Stage]}
                       />
                     );
                   })}
