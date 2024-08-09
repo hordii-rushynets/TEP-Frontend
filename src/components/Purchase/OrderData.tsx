@@ -52,7 +52,7 @@ export function OrderData() {
       "recipient_address": deliveryValues.delivery_method === "WarehouseDoors" ? deliveryValues.street : deliveryValues.department,
       "recipient_house": deliveryValues.house,
       "recipient_float": deliveryValues.flat,
-      "recipient_name": `${addressValues.firstName} ${addressValues.lastName}`,
+      "recipient_name": `${addressValues.lastName} ${addressValues.firstName}`,
       "description": "TEST TEST TEST",
       "cost": cartItems.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19,
       "weight": cartItems.reduce((acc, el) => acc + el?.product_variants?.weight, 0),

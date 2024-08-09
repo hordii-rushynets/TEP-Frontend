@@ -25,7 +25,7 @@ export function DeliveryForm() {
       purchaseService.getWarehouses(service, city).then(warehouses => setWarehouses(warehouses))
     }
     else if (city === "") {
-      addressForm.setError("city", { type: "manual", message: "Обовязково вкажіть місто" });
+      addressForm.setError("city", { type: "manual", message: staticData.forms.cityError });
       router.push(PurchaseUrl.getAddress());
     }
   }, [deliveryForm.watch("delivery_service"), addressForm.watch("city")]);
@@ -35,19 +35,19 @@ export function DeliveryForm() {
 
     if (data.delivery_method === "WarehouseDoors") {
       if (data.street === "") {
-        deliveryForm.setError("street", {type: "manual", message: "Обов'язково вкажіть вулицю"})
+        deliveryForm.setError("street", {type: "manual", message: staticData.forms.streetError})
         validation = false;
       }
       if (data.house === "") {
-        deliveryForm.setError("house", {type: "manual", message: "Обов'язково вкажіть номер будинку"})
+        deliveryForm.setError("house", {type: "manual", message: staticData.forms.houseNoneError})
         validation = false;
       }
       else if (isNaN(parseInt(data.house)) || parseInt(data.house) <= 0) {
-        deliveryForm.setError("house", {type: "manual", message: "Вкажіть справжній номер будинку"})
+        deliveryForm.setError("house", {type: "manual", message: staticData.forms.houseValidationError})
         validation = false;
       }
       if (data.flat !== "" && (isNaN(parseInt(data.flat)) || parseInt(data.flat) <= 0)) {
-        deliveryForm.setError("flat", {type: "manual", message: "Вкажіть справжній номер квартири"})
+        deliveryForm.setError("flat", {type: "manual", message: staticData.forms.flatValidationError})
         validation = false;
       }
     }
@@ -90,14 +90,14 @@ export function DeliveryForm() {
                   deliveryForm.watch("delivery_service") === "NovaPost"
                     ? staticData.purchase.deliveryForm.text7
                     : staticData.purchase.deliveryForm.text8,
-                value: "WarehouseWarehouse",
+                value: deliveryForm.watch("delivery_service") === "NovaPost" ? "WarehouseWarehouse" : "W2W",
               },
               {
                 label:
                   deliveryForm.watch("delivery_service") === "NovaPost"
                     ? staticData.purchase.deliveryForm.text9
                     : staticData.purchase.deliveryForm.text10,
-                value: "WarehouseDoors",
+                value: deliveryForm.watch("delivery_service") === "NovaPost" ? "WarehouseDoors" : "W2D",
               },
             ]}
           />
@@ -116,18 +116,18 @@ export function DeliveryForm() {
             <>
             <FormTextInput
               fieldName={"street"}
-              label={"Вулиця"}
-              placeholder={"Ваша вулиця (введіть тільки назву, наприклад \"Залізняка\")"}
+              label={staticData.deliveryForm.streetLabel}
+              placeholder={staticData.deliveryForm.streetPlaceholder}
             />
             <FormTextInput
               fieldName={"house"}
-              label={"Номер будинку"}
-              placeholder={"Номер вашого будинку"}
+              label={staticData.deliveryForm.houseLabel}
+              placeholder={staticData.deliveryForm.streetPlaceholder}
             />
             <FormTextInput
               fieldName={"flat"}
-              label={"Номер квартири"}
-              placeholder={"Номер вашої квартири"}
+              label={staticData.deliveryForm.flatLabel}
+              placeholder={staticData.deliveryForm.streetPlaceholder}
             />
             </>
           )}

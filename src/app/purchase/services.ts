@@ -13,8 +13,8 @@ export class PurchaseService {
         return data;
     }
 
-    public async getTracking(service: string, tracking_number: string): Promise<Stage[]> {
-        const data = await this.daoService.getTracking(service, tracking_number);
+    public async getTracking(tracking_number: string): Promise<Stage[]> {
+        const data = await this.daoService.getTracking(tracking_number);
         return data;
     }
 

@@ -26,8 +26,8 @@ export function AddressForm() {
       router.push(PurchaseUrl.getDelivery());
     }
     else {
-      addressForm.setError("phoneNumber", { type: "manual", message: "Введіть дійсний номер телефону" });
-      setPhoneNumberError("Введіть дійсний номер телефону");
+      addressForm.setError("phoneNumber", { type: "manual", message: staticData.forms.phoneError });
+      setPhoneNumberError(staticData.forms.phoneError);
     }
   }
 

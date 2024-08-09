@@ -16,8 +16,8 @@ export class PurchaseDAOService {
         return [];
     }
 
-    public async getTracking(service: string, tracking_number: string): Promise<Stage[]> {
-        const response = await fetch(`${this.apiUrl}/api/post/track-parcel/${service}/${tracking_number}/`);
+    public async getTracking(tracking_number: string): Promise<Stage[]> {
+        const response = await fetch(`${this.apiUrl}/api/post/track-parcel/${tracking_number}/`);
         if (response.ok) {
             return response.json();
         }

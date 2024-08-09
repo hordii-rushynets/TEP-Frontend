@@ -1026,7 +1026,13 @@ export default {
         "text12": "Select branch number",
         "text13": "Address",
         "text14": "Your address",
-        "text15": "Save and Continue"
+        "text15": "Save and Continue",
+        "streetLabel": "Street",
+        "streetPlaceHolder": "Your street (enter only the name, e.g., \"Zaliznyaka\")",
+        "houseLabel": "House number",
+        "housePlaceholder": "Your house number",
+        "flatLabel": "Apartment number",
+        "flatPlaceholder": "Your apartment number"        
       },
       "orderData": {
         "title": "Order Details",
@@ -1376,7 +1382,11 @@ export default {
       "deliveryMethodError": "Delivery method is required",
       "departmentError": "Department number is required",
       "paymentError": "Payment method is required",
-      "orderNumberError": "Order number is invalid. Please check the entered data.",      
+      "orderNumberError": "Order number is invalid. Please check the entered data.",    
+      "houseNoneError": "House number is required",
+      "houseValidationError": "Provide a valid house number",
+      "flatValidationError": "Provide a valid apartment number",
+      "phoneError": "Enter a valid phone number",
       "contactUsRequestForm": {
         "text1": "Submit request",
         "text2": "Name",

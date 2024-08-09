@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
-import { Button, FormSelectInput, FormTextInput } from "common/ui";
+import { Button, FormTextInput } from "common/ui";
 import { PurchaseService } from "app/purchase/services";
 import { Stage } from "app/purchase/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
@@ -22,10 +22,6 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
       .string()
       .min(8, staticData.forms.orderNumberError)
       .default(""),
-      delivery_service: z
-      .string()
-      .min(1, "Обовязково вкажіть службу доставки")
-      .default(""),
   });
   
   type Form = z.infer<typeof formSchema>;
@@ -37,28 +33,12 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
   const purchaseService = new PurchaseService();
 
   function onSubmit(data: Form) {
-    purchaseService.getTracking(data.delivery_service, data.order_number).then(stages => onSending(stages));
+    purchaseService.getTracking(data.order_number).then(stages => onSending(stages));
   }
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
-          <FormSelectInput
-            fieldName={"delivery_service"}
-            label={"Служба доставки"}
-            display={"Оберіть службу"}
-            options={[
-              {
-                label: "Укр Пошта",
-                value: "UkrPost",
-              },
-              {
-                label: "Нова Пошта",
-                value: "NovaPost",
-              },
-            ]}
-          />
-          <br/>
         <FormTextInput<Form>
           className={{ wrapper: "mb-12" }}
           fieldName={"order_number"}
