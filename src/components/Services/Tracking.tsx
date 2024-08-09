@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InfoUrl } from "route-urls";
 
 import AnyQuestions from "common/AnyQuestions";
@@ -11,10 +11,18 @@ import { OrderStatusStage } from "./OrderStatusStage";
 import { TrackingForm } from "./TrackingForm";
 import { Stage } from "app/purchase/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
+import { PurchaseService } from "app/purchase/services";
 
 export default function Tracking() {
   const [stages, setStages] = useState<Stage[] | undefined>();
   const { localization, staticData } = useLocalization();
+
+  const purchaseService = new PurchaseService();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    purchaseService.getTracking(queryParams.get('order_id') || "").then(stages => setStages(stages));
+  }, []);
 
   return (
     <>

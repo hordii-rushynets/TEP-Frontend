@@ -8,8 +8,18 @@ export class PurchaseDAOService {
       this.apiUrl = apiUrl;
     }
   
-    public async getWarehouses(service: string, city: string): Promise<Warehouse[]> {
-        const response = await fetch(`${this.apiUrl}/api/post/get-warehouses/${service}/${city}/`);
+    public async getWarehouses(service: string, city: string, district: string, region: string): Promise<Warehouse[]> {
+        const response = await fetch(`${this.apiUrl}/api/post/get-warehouses/${service}/`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "city_name": city,
+                "region_name": region,
+                "district_name": district
+            })
+        });
         if (response.ok) {
             return response.json();
         }

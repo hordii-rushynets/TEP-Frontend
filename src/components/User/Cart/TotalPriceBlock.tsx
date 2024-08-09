@@ -22,8 +22,10 @@ export function TotalPriceBlock({
   const { addressForm, deliveryForm } = usePostService();
 
   useEffect(() => {
+    const addressValues = addressForm.getValues();
+
     const service = deliveryForm.getValues().delivery_service;
-    const city = addressForm.getValues().city;
+    const city = service === "NovaPost" ? addressValues.city : addressValues.postal;
     const weight = goods.reduce((acc, el) => acc + el?.product_variants?.weight, 0)
     if (city !== "" && service !== "") {
       purchaseService.getDeliveryPrice(service, totalPrice, city, weight).then(cost => setDeliveryPrice(cost));

@@ -1002,7 +1002,9 @@ export default {
         "text14": "Your phone",
         "text15": "Email",
         "text16": "Your email",
-        "text17": "Save and Continue"
+        "text17": "Save and Continue",
+        "districtLabel": "District",
+        "districtPlaceholder": "Your district"
       },
       "confirmation": {
         "text1": "Order Placed",
@@ -1387,6 +1389,7 @@ export default {
       "houseValidationError": "Provide a valid house number",
       "flatValidationError": "Provide a valid apartment number",
       "phoneError": "Enter a valid phone number",
+      "districtError": "Be sure to specify the area",
       "contactUsRequestForm": {
         "text1": "Submit request",
         "text2": "Name",

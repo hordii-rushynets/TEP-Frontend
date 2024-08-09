@@ -48,17 +48,16 @@ export function OrderData() {
 
     purchaseService.createParcel({
       "area_recipient": addressValues.region,
-      "city_recipient": addressValues.city,
-      "recipient_address": deliveryValues.delivery_method === "WarehouseDoors" ? deliveryValues.street : deliveryValues.department,
+      "city_recipient": deliveryValues.delivery_service === "UkrPost" ? addressValues.postal : addressValues.city,
+      "recipient_address": deliveryValues.delivery_method === "WarehouseDoors" || deliveryValues.delivery_method === "W2D" ? deliveryValues.street : deliveryValues.department,
       "recipient_house": deliveryValues.house,
       "recipient_float": deliveryValues.flat,
       "recipient_name": `${addressValues.lastName} ${addressValues.firstName}`,
       "description": "TEST TEST TEST",
-      "cost": cartItems.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19,
-      "weight": cartItems.reduce((acc, el) => acc + el?.product_variants?.weight, 0),
       "settlemen_type": "місто",
       "recipients_phone": addressValues.phoneNumber,
       "service_type": deliveryValues.delivery_method,
+      "cart_item_ids": cartItems.map(item => item.id)
     }, deliveryValues.delivery_service, authContext).then(errors => {
       if (errors) {
         setErrors(errors);

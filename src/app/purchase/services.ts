@@ -8,8 +8,8 @@ export class PurchaseService {
         this.daoService = new PurchaseDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getWarehouses(service: string, city: string): Promise<Warehouse[]> {
-        const data = await this.daoService.getWarehouses(service, city);
+    public async getWarehouses(service: string, city: string, district: string, region: string): Promise<Warehouse[]> {
+        const data = await this.daoService.getWarehouses(service, city, district, region);
         return data;
     }
 

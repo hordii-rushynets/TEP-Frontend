@@ -55,6 +55,11 @@ export function AddressForm() {
             placeholder={staticData.purchase.addressForm.text8}
           />
           <FormTextInput
+            fieldName={"district"}
+            label={staticData.purchase.addressForm.districtLabel}
+            placeholder={staticData.purchase.addressForm.districtPlaceholder}
+          />
+          <FormTextInput
             fieldName={"region"}
             label={staticData.purchase.addressForm.text9}
             placeholder={staticData.purchase.addressForm.text10}

@@ -999,7 +999,9 @@ export default {
         "text14": "Ваш телефон",
         "text15": "Электронная почта",
         "text16": "Ваша почта",
-        "text17": "Сохранить и продолжить"
+        "text17": "Сохранить и продолжить",
+        "districtLabel": "Район",
+        "districtPlaceholder": "Ваш район"
       },
       "confirmation": {
         "text1": "Заказ оформлен",
@@ -1384,6 +1386,7 @@ export default {
       "houseValidationError": "Укажите настоящий номер дома",
       "flatValidationError": "Укажите настоящий номер квартиры",
       "phoneError": "Введите действительный номер телефона",   
+      "districtError": "Обязательно укажите район",
       "contactUsRequestForm": {
         "text1": "Оставить заявку",
         "text2": "Имя",

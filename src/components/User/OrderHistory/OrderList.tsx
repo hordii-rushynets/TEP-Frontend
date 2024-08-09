@@ -1,11 +1,11 @@
 import { cn } from "utils/cn";
 
-import { Order } from "./Order";
-import { type OrderType } from "./OrderHistory";
+import { Order as OrderComponent } from "./Order";
 import { useLocalization } from "contexts/LocalizationContext";
+import { Order } from "app/account/order-history/interfaces";
 
 export type OrderListProps = {
-  orders: OrderType[];
+  orders: Order[];
 };
 
 export function OrderList({ orders }: OrderListProps) {
@@ -20,7 +20,7 @@ export function OrderList({ orders }: OrderListProps) {
   return (
     <div className={"flex max-w-[704px] flex-col gap-y-24"}>
       {orders.map((order, Idx) => (
-        <Order
+        <OrderComponent
           className={cn({ "border-t border-tep_gray-200 pt-12": Idx !== 0 })}
           key={order.id}
           order={order}

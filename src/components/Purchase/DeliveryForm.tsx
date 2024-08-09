@@ -19,10 +19,14 @@ export function DeliveryForm() {
   const { localization, staticData } = useLocalization();
 
   useEffect(() => {
-    const city = addressForm.getValues().city;
+    const addressValues = addressForm.getValues();
+
+    const city = addressValues.city;
+    const district = addressValues.district;
+    const region = addressValues.region;
     const service = deliveryForm.getValues().delivery_service;
-    if (city !== "" && service !== "") {
-      purchaseService.getWarehouses(service, city).then(warehouses => setWarehouses(warehouses))
+    if (city !== "" && service !== "" && district !== "" && region !== "") {
+      purchaseService.getWarehouses(service, city, district, region).then(warehouses => setWarehouses(warehouses))
     }
     else if (city === "") {
       addressForm.setError("city", { type: "manual", message: staticData.forms.cityError });
@@ -101,7 +105,7 @@ export function DeliveryForm() {
               },
             ]}
           />
-          {deliveryForm.watch("delivery_method") === "WarehouseWarehouse" && (
+          {(deliveryForm.watch("delivery_method") === "W2W") && (
             <FormSelectInput
               fieldName={"department"}
               label={staticData.purchase.deliveryForm.text11}
@@ -112,22 +116,52 @@ export function DeliveryForm() {
               }))}
             />
           )}
+          {(deliveryForm.watch("delivery_method") === "WarehouseWarehouse") && (
+            <FormSelectInput
+              fieldName={"department"}
+              label={staticData.purchase.deliveryForm.text11}
+              display={staticData.purchase.deliveryForm.text12}
+              options={warehouses.map(warehouse => ({
+                label: warehouse[`description_${localization}` as keyof Warehouse],
+                value: warehouse.number
+              }))}
+            />
+          )}
+          {deliveryForm.watch("delivery_method") === "W2D" && (
+            <>
+            <FormTextInput
+              fieldName={"street"}
+              label={staticData.purchase.deliveryForm.streetLabel}
+              placeholder={staticData.purchase.deliveryForm.streetPlaceholder}
+            />
+            <FormTextInput
+              fieldName={"house"}
+              label={staticData.purchase.deliveryForm.houseLabel}
+              placeholder={staticData.purchase.deliveryForm.housePlaceholder}
+            />
+            <FormTextInput
+              fieldName={"flat"}
+              label={staticData.purchase.deliveryForm.flatLabel}
+              placeholder={staticData.purchase.deliveryForm.flatPlaceholder}
+            />
+            </>
+          )}
           {deliveryForm.watch("delivery_method") === "WarehouseDoors" && (
             <>
             <FormTextInput
               fieldName={"street"}
-              label={staticData.deliveryForm.streetLabel}
-              placeholder={staticData.deliveryForm.streetPlaceholder}
+              label={staticData.purchase.deliveryForm.streetLabel}
+              placeholder={staticData.purchase.deliveryForm.streetPlaceholder}
             />
             <FormTextInput
               fieldName={"house"}
-              label={staticData.deliveryForm.houseLabel}
-              placeholder={staticData.deliveryForm.streetPlaceholder}
+              label={staticData.purchase.deliveryForm.houseLabel}
+              placeholder={staticData.purchase.deliveryForm.housePlaceholder}
             />
             <FormTextInput
               fieldName={"flat"}
-              label={staticData.deliveryForm.flatLabel}
-              placeholder={staticData.deliveryForm.streetPlaceholder}
+              label={staticData.purchase.deliveryForm.flatLabel}
+              placeholder={staticData.purchase.deliveryForm.flatPlaceholder}
             />
             </>
           )}

@@ -7,11 +7,12 @@ import { IconButton, Title } from "common/ui";
 import { Counter } from "components/Goods/Product/Counter";
 import { Price } from "components/Goods/Product/Price";
 
-import { OrderedProduct } from "./OrderHistory";
 import { useLocalization } from "contexts/LocalizationContext";
+import { Color, ProductVariant, Size } from "app/goods/[category]/page";
+import { OrderItem } from "app/account/order-history/interfaces";
 
 export type OrderProductCardProps = {
-  product: OrderedProduct;
+  product: OrderItem;
   hasThrash?: boolean;
   trashAction?: () => void;
   trashClassName?: string;
@@ -24,10 +25,7 @@ export function OrderProductCard({
   trashAction,
   trashClassName,
 }: OrderProductCardProps) {
-  const { category_title, category_slug, image, price, title, article, color, count, size } =
-    product;
-
-  const { staticData } = useLocalization();
+  const { localization, staticData } = useLocalization();
 
   return (
     <div
@@ -38,32 +36,32 @@ export function OrderProductCard({
     >
       <div className={"flex flex-1 gap-x-6"}>
         <div className={"w-full max-w-[184px]"}>
-          <ImageSquare source={image} />
+          <ImageSquare source={product.product_variant.main_image} />
         </div>
         <div>
           <div className={"mb-2 flex flex-col justify-between gap-y-2 md:mb-6"}>
             <Title size={"2xl"} className={"truncate"}>
-              {title}
+              {product.product_variant[`title_${localization}` as keyof ProductVariant] as string}
             </Title>
-            {category_title && (
+            {/* {product.category_title && (
               <p className={"text-sm text-tep_gray-500 lg:font-extralight"}>
                 {category_title}
               </p>
-            )}
+            )} */}
           </div>
           <div>
-            <Price price={price} className={"mb-2.5"} />
+            <Price price={product.product_variant.promo_price ? product.product_variant.promo_price : product.product_variant.default_price} className={"mb-2.5"} />
             <div className={"text-sm leading-normal lg:font-extralight"}>
-              <p>{color}</p>
-              <p>{size} {staticData.account.orderProductCard.text1}</p>
-              <p>{staticData.account.orderProductCard.text2} {article}</p>
+              <p>{product.color[`title_${localization}` as keyof Color] as string}</p>
+              <p>{product.size[`title_${localization}` as keyof Size] as string} {staticData.account.orderProductCard.text1}</p>
+              <p>{staticData.account.orderProductCard.text2} {product.product_variant.sku}</p>
             </div>
           </div>
         </div>
       </div>
       <div className={"flex flex-col gap-y-8"}>
         <div className={"flex items-center justify-between gap-x-8"}>
-          <Counter count={count} inactive={true} />
+          <Counter count={product.quantity} inactive={true} />
           <IconButton
             onClick={trashAction}
             className={{
@@ -80,7 +78,7 @@ export function OrderProductCard({
           }
         >
           <span className={"text-sm lg:font-extralight"}>{staticData.account.orderProductCard.text3}</span>
-          <Price price={price} />
+          <Price price={product.product_variant.promo_price ? product.product_variant.promo_price : product.product_variant.default_price} />
         </div>
       </div>
     </div>

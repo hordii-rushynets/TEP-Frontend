@@ -33,7 +33,10 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
   const purchaseService = new PurchaseService();
 
   function onSubmit(data: Form) {
-    purchaseService.getTracking(data.order_number).then(stages => onSending(stages));
+    purchaseService.getTracking(data.order_number).then(stages => {
+      stages.length === 0 && form.setError("order_number", {type: "manual", message: staticData.forms.orderNumberError});
+      onSending(stages)
+    });
   }
 
   return (

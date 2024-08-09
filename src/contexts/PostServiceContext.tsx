@@ -20,6 +20,7 @@ export interface PostServiceContextType {
     firstName: string;
     lastName: string;
     city: string;
+    district: string;
     region: string;
     postal: string;
     phoneNumber: string;
@@ -37,6 +38,7 @@ const addressFormSchema = z.object({
   firstName: z.string().min(1, "").default(""),
   lastName: z.string().min(1, "").default(""),
   city: z.string().min(1, "").default(""),
+  district: z.string().min(1, "").default(""),
   region: z.string().min(1, "").default(""),
   postal: z.string().min(1, "").default(""),
   phoneNumber: z.string().default(""),
@@ -77,6 +79,7 @@ export const PostServiceProvider = ({ children }: PostServiceProviderProps) => {
     firstName: z.string().min(1, staticData.forms.firstNameError).default(""),
     lastName: z.string().min(1, staticData.forms.lastNameError).default(""),
     city: z.string().min(1, staticData.forms.cityError).default(""),
+    district: z.string().min(1, staticData.forms.districtError).default(""),
     region: z.string().min(1, staticData.forms.regionError).default(""),
     postal: z.string().min(1, staticData.forms.postalError).default(""),
     phoneNumber: z.string().default(""),
