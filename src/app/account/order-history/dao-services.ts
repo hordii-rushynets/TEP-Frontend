@@ -9,7 +9,7 @@ export class OrderHistoryDAOService {
     }
 
     public async getOrderHistory(authContext: any):Promise<Order[]> {
-        const response = await fetchWithAuth("http://localhost:8000/api/post/orders/", {}, authContext);
+        const response = await fetchWithAuth(`${this.apiUrl}/api/post/orders/`, {}, authContext);
 
         if (response.ok) {
             const data = await response.json();
