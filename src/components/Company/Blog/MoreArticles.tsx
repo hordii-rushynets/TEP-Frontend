@@ -47,8 +47,8 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
     return <div>Loading...</div>; // Show a loading state while fetching data
   }
 
-  const otherArticles = articles.filter((article) => article.id !== id);
-  return (
+  const otherArticles = articles.filter((article) => article.slug !== id);
+  return otherArticles.length !== 0 ? (
     <Section className={cn("overflow-hidden", className)}>
       <Container>
         <div>
@@ -113,5 +113,5 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
         </div>
       </Container>
     </Section>
-  );
+  ) : <></>;
 }
