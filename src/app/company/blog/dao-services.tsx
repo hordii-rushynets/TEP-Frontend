@@ -7,13 +7,13 @@ export class ArticleDAOService {
       this.apiUrl = apiUrl;
     }
   
-    public async getArticles(page: string): Promise<{count: number; next: string; prvious: string; results: Article[]}> {
+    public async getArticles(page: string): Promise<{count: number; next: string; previous: string; results: Article[]}> {
       try {
         const response = await fetch(`${this.apiUrl}/api/blog/posts/?page=${page}`);
         if (!response.ok) {
           throw new Error(`Error fetching articles: ${response.statusText}`);
         }
-        const articles: {count: number; next: string; prvious: string; results: Article[]} = await response.json();
+        const articles: {count: number; next: string; previous: string; results: Article[]} = await response.json();
         return articles;
       } catch (error) {
         console.error('Failed to fetch articles:', error);

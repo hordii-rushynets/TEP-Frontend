@@ -88,3 +88,7 @@ export function getTrueKeys(obj: { [key: string]: boolean }): string {
   const trueKeys = Object.keys(obj).filter(key => obj[key]);
   return trueKeys.join(',');
 }
+
+export function isValidDate(date: any) {
+  return date instanceof Date && !isNaN(date.getTime());
+}

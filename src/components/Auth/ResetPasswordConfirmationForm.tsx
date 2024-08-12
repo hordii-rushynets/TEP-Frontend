@@ -70,8 +70,8 @@ export function ResetPasswordConfirmationForm() {
         <div className={"flex flex-col gap-y-12 lg:gap-y-[45px]"}>
           <FormTextInput<Form>
             fieldName={"verificationCode"}
-            label={staticData.auth.resetPasswordConfirmationForm.text1}
-            placeholder={staticData.auth.resetPasswordConfirmationForm.text2}
+            label={staticData.auth.emailConfirmationForm.text3}
+            placeholder={staticData.auth.emailConfirmationForm.text4}
           />
           <Button
             type={"submit"}
@@ -79,7 +79,7 @@ export function ResetPasswordConfirmationForm() {
             colorVariant={"black"}
             fullWidth
           >
-            {staticData.auth.resetPasswordConfirmationForm.text3}
+            {staticData.auth.emailConfirmationForm.text5}
           </Button>
         </div>
       </form>

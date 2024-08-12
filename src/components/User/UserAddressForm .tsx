@@ -26,7 +26,7 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (Number(postal)) {
+      if (Number(postal) || postal === "" || postal === undefined || postal === null) {
         setPostalError(false);
         const addressInfo = new FormData();
         addressInfo.append("address", street);

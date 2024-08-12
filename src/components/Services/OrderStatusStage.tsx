@@ -4,6 +4,7 @@ import { cn } from "utils/cn";
 import { Title } from "common/ui";
 
 import Border from "./Vector 1.svg";
+import { isValidDate } from "utils/helpers";
 
 export type OrderStatusStageProps = {
   isLast: boolean;
@@ -32,8 +33,8 @@ export function OrderStatusStage({
         {label}
       </Title>
       <p className={"flex gap-x-4 text-sm lg:font-extralight"}>
-        <span>{date?.toLocaleDateString() || ""}</span>
-        <span>{date?.toLocaleTimeString().slice(0, 5) || ""}</span>
+        <span>{isValidDate(date) ? date?.toLocaleDateString() : ""}</span>
+        <span>{isValidDate(date) ? date?.toLocaleTimeString().slice(0, 5) : ""}</span>
       </p>
       <Image
         src={Border}

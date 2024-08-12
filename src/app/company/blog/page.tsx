@@ -21,7 +21,6 @@ export default function BlogPage() {
 
   useEffect(() => {
     articles ? setLoading(false) : setLoading(true);
-    console.log(articles);
   }, [articles]);
 
   const searchParams = useSearchParams();

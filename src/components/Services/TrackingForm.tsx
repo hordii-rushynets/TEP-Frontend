@@ -6,10 +6,12 @@ import { getDefaults } from "utils/zod";
 import { z } from "zod";
 
 import { Button, FormTextInput } from "common/ui";
+import { PurchaseService } from "app/purchase/services";
+import { Stage } from "app/purchase/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export type TrackingFormProps = {
-  onSending: (v: string) => void;
+  onSending: (v: Stage[]) => void;
 };
 
 export function TrackingForm({ onSending }: TrackingFormProps) {
@@ -27,8 +29,14 @@ export function TrackingForm({ onSending }: TrackingFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: getDefaults(formSchema),
   });
+
+  const purchaseService = new PurchaseService();
+
   function onSubmit(data: Form) {
-    onSending(data.order_number);
+    purchaseService.getTracking(data.order_number).then(stages => {
+      stages.length === 0 && form.setError("order_number", {type: "manual", message: staticData.forms.orderNumberError});
+      onSending(stages)
+    });
   }
 
   return (

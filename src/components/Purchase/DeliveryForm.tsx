@@ -1,51 +1,69 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { PurchaseUrl } from "route-urls";
-import { getDefaults } from "utils/zod";
-import { z } from "zod";
 
 import { Button, FormSelectInput, FormTextInput } from "common/ui";
+import { DeliveryForm as DeliveryFormType, usePostService } from "contexts/PostServiceContext";
+import { useEffect, useState } from "react";
+import { PurchaseService } from "app/purchase/services";
+import { Warehouse } from "app/purchase/interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export function DeliveryForm() {
   const router = useRouter();
-  const { staticData } = useLocalization();
+  const { addressForm, deliveryForm } = usePostService();
+  const purchaseService = new PurchaseService();
+  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const { localization, staticData } = useLocalization();
 
-  const formSchema = z.object({
-    delivery_service: z
-      .string()
-      .min(1, staticData.forms.deliveryServiceError)
-      .default(""),
-    delivery_method: z
-      .string()
-      .min(1, staticData.forms.deliveryMethodError)
-      .default(""),
-    department: z
-      .string()
-      .min(1, staticData.forms.departmentError)
-      .default(""),
-  });
-  
-  type Form = z.infer<typeof formSchema>;
+  useEffect(() => {
+    const addressValues = addressForm.getValues();
 
-  const form = useForm<Form>({
-    resolver: zodResolver(formSchema),
-    defaultValues: getDefaults(formSchema),
-  });
+    const city = addressValues.city;
+    const district = addressValues.district;
+    const region = addressValues.region;
+    const service = deliveryForm.getValues().delivery_service;
+    if (city !== "" && service !== "" && district !== "" && region !== "") {
+      purchaseService.getWarehouses(service, city, district, region).then(warehouses => setWarehouses(warehouses))
+    }
+    else if (city === "") {
+      addressForm.setError("city", { type: "manual", message: staticData.forms.cityError });
+      router.push(PurchaseUrl.getAddress());
+    }
+  }, [deliveryForm.watch("delivery_service"), addressForm.watch("city")]);
 
-  function onSubmit(data: Form) {
-    data;
-    // TODO
-    // ...
-    router.push(PurchaseUrl.getOrderData());
+  function onSubmit(data: DeliveryFormType) {
+    let validation = true;
+
+    if (data.delivery_method === "WarehouseDoors") {
+      if (data.street === "") {
+        deliveryForm.setError("street", {type: "manual", message: staticData.forms.streetError})
+        validation = false;
+      }
+      if (data.house === "") {
+        deliveryForm.setError("house", {type: "manual", message: staticData.forms.houseNoneError})
+        validation = false;
+      }
+      else if (isNaN(parseInt(data.house)) || parseInt(data.house) <= 0) {
+        deliveryForm.setError("house", {type: "manual", message: staticData.forms.houseValidationError})
+        validation = false;
+      }
+      if (data.flat !== "" && (isNaN(parseInt(data.flat)) || parseInt(data.flat) <= 0)) {
+        deliveryForm.setError("flat", {type: "manual", message: staticData.forms.flatValidationError})
+        validation = false;
+      }
+    }
+
+    if (validation) {
+      router.push(PurchaseUrl.getOrderData());
+    }
   }
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
+    <FormProvider {...deliveryForm}>
+      <form onSubmit={deliveryForm.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
         <div
           className={
             "mb-12 flex flex-col gap-y-6 border-b border-tep_gray-200 pb-24"
@@ -58,11 +76,11 @@ export function DeliveryForm() {
             options={[
               {
                 label: staticData.purchase.deliveryForm.text3,
-                value: "ua_post",
+                value: "UkrPost",
               },
               {
                 label: staticData.purchase.deliveryForm.text4,
-                value: "new_post",
+                value: "NovaPost",
               },
             ]}
           />
@@ -73,39 +91,79 @@ export function DeliveryForm() {
             options={[
               {
                 label:
-                  form.watch("delivery_service") === "new_post"
+                  deliveryForm.watch("delivery_service") === "NovaPost"
                     ? staticData.purchase.deliveryForm.text7
                     : staticData.purchase.deliveryForm.text8,
-                value: "department",
+                value: deliveryForm.watch("delivery_service") === "NovaPost" ? "WarehouseWarehouse" : "W2W",
               },
               {
                 label:
-                  form.watch("delivery_service") === "new_post"
+                  deliveryForm.watch("delivery_service") === "NovaPost"
                     ? staticData.purchase.deliveryForm.text9
                     : staticData.purchase.deliveryForm.text10,
-                value: "courier",
+                value: deliveryForm.watch("delivery_service") === "NovaPost" ? "WarehouseDoors" : "W2D",
               },
             ]}
           />
-          {form.watch("delivery_method") === "department" && (
+          {(deliveryForm.watch("delivery_method") === "W2W") && (
             <FormSelectInput
               fieldName={"department"}
               label={staticData.purchase.deliveryForm.text11}
               display={staticData.purchase.deliveryForm.text12}
-              options={[
-                {
-                  label: "Відділення №33, вул. Антоновича 90",
-                  value: "33",
-                },
-              ]}
+              options={warehouses.map(warehouse => ({
+                label: warehouse[`description_${localization}` as keyof Warehouse],
+                value: warehouse.number
+              }))}
             />
           )}
-          {form.watch("delivery_method") === "courier" && (
-            <FormTextInput
+          {(deliveryForm.watch("delivery_method") === "WarehouseWarehouse") && (
+            <FormSelectInput
               fieldName={"department"}
-              label={staticData.purchase.deliveryForm.text13}
-              placeholder={staticData.purchase.deliveryForm.text14}
+              label={staticData.purchase.deliveryForm.text11}
+              display={staticData.purchase.deliveryForm.text12}
+              options={warehouses.map(warehouse => ({
+                label: warehouse[`description_${localization}` as keyof Warehouse],
+                value: warehouse.number
+              }))}
             />
+          )}
+          {deliveryForm.watch("delivery_method") === "W2D" && (
+            <>
+            <FormTextInput
+              fieldName={"street"}
+              label={staticData.purchase.deliveryForm.streetLabel}
+              placeholder={staticData.purchase.deliveryForm.streetPlaceholder}
+            />
+            <FormTextInput
+              fieldName={"house"}
+              label={staticData.purchase.deliveryForm.houseLabel}
+              placeholder={staticData.purchase.deliveryForm.housePlaceholder}
+            />
+            <FormTextInput
+              fieldName={"flat"}
+              label={staticData.purchase.deliveryForm.flatLabel}
+              placeholder={staticData.purchase.deliveryForm.flatPlaceholder}
+            />
+            </>
+          )}
+          {deliveryForm.watch("delivery_method") === "WarehouseDoors" && (
+            <>
+            <FormTextInput
+              fieldName={"street"}
+              label={staticData.purchase.deliveryForm.streetLabel}
+              placeholder={staticData.purchase.deliveryForm.streetPlaceholder}
+            />
+            <FormTextInput
+              fieldName={"house"}
+              label={staticData.purchase.deliveryForm.houseLabel}
+              placeholder={staticData.purchase.deliveryForm.housePlaceholder}
+            />
+            <FormTextInput
+              fieldName={"flat"}
+              label={staticData.purchase.deliveryForm.flatLabel}
+              placeholder={staticData.purchase.deliveryForm.flatPlaceholder}
+            />
+            </>
           )}
         </div>
         <Button
