@@ -110,16 +110,14 @@ export function OrderData() {
             >
               <div className={"pb-32 pt-24 lg:pb-48"}>
                 <Title className={"mb-3.5 text-center text-3xl"}>
-                  Кошик порожній
+                  {staticData.account.cart.text3}
                 </Title>
                 <p
                   className={
                     "mb-12 max-w-[496px] text-center text-sm leading-normal lg:font-extralight"
                   }
                 >
-                  На жаль, твій кошик порожній. Але ще не пізно це виправити!
-                  Увійдіть, щоб додати товари зі списку &quot;Улюблене&quot; або
-                  перейдіть до списку товарів, щоб ознайомитись з асортиментом.
+                  {staticData.account.cart.text4}
                 </p>
                 <div
                   className={
@@ -132,12 +130,12 @@ export function OrderData() {
                       fullWidth
                       colorVariant={"black"}
                     >
-                      Увійти
+                      {staticData.account.cart.text5}
                     </Button>
                   </Link>}
                   <Link href={MainUrl.getGoods()}>
                     <Button size={"large"} fullWidth>
-                      Перейти до товарів
+                      {staticData.account.cart.text6}
                     </Button>
                   </Link>
                 </div>
