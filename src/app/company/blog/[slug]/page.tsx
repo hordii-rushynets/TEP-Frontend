@@ -6,7 +6,7 @@ import { MoreArticles } from "components/Company/Blog/MoreArticles";
 import { ImageBlock } from "components/Company/ImageBlock";
 import { MainImageBlock } from "components/Company/MainImageBlock";
 import { useEffect, useState } from "react";
-import { Article, ArticleDefault, Tag } from "../interfaces";
+import { Article, ArticleDefault, Complexity, Tag } from "../interfaces";
 import { useLocalization } from "contexts/LocalizationContext";
 import { ArticleService } from "../services";
 
@@ -46,20 +46,20 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         <Container>
           <div className={"py-20 md:py-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article?.complexity?.[`title_${localization}` as keyof {}]}
+              {article?.complexity?.[0][`title_${localization}` as keyof {}]}
             </Title>
             <p className={"mb:text-sm text-lg lg:font-extralight"}>
-              {article?.complexity?.[`description_${localization}` as keyof {}]}
+              {article?.complexity?.[0][`description_${localization}` as keyof {}]}
             </p>
           </div>
         </Container>
       </Section>
-      <ImageBlock image={article?.complexity?.image || ""} />
+      <ImageBlock image={article?.complexity?.[0].photo || ""} />
       <Section>
         <Container>
           <div className={"pb-16 pt-20 md:pb-20 md:pt-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article?.requirements?.[`title_${localization}` as keyof {}]}
+              {article?.requirements?.[0][`title_${localization}` as keyof {}]}
             </Title>
             <ol
               className={
@@ -67,35 +67,35 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               }
             >
               <li>
-                {article?.requirements?.[`description_${localization}` as keyof {}]}
+                {article?.requirements?.[0][`description_${localization}` as keyof {}]}
               </li>
             </ol>
           </div>
         </Container>
       </Section>
       <ImageBlock
-        image={article?.for_children?.image || ""}
-        description={article?.for_children?.[`additional_description_${localization}` as keyof {}]}
+        image={article?.for_children?.[0].photo || ""}
+        description={article?.for_children?.[0][`additional_description_${localization}` as keyof {}]}
       />
       <Section>
         <Container>
           <div className={"pb-16 pt-20 md:pb-20 md:pt-24"}>
             <p className={"mb:text-sm text-lg lg:font-extralight"}>
-              {article?.for_children?.[`description_${localization}` as keyof {}]}
+              {article?.for_children?.[0][`description_${localization}` as keyof {}]}
             </p>
           </div>
         </Container>
       </Section>
-      <ImageBlock image={article?.what_materials?.image || ""} />
+      <ImageBlock image={article?.what_materials?.[0].photo || ""} />
       <Section>
         <Container>
           <div className={"py-20 md:py-24"}>
             <Title component={"h5"} className={"mb-3.5"}>
-              {article?.what_materials?.[`title_${localization}` as keyof {}]}
+              {article?.what_materials?.[0][`title_${localization}` as keyof {}]}
             </Title>
             <ol className={"mb:text-sm text-lg lg:font-extralight"}>
               <li>
-                  {article?.requirements?.[`description_${localization}` as keyof {}]}
+                  {article?.requirements?.[0][`description_${localization}` as keyof {}]}
               </li>
             </ol>
           </div>
