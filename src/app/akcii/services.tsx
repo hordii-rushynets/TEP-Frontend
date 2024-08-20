@@ -18,9 +18,9 @@ export class ProductForSaleService {
                 return {
                     id: product.id.toString(),
                     slug: product.slug,
-                    title: product[(`title_${localization}` || "title") as keyof ProductWithVariant].toString(),
+                    title: product[(`title_${localization}` || "title") as keyof ProductWithVariant]?.toString(),
                     category_slug: product.category.slug,
-                    category_title: product.category[(`title_${localization}` || "title") as keyof Category].toString(),
+                    category_title: product.category[(`title_${localization}` || "title") as keyof Category]?.toString(),
                     image: variantOnPromotion?.main_image || "",
                     price: variantOnPromotion?.default_price || 0,
                     isSale: variantOnPromotion?.promotion || false,
