@@ -1,3 +1,4 @@
+import { getUserIP } from "utils/helpers";
 import { CartDAOService } from "./dao-services";
 import { Cart, CartItem } from "./interfaces";
 
@@ -10,19 +11,23 @@ export class CartService {
     }
 
     public async getCart(authContext: any): Promise<CartItem[]> {
-        return await this.daoService.getCart(authContext);
+        const ip = await getUserIP();
+        return await this.daoService.getCart(ip, authContext);
     }
 
     public async putItemInCart(item: any, authContext: any): Promise<Response> {
-      const response = await this.daoService.putItemInCart(item, authContext);
+      const ip = await getUserIP();
+      const response = await this.daoService.putItemInCart(ip, item, authContext);
       return response;
     }
 
     public async updateItemInCart(item_id: number, body: Object, authContext: any): Promise<void> {
-        await this.daoService.updateItemInCart(item_id, body, authContext);
+        const ip = await getUserIP();
+        await this.daoService.updateItemInCart(ip, item_id, body, authContext);
     }
 
     public async deleteItemFromCart(item_id: number, authContext: any): Promise<void> {
-        await this.daoService.deleteItemFromCart(item_id, authContext);
+        const ip = await getUserIP();
+        await this.daoService.deleteItemFromCart(ip, item_id, authContext);
     }
 }

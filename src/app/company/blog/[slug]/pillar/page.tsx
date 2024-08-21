@@ -197,7 +197,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
       </Section>
       <ImageBlock
         size={"large"}
-        image={article.for_children?.image || ""}
+        image={article.for_children?.photo || ""}
         description={article.for_children?.[`additional_description_${localization}` as keyof {}]}
       />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
@@ -252,7 +252,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.what_materials?.image || ""} />
+      <ImageBlock size={"large"} image={article.what_materials?.photo || ""} />
       <Section className={"pb-10 pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>
@@ -356,7 +356,7 @@ export default function PillarPage({ params }: { params: { slug: string } }) {
           </div>
         </Container>
       </Section>
-      <ImageBlock size={"large"} image={article.complexity?.image || ""} />
+      <ImageBlock size={"large"} image={article.complexity?.photo || ""} />
       <Section className={"pb-[68px] pt-24 md:pb-14 md:pt-24 lg:pb-40"}>
         <Container>
           <div className={"mx-auto max-w-[808px]"}>
