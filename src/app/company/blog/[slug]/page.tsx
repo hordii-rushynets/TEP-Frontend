@@ -92,7 +92,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               {article?.what_materials?.[`title_${localization}` as keyof {}]}
             </Title>
             <ol className={"mb:text-sm text-lg lg:font-extralight"}>
-                <div dangerouslySetInnerHTML={{ __html: article?.requirements?.[`description_${localization}` as keyof {}] || "" }} />
+                <div dangerouslySetInnerHTML={{ __html: article?.what_materials?.[`description_${localization}` as keyof {}] || "" }} />
             </ol>
           </div>
         </Container>
