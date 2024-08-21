@@ -58,7 +58,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
                 {staticData.company.vacancies.vacancyInfo.text1}
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
-                {vacancy?.[`description_${localization}` as keyof Vacancy] as string}
+                <div dangerouslySetInnerHTML={{ __html:vacancy?.[`description_${localization}` as keyof Vacancy] as string}} />
               </p>
             </div>
           )}
@@ -68,7 +68,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
               {staticData.company.vacancies.vacancyInfo.text2}
               </Title>
               <p className={"text-lg md:text-sm md:font-light"}>
-                {vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}
+                <div dangerouslySetInnerHTML={{ __html: vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}} />
               </p>
             </div>
           )}

@@ -96,7 +96,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
             >
               <div>
                 <p className={"mb-5 text-sm lg:font-extralight"}>
-                  {info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}
+                <div dangerouslySetInnerHTML={{ __html:info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}} />
                 </p>
               </div>
             </DisclosureItem>}
@@ -106,7 +106,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <p className={"text-sm lg:font-extralight"}>
-                {info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}
+                <div dangerouslySetInnerHTML={{ __html:info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}} />
               </p>
             </DisclosureItem>}
             {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() && <DisclosureItem
@@ -116,7 +116,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
             >
               <div>
                 <p className={"mb-5 text-sm lg:font-extralight"}>
-                  {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString()}
+                  <div dangerouslySetInnerHTML={{ __html: info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() }} />
                 </p>
               </div>
             </DisclosureItem>}
