@@ -8,9 +8,14 @@ export class CartDAOService {
       this.apiUrl = apiUrl;
     }
   
-    public async getCart(authContext: any): Promise<CartItem[]> {
+    public async getCart(ip: string, authContext: any): Promise<CartItem[]> {
       try {
-        const response = await fetchWithAuth(`${this.apiUrl}/api/cart/item/`, {}, authContext);
+        const response = await fetchWithAuth(`${this.apiUrl}/api/cart/item/`, {
+          method: "GET",
+          headers: {
+            'Real-Ip': ip,
+          }
+        }, authContext);
         const cartItems = response.json();
         return cartItems;
       } catch (error) {
@@ -19,12 +24,13 @@ export class CartDAOService {
       }
     }
 
-    public async putItemInCart(item: any, authContext: any): Promise<Response> {
+    public async putItemInCart(ip: string, item: any, authContext: any): Promise<Response> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/cart/item/`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Real-Ip': ip,
           },
           body: JSON.stringify(item)
         }, authContext);
@@ -35,12 +41,13 @@ export class CartDAOService {
       }
     }
 
-    public async updateItemInCart(item_id: number, body: Object, authContext: any): Promise<void> {
+    public async updateItemInCart(ip: string, item_id: number, body: Object, authContext: any): Promise<void> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/cart/item/${item_id}/`, {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Real-Ip': ip,
           },
           body: JSON.stringify(body),
         }, authContext);
@@ -50,10 +57,13 @@ export class CartDAOService {
       }
     }
 
-    public async deleteItemFromCart(item_id: number, authContext: any): Promise<void> {
+    public async deleteItemFromCart(ip: string, item_id: number, authContext: any): Promise<void> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/cart/item/${item_id}/`, {
           method: "DELETE",
+          headers: {
+            'Real-Ip': ip,
+          }
         }, authContext);
       } catch (error) {
         console.error('Failed to delete item from the cart:', error);

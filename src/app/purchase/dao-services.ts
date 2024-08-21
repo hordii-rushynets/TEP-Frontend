@@ -52,11 +52,12 @@ export class PurchaseDAOService {
         return {cost: undefined};
     }
 
-    public async createParcel(body: Object, service: string, authContext: any): Promise<void | Error[]> {
+    public async createParcel(ip: string, body: Object, service: string, authContext: any): Promise<void | Error[]> {
         const response = await fetchWithAuth(`${this.apiUrl}/api/post/create-parcel/${service}/`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Real-Ip": ip
             },
             body: JSON.stringify(body)
         }, authContext)

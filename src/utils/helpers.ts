@@ -92,3 +92,10 @@ export function getTrueKeys(obj: { [key: string]: boolean }): string {
 export function isValidDate(date: any) {
   return date instanceof Date && !isNaN(date.getTime());
 }
+
+
+export const getUserIP = async () => {
+  const response = await fetch('https://api.ipify.org?format=json');
+  const data = await response.json();
+  return data.ip;
+};

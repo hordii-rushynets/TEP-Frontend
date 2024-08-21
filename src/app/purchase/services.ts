@@ -1,3 +1,4 @@
+import { getUserIP } from "utils/helpers";
 import { PurchaseDAOService } from "./dao-services";
 import { Error, Stage, Warehouse } from "./interfaces";
 
@@ -24,7 +25,8 @@ export class PurchaseService {
     }
 
     public async createParcel(body: Object, service: string, authContext: any): Promise<void | Error[]> {
-        const response = await this.daoService.createParcel(body, service, authContext);
+        const ip = await getUserIP();
+        const response = await this.daoService.createParcel(ip, body, service, authContext);
         if (response) {
             return response;
         }
