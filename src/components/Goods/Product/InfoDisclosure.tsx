@@ -72,7 +72,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                       </div>
                     </div>
                     <p className={"text-xs font-light leading-none"}>
-                      {feedback.text}
+                    <div dangerouslySetInnerHTML={{ __html: feedback.text }} />
                     </p>
                   </div>
                 ))}
@@ -178,7 +178,7 @@ export function InfoSkeleton({
         {title}
       </Title>
       {description && (
-        <p className={"mb-[75px] text-sm font-extralight"}>{description}</p>
+        <p className={"mb-[75px] text-sm font-extralight"}><div dangerouslySetInnerHTML={{ __html: description }} /></p>
       )}
       <div className={"-mr-4 flex-1 overflow-y-scroll pr-4"}>{children}</div>
     </div>

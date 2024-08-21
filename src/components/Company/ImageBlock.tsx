@@ -35,7 +35,7 @@ export function ImageBlock({
         >
           {description && (
             <p className={"max-w-[1016px] text-2xl text-white lg:text-3xl"}>
-              {description}
+              <div dangerouslySetInnerHTML={{ __html: description }} />
             </p>
           )}
         </div>

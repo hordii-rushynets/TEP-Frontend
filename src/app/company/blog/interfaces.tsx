@@ -5,11 +5,6 @@ export interface Tag {
   title_en: string;
 }
 
-export type Complexity = {
-  
-}
-
-
 export type Article = {
   id: string;
   slug: string;
@@ -24,27 +19,27 @@ export type Article = {
     description_uk: string;
     description_en: string;
     photo: StaticImageData | string;
-  }[];
+  };
   requirements?: {
     title_uk: string;
     title_en: string;
     description_uk: string[];
     description_en: string[];
-  }[];
+  };
   what_materials?: {
     title_uk: string;
     title_en: string;
     description_uk:  string[];
     description_en:  string[];
     photo: StaticImageData | string;
-  }[];
+  };
   for_children?: {
     additional_description_uk: string;
     additional_description_en: string;
     description_uk: string;
     description_en: string;
     photo: StaticImageData | string;
-  }[];
+  };
 
   author: {
     name: string;
