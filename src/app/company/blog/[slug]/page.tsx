@@ -23,11 +23,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     articleService.getArticle(params.slug).then(article => setArticle(article));
   }, [])
 
+  
+  const { localization } = useLocalization();
+
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  const { localization } = useLocalization();
 
   return (
     <>
@@ -48,9 +49,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Title component={"h5"} className={"mb-3.5"}>
               {article?.complexity?.[`title_${localization}` as keyof {}]}
             </Title>
-            <p className={"mb:text-sm text-lg lg:font-extralight"}>
               <div dangerouslySetInnerHTML={{ __html: article?.complexity?.[`description_${localization}` as keyof {}] || "" }} />
-            </p>
           </div>
         </Container>
       </Section>
@@ -61,13 +60,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Title component={"h5"} className={"mb-3.5"}>
               <div dangerouslySetInnerHTML={{ __html: article?.requirements?.[`title_${localization}` as keyof {}] || "" }} />
             </Title>
-            <ol
-              className={
-                "mb:text-sm list-inside list-decimal text-lg lg:font-extralight"
-              }
-            >
               <div dangerouslySetInnerHTML={{ __html: article?.requirements?.[`description_${localization}` as keyof {}] || "" }} />
-            </ol>
           </div>
         </Container>
       </Section>
@@ -78,9 +71,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <Section>
         <Container>
           <div className={"pb-16 pt-20 md:pb-20 md:pt-24"}>
-            <p className={"mb:text-sm text-lg lg:font-extralight"}>
               <div dangerouslySetInnerHTML={{ __html: article?.for_children?.[`description_${localization}` as keyof {}] || "" }} />
-            </p>
           </div>
         </Container>
       </Section>
@@ -91,9 +82,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Title component={"h5"} className={"mb-3.5"}>
               {article?.what_materials?.[`title_${localization}` as keyof {}]}
             </Title>
-            <ol className={"mb:text-sm text-lg lg:font-extralight"}>
                 <div dangerouslySetInnerHTML={{ __html: article?.what_materials?.[`description_${localization}` as keyof {}] || "" }} />
-            </ol>
           </div>
         </Container>
       </Section>
