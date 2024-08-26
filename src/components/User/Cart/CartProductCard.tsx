@@ -99,7 +99,7 @@ export function CartProductCard({
           }
         >
           <span className={"text-sm lg:font-extralight"}>{staticData.account.cartProductCard.text3}</span>
-          <Price price={product.product_variants.default_price * product.quantity} />
+          <Price price={(product.product_variants.promotion ? product.product_variants.promo_price : product.product_variants.default_price) * product.quantity} />
         </div>
       </div>
     </div>

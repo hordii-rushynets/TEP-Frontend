@@ -107,6 +107,7 @@ export interface ProductVariant {
   variant_images: VariantImages[];
   variant_info: VariantInfo;
   filter_field: DynamicFilterField[];
+  in_cart: boolean;
 }
 
 export interface ProductWithVariant {

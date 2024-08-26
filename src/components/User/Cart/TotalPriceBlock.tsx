@@ -15,7 +15,7 @@ export function TotalPriceBlock({
   hasTotalPrice = true,
   goods,
 }: TotalPriceBlockProps) {
-  const totalPrice = goods.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19;
+  const totalPrice = +(goods.reduce((acc, el) => acc + (el?.product_variants?.promotion ? el?.product_variants?.promo_price : el?.product_variants?.default_price) * el.quantity, 0) * 1.19).toFixed(2);
 
   const [deliveryPrice, setDeliveryPrice] = useState<number | undefined>();
   const purchaseService = new PurchaseService();
