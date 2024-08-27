@@ -14,7 +14,7 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { DynamicFilterField } from "components/Filters/ProductsFilters";
 
 import { useEffect, useState } from "react";
-import { fetchWithAuth } from "utils/helpers";
+import { fetchWithAuth, getUserIP } from "utils/helpers";
 import { useAuth } from "contexts/AuthContext";
 
 import { sortings } from "./defaultValues";
@@ -107,6 +107,7 @@ export interface ProductVariant {
   variant_images: VariantImages[];
   variant_info: VariantInfo;
   filter_field: DynamicFilterField[];
+  in_cart: boolean;
 }
 
 export interface ProductWithVariant {
@@ -231,9 +232,21 @@ export default function CategoryPage({
   async function searchFetch() {
     const urlParams = new URLSearchParams(filterParams);
 
-    await fetchWithAuth(`${APIurl}/api/store/products/?${urlParams}`, {}, authContext).then(response => {
+    const ip = await getUserIP();
+
+    await fetchWithAuth(`${APIurl}/api/store/products/?${urlParams}`, {
+      method: "GET",
+      headers: {
+        "Real-Ip": ip
+      }
+    }, authContext).then(response => {
       if (response.status === 401) {
-        return fetch(`${APIurl}/api/store/products/?${urlParams}`)
+        return fetch(`${APIurl}/api/store/products/?${urlParams}`, {
+          method: "GET",
+          headers: {
+            "Real-Ip": ip
+          }
+        })
       }
       return response
     })
