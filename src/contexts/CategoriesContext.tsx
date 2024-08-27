@@ -35,24 +35,25 @@ const APIurl = process.env.NEXT_PUBLIC_API_URL
 
 export function CategoriesProvider({ children }: CategoriesProviderProps) {
   const [categories, setCategories] = useState<Category[]>([]);
-  const { staticData } = useLocalization();
+  const { localization } = useLocalization();
 
   async function fetchCategories() {
     const res = await fetch(`${APIurl}/api/store/categories/`);
     const data = await res.json();
-    setCategories(data.map((category: any) => ({
+    setCategories(data.map((category: any) => {
+      return {
       id: category.id,
       slug: category.slug,
-      title: category[`title_${staticData.backendPostfix}` || "title"],
-      description: category[`description_${staticData.backendPostfix}` || "description"],
+      title: category[`title_${localization}`],
+      description: category[`description_${localization}`],
       image: category.image,
       filters: category.filter
-    })));
+    }}));
   }
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [localization]);
 
   return (
     <CategoriesContext.Provider value={{ categories }}>

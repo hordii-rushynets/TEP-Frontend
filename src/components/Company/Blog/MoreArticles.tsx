@@ -41,7 +41,7 @@ export function MoreArticles({ id, className }: PopularGoodsProps) {
         console.error('Error fetching articles:', error);
       })
 
-  }, []);
+  }, [localization]);
 
   if (loading) {
     return <div>Loading...</div>; // Show a loading state while fetching data

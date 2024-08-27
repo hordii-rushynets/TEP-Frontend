@@ -25,7 +25,7 @@ export default function SalesPage() {
       setProducts(products.productsToShow);
       setProductsWithVariants(products.productsWithVariant);
     })
-  }, [category]);
+  }, [category, localization]);
 
   return (
     <>

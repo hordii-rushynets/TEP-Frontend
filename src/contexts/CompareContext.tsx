@@ -2,6 +2,7 @@
 
 import { ProductWithVariant } from "app/goods/[category]/page";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useLocalization } from "./LocalizationContext";
 
 const APIurl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -34,6 +35,7 @@ export function CompareProvider(props: CompareProviderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<ProductWithVariant[]>([]);
   const [ids, setIds] = useState<string[]>([]);
+  const { localization } = useLocalization();
 
   const addProduct = (id: string) => {
     if (!ids.includes(id)) {
@@ -71,7 +73,7 @@ export function CompareProvider(props: CompareProviderProps) {
       setIsOpen(false);
     }
 
-  }, [ids]);
+  }, [ids, localization]);
 
   return (
     <CompareContext.Provider

@@ -74,7 +74,7 @@ export function AutocompleteInput({ className }: AutocompleteInputProps) {
             )}
           >
             <Combobox.Input
-              placeholder={"Що ти шукаєш?"}
+              placeholder={staticData.common.autocompleteInput.placeholder}
               className={"w-full bg-transparent px-6 pb-3.5 pt-4 outline-none "}
               onChange={(event) => setQuery(event.target.value)}
             />

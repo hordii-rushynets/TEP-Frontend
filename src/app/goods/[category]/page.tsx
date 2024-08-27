@@ -203,7 +203,7 @@ export default function CategoryPage({
     });
   }
 
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [productsToShow, setProductsToShow] = useState([]);
 
@@ -285,11 +285,11 @@ export default function CategoryPage({
 
   useEffect(() => {
     fetchCategory();
-  }, []);
+  }, [staticData]);
 
   useEffect(() => {
     searchFetch();
-  }, [filterParams]);
+  }, [filterParams, staticData]);
 
   return !notFound ? (
     <>

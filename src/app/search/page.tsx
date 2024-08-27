@@ -50,7 +50,7 @@ export default function SearchPage() {
       setProducts(products.productsToShow);
       setProductsWithVariants(products.productsWithVariant);
     })
-  }, [filters]);
+  }, [filters, localization]);
 
   useEffect(() => {
     products.length !== 0 ? searchService.getTags(products[0].category_slug, staticData).then(tags => setTags(tags))

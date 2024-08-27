@@ -20,6 +20,7 @@ export default function VacanciesPage({
 }: {
   searchParams: SearchParams;
 }) {
+  const { staticData, localization } = useLocalization();
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
   const [filters, setFilters] = useState<{[key: string]: string}>({
     "title_uk": "",
@@ -43,9 +44,7 @@ export default function VacanciesPage({
 
   useEffect(() => {
     vacancyService.getVacancies(filters).then(data => setVacancies(data));
-  }, [filters]);
-
-  const { staticData } = useLocalization();
+  }, [filters, localization]);
 
   return (
     <>

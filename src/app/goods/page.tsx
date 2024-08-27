@@ -27,7 +27,7 @@ export default function GoodsPage() {
 
   useEffect(() => {
     interiorProductService.getInspirationProducts(staticData).then(products => setProducts(products));
-  }, []);
+  }, [staticData]);
 
   return (
     <>
