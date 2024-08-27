@@ -1,6 +1,7 @@
 import StaticData from "locals/dataInterface";
 import { ProductDAOService } from "./dao-services";
 import { ProductToShow, ProductWithVariant } from "./page";
+import { getUserIP } from "utils/helpers";
 
 function filterExpiredProducts(viewedProducts: {id: string, expiry: number}[]):{id: string, expiry: number}[]{
     const now = new Date().getTime();
@@ -33,7 +34,8 @@ export class ProductService {
     }
 
     public async getPopularProducts(staticData: StaticData, authContext: any): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
-      return await this.daoService.getPopularProducts(authContext).then(response => {
+      const ip = await getUserIP();
+      return await this.daoService.getPopularProducts(ip, authContext).then(response => {
         if (response.ok) {return response.json();}
       }).then(data => {
         let productsToShow = data.map((product:any) => {
@@ -62,7 +64,8 @@ export class ProductService {
     }
 
     public async getRecommendedGoods(staticData: StaticData, authContext: any, product_slug?: string): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
-      return await this.daoService.getRecommendedGoods(authContext, product_slug).then(response => {
+      const ip = await getUserIP();
+      return await this.daoService.getRecommendedGoods(ip, authContext, product_slug).then(response => {
         if (response.ok) {return response.json();}
       }).then(data => {
         let productsToShow = data.map((product:any) => {
