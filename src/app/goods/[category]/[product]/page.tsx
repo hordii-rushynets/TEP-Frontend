@@ -76,7 +76,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
         }
       }
     });
-  }, [refresh]);
+  }, [refresh, localization, staticData]);
 
   const setCurrVariant = () => {
     let currVar = findMatchingVariant(selectedColor, selectedSize, selectedFilters, productVariants, staticData, searchParams);

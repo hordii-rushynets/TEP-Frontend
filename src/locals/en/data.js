@@ -650,7 +650,8 @@ export default {
           "text15": "Customer Support"
         },
         "price": "UAH",
-        "similarGoods": "Similar Products"
+        "similarGoods": "Similar Products",
+        "popularGoodsTitle": "Popular products"
     },
     "sales": {
       "text1": "Sales",
@@ -1187,7 +1188,8 @@ export default {
     "common": {// Generated with AI
       "autocompleteInput": {
         "text1": "Article No.",
-        "text2": "All products"
+        "text2": "All products",
+        "placeholder": "What do you search?"
       },
       "anyQuestions": {
         "title": "Have any questions?",

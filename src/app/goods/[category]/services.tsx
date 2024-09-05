@@ -68,6 +68,7 @@ export class ProductService {
       return await this.daoService.getRecommendedGoods(ip, authContext, product_slug).then(response => {
         if (response.ok) {return response.json();}
       }).then(data => {
+        if (data) {
         let productsToShow = data.map((product:any) => {
           let productVariant = product.product_variants[0];
 
@@ -90,6 +91,8 @@ export class ProductService {
         });
 
         return {productsWithVariant: data, productsToShow: productsToShow};
+      }
+      else {return {productsWithVariant: [], productsToShow: []}};
       });
     }
 

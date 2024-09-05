@@ -15,7 +15,7 @@ export default function VacancyPage({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     vacancyService.getVacancy(params.slug).then(data => setVacancy(data));
-  }, []);
+  }, [localization]);
 
   return (
     <>

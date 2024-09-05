@@ -23,7 +23,7 @@ type PopularGoodsProps = {
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 
 export function PopularGoods({
-  title = "Популярні товари",
+  title = "",
   className,
 }: PopularGoodsProps) {
   const productService = new ProductService();
@@ -37,13 +37,13 @@ export function PopularGoods({
       setProducts(data.productsToShow);
       setProductsWithVariants(data.productsWithVariant);
     })
-  }, []);
+  }, [staticData]);
 
   return (
     <Section className={cn("mb-[72px] overflow-hidden", className)}>
       <Container>
         <div>
-          <Title className={"mb-12"}>{title}</Title>
+          <Title className={"mb-12"}>{title === "" ? staticData.goods.popularGoodsTitle : title}</Title>
           <Swiper
             className={"!overflow-visible"}
             modules={[Navigation, Scrollbar, Autoplay]}

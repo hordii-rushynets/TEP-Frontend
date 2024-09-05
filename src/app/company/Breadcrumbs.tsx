@@ -18,6 +18,7 @@ export function Breadcrumbs() {
   const pathname = usePathname();
   const params = useParams();
   const slug = params.slug as string;
+  const { localization, staticData } = useLocalization();
 
   const vacancyService = new VacancyService();
   const articleService = new ArticleService();
@@ -30,10 +31,9 @@ export function Breadcrumbs() {
     catch {
       
     }
-  }, [slug]);
+  }, [slug, localization]);
 
   const [loading, setLoading] = useState(true);
-  const { localization, staticData } = useLocalization();
   const [ article, setArticle] = useState<Article>(ArticleDefault);
   const [ vacancyPosition, setVacancy ] = useState<Vacancy>(VacancyDefault);
 

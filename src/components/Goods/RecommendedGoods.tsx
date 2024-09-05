@@ -38,7 +38,7 @@ export function RecommendedGoods({
       setProducts(goods.productsToShow);
       setProductsWithVariants(goods.productsWithVariant);
     });
-  }, [product_slug]);
+  }, [product_slug, staticData]);
 
   return products.length !== 0 ? (
     <Section className={cn("mb-[110px] overflow-hidden", className)}>

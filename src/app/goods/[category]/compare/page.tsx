@@ -115,7 +115,7 @@ export default function ComparePage() {
                       "min-w-[152px] md:min-w-[250px] lg:min-w-[288px]"
                     }
                   >
-                    <p className={"text-sm lg:font-extralight"}>{item.product_variants[0].sizes[0][`title_${localization}` as keyof Size]}</p>
+                    <p className={"text-sm lg:font-extralight"}>{item.product_variants[0].sizes.map(size => size[`title_${localization}` as keyof Size]).join(", ")}</p>
                   </div>
                 );
               })}
@@ -141,13 +141,13 @@ export default function ComparePage() {
                         "inline-flex flex-col items-center gap-y-4 text-center"
                       }
                     >
-                      <span
+                      {item.product_variants[0].colors.map(color => (<><span
                         className={cn("size-14 rounded-full")}
-                        style={{backgroundColor: item.product_variants[0].colors[0].hex}}
+                        style={{backgroundColor: color.hex}}
                       ></span>
                       <span className={"text-sm lg:font-extralight"}>
-                        {item.product_variants[0].colors[0][`title_${localization}` as keyof Color]}
-                      </span>
+                        {color[`title_${localization}` as keyof Color]}
+                      </span></>))}
                     </div>
                   </div>
                 );

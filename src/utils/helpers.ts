@@ -41,12 +41,14 @@ export function transformImagesArr(
 
 export async function fetchWithAuth(url: string, options : RequestInit = {}, authContext: AuthContextType) : Promise<Response> {
   const accessToken = localStorage.getItem('TEPAccessToken');
+  const ip = await getUserIP();
   if (accessToken) {
     options = {
       ...options,
       headers: {
         ...options.headers,
         'Authorization': `JWT ${accessToken}`,
+        'Real-Ip': ip
       },
     };
   }
@@ -62,6 +64,7 @@ export async function fetchWithAuth(url: string, options : RequestInit = {}, aut
         headers: {
           ...options.headers,
           'Authorization': `JWT ${newAccessToken}`,
+          'Real-Ip': ip
         },
       }
     }

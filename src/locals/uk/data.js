@@ -657,7 +657,8 @@ export default {
           "text15": "Служба підтримки"
         },
         "price": "грн",
-        "similarGoods": "Подібні товари"
+        "similarGoods": "Подібні товари",
+        "popularGoodsTitle": "Популярні товари"
     },
     "sales": {
       "text1": "Акції",
@@ -1195,7 +1196,8 @@ export default {
     "common": {
       "autocompleteInput": {
         "text1": "Артикул №",
-        "text2": "Всі товари"
+        "text2": "Всі товари",
+        "placeholder": "Що ти шукаєш?"
       },
       "anyQuestions": {
         "title": "Залишились питання?",
