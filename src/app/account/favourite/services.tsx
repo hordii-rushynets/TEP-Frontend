@@ -34,8 +34,9 @@ export class FavouriteService {
       return {productsWithVariant: productsWithVariants || [], productsToShow : productsToShow}; 
     }
 
-    public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<void> {
-      await this.daoService.markFavourite(product_id, is_favourite, authContext, dontAuthAction);
+    public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<boolean> {
+      const success = await this.daoService.markFavourite(product_id, is_favourite, authContext, dontAuthAction);
+      return success || false;
     }
 
     public async deleteAllFavourite(authContext: any, dontAuthAction: () => void): Promise<void> {

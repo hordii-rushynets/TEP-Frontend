@@ -58,7 +58,7 @@ export function Pages() {
         >
           {pages.map((page, indx) => (
             <SimpleCard
-              key={page.toString()}
+              key={indx}
               url={page.url}
               isIcon
               source={page.image}

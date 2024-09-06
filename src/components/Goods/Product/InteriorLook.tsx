@@ -12,11 +12,12 @@ export function InteriorLook({images}: {images: {image: string}[]}) {
         {staticData.goods.interiorLook}
       </Title>
       <div className={"grid grid-cols-1 gap-6 lg:grid-cols-2"}>
-        {images.map(i => 
+        {images.map((i, indx) => 
         <div
           className={
             "relative overflow-hidden rounded-3xl pb-[100%] md:h-[300px] md:pb-0 lg:h-[616px]"
           }
+          key={indx}
         >
           <Image src={i.image} fill alt={"Image"} className={"object-cover"} sizes="100vw, 50vw, 33vw"/>
         </div>

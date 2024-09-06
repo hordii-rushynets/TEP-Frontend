@@ -5,7 +5,7 @@ export function shakeCaseToWords(str: string) {
 }
 
 export function toTitleCase(str: string, toLower = true) {
-  const targetStr = toLower ? str.toLowerCase() : str;
+  const targetStr = toLower ? str?.toLowerCase() : str;
   return replace(/(^.|\s.)/g, toUpper, targetStr);
 }
 

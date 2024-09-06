@@ -128,12 +128,12 @@ export function Footer() {
               </div>
               <Socials
                 links={{
-                  facebook: "#",
-                  instagram: "#",
-                  linkedin: "#",
-                  pinterest: "#",
-                  tiktok: "#",
-                  youtube: "#",
+                  facebook: SocialMediaUrl.getFacebook(),
+                  instagram: SocialMediaUrl.getInstagram(),
+                  linkedin: "",
+                  pinterest: SocialMediaUrl.getPinterest(),
+                  tiktok: SocialMediaUrl.getTikTok(),
+                  youtube: SocialMediaUrl.getYouTube(),
                 }}
               />
             </div>
@@ -175,7 +175,7 @@ export function Footer() {
                 links={{
                   facebook: SocialMediaUrl.getFacebook(),
                   instagram: SocialMediaUrl.getInstagram(),
-                  linkedin: "#",
+                  linkedin: "",
                   pinterest: SocialMediaUrl.getPinterest(),
                   tiktok: SocialMediaUrl.getTikTok(),
                   youtube: SocialMediaUrl.getYouTube(),
@@ -218,7 +218,7 @@ export function Footer() {
 
 export const FooterLiLink = ({
   children,
-  url = "#",
+  url = "",
 }: {
   children: React.ReactNode;
   url: string;

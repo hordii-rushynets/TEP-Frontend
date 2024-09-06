@@ -179,10 +179,12 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                   setText(staticData.auth.notifications.unautorized);
                   setIsOpen(true);
                   router.push('/sign-in');
-                }).then(()=>{
-                  !IsFavourite && setTitleF(productWithVariant?.[`title_${localization}` as keyof ProductWithVariant] as string);
-                  !IsFavourite && setIsOpenF(true);
-                  setIsFavourite(!IsFavourite);
+                }).then((success)=>{
+                  if (success) {
+                    !IsFavourite && setTitleF(productWithVariant?.[`title_${localization}` as keyof ProductWithVariant] as string);
+                    !IsFavourite && setIsOpenF(true);
+                    setIsFavourite(!IsFavourite);
+                  }
                 });
               }}
               searchParams={searchParams}

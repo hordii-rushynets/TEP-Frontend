@@ -123,9 +123,7 @@ export function PaymentDetails({
             <Price price={price} className={"text-[42px]"} />
             <Counter count={count} setCount={setCount}/>
           </div>
-          <p className={"mb-6 text-sm font-extralight"}>
-          <div dangerouslySetInnerHTML={{ __html: description }} />
-          </p>
+          <div dangerouslySetInnerHTML={{ __html: description }} className={"mb-6 text-sm font-extralight"}/>
           <div className={"mb-[65px] flex flex-col gap-y-6"}>
             {colors.length > 0 && (
               <SelectInput

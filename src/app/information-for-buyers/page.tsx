@@ -31,7 +31,7 @@ export default function InformationForBuyersPage() {
                 key={id}
                 trigger={
                   <Title component={"h4"} size={"xl"}>
-                    {"Послуги"}
+                    {staticData.info_for_buyers.services}
                   </Title>
                 }
               >

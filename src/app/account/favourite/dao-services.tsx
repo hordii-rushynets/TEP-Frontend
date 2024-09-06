@@ -26,7 +26,7 @@ export class FavouriteDAOService {
     }
       
 
-    public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<void> {
+    public async markFavourite(product_id: string, is_favourite: boolean, authContext: any, dontAuthAction: () => void): Promise<boolean | undefined> {
       try {
         const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/favorite/`, {
             method: "POST",
@@ -41,9 +41,7 @@ export class FavouriteDAOService {
         if (response.status === 401) {
           dontAuthAction();
         }
-        if (!response.ok) {
-          throw new Error("Failed to fetch favourite products");
-        }
+        return response.ok;
   
       } catch (error) {
         console.log(error);

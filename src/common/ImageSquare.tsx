@@ -20,15 +20,15 @@ export function ImageSquare(props: ImageSquareProps) {
         classes?.wrapper,
       )}
     >
-      <Image
+      {source && <Image
         onClick={onClick}
-        src={source || ""}
+        src={source}
         alt={alt}
         fill
         className={cn("object-cover", classes?.image)}
         sizes="100vw, 50vw, 33vw"
         {...imageProps}
-      />
+      />}
     </div>
   );
 }

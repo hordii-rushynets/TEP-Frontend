@@ -49,25 +49,25 @@ export function UserAddressForm({ user, refresh, setRefresh }: UserAccountProps)
     <div className={"max-w-[600px]"}>
       <div className={"flex flex-col gap-y-6"}>
         <TextInput
-          value={street}
+          value={street || ""}
           onChange={(e) => setStreet(e.target.value)}
           label={staticData.account.userAddressForm.text1}
           placeholder={staticData.account.userAddressForm.text1}
         />
         <TextInput
-          value={city}
+          value={city || ""}
           onChange={(e) => setCity(e.target.value)}
           label={staticData.account.userAddressForm.text2}
           placeholder={staticData.account.userAddressForm.text2}
         />
         <TextInput
-          value={region}
+          value={region || ""}
           onChange={(e) => setRegion(e.target.value)}
           label={staticData.account.userAddressForm.text3}
           placeholder={staticData.account.userAddressForm.text3}
         />
         <TextInput
-          value={postal}
+          value={postal || ""}
           onChange={(e) => setPostal(e.target.value)}
           label={staticData.account.userAddressForm.text4}
           placeholder={staticData.account.userAddressForm.text4}

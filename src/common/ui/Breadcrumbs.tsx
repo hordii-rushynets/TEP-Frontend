@@ -29,7 +29,7 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
             const isLast = idx === items.length - 1;
 
             return (
-              <li key={i.name}>
+              <li key={idx}>
                 <Link
                   href={i.href}
                   className={clsx(

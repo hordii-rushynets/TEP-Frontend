@@ -124,11 +124,13 @@ export default function ProductCard({
                   setText(staticData.auth.notifications.unautorized);
                   setIsOpen(true);
                   router.push('/sign-in');
-                }).then(()=>{
-                  !isFavourite && setTitleF(title);
-                  !isFavourite && setIsOpenF(true);
-                  setIsFavourite(!IsFavourite);
-                  setRefreshFav(!refreshFav);
+                }).then((success)=>{
+                  if (success) {
+                    !isFavourite && setTitleF(title);
+                    !isFavourite && setIsOpenF(true);
+                    setIsFavourite(!IsFavourite);
+                    setRefreshFav(!refreshFav);
+                  }
                 });
               }}
             >

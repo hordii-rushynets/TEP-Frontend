@@ -111,7 +111,7 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
             />
             <InputMask
               mask={"+38 (099) 999-99-99"}
-              value={phoneNumber}
+              value={phoneNumber || ""}
               onChange={(e) => setPhoneNumber(e.target.value)}
               alwaysShowMask
               autoComplete={"off"}
