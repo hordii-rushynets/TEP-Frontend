@@ -14,12 +14,12 @@ export class FeedbackDAOService {
         try {
           const response = await fetchWithAuth(`${this.apiUrl}/api/store/feedback/?${urlParams}`, {}, authContext);
           if (!response.ok) {
-            throw new Error(`Error fetching feedbacks: ${response.statusText}`);
+            return []
           }
           const feedbacks: Feedback[] = await response.json();
           return feedbacks;
         } catch (error) {
-          console.error('Failed to fetch feedbacks:', error);
+          console.log('Failed to fetch feedbacks:', error);
           throw error;
         }
     }
@@ -33,7 +33,7 @@ export class FeedbackDAOService {
           return response.ok;
 
         } catch (error) {
-          console.error('Failed to fetch feedbacks:', error);
+          console.log('Failed to fetch feedbacks:', error);
           throw error;
         }
     }
@@ -50,7 +50,7 @@ export class FeedbackDAOService {
           return response.status;
 
         } catch (error) {
-          console.error('Failed to fetch feedbacks:', error);
+          console.log('Failed to fetch feedbacks:', error);
           throw error;
         }
     }
@@ -68,7 +68,7 @@ export class FeedbackDAOService {
 
 
       } catch (error) {
-        console.error('Failed to fetch feedbacks:', error);
+        console.log('Failed to fetch feedbacks:', error);
         throw error;
       }
     }
