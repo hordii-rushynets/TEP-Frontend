@@ -81,7 +81,7 @@ export function FeedbackCard({ feedback, refresh }: FeedbackCardProps) {
             {feedback.product.category[`title_${localization}` as keyof Category] as string}
           </span>
         </Link>
-        <p className={"text-sm lg:font-extralight"}>{feedback.text}</p>
+        <div dangerouslySetInnerHTML={{ __html: feedback.text }} className={"text-sm lg:font-extralight"}/>
       </div>
       {!!feedback.feedback_images?.length && (
         <div className={"flex flex-wrap gap-2"}>

@@ -57,9 +57,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
               <Title size={"xl"} className={"mb-5"}>
                 {staticData.company.vacancies.vacancyInfo.text1}
               </Title>
-              <p className={"text-lg md:text-sm md:font-light"}>
-                <div dangerouslySetInnerHTML={{ __html:vacancy?.[`description_${localization}` as keyof Vacancy] as string}} />
-              </p>
+                <div dangerouslySetInnerHTML={{ __html:vacancy?.[`description_${localization}` as keyof Vacancy] as string}} className={"text-lg md:text-sm md:font-light"}/>
             </div>
           )}
           {vacancy?.about_company && (
@@ -67,9 +65,7 @@ export function VacancyInfo({ vacancy }: VacancyInfoProps) {
               <Title size={"xl"} className={"mb-5"}>
               {staticData.company.vacancies.vacancyInfo.text2}
               </Title>
-              <p className={"text-lg md:text-sm md:font-light"}>
-                <div dangerouslySetInnerHTML={{ __html: vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}} />
-              </p>
+                <div dangerouslySetInnerHTML={{ __html: vacancy?.[`about_company_${localization}` as keyof Vacancy] as string}} className={"text-lg md:text-sm md:font-light"}/>
             </div>
           )}
           <Link href={CompanyUrl.getVacanciesRequest(vacancy?.id.toString())}>

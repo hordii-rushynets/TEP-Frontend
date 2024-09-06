@@ -95,9 +95,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <div>
-                <p className={"mb-5 text-sm lg:font-extralight"}>
-                <div dangerouslySetInnerHTML={{ __html:info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}} />
-                </p>
+                <div dangerouslySetInnerHTML={{ __html:info[(`material_and_care_${staticData.backendPostfix}` || "material_and_care") as keyof VariantInfo].toString()}} className={"mb-5 text-sm lg:font-extralight"} />
               </div>
             </DisclosureItem>}
             {info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString() && <DisclosureItem
@@ -105,9 +103,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
               endIcon={<FiChevronDown className={"size-6"} />}
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
-              <p className={"text-sm lg:font-extralight"}>
-                <div dangerouslySetInnerHTML={{ __html:info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}} />
-              </p>
+                <div dangerouslySetInnerHTML={{ __html:info[(`ecology_and_environment_${staticData.backendPostfix}` || "ecology_and_environment") as keyof VariantInfo].toString()}} className={"text-sm lg:font-extralight"}/>
             </DisclosureItem>}
             {info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() && <DisclosureItem
               trigger={staticData.goods.infoDisclosure.text6}
@@ -115,9 +111,7 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
               className={{ triggerWrapper: "py-8 font-bold" }}
             >
               <div>
-                <p className={"mb-5 text-sm lg:font-extralight"}>
-                  <div dangerouslySetInnerHTML={{ __html: info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() }} />
-                </p>
+                  <div dangerouslySetInnerHTML={{ __html: info[(`packaging_${staticData.backendPostfix}` || "packaging") as keyof VariantInfo].toString() }} className={"mb-5 text-sm lg:font-extralight"}/>
               </div>
             </DisclosureItem>}
           </Disclosure>
@@ -126,8 +120,8 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
       {dimensionalGrid.length !== 0 && <FilterDialog open={isSizeOpen} onClose={() => setIsSizeOpen(false)}>
         <InfoSkeleton title={staticData.goods.infoDisclosure.text2}>
           <Disclosure>
-            {dimensionalGrid.map(grid => (
-              <div className={"flex gap-x-2 py-8"}>
+            {dimensionalGrid.map((grid, indx) => (
+              <div className={"flex gap-x-2 py-8"} key={indx}>
                 <Title className={"basis-32"} component={"h6"} size={"base"}>
                   {grid[`title_${staticData.backendPostfix}` as keyof DimensionalGrid] as string}
                 </Title>
@@ -136,8 +130,8 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                     "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
                   }
                 >
-                  {grid.sizes.map(size => (
-                    <span>{size[`title_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                  {grid.sizes.map((size, indx) => (
+                    <span key={indx}>{size[`title_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
                   ))}
                 </div>
                 <div
@@ -145,8 +139,8 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
                     "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
                   }
                 >
-                  {grid.sizes.map(size => (
-                    <span>{size[`size_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                  {grid.sizes.map((size, indx) => (
+                    <span key={indx}>{size[`size_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
                   ))}
                 </div>
               </div>

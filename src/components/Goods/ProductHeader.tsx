@@ -16,7 +16,7 @@ export default function ProductHeader({
           <Title className={"mb-3.5"} size={"3xl"}>
             {title}
           </Title>
-          <p className={"text-sm font-extralight"}><div dangerouslySetInnerHTML={{ __html: description }} /></p>
+          <div dangerouslySetInnerHTML={{ __html: description }} className={"text-sm font-extralight"}/>
         </div>
       </Container>
     </Section>

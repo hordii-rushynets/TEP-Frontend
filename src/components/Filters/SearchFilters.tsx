@@ -186,12 +186,13 @@ export default function SearchFilters({
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"grid grid-cols-4 gap-y-8 py-5"}>
-                  {colors.map(c => 
+                  {colors.map((c, indx) => 
                     <ColorCheckbox
                       checked={color[c.title]}
                       onChange={() => setColor((v) => ({ ...v, [c.title]: !v[c.title] }))}
                       label={c[`title_${localization}` as keyof Color]}
                       hex={c.hex}
+                      key={indx}
                     />
                   )}
                 </div>
@@ -202,13 +203,14 @@ export default function SearchFilters({
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[142px] py-5"}>
-                  {materials.map(m => 
+                  {materials.map((m, indx) => 
                     <FilterCheckbox
                       checked={material[m.title]}
                       onChange={() =>
                         setMaterial((v) => ({ ...v, [m.title]: !v[m.title] }))
                       }
                       label={m[`title_${localization}` as keyof Material]}
+                      key={indx}
                     />
                   )}
                 </div>
@@ -219,13 +221,14 @@ export default function SearchFilters({
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[127px] py-5"}>
-                  {sizes.map(s => 
+                  {sizes.map((s, indx) => 
                     <FilterCheckbox
                       checked={size[s.title]}
                       onChange={() =>
                         setSize((v) => ({ ...v, [s.title]: !v[s.title] }))
                       }
                       label={s[`title_${localization}` as keyof Size]}
+                      key={indx}
                     />
                   )}
                 </div>

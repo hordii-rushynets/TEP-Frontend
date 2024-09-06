@@ -78,8 +78,8 @@ export default function SearchPage() {
                 {staticData.search.searchPage.notfound} “{searchQuery}”
                 </Title>
                 <p className={"mb-5 text-2xl font-bold"}>{staticData.search.searchPage.question}</p>
-                {tags.map(tag => 
-                  <div>
+                {tags.map((tag, indx) => 
+                  <div key={indx}>
                     <span className={"font-bold underline underline-offset-1"}>
                       {tag.tag}
                     </span>{" "}

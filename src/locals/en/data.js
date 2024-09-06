@@ -381,7 +381,7 @@ export default {
                     "Order confirmation",
                     "Advance payment",
                     "Production start",
-                    "Order proceeds to TEП warehouse",
+                    "Order proceeds to TEP warehouse",
                     "All satisfied"
                 ]
             },
@@ -660,6 +660,7 @@ export default {
     "info_for_buyers": {// Generated with AI
       "text1": "Information for Buyers",
       "text2": "TEP is much more than a company selling textile products. It is a multifaceted brand characterized by the use of eco-friendly and modern materials such as cotton, a strong stance on human rights, comfortable working conditions, and democratic design of its products.",
+      "services": "Services",
       "info_links": [
         "Contact us",
         "Product returns",
