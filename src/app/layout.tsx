@@ -16,6 +16,8 @@ import { Wholesale100K } from "components/Purchase/Wholesale100K";
 import "@smastrom/react-rating/style.css";
 
 import "../styles/globals.css";
+import GoogleAnalytics from "components/GoogleAnalytics";
+import GoogleTagManager from "components/GoogleTagManager";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +59,14 @@ export const metadata: Metadata = {
     template: "%s | ТЕП",
   },
   description: "ТЕП",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE,
+    yandex: 'yandex',
+    yahoo: 'yahoo',
+    other: {
+      me: ['my-email', 'my-link'],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -64,11 +74,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html
       lang={"uk"}
       className={`${mont.variable} h-full scroll-smooth text-black`}
     >
+      <GoogleTagManager />
+      <GoogleAnalytics />
       <body className={"relative h-full"}>
         <Providers>
           <Banner />
