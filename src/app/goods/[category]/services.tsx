@@ -2,6 +2,7 @@ import StaticData from "locals/dataInterface";
 import { ProductDAOService } from "./dao-services";
 import { ProductToShow, ProductWithVariant } from "./page";
 import { getUserIP } from "utils/helpers";
+import { FilterFields } from "./interfaces";
 
 function filterExpiredProducts(viewedProducts: {id: string, expiry: number}[]):{id: string, expiry: number}[]{
     const now = new Date().getTime();
@@ -104,5 +105,15 @@ export class ProductService {
 
       const images:{image: string}[]= await response.json();
       return images;
+    }
+
+    public async getFilterFields(category_slug: string): Promise<FilterFields> {
+      const response = await this.daoService.getFilterFields(category_slug);
+      if (!response.ok) {
+        return {colors: [], sizes: [], materials: [], filter_fields: []};
+      }
+
+      const filterFields = await response.json();
+      return filterFields;
     }
 }

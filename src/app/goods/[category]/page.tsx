@@ -19,6 +19,8 @@ import { useAuth } from "contexts/AuthContext";
 
 import { sortings } from "./defaultValues";
 import NotFound from "app/not-found";
+import { ProductService } from "./services";
+import { FilterFields } from "./interfaces";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -283,9 +285,17 @@ export default function CategoryPage({
     });
   }
 
+  const productService = new ProductService(); 
+
   useEffect(() => {
     fetchCategory();
   }, [staticData]);
+
+  const [filterFields, setFilterFields] = useState<FilterFields>({colors: [], sizes: [], materials: [], filter_fields: []});
+
+  useEffect(() => {
+    productService.getFilterFields(category.slug).then(filterFields => setFilterFields(filterFields));
+  }, [category]);
 
   useEffect(() => {
     searchFetch();
@@ -304,7 +314,7 @@ export default function CategoryPage({
         sort={sort} 
         setSort={setSort} 
         filters={category.filter}
-        sizes={getUniqueSizes(productsWithVariants)}
+        filterFields={filterFields}
         setFilterParams={setFilterParams}
         filterParams={filterParams}
       />

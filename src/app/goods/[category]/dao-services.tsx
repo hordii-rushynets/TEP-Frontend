@@ -62,5 +62,10 @@ export class ProductDAOService {
       const response = await fetch(`${this.apiUrl}/api/store/inspiration-image/`);
       return response;
     }
+
+    public async getFilterFields(category_slug: string): Promise<Response> {
+      const response = await fetch(`${this.apiUrl}/api/store/categories-fields/${category_slug}/`);
+      return response;
+    }
   }
   
