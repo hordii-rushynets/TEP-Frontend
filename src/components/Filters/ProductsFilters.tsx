@@ -20,6 +20,8 @@ import { useLocalization } from "contexts/LocalizationContext";
 import { generateDictionary, getTrueKeys } from "utils/helpers";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { FilterFields } from "app/goods/[category]/interfaces";
+import { Size } from "app/goods/[category]/page";
 
 export interface DynamicFilterField {
   id: number;
@@ -42,17 +44,17 @@ type PillowsFiltersProps = {
   sort: string;
   setSort: (string: string) => void;
   filters: DynamicFilter[];
-  sizes: string[];
+  filterFields: FilterFields;
   filterParams: {[key: string]: string;};
   setFilterParams: Dispatch<SetStateAction<{[key: string]: string;}>>;
 };
 
-export default function ProductsFilters({ count, sort, setSort, filters, sizes, setFilterParams, filterParams }: PillowsFiltersProps) {
+export default function ProductsFilters({ count, sort, setSort, filterFields, filters, setFilterParams, filterParams }: PillowsFiltersProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
   const params = useParams();
 
-  const [size, setSize] = useState(generateDictionary(sizes));
+  const [size, setSize] = useState(generateDictionary(filterFields.sizes.map(size => size[`title_${localization}` as keyof Size])));
   const [dynamicFilterFields, setDynamicFilterFields] = useState<{ [key: string]: boolean }>({});
 
   useEffect(()=>{
@@ -121,7 +123,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
           onClose={() => setIsFilterOpen(false)}
         >
           <Skeleton onClick={() => setIsFilterOpen(false)} count={count} isCleanButtonDisabled={getTrueKeys(size) + getTrueKeys(dynamicFilterFields) === ""} cleanFIlter={() => {
-            setSize(generateDictionary(sizes));
+            setSize(generateDictionary(filterFields.sizes.map(size => size[`title_${localization}` as keyof Size])));
             setDynamicFilterFields({});
           }}>
             <Disclosure>
@@ -154,7 +156,7 @@ export default function ProductsFilters({ count, sort, setSort, filters, sizes, 
                 className={{ triggerWrapper: "py-8 font-bold" }}
               >
                 <div className={"max-w-[127px] py-5"}>
-                  {sizes.map((size_name, idx)=>
+                  {filterFields.sizes.map(size => size[`title_${localization}` as keyof Size]).map((size_name, idx)=>
                     <FilterCheckbox
                       key={idx}
                       checked={size[size_name]}
