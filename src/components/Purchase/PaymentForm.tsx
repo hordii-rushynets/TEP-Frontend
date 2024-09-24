@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import ReactInputMask from "react-input-mask";
 import { PurchaseUrl } from "route-urls";
@@ -18,21 +18,33 @@ import {
 } from "common/ui";
 import { QuestionTip } from "components/User/QuestionTip";
 import { useLocalization } from "contexts/LocalizationContext";
+import { PurchaseService } from "app/purchase/services";
+import { usePostService } from "contexts/PostServiceContext";
+import { CartService } from "app/account/cart/services";
+import { useAuth } from "contexts/AuthContext";
+import { CartItem } from "app/account/cart/interfaces";
+import { Error } from "app/purchase/interfaces";
 
 export function PaymentForm() {
-  const [cardNumber, setCardNumber] = useState("");
-  const [date, setDate] = useState("");
-  const [cvv, setCvv] = useState("");
+  // const [cardNumber, setCardNumber] = useState("");
+  // const [date, setDate] = useState("");
+  // const [cvv, setCvv] = useState("");
+  const { addressForm, deliveryForm } = usePostService();
+  const purchaseService = new PurchaseService();
+  const cartService = new CartService();
+  const authContext = useAuth();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartRefresh, setCartRefresh] = useState(false);
   
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
 
   const formSchema = z.object({
     payment_method: z
       .string()
       .min(1, staticData.forms.paymentError)
       .default(""),
-    add_card: z.boolean().default(true),
-    promo_code: z.string().default(""),
+    // add_card: z.boolean().default(true),
+    // promo_code: z.string().default(""),
     comment: z.string().default(""),
   });
   
@@ -45,25 +57,77 @@ export function PaymentForm() {
     defaultValues: getDefaults(formSchema),
   });
 
-  function onSubmit(data: Form) {
-    const fullData = {
-      ...data,
-      cardNumber: cardNumber.match(/\d/g)?.join(""),
-      date,
-      cvv,
-    };
-    fullData;
-    setCardNumber("");
-    setDate("");
-    setCvv("");
-    // TODO
-    // ...
-    router.push(PurchaseUrl.getConfirmation());
+  useEffect(() => {
+    cartService.getCart(authContext).then(items => setCartItems(items));
+  }, [cartRefresh]);
+
+  const deliveryValues = deliveryForm.getValues();
+  if (deliveryValues.delivery_method === "" || deliveryValues.delivery_service === "") {
+    router.push(PurchaseUrl.getDelivery());
   }
+
+  const [ errors, setErrors ] = useState<Error[]>([]);
+
+  const SubmitParcel = (data: Form) => {
+    const addressValues = addressForm.getValues();
+    const deliveryValues = deliveryForm.getValues();
+
+    purchaseService.createParcel({
+      "area_recipient": addressValues.region,
+      "city_recipient": deliveryValues.delivery_service === "UkrPost" ? addressValues.postal : addressValues.city,
+      "recipient_address": deliveryValues.delivery_method === "WarehouseDoors" || deliveryValues.delivery_method === "W2D" ? deliveryValues.street : deliveryValues.department,
+      "recipient_house": deliveryValues.house,
+      "recipient_float": deliveryValues.flat,
+      "recipient_name": `${addressValues.lastName} ${addressValues.firstName}`,
+      "description": data.comment || "TEST TEST TEST",
+      "settlemen_type": "місто",
+      "recipients_phone": addressValues.phoneNumber,
+      "service_type": deliveryValues.delivery_method,
+      "cart_item_ids": cartItems.map(item => item.id),
+      "payment_method": data.payment_method,
+    }, deliveryValues.delivery_service, authContext).then(errors => {
+      if (errors) {
+        setErrors(errors);
+      } else {
+        router.push(PurchaseUrl.getPayment());
+      }
+    });
+  }
+
+  useEffect(() => {
+    let pageToRedirect = PurchaseUrl.getDelivery();
+    errors.forEach(error => {
+      const errorMessage = {
+        type: "manual", 
+        message: error[localization as keyof Error]
+      }
+
+      switch (error.error) {
+        case "city_error":
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("city", errorMessage);
+        case "recipient_branch_or_street_error":
+          deliveryForm.setError("street", errorMessage);
+        case "delivery_type_error":
+          deliveryForm.setError("delivery_method", errorMessage);
+        case "phone_number_error": 
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("phoneNumber", errorMessage);
+        case "person_error":
+          pageToRedirect = PurchaseUrl.getAddress();
+          addressForm.setError("firstName", errorMessage);
+          addressForm.setError("lastName", errorMessage);
+      }
+    });
+
+    if ( errors.length !== 0 ) {
+      router.push(pageToRedirect)
+    }
+  }, [errors]);
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={"max-w-[600px]"}>
+      <form onSubmit={form.handleSubmit(SubmitParcel)} className={"max-w-[600px]"}>
         <div
           className={
             "mb-12 flex flex-col gap-y-6 border-b border-tep_gray-200 pb-24"
@@ -76,15 +140,15 @@ export function PaymentForm() {
             options={[
               {
                 label: staticData.purchase.paymentForm.text3,
-                value: "by_card",
+                value: "ByCard",
               },
               {
                 label: staticData.purchase.paymentForm.text4,
-                value: "upon_delivery",
+                value: "UponReceipt",
               },
             ]}
           />
-          {form.watch("payment_method") === "by_card" && (
+          {/* {form.watch("payment_method") === "by_card" && (
             <div className={"flex flex-col gap-y-6 md:mb-4"}>
               <ReactInputMask
                 mask={"9999 9999 9999 9999"}
@@ -140,13 +204,13 @@ export function PaymentForm() {
                 label={staticData.purchase.paymentForm.text9}
               />
             </div>
-          )}
+          )} */}
 
-          <FormTextInput
+          {/* <FormTextInput
             fieldName={"promo_code"}
             label={staticData.purchase.paymentForm.text10}
             placeholder={staticData.purchase.paymentForm.text11}
-          />
+          /> */}
           <FormTextInput
             multiline
             fieldName={"comment"}

@@ -1011,7 +1011,7 @@ export default {
       "confirmation": {
         "text1": "Order Placed",
         "text2": "Your order has been successfully placed! Expect news about delivery. You can track the status of your order using the tracking number in the 'Track Order' section.",
-        "text3": "Track Order",
+        "text3": "View Order",
         "text4": "Home"
       },
       "deliveryTitle": "Delivery",
