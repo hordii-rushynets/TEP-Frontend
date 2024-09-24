@@ -63,6 +63,11 @@ export class ProductDAOService {
       return response;
     }
 
+    public async getFilterFields(category_slug: string): Promise<Response> {
+      const response = await fetch(`${this.apiUrl}/api/store/categories-fields/${category_slug}/`);
+      return response;
+    }
+
     public async getNewProducts(category: string, authContext: any): Promise<Response> {
       const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?ordering=-last_modified&category_slug=${category}`, {}, authContext)
       return response;

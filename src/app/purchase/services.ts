@@ -1,6 +1,7 @@
 import { getUserIP } from "utils/helpers";
 import { PurchaseDAOService } from "./dao-services";
 import { Error, Stage, Warehouse } from "./interfaces";
+import { type } from "ramda";
 
 export class PurchaseService {
     private daoService: PurchaseDAOService;
@@ -27,8 +28,20 @@ export class PurchaseService {
     public async createParcel(body: Object, service: string, authContext: any): Promise<void | Error[]> {
         const ip = await getUserIP();
         const response = await this.daoService.createParcel(ip, body, service, authContext);
-        if (response) {
-            return response;
+        if ( type(response) === "String") {
+            const newWindow = window.open('', '_blank');
+
+            if (newWindow) {
+                newWindow.document.open();
+                newWindow.document.write(response as string);
+                newWindow.document.close(); 
+            } else {
+                console.error('Failed to open new window. Please check browser settings.');
+            }
+        }
+
+        if (type(response) === "Array") {
+            return response as Error[];
         }
     }
 }

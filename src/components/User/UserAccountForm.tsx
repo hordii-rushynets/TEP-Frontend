@@ -127,15 +127,15 @@ export function UserAccountForm({user, refresh, setRefresh,}: UserAccountProps) 
               }
               onClick={() => setIsDateOpen(true)}
             />
-            <FormSelectInput
+            {/* <FormSelectInput
               fieldName={"profileType"}
               label={staticData.account.userAccountForm.text12}
               options={[
                 { label: staticData.account.userAccountForm.text13, value: "usual" },
                 { label: staticData.account.userAccountForm.text14, value: "another" },
               ]}
-            />
-            <UserSocials fbLink={"#"} googleLink={"#"} />
+            /> */}
+            {/* <UserSocials fbLink={"#"} googleLink={"#"} /> */}
             <Button
               type={"submit"}
               fullWidth

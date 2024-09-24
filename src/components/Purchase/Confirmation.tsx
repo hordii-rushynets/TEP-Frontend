@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { MainUrl, ServicesUrl } from "route-urls";
+import { MainUrl, UserUrl } from "route-urls";
 
 import { Button, Container, Section, Title } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
@@ -31,7 +31,7 @@ export function Confirmation() {
                 "flex flex-col justify-center gap-x-4 gap-y-6 self-stretch md:flex-row"
               }
             >
-              <Link href={ServicesUrl.getTracking()}>
+              <Link href={UserUrl.getOrderHistory()}>
                 <Button colorVariant={"black"} fullWidth size={"large"}>
                 {staticData.purchase.confirmation.text3}
                 </Button>

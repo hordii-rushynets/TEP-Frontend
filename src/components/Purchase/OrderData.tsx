@@ -40,63 +40,6 @@ export function OrderData() {
     cartService.getCart(authContext).then(items => setCartItems(items));
   }, [cartRefresh]);
 
-  const [ errors, setErrors ] = useState<Error[]>([]);
-
-  const SubmitParcel = () => {
-    const addressValues = addressForm.getValues();
-    const deliveryValues = deliveryForm.getValues();
-
-    purchaseService.createParcel({
-      "area_recipient": addressValues.region,
-      "city_recipient": deliveryValues.delivery_service === "UkrPost" ? addressValues.postal : addressValues.city,
-      "recipient_address": deliveryValues.delivery_method === "WarehouseDoors" || deliveryValues.delivery_method === "W2D" ? deliveryValues.street : deliveryValues.department,
-      "recipient_house": deliveryValues.house,
-      "recipient_float": deliveryValues.flat,
-      "recipient_name": `${addressValues.lastName} ${addressValues.firstName}`,
-      "description": "TEST TEST TEST",
-      "settlemen_type": "місто",
-      "recipients_phone": addressValues.phoneNumber,
-      "service_type": deliveryValues.delivery_method,
-      "cart_item_ids": cartItems.map(item => item.id)
-    }, deliveryValues.delivery_service, authContext).then(errors => {
-      if (errors) {
-        setErrors(errors);
-      } else {
-        router.push(PurchaseUrl.getPayment());
-      }
-    });
-  }
-
-  useEffect(() => {
-    let pageToRedirect = PurchaseUrl.getDelivery();
-    errors.forEach(error => {
-      const errorMessage = {
-        type: "manual", 
-        message: error[localization as keyof Error]
-      }
-
-      switch (error.error) {
-        case "city_error":
-          pageToRedirect = PurchaseUrl.getAddress();
-          addressForm.setError("city", errorMessage);
-        case "recipient_branch_or_street_error":
-          deliveryForm.setError("street", errorMessage);
-        case "delivery_type_error":
-          deliveryForm.setError("delivery_method", errorMessage);
-        case "phone_number_error": 
-          pageToRedirect = PurchaseUrl.getAddress();
-          addressForm.setError("phoneNumber", errorMessage);
-        case "person_error":
-          pageToRedirect = PurchaseUrl.getAddress();
-          addressForm.setError("firstName", errorMessage);
-          addressForm.setError("lastName", errorMessage);
-      }
-    });
-
-    if ( errors.length !== 0 ) {
-      router.push(pageToRedirect)
-    }
-  }, [errors]);
 
   if (!cartItems.length) {
     return (
@@ -168,7 +111,7 @@ export function OrderData() {
           <div>
             <TotalPriceBlock goods={cartItems} />
             <div className={"sm:inline-block"}>
-              <Button fullWidth colorVariant={"black"} size={"super-large"} onClick={SubmitParcel}>
+              <Button fullWidth colorVariant={"black"} size={"super-large"} onClick={() => {router.push(PurchaseUrl.getPayment());}}>
               {staticData.purchase.orderData.saveButton}
               </Button>
             </div>
