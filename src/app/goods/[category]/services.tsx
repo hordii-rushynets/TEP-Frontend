@@ -105,4 +105,36 @@ export class ProductService {
       const images:{image: string}[]= await response.json();
       return images;
     }
+
+    public async getNewProducts(staticData: StaticData, category: string, authContext: any): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
+      return await this.daoService.getNewProducts(category, authContext).then(response => {
+        if (response.ok) {return response.json();}
+      }).then(data => {
+        if (data) {
+        let productsToShow = data.map((product:any) => {
+          let productVariant = product.product_variants[0];
+
+          return {
+            id: product.id,
+            slug: product.slug,
+            title: product[`title_${staticData.backendPostfix}` || "title"],
+            category_slug: product.category.slug,
+            category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
+            image: productVariant.main_image || "",
+            price: productVariant.default_price,
+            isSale: productVariant.promotion,
+            salePrice: productVariant.promo_price,
+            count: productVariant.count,
+            number_of_views: product.number_of_views,
+            date: new Date(product.last_modified), 
+            isFavourite: product.is_favorite,
+            isInCart: product.in_cart
+          }
+        });
+
+        return {productsWithVariant: data, productsToShow: productsToShow};
+      }
+      else {return {productsWithVariant: [], productsToShow: []}};
+      });
+    }
 }

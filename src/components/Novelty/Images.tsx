@@ -4,8 +4,9 @@ import { Container, Section } from "common/ui";
 
 import IMG1 from "./static/image1.jpg";
 import IMG2 from "./static/image2.jpg";
+import { ProductToShow } from "app/goods/[category]/page";
 
-export const Images = () => {
+export const Images = ({blanket, towel}: {blanket: ProductToShow, towel: ProductToShow}) => {
   return (
     <Section className={"mb-24 lg:mb-40"}>
       <Container>
@@ -16,17 +17,7 @@ export const Images = () => {
               classes={{ wrapper: "pb-[147%] lg:pb-[110%]" }}
             />
             <Tip
-              product={{
-                id: "1",
-                slug: "",
-                category_title: "Ковдра",
-                category_slug: "sheets",
-                title: "Velure",
-                price: 1299,
-                image: "",
-                number_of_views: 1,
-                date: ""
-              }}
+              product={blanket}
               className={"absolute right-[20%] top-[45%]"}
             />
           </div>
@@ -36,17 +27,7 @@ export const Images = () => {
               classes={{ wrapper: "pb-[147%] lg:pb-[110%]" }}
             />
             <Tip
-              product={{
-                id: "2",
-                slug: "",
-                category_title: "Ковдра",
-                category_slug: "sheets",
-                title: "Velure",
-                price: 1299,
-                image: "",
-                number_of_views: 1,
-                date: ""
-              }}
+              product={towel}
               className={"absolute right-[30%] top-[30%]"}
             />
           </div>

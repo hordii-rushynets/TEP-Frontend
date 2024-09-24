@@ -62,5 +62,10 @@ export class ProductDAOService {
       const response = await fetch(`${this.apiUrl}/api/store/inspiration-image/`);
       return response;
     }
+
+    public async getNewProducts(category: string, authContext: any): Promise<Response> {
+      const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?ordering=-last_modified&category_slug=${category}`, {}, authContext)
+      return response;
+    }
   }
   
