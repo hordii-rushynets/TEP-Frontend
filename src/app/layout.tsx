@@ -18,6 +18,7 @@ import "@smastrom/react-rating/style.css";
 import "../styles/globals.css";
 import GoogleAnalytics from "components/GoogleAnalytics";
 import GoogleTagManager from "components/GoogleTagManager";
+import MetaPixel from "components/MetaPixel";
 
 export const dynamic = "force-dynamic";
 
@@ -82,6 +83,7 @@ export default function RootLayout({
     >
       <GoogleTagManager />
       <GoogleAnalytics />
+      <MetaPixel />
       <body className={"relative h-full"}>
         <Providers>
           <Banner />
@@ -89,9 +91,9 @@ export default function RootLayout({
           <AuthorizationNotification />
           <CartNotification />
           <FavouriteNotification />
-          <Wholesale10K />
+          {/* <Wholesale10K />
           <Wholesale100K />
-          <Promocode10Percent />
+          <Promocode10Percent /> */}
           <div className={"flex h-full flex-col"}>
             <Header />
             <main className={"relative flex-1 pt-[147px] md:pt-[95px]"}>
