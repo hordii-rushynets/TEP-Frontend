@@ -14,9 +14,11 @@ import { CartItem } from "app/account/cart/interfaces";
 import { useAuth } from "contexts/AuthContext";
 import { PostServiceProvider } from "contexts/PostServiceContext";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ConversionsService } from "services/conversionsServices";
 
 export function Cart() {
   const cartService = new CartService();
+  const conversionsService = new ConversionsService();
   const authContext = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartRefresh, setCartRefresh] = useState(false);
@@ -108,7 +110,7 @@ export function Cart() {
             <div className={"flex flex-col"}>
               <TotalPriceBlock goods={cartItems}/>
               <Link href={PurchaseUrl.getAddress()} className={"self-end"}>
-                <Button colorVariant={"black"} size={"super-large"}>
+                <Button colorVariant={"black"} size={"super-large"} onClick={() => {conversionsService.sendConversion("InitiateCheckout")}}>
                 {staticData.account.cart.text8}
                 </Button>
               </Link>

@@ -19,7 +19,7 @@ export function TotalPriceBlock({
 
   const [deliveryPrice, setDeliveryPrice] = useState<number | undefined>();
   const purchaseService = new PurchaseService();
-  const { addressForm, deliveryForm } = usePostService();
+  const { addressForm, deliveryForm, setCost } = usePostService();
 
   useEffect(() => {
     const addressValues = addressForm.getValues();
@@ -31,6 +31,10 @@ export function TotalPriceBlock({
       purchaseService.getDeliveryPrice(service, totalPrice, city, weight).then(cost => setDeliveryPrice(cost));
     }
   }, []);
+
+  useEffect(() => {
+    setCost(deliveryPrice ? totalPrice + deliveryPrice : totalPrice);
+  }, [deliveryPrice]);
 
   const { staticData } = useLocalization();
 

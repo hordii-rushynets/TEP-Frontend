@@ -6,6 +6,7 @@ import { Button } from "common/ui";
 import { CartItem } from "app/account/cart/interfaces";
 import { CartProductCard } from "./CartProductCard";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ConversionsService } from "services/conversionsServices";
 
 export type CartListProps = {
   goods: CartItem[];
@@ -17,6 +18,7 @@ export type CartListProps = {
 
 export function CartList({ goods, hasButton = true, trashAction, cartRefresh, setCartRefresh }: CartListProps) {
   const { staticData } = useLocalization();
+  const conversionsService = new ConversionsService();
 
   return (
     <div
@@ -34,7 +36,7 @@ export function CartList({ goods, hasButton = true, trashAction, cartRefresh, se
           href={PurchaseUrl.getAddress()}
           className={"self-end lg:self-start"}
         >
-          <Button colorVariant={"black"} size={"super-large"}>
+          <Button colorVariant={"black"} size={"super-large"} onClick={() => {conversionsService.sendConversion("InitiateCheckout")}}>
             {staticData.account.cartList}
           </Button>
         </Link>

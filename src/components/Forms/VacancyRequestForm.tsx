@@ -12,6 +12,7 @@ import { z } from "zod";
 import { Button, FormTextInput, TextInput, Title } from "common/ui";
 import { VacancyService } from "app/company/vacancies/services";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ConversionsService } from "services/conversionsServices";
 
 export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
   const [phone, setPhone] = useState("");
@@ -20,6 +21,7 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
   const id = useId();
   const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
   const vacancyService = new VacancyService();
+  const conversionsService = new ConversionsService();
   const { staticData } = useLocalization();
 
   const vacancyRequestSchema = z.object({
@@ -55,6 +57,7 @@ export function VacancyRequestForm({ slug = "" }: { slug?: string }) {
     vacancyService.postVacancyOffer(offerData).then(success => {
       if (success) {
         setPhone("");
+        conversionsService.sendConversion("SubmitApplication");
         form.reset();
         router.push(`${pathname.split("?")[0]}/success`);
       }

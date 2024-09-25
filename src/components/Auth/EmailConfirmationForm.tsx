@@ -16,6 +16,7 @@ import {
   FormTextInput,
 } from "common/ui";
 import { useAuth } from "contexts/AuthContext";
+import { ConversionsService } from "services/conversionsServices";
 
 const formSchema = z.object({
   verificationCode: z.string()
@@ -40,6 +41,7 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
   const { staticData } = useLocalization();
 
   const accountService = new AccountService();
+  const conversionsService = new ConversionsService();
   const authContext = useAuth();
 
   function onSubmit(data: Form) {
@@ -70,6 +72,7 @@ export function EmailConfirmationForm({updating = false} : EmailConfirmationForm
         if (response.status === 200) {
           setText(staticData.auth.notifications.registration);
           setIsOpen(true);
+          conversionsService.sendConversion("EmailSubscription");
           localStorage.removeItem("TEPemail");
           router.push(AuthUrl.getSignIn());
         }
