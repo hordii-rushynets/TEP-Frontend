@@ -26,15 +26,22 @@ import { useAuth } from "contexts/AuthContext";
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ConversionsService } from "services/conversionsServices";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const conversionsService = new ConversionsService();
+  const pathname = usePathname();
 
   useEffect(() => {
     const body = document.querySelector("body");
     if (!body) return;
     body.style.overflow = menuIsOpen ? "hidden" : "";
-  }, [menuIsOpen]);
+
+    conversionsService.sendConversion("PageView");
+  }, [menuIsOpen, pathname]);
 
   const { isAuthenticated } = useAuth();
   const { staticData } = useLocalization();

@@ -24,17 +24,15 @@ export function OrderData() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartRefresh, setCartRefresh] = useState(false);
   const router = useRouter();
-  const { setIsOpen, setText } = useNotificationContext();
 
-  const { addressForm, deliveryForm } = usePostService();
-  const purchaseService = new PurchaseService();
+  const { deliveryForm } = usePostService();
 
   const deliveryValues = deliveryForm.getValues();
   if (deliveryValues.delivery_method === "" || deliveryValues.delivery_service === "") {
     router.push(PurchaseUrl.getDelivery());
   }
 
-  const { localization, staticData } = useLocalization();
+  const { staticData } = useLocalization();
 
   useEffect(() => {
     cartService.getCart(authContext).then(items => setCartItems(items));

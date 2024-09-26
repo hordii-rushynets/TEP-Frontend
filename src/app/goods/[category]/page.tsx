@@ -21,6 +21,7 @@ import { sortings } from "./defaultValues";
 import NotFound from "app/not-found";
 import { ProductService } from "./services";
 import { FilterFields } from "./interfaces";
+import { ConversionsService } from "services/conversionsServices";
 
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
@@ -182,6 +183,11 @@ export default function CategoryPage({
   if (isStr(page) && !isNaN(parseInt(page))) activePageNum = parseInt(page);
 
   const [category, setCategory] = useState<Category>(DefaultCategory);
+  const conversionsService = new ConversionsService();
+
+  useEffect(() => {
+    conversionsService.sendConversion("ViewCategory");
+  }, []);
 
   async function fetchCategory() {
     await fetch(`${APIurl}/api/store/categories/${params.category}/`)

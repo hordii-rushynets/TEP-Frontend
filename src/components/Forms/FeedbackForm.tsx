@@ -26,6 +26,7 @@ import { useAuth } from "contexts/AuthContext";
 import { AuthUrl } from "route-urls";
 import { useNotificationContext } from "contexts/NotificationContext";
 import { ImageSquare } from "common/ImageSquare";
+import { ConversionsService } from "services/conversionsServices";
 
 export function FeedbackForm() {
   const { staticData } = useLocalization();
@@ -34,6 +35,7 @@ export function FeedbackForm() {
   const id = useId();
   const [products, setProducts] = useState<ProductWithVariant[]>([]);
   const feedbackService = new FeedbackService();
+  const conversionsService = new ConversionsService();
   const authContext = useAuth();
   const {setText, setIsOpen} = useNotificationContext();
   const [selectedFiles, setSelectedFiles] = useState<Array<File>>([]);
@@ -67,6 +69,7 @@ export function FeedbackForm() {
 
     feedbackService.postFeedback(dataToSend, authContext).then(success => {
       if (success) {
+        conversionsService.sendConversion("SubmitApplication");
         form.reset();
         router.push(`${pathname}/success`);
       }

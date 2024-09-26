@@ -26,6 +26,8 @@ export interface PostServiceContextType {
     phoneNumber: string;
     email: string;
 }, any, undefined>;
+  cost: number;
+  setCost: (v: number) => void;
 }
 
 const PostServiceContext = createContext<PostServiceContextType | undefined>(undefined);
@@ -122,8 +124,10 @@ export const PostServiceProvider = ({ children }: PostServiceProviderProps) => {
       defaultValues: getDefaults(addressFormSchema),
     });
 
+  const [cost, setCost] = useState(0);
+
   return (
-    <PostServiceContext.Provider value={{ deliveryForm, addressForm}}>
+    <PostServiceContext.Provider value={{ deliveryForm, addressForm, cost, setCost}}>
       {children}
     </PostServiceContext.Provider>
   );

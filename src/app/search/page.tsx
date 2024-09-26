@@ -15,6 +15,7 @@ import { SearchService } from "./services";
 import { useLocalization } from "contexts/LocalizationContext";
 import { sortings } from "app/goods/[category]/defaultValues";
 import { useAuth } from "contexts/AuthContext";
+import { ConversionsService } from "services/conversionsServices";
 
 export default function SearchPage() {
   const { searchQuery } = useSearchContext();
@@ -22,6 +23,7 @@ export default function SearchPage() {
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [tags, setTags] = useState<{tag: string, count: number}[]>([]);
   const searchService = new SearchService();
+  const conversionsService = new ConversionsService();
   const authContext = useAuth();
   const { staticData, localization } = useLocalization();
   const [filters, setFilters] = useState<{[key: string]: string}>({
@@ -43,6 +45,7 @@ export default function SearchPage() {
 
   useEffect(() => {
     handleFilterChange(`title_${localization}`, searchQuery);
+    conversionsService.sendConversion("Search");
   }, [searchQuery]);
 
   useEffect(() => {

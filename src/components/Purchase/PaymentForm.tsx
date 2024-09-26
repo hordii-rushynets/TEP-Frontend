@@ -24,14 +24,16 @@ import { CartService } from "app/account/cart/services";
 import { useAuth } from "contexts/AuthContext";
 import { CartItem } from "app/account/cart/interfaces";
 import { Error } from "app/purchase/interfaces";
+import { ConversionsService } from "services/conversionsServices";
 
 export function PaymentForm() {
   // const [cardNumber, setCardNumber] = useState("");
   // const [date, setDate] = useState("");
   // const [cvv, setCvv] = useState("");
-  const { addressForm, deliveryForm } = usePostService();
+  const { addressForm, deliveryForm, cost } = usePostService();
   const purchaseService = new PurchaseService();
   const cartService = new CartService();
+  const conversionsService = new ConversionsService();
   const authContext = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartRefresh, setCartRefresh] = useState(false);
@@ -92,6 +94,8 @@ export function PaymentForm() {
         router.push(PurchaseUrl.getPayment());
       }
     });
+
+    conversionsService.sendConversion("Purchase", {"currency": "UAH", "value": cost});
   }
 
   useEffect(() => {
