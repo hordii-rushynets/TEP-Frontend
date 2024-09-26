@@ -21,7 +21,7 @@ export class ConversionsService {
         const fbp = document.cookie.match(/_fbp=([^;]*)/)?.[1] || '';
         const fbc = document.cookie.match(/_fbc=([^;]*)/)?.[1] || '';
         const ip = await getUserIP();
-        const time = Date.now();
+        const time = Math.floor(Date.now()/1000);
         const agent = navigator.userAgent || "";
         const url = window.location.href;
 
