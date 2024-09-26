@@ -131,6 +131,7 @@ export interface ProductWithVariant {
   is_favorite: boolean;
   in_cart: boolean;
   dimensional_grid: DimensionalGrid[];
+  dimensional_grid_description: string;
 }
 
 export type DimensionalGridSize = {

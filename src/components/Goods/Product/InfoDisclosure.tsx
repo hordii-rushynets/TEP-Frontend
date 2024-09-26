@@ -122,26 +122,30 @@ export function InfoDisclosure({ feedbacks, info, description, dimensionalGrid }
           <Disclosure>
             {dimensionalGrid.map((grid, indx) => (
               <div className={"flex gap-x-2 py-8"} key={indx}>
-                <Title className={"basis-32"} component={"h6"} size={"base"}>
+                <Title className={"basis-32 break-words w-20"} component={"h6"} size={"base"}>
                   {grid[`title_${staticData.backendPostfix}` as keyof DimensionalGrid] as string}
                 </Title>
-                <div
-                  className={
-                    "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                  }
-                >
-                  {grid.sizes.map((size, indx) => (
-                    <span key={indx}>{size[`title_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
-                  ))}
-                </div>
-                <div
-                  className={
-                    "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight"
-                  }
-                >
-                  {grid.sizes.map((size, indx) => (
-                    <span key={indx}>{size[`size_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
-                  ))}
+                <div className={
+                  "flex flex-1 gap-x-2"
+                }>
+                  <div
+                    className={
+                      "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight w-24"
+                    }
+                  >
+                    {grid.sizes.map((size, indx) => (
+                      <span className={"break-words"} key={indx}>{size[`title_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                    ))}
+                  </div>
+                  <div
+                    className={
+                      "flex flex-1 flex-col gap-y-2 text-sm lg:font-extralight w-24"
+                    }
+                  >
+                    {grid.sizes.map((size, indx) => (
+                      <span className={"break-words"} key={indx}>{size[`size_${staticData.backendPostfix}` as keyof DimensionalGridSize]}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}

@@ -207,7 +207,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                 info={currentVariant?.variant_info || VariantInfoDefault}
                 feedbacks={feedbacks.reverse()}
                 dimensionalGrid={productWithVariant?.dimensional_grid || []}
-                description={productWithVariant ? productWithVariant[(`description_${staticData.backendPostfix}` || "description") as keyof ProductWithVariant].toString() : ""}
+                description={productWithVariant?.[(`dimensional_grid_description_${staticData.backendPostfix}` || "dimensional_grid_description") as keyof ProductWithVariant]?.toString() || ""}
               />
               <SimilarGoods product={productWithVariant}/>
               {productWithVariant?.images.length !== 0 && <InteriorLook images={productWithVariant?.images || []}/>}
