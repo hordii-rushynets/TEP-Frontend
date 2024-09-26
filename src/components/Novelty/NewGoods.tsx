@@ -8,6 +8,7 @@ import ProductsList from "components/Goods/ProductsList";
 
 import PillowIMG from "./static/pillow.jpg";
 import { useLocalization } from "contexts/LocalizationContext";
+import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
 
 const pillows = [...Array(9)].map((_, Idx) => ({
   id: (Idx + 1).toString(),
@@ -22,10 +23,13 @@ const pillows = [...Array(9)].map((_, Idx) => ({
 }));
 
 type NewGoodsProps = {
+  products: ProductToShow[];
+  productsWithVariant: ProductWithVariant[];
   activePage: number;
+  setCategory: (v: string) => void;
 };
 
-export const NewGoods = ({ activePage }: NewGoodsProps) => {
+export const NewGoods = ({ products, productsWithVariant, activePage, setCategory }: NewGoodsProps) => {
   const { staticData } = useLocalization();
 
   return (
@@ -35,13 +39,14 @@ export const NewGoods = ({ activePage }: NewGoodsProps) => {
           <Title className={"mb-9"}>{staticData.novelty.newGoodsTitle}</Title>
           <div className={"mb-12 md:mb-6"}>
             <Suspense fallback={<Loader />}>
-              <CategoriesFilter setCategory={(category) => {}}/>
+              <CategoriesFilter setCategory={(category) => {setCategory(category)}}/>
             </Suspense>
           </div>
           <ProductsList
             activePage={activePage}
-            products={pillows}
-            productsWithVariants={[]}
+            products={products}
+            productsWithVariants={productsWithVariant}
+            showCompare={false}
           />
         </div>
       </Container>
