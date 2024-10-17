@@ -5,9 +5,6 @@ services:
     build: .
     ports:
       - '3000:3000'
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development # development - for development, production - for production
-    command: npm run dev # npm run dev - for development, npm start - for production
+      - NODE_ENV=production # development - for development, production - for production
+    command: npm start # npm run dev - for development, npm start - for production

@@ -95,7 +95,7 @@ export interface ProductVariant {
   drop_shipping_price: number;  
   id: number;
   main_image: string;
-  materials: Material[];
+  materials?: Material[];
   product: number;
   promo_price: number;
   promotion: boolean;
@@ -207,8 +207,6 @@ export default function CategoryPage({
         title: data[`title_${staticData.backendPostfix}` || "title"],
         filter: data.filter
       });
-
-      data && setFilterParams({...filterParams, ["category_title"]: data.title});
     });
   }
 

@@ -153,7 +153,6 @@ export default function ProductCard({
               cartService.putItemInCart({
                 color_id: productWithVariant.product_variants[0].colors[0].id,
                 size_id: productWithVariant.product_variants[0].sizes[0].id,
-                material_id: productWithVariant.product_variants[0].materials[0].id,
                 filter_field_ids: [],
                 product_variants_id: productWithVariant.product_variants[0].id,
                 quantity: 1,

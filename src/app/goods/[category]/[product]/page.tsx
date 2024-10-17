@@ -138,7 +138,7 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
               isInStock={currentVariant?.count && isCurrVariantFound ? true : false}
               price={currentVariant?.promotion ? currentVariant.promo_price : currentVariant?.default_price || 0}
               sizes={sizes}
-              title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant].toString() : ""}
+              title={currentVariant ? currentVariant[(`title_${staticData.backendPostfix}` || "title") as keyof ProductVariant]?.toString() || "" : ""}
               count={count}
               setCount={setCount}
               images={[currentVariant?.main_image || ""].concat(currentVariant?.variant_images.map((image) => image.image) || [])}
@@ -153,7 +153,6 @@ export default function ProductPage({searchParams, params}:{searchParams: Search
                 cartService.putItemInCart({
                   color_id: colors.find(color => color[`title_${localization}` as keyof Color] === selectedColor)?.id,
                   size_id: sizes.find(size => size[`title_${localization}` as keyof Size] === selectedSize)?.id,
-                  material_id: currentVariant?.materials[0].id,
                   filter_field_ids: getFilterFieldIds(),
                   product_variants_id: currentVariant?.id,
                   quantity: count,
