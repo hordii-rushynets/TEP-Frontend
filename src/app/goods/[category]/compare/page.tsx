@@ -170,7 +170,7 @@ export default function ComparePage() {
                     }
                   >
                     <p className={"text-sm lg:font-extralight"}>
-                      {item.product_variants[0].materials?.[0][`title_${localization}` as keyof Material] || ""}
+                      {item.product_variants[0].materials?.[0]?.[`title_${localization}` as keyof Material] || localization === "en" ? "Material not specified" : "Матеріал не вказаний"}
                     </p>
                   </div>
                 );
