@@ -782,17 +782,80 @@ export default {
           "topic": "Frequently asked questions",
           "data": [
             {
-              "question": "Question 1",
-              "answer": ["Answer 1"]
+              "question": "What blanket/pillow sizes are available? ",
+              "answer": [
+                "Blankets: 140x210, 150x210, 180x210, 200x210, 200x220. ",
+                "Pillows: 50x70, 70x70."
+              ]
             },
             {
-              "question": "Question 2",
-              "answer": ["Answer 2"]
+              "question": "What material is used for bed linen? ",
+              "answer": ["Materials: Cotton Ranfors , Cotton Biaz, Stripe Satin."]
             },
             {
-              "question": "Question 3",
-              "answer": ["Answer 3"]
-            }
+              "question": "Is the product hypoallergenic ?",
+              "answer": ["Yes, the products are mostly hypoallergenic for everyone's convenience. However, it is worth checking each new product for hypoallergenic materials."]
+            },
+            {
+              "question": "Can I get a promo code ? ",
+              "answer": [
+                "Yes, promo codes are available during promotional offers."
+              ]
+            },
+            {
+              "question": "Are there gift coupons? What can you take as a gift?",
+              "answer": [
+                "Yes, gift coupons are under development."
+              ]
+            },
+            {
+              "question": "What is the shipping cost? How long does delivery within Ukraine take? ",
+              "answer": [
+                "\"Nova Poshta\" delivery:",
+                "•	at the post office — from UAH 70.",
+                "•	at the branch — from 75 hryvnias.",
+                "•	by courier — from UAH 110.",
+                "\"Ukrposhta Express\" delivery:",
+                "•	in the branch - from 45 hryvnias.",
+                "•	by courier — from UAH 70.",
+                "\"Meest Poshta\" delivery :",
+                "•	at the branch — from 75 hryvnias.",
+                "•	by courier — from UAH 115.",
+                "Shipment of goods within 1-3 working days from the moment of placing the order."
+              ]
+            },
+            {
+              "question": "Is it possible to pay for the product after receiving it?",
+              "answer": [
+                "Yes, payment is possible upon receipt or in advance to the account."
+              ]
+            },
+            {
+              "question": "How to properly wash blankets / pillows / bed linen?",
+              "answer": [
+                "•	Blankets: Easy care: machine washable and tumble dryable",
+                "•	Cushions: easy care: machine washable and tumble dry,",
+                "•	Bed linen: In order for the bed linen to last as long as possible and remain bright, we advise you to follow our washing and care recommendations: be sure to wash the bed linen before the first use, the first time the bed linen should be washed in the machine separately from other products at a temperature of 30 ° C, check whether all buttons are fastened buttons before washing, in the future wash with similar colors at a maximum temperature of 40°C"
+              ]
+            },
+            {
+              "question": "Is there a warranty? ",
+              "answer": [
+                "In case of an error when completing the order, you have the right to return or exchange the product within 14 calendar days. By signing the appropriate order acceptance form ( declaration ), you confirm the speedy completion of the transaction. After that, claims regarding external defects of the product , its quantity, completeness and appearance are not are accepted"
+              ]
+            },
+            {
+              "question": "Is it possible to order bed linen of a non-standard size? ",
+              "answer": [
+                "Yes, individual tailoring is possible from 50 pcs."
+              ]
+            },
+            {
+              "question": "Are gift-wrapped kits available?",
+              "answer": [
+                "So, for example, Stripe Satin sets in a gift box are a great option for a gift."
+              ]
+            },
           ]
         },
         {
@@ -800,14 +863,90 @@ export default {
           "topic": "Payment",
           "data": [
             {
-              "question": "Question 1",
-              "answer": ["Answer 1"]
-            }
+              "question": "What payment methods are available in your online store?",
+              "answer": ["We accept payment to a current account and in cash upon receipt of the order. You can also pay by card via LiqPay immediately when placing an order."]
+            },
+            {
+              "question": "Is it possible to pay for the order in cash? ",
+              "answer": ["Yes, you can pay for your order in cash when you receive it at the post office or when you pick it up from the city of Chernivtsi, str. Komunalnikiv 4 B"]
+            },
+            {
+              "question": "Is there a commission when paying by cash at the post office? ",
+              "answer": ["Yes, 2% of the order amount + UAH 20."]
+            },
+            {
+              "question": "Is it safe to pay by bank card on your website? ",
+              "answer": ["Absolutely! We use modern encryption methods to protect your payment data."]
+            },
+            {
+              "question": "If I choose to pay in cash, can I change the payment method after placing the order? ",
+              "answer": ["Yes, you can change the payment method when the manager confirms the order by phone."]
+            },
+            {
+              "question": "Are there additional fees when paying by bank card? ",
+              "answer": ["No, there are no additional fees when paying by bank card. You pay only the amount of your order."]
+            },
+            {
+              "question": "What to do if the payment did not go through or the funds were returned when paying with LiqPay ?",
+              "answer": ["In this case, call the number indicated on the website, the manager will send you bank details for payment or choose a cash settlement."]
+            },
+            {
+              "question": "How long after payment will you ship my order?",
+              "answer": ["Shipping will take place within 2 working days."]
+            },
+            {
+              "question": "Can you issue an invoice to a sole proprietorship or a legal entity?",
+              "answer": ["Yes, of course . If you need a personalized payment account , you must inform the manager before paying for the order."]
+            },
           ]
         },
         {
           "id": 5,
-          "topic": "Delivery"
+          "topic": "Delivery",
+          "data": [
+            {
+              "question": "What are your possible shipping methods?",
+              "answer": [
+                "We offer a choice of several delivery methods: Nova poshta, Ukrposhta, self-delivery from Chernivtsi, 4B Komunalnykiv St."
+              ]
+            },
+            {
+              "question": "How much does postage cost? ",
+              "answer": [
+                "The cost of delivery is calculated according to the carrier's tariffs and depends on the volume order You can check the approximate cost of delivery with the manager."
+              ]
+            },
+            {
+              "question": "Do you have free shipping?",
+              "answer": [
+                "Yes, there is. Free delivery for retail orders is valid from orders worth UAH 3,500. You can choose Nova poshta or Ukrposhta."
+              ]
+            },
+            {
+              "question": "When will my order ship?",
+              "answer": [
+                "Orders are shipped from Monday to Friday every day . After confirmation of the order, the shipment is made within 2 working days."
+              ]
+            },
+            {
+              "question": "How do I find out the TTN number?",
+              "answer": [
+                "After sending the order, you will receive an SMS message from Balakkom with TTN number. There is also information from the carrier. In the event that the SMS did not arrive, call the number indicated on the website."
+              ]
+            },
+            {
+              "question": "When will my order arrive?",
+              "answer": [
+                "It depends directly on the carrier you have chosen. If the goods are delivered by Novaya Poshta, on average it takes 1-2 days. Ukrposhta - 4 days to the city, 5-6 days delivery to the settlement. *sometimes the terms are shorter, the average indicator is indicated."
+              ]
+            },
+            {
+              "question": "Do you have urgent same day shipping?",
+              "answer": [
+                "Yes, we can send the product urgently if the order is placed before 2:00 p.m. on the current working day (Monday- Friday ) . Definitely report this to the manager."
+              ]
+            },
+          ]
         },
         {
           "id": 6,
@@ -836,13 +975,37 @@ export default {
           "topic": "Returns and exchanges",
           "data": [
             {
-              "question": "Question 1",
-              "answer": ["Answer 1"]
+              "question": "For what time can i return or exchange goods? ",
+              "answer": ["You can return or exchange the product within 14 days from the moment of payment."]
             },
             {
-              "question": "Question 2",
-              "answer": ["Answer 2"]
-            }
+              "question": "Which ones conditions for returning goods? ",
+              "answer": ["The product must be complete complete set , store freight appearance and integrity packaging , not in operation and have a receipt."]
+            },
+            {
+              "question": "Or Can I return the product without a receipt? ",
+              "answer": ["Sorry for the return or a check is mandatory for the exchange of goods ."]
+            },
+            {
+              "question": "Or can I exchange the product for another one ? ",
+              "answer": ["Yes, you can exchange the product for another , provided compliance all return conditions , no later than 14 days from the moment of payment."]
+            },
+            {
+              "question": "What what to do if the product was used ? ",
+              "answer": ["Unfortunately, the goods that were in operation , are not subject to return or exchange"]
+            },
+            {
+              "question": "Or need save original packaging for return ? ",
+              "answer": ["Yes, the product must be returned in its original packaging packaging with all components ."]
+            },
+            {
+              "question": "How do I get your money after product return ? ",
+              "answer": ["After receipt and review return , the amount will be returned through the fiscal device , in the way that was payment made within 3 working days days"]
+            },
+            {
+              "question": "Or can i return the product if he I just didn't like it ?",
+              "answer": ["Yes, you can return an item if it does not meet your expectations , provided compliance all return conditions and check availability ."]
+            },
           ]
         }
       ],
