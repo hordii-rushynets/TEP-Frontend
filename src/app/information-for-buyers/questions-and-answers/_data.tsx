@@ -26,7 +26,7 @@ export const qaa_categories: QAACategory[] = [
     },
     {
       id: 5,
-      url: ServicesUrl.getDelivery(),
+      url: `${InfoUrl.getQuestionsAndAnswers()}/4`,
       icon: <FiTruck />,
     },
     {
@@ -36,12 +36,12 @@ export const qaa_categories: QAACategory[] = [
     },
     {
       id: 7,
-      url: `${InfoUrl.getQuestionsAndAnswers()}/4`,
+      url: `${InfoUrl.getQuestionsAndAnswers()}/5`,
       icon: <FiBookOpen />,
     },
     {
       id: 8,
-      url: `${InfoUrl.getQuestionsAndAnswers()}/5`,
+      url: `${InfoUrl.getQuestionsAndAnswers()}/6`,
       icon: <FiHome />,
     },
   ];

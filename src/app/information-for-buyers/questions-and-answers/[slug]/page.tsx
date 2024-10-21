@@ -20,7 +20,7 @@ export default function CategoryPage() {
       <Section className={"mb-24 mt-12 lg:mb-40"}>
         <Container>
           <div>
-            <Title className={"mb-12"}>{staticData.info_for_buyers.qaCategoryPage}</Title>
+            <Title className={"mb-12"}>{categoryText.topic}</Title>
             <Disclosure>
               {categoryText?.data?.map((i: {question: string, answer: string[]}) => (
                 <DisclosureItem
