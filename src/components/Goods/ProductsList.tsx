@@ -9,6 +9,7 @@ type ProductsListProps = {
   products: ProductToShow[];
   productsWithVariants: ProductWithVariant[];
   activePage: number;
+  totalPages: number;
   showCompare?: boolean;
 } & Pick<HTMLAttributes<HTMLElement>, "className">;
 export default function ProductsList({
@@ -16,6 +17,7 @@ export default function ProductsList({
   productsWithVariants,
   activePage,
   className,
+  totalPages,
   showCompare = true,
 }: ProductsListProps) {
   return (
@@ -26,7 +28,7 @@ export default function ProductsList({
             "grid grid-cols-1 gap-x-6 gap-y-11 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-y-[72px]"
           }
         >
-          {products.slice(activePage*10 - 10,activePage*10).map((product) => {
+          {products.map((product) => {
             return <ProductCard 
               key={product.id} 
               product={product} 
@@ -38,7 +40,7 @@ export default function ProductsList({
         </div>
         <Pagination
           className={"mt-12 md:mt-[72px]"}
-          total={Math.ceil(products.length/10)}
+          total={totalPages}
           activePage={activePage}
         />
       </Container>
