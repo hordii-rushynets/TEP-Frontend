@@ -213,17 +213,20 @@ export default function CategoryPage({
   const { staticData, localization } = useLocalization();
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
   const [productsToShow, setProductsToShow] = useState([]);
-
-  function getUniqueSizes(products: ProductWithVariant[]): string[] {
-    const sizes = products.flatMap(product => product.product_variants.flatMap(variant => variant.sizes.map(size => size[(`title_${staticData.backendPostfix}` || "title") as keyof Size].toString())));
-    return Array.from(new Set(sizes));
-  }
+  const [totalPages, setTotalPages] = useState(1);
+  const [count, setCount] = useState(0);
 
   const [filterParams, setFilterParams] = useState<{[key: string]: string}>({
+    "page_size": "12",
+    "page": activePageNum.toString(),
     "category_slug": params.category,
     "size": "",
     "filter_fields_id": ""
   });
+
+  useEffect(() => {
+    setFilterParams({...filterParams, ["page"]: activePageNum.toString()});
+  }, [activePageNum]);
 
   const [sort, setSort] = useState<string>("suitable");
 
@@ -264,9 +267,9 @@ export default function CategoryPage({
       return
     })
     .then(data => {
-      data && setProductsWithVariants(data);
+      data && setProductsWithVariants(data.results);
       if (data) {
-        let productsToShow = data.map((product:any) => {
+        let productsToShow = data.results.map((product:any) => {
           let productVariant = product.product_variants[0];
           return {
             id: product.id,
@@ -286,6 +289,8 @@ export default function CategoryPage({
           }
         });
         setProductsToShow(productsToShow);
+        setTotalPages(data.total_pages);
+        setCount(data.count);
       }
     });
   }
@@ -315,7 +320,7 @@ export default function CategoryPage({
         }
       />
       <ProductsFilters 
-        count={productsWithVariants.length} 
+        count={count} 
         sort={sort} 
         setSort={setSort} 
         filters={category.filter}
@@ -329,6 +334,7 @@ export default function CategoryPage({
         activePage={activePageNum}
         products={productsToShow}
         productsWithVariants={productsWithVariants}
+        totalPages={totalPages}
       />
       <PopularGoods />
       <ProductDescriptions descriptions={staticData.goods.productDescriptions} />
