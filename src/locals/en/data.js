@@ -740,37 +740,45 @@ export default {
               ]
             },
             {
-              "question": "How to check product availability?",
-              "answer": ["How to check product availability?"]
+              "question": "How can I find out if a product is in stock?",
+              "answer": ["The availability status of each product is indicated on the product page. If the item is in stock, you will see an \"Add to Cart\" button. If the item is temporarily unavailable, the status will show as \"Out of Stock.\""]
             },
             {
-              "question": "What warranty do you offer on purchased items?",
-              "answer": ["What warranty do you offer on purchased items?"]
+              "question": "What should I do if the product is out of stock?",
+              "answer": ["If a product is unavailable, you can leave your email in the \"Notify me when available\" form, and we will send you a notification once the item is back in stock. You can also contact our support team to check on the possibility of restocking."]
             },
             {
-              "question": "Can TEP products be purchased abroad?",
-              "answer": ["Can TEP products be purchased abroad?"]
+              "question": "Can I reserve an item that is temporarily out of stock?",
+              "answer": ["Unfortunately, we do not offer the option to reserve out-of-stock items. However, you can subscribe to notifications about their availability on the product page."]
             },
             {
-              "question": "How to find out when a product will be back in stock?",
-              "answer": ["How to find out when a product will be back in stock?"]
+              "question": "How often is the information on product availability updated on the website?",
+              "answer": ["Product availability information is updated in real-time. We continuously monitor our inventory and update the data so you can see the most current information."]
             },
             {
-              "question": "What if the product arrived damaged?",
-              "answer": ["What if the product arrived damaged?"]
+              "question": "Are there any products that are always in stock?",
+              "answer": ["We strive to maintain a constant supply of our most popular products. However, due to high demand or seasonal changes, some items may be temporarily unavailable."]
             },
             {
-              "question": "When will certain products be available again?",
-              "answer": ["When will certain products be available again?"]
+              "question": "Can I order a product that is currently out of stock?",
+              "answer": ["Unfortunately, we do not accept orders for out-of-stock items. However, you can subscribe to availability notifications to receive an alert when the product is back in stock."]
             },
             {
-              "question": "Where can I find product information online?",
-              "answer": ["Where can I find product information online?"]
+              "question": "Is it possible to find out when an item will be available?",
+              "answer": ["Exact restocking dates depend on our suppliers and production schedules. You can contact our support team for more detailed information if you need an estimated time for restocking."]
             },
             {
-              "question": "When can we expect new discounts on certain products?",
-              "answer": ["When can we expect new discounts on certain products?"]
-            }
+              "question": "Are there products available only for a limited time?",
+              "answer": ["Yes, some products may be available for a limited time, especially during seasonal sales or promotions. We recommend keeping an eye on our updates and promotions to not miss out on unique offers."]
+            },
+            {
+              "question": "What should I do if a product is listed as in stock but cannot be added to the cart?",
+              "answer": ["If an item is shown as in stock but cannot be added to the cart, it may be a technical error. Please try refreshing the page or contact our support team so we can help resolve the issue."]
+            },
+            {
+              "question": "Can I check the availability of a product in a physical store (if applicable)?",
+              "answer": ["If we have physical stores, product availability in them may vary. You can call or message us to check the availability of a specific product at a particular store."]
+            },
           ]
         },
         {
@@ -957,17 +965,45 @@ export default {
           "topic": "General information",
           "data": [
             {
-              "question": "Question 1",
-              "answer": ["Answer 1"]
+              "question": "What is TEP?",
+              "answer": ["TEP is a Ukrainian online store and brand specializing in home products, including bed linen, towels, blankets, pillows, and other textile items. We offer high-quality products that create comfort and coziness in your home. TEP is simply warmth in your home. Read more in the \"About TEP\" section."]
             },
             {
-              "question": "Question 2",
-              "answer": ["Answer 2"]
+              "question": "Where is your store located?",
+              "answer": ["Our main office is located in Ukraine, and we deliver throughout the country and beyond. Our official showroom is located at 4B Komunalnykiv Street, Chernivtsi."]
             },
             {
-              "question": "Question 3",
-              "answer": ["Answer 3"]
-            }
+              "question": "What product categories are available on the site?",
+              "answer": ["On our website, you will find bed linens, blankets, pillows, throws, bedspreads, children's products, as well as home accessories. We are constantly expanding our range to meet all your needs."]
+            },
+            {
+              "question": "Are all products in stock?",
+              "answer": ["We continuously update our product range to ensure availability, but some items may occasionally be temporarily out of stock. You can contact our support team to check the availability of a specific product."]
+            },
+            {
+              "question": "Can I place an order on the website?",
+              "answer": ["Yes, you can easily place an order on our website by selecting the desired products and adding them to your cart. Follow the instructions to complete your purchase."]
+            },
+            {
+              "question": "Do you offer international shipping?",
+              "answer": ["Yes, we provide international shipping. The delivery terms and cost depend on the destination country. For more details, you can contact our support team or visit the \"Delivery\" section."]
+            },
+            {
+              "question": "What payment methods do you support?",
+              "answer": ["We accept payment via bank cards, online payments, and cash on delivery. Check out the available payment options on the checkout page."]
+            },
+            {
+              "question": "Do you offer a warranty on your products?",
+              "answer": ["Yes, we offer a warranty on all products purchased from our store. If you are not satisfied with your purchase, you can return or exchange the item within a specified period according to our return policy."]
+            },
+            {
+              "question": "How can I contact your support team?",
+              "answer": ["You can contact us via the feedback form on the website, by phone, or by email. Our operators are ready to answer your questions and help resolve any issues."]
+            },
+            {
+              "question": "Is it possible to get a discount or promo code?",
+              "answer": ["We frequently run promotions and offer discounts on certain product categories. You can also subscribe to our newsletter to receive information about special offers and promo codes."]
+            },
           ]
         },
         {
