@@ -15,7 +15,7 @@ export default function Technologies() {
         <div>
           <Title className={"mb-6 text-3xl"}>{staticData.company.about.technologies.text1}</Title>
           <p
-            className={"mb-7 max-w-[517px] text-sm md:mb-8 lg:font-extralight"}
+            className={"mb-7 max-w-[517px] text-sm md:mb-8 lg:text-sm"}
           >
             {staticData.company.about.technologies.text2}{" "}
           </p>

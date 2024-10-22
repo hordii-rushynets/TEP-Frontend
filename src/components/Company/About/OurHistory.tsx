@@ -65,7 +65,7 @@ export function OurHistory() {
                 </div>
                 <p
                   className={
-                    "max-w-[818px] text-lg md:text-sm lg:font-extralight"
+                    "max-w-[818px] text-lg md:text-sm lg:text-sm"
                   }
                 >
                   {staticData.company.about.ourHistory.content[Idx]}

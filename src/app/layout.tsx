@@ -86,7 +86,7 @@ export default function RootLayout({
       <MetaPixel />
       <body className={"relative h-full"}>
         <Providers>
-          <Banner />
+          {/* <Banner /> */}
           <Notification />
           <AuthorizationNotification />
           <CartNotification />
