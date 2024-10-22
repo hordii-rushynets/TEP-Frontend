@@ -21,14 +21,14 @@ export class ProductDAOService {
     }
 
     public async getPopularProducts(ip: string, authContext: any): Promise<Response> {
-      const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?ordering=-number_of_add_to_cart,-number_of_views`, {
+      const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}&ordering=-number_of_add_to_cart,-number_of_views`, {
         headers: {
           "Real-Ip": ip
         }
       }, authContext)
       .then(response => {
         if (response.status === 401) {
-          return fetch(`${this.apiUrl}/api/store/products/?ordering=-number_of_add_to_cart,-number_of_views`, {
+          return fetch(`${this.apiUrl}/api/store/products/?limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}&ordering=-number_of_add_to_cart,-number_of_views`, {
             headers: {
               "Real-Ip": ip
             }
@@ -40,7 +40,7 @@ export class ProductDAOService {
     }
 
     public async getRecommendedGoods(ip: string, authContext: any, product_slug = ""): Promise<Response> {
-      const url = `${this.apiUrl}/api/store/recommendation/${product_slug}${product_slug ? "/" : ""}`
+      const url = `${this.apiUrl}/api/store/recommendation/${product_slug}${product_slug ? "/" : ""}` + `?limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`
       const response = await fetchWithAuth(url, {
         headers: {
           "Real-Ip": ip
