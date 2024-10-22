@@ -117,12 +117,18 @@ export class ProductService {
       return filterFields;
     }
 
-    public async getNewProducts(staticData: StaticData, category: string, authContext: any): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
-      return await this.daoService.getNewProducts(category, authContext).then(response => {
+    public async getNewProducts(staticData: StaticData, category: string, page: string, authContext: any): Promise<
+    {
+      productsWithVariant: ProductWithVariant[], 
+      productsToShow: ProductToShow[],
+      totalPages: number
+    }
+    > {
+      return await this.daoService.getNewProducts(category, page, authContext).then(response => {
         if (response.ok) {return response.json();}
       }).then(data => {
         if (data) {
-        let productsToShow = data.map((product:any) => {
+        let productsToShow = data.results.map((product:any) => {
           let productVariant = product.product_variants[0];
 
           return {
@@ -143,9 +149,9 @@ export class ProductService {
           }
         });
 
-        return {productsWithVariant: data, productsToShow: productsToShow};
+        return {productsWithVariant: data.results, productsToShow: productsToShow, totalPages: data.total_pages};
       }
-      else {return {productsWithVariant: [], productsToShow: []}};
+      else {return {productsWithVariant: [], productsToShow: [], totalPages: 1};};
       });
     }
 }

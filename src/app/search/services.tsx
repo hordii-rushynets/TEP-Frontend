@@ -9,11 +9,18 @@ export class SearchService {
         this.daoService = new SearchDAOService(process.env.NEXT_PUBLIC_API_URL || "");
     }
 
-    public async getSearchProducts(filterParams: {[key: string]: string}, staticData: StaticData, authContext: any): Promise<{productsWithVariant: ProductWithVariant[], productsToShow: ProductToShow[]}> {
+    public async getSearchProducts(filterParams: {[key: string]: string}, staticData: StaticData, authContext: any): Promise<
+    {
+      productsWithVariant: ProductWithVariant[], 
+      productsToShow: ProductToShow[],
+      totalPages: number,
+      count: number
+    }
+    > {
         return await this.daoService.getSearchProducts(filterParams, authContext).then(response => {
           if (response.ok) {return response.json();}
         }).then(data => {
-          let productsToShow = data.map((product:any) => {
+          let productsToShow = data.results.map((product:any) => {
             let productVariant = product.product_variants[0];
   
             return {
@@ -33,7 +40,7 @@ export class SearchService {
             }
           });
   
-          return {productsWithVariant: data, productsToShow: productsToShow};
+          return {productsWithVariant: data.results, productsToShow: productsToShow, count: data.count, totalPages: data.total_pages};
         });
       }
 

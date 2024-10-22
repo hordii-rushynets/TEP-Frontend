@@ -37,11 +37,13 @@ export default function NoveltyPage({
   const [blanket, setBlanket] = useState<ProductToShow>({} as ProductToShow);
   const [towel, setTowel] = useState<ProductToShow>({} as ProductToShow);
   const [isImagesSet, setIsImagesSet] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    productService.getNewProducts(staticData, category, authContext).then(result => {
+    productService.getNewProducts(staticData, category, activePageNum.toString(), authContext).then(result => {
       setProducts(result.productsToShow);
       setProductsWithVariant(result.productsWithVariant);
+      setTotalPages(result.totalPages);
     });
   }, [category, staticData]);
 
@@ -63,7 +65,7 @@ export default function NoveltyPage({
         }
       />
       <Images blanket={blanket} towel={towel}/>
-      <NewGoods products={products} productsWithVariant={productsWithVariant} activePage={activePageNum} setCategory={setCategory} />
+      <NewGoods products={products} productsWithVariant={productsWithVariant} activePage={activePageNum} totalPages={totalPages} setCategory={setCategory} />
       <PopularGoods />
     </>
   );

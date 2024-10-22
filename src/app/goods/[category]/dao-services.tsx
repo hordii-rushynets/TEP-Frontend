@@ -68,8 +68,8 @@ export class ProductDAOService {
       return response;
     }
 
-    public async getNewProducts(category: string, authContext: any): Promise<Response> {
-      const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?ordering=-last_modified&category_slug=${category}`, {}, authContext)
+    public async getNewProducts(category: string, page: string, authContext: any): Promise<Response> {
+      const response = await fetchWithAuth(`${this.apiUrl}/api/store/products/?ordering=-last_modified&category_slug=${category}&page=${page}&page_size=12`, {}, authContext)
       return response;
     }
   }

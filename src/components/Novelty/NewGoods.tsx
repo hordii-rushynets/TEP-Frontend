@@ -6,30 +6,18 @@ import { Container, Loader, Section, Title } from "common/ui";
 import CategoriesFilter from "components/Filters/CategoriesFilter";
 import ProductsList from "components/Goods/ProductsList";
 
-import PillowIMG from "./static/pillow.jpg";
 import { useLocalization } from "contexts/LocalizationContext";
 import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
-
-const pillows = [...Array(9)].map((_, Idx) => ({
-  id: (Idx + 1).toString(),
-  slug: "",
-  title: "Dream",
-  category_title: "Ковдра",
-  category_slug: "sheets",
-  image: PillowIMG,
-  price: 1199,
-  number_of_views: 1,
-  date: ""
-}));
 
 type NewGoodsProps = {
   products: ProductToShow[];
   productsWithVariant: ProductWithVariant[];
   activePage: number;
+  totalPages: number;
   setCategory: (v: string) => void;
 };
 
-export const NewGoods = ({ products, productsWithVariant, activePage, setCategory }: NewGoodsProps) => {
+export const NewGoods = ({ products, productsWithVariant, activePage, totalPages, setCategory }: NewGoodsProps) => {
   const { staticData } = useLocalization();
 
   return (
@@ -44,6 +32,7 @@ export const NewGoods = ({ products, productsWithVariant, activePage, setCategor
           </div>
           <ProductsList
             activePage={activePage}
+            totalPages={totalPages}
             products={products}
             productsWithVariants={productsWithVariant}
             showCompare={false}

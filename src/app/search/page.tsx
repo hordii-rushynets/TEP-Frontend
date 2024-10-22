@@ -10,14 +10,19 @@ import { useSearchContext } from "contexts/SearchContext";
 
 import { Breadcrumbs } from "./Breadcrumbs";
 import { useEffect, useState } from "react";
-import { ProductToShow, ProductWithVariant } from "app/goods/[category]/page";
+import { ProductToShow, ProductWithVariant, SearchParams } from "app/goods/[category]/page";
 import { SearchService } from "./services";
 import { useLocalization } from "contexts/LocalizationContext";
 import { sortings } from "app/goods/[category]/defaultValues";
 import { useAuth } from "contexts/AuthContext";
 import { ConversionsService } from "services/conversionsServices";
+import { isStr } from "utils/js-types";
 
-export default function SearchPage() {
+export default function SearchPage({searchParams}: {searchParams: SearchParams}) {
+  const { page } = searchParams;
+  let activePageNum = 1;
+  if (isStr(page) && !isNaN(parseInt(page))) activePageNum = parseInt(page);
+
   const { searchQuery } = useSearchContext();
   const [products, setProducts] = useState<ProductToShow[]>([]);
   const [productsWithVariants, setProductsWithVariants] = useState<ProductWithVariant[]>([]);
@@ -27,6 +32,8 @@ export default function SearchPage() {
   const authContext = useAuth();
   const { staticData, localization } = useLocalization();
   const [filters, setFilters] = useState<{[key: string]: string}>({
+    "page_size": "12",
+    "page": activePageNum.toString(),
     "title_uk": "",
     "title_en": "",
     "title_ru": "",
@@ -35,6 +42,8 @@ export default function SearchPage() {
     "material": ""
   });
   const [sort, setSort] = useState<string>("suitable");
+  const [count, setCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters({
@@ -49,9 +58,15 @@ export default function SearchPage() {
   }, [searchQuery]);
 
   useEffect(() => {
+    handleFilterChange("page", activePageNum.toString())
+  }, [activePageNum]);
+
+  useEffect(() => {
     searchService.getSearchProducts(filters, staticData, authContext).then(products => {
       setProducts(products.productsToShow);
       setProductsWithVariants(products.productsWithVariant);
+      setCount(products.count);
+      setTotalPages(products.totalPages);
     })
   }, [filters, localization]);
 
@@ -98,8 +113,8 @@ export default function SearchPage() {
       </Section>
       {searchQuery && products.length !== 0 && (
         <>
-          <SearchFilters sort={sort} setSort={setSort} className={"border-none"} count={products.length} onFilterChange={handleFilterChange}/>
-          <ProductsList activePage={1} products={products} productsWithVariants={productsWithVariants}/>
+          <SearchFilters sort={sort} setSort={setSort} className={"border-none"} count={count} onFilterChange={handleFilterChange}/>
+          <ProductsList activePage={1} totalPages={totalPages} products={products} productsWithVariants={productsWithVariants}/>
           <Section className={"mb-40 lg:mb-64"}>
             <Container>
               <div>
