@@ -78,25 +78,25 @@ export function Footer() {
             <nav className={"flex items-start gap-x-4 whitespace-nowrap"}>
               <div className={"basis-1/4"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  {staticData.header.goodsLabel}
+                  {staticData.footer.goodsLabel}
                 </Title>
                 <GoodsLinksList />
               </div>
               <div className={"basis-1/4"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                  {staticData.header.companyLabel}
+                  {staticData.footer.companyLabel}
                 </Title>
                 <CompanyLinksList />
               </div>
               <div className={"basis-1/4 md:hidden lg:block"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                {staticData.header.serviceLabel}
+                {staticData.footer.serviceLabel}
                 </Title>
                 <ServicesLinksList />
               </div>
               <div className={"flex-1 md:basis-1/2 lg:basis-auto"}>
                 <Title className={"mb-7"} component={"h4"} size={"xl"}>
-                {staticData.header.infoLabel}
+                {staticData.footer.infoLabel}
                 </Title>
                 <InfoLinksList />
               </div>
@@ -108,7 +108,7 @@ export function Footer() {
           <div className={"hidden gap-x-4 pb-5 pt-7 md:flex lg:hidden"}>
             <div className={"basis-1/2"}>
               <Title className={"mb-7"} component={"h4"} size={"xl"}>
-              {staticData.header.serviceLabel}
+              {staticData.footer.serviceLabel}
               </Title>
               <ServicesLinksList />
             </div>
@@ -248,7 +248,7 @@ export const GoodsLinksList : React.FC = () => {
         {category.title}
       </FooterLiLink>
     ))}
-    <FooterLiLink url={MainUrl.getSales()}>{staticData.header.salesTitle}</FooterLiLink>
+    <FooterLiLink url={MainUrl.getSales()}>{staticData.footer.salesTitle}</FooterLiLink>
   </ul>
   );
 };
@@ -300,10 +300,10 @@ export const InfoLinksList : React.FC = () => {
 export const FooterDiclosureNavigation: React.FC = () => {
   const { staticData } = useLocalization();
   const links = [
-    { triger: staticData.header.goodsLabel, list: <GoodsLinksList/> },
-    { triger: staticData.header.companyLabel, list: <CompanyLinksList /> },
-    { triger: staticData.header.serviceLabel, list: <ServicesLinksList /> },
-    { triger: staticData.header.infoLabel, list: <InfoLinksList /> },
+    { triger: staticData.footer.goodsLabel, list: <GoodsLinksList/> },
+    { triger: staticData.footer.companyLabel, list: <CompanyLinksList /> },
+    { triger: staticData.footer.serviceLabel, list: <ServicesLinksList /> },
+    { triger: staticData.footer.infoLabel, list: <InfoLinksList /> },
   ];
 
   return (

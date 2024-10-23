@@ -12,6 +12,8 @@ import DetailsIMG2 from "./static/details/point2.jpg";
 import FibersIMG from "./static/fibers.jpg";
 import PillowsIMG from "./static/pillows.jpg";
 import UltrasonicIMG from "./static/ultrasonic.jpg";
+import ToppersIMG from "./static/toppers.jpg";
+import LinensIMG from "./static/linens.jpg";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export type Technology = {
@@ -71,6 +73,30 @@ export const technologies = [
       },
     ],
   },
+  {
+    id: "5",
+    image: ToppersIMG,
+    details: [
+      {
+        img: DetailsIMG1,
+      },
+      {
+        img: DetailsIMG2,
+      },
+    ],
+  },
+  {
+    id: "6",
+    image: LinensIMG,
+    details: [
+      {
+        img: DetailsIMG1,
+      },
+      {
+        img: DetailsIMG2,
+      },
+    ],
+  },
 ];
 
 export function Technologies() {
@@ -96,8 +122,10 @@ export function Technologies() {
             <SimpleCard
               key={tech.id}
               title={staticData.company.technologies.technologies.data[indx].title}
+              description={staticData.company.technologies.technologies.data[indx].details[0]}
               source={tech.image}
-              url={`${CompanyUrl.getTechnologies()}/${tech.id}`}
+              url={``}
+              isIcon={false}
             />
           ))}
         </div>

@@ -246,7 +246,7 @@ export default {
             "text6": "Work at TEP",
             "text7": "Technologies",
             "text8": "Blog",
-            "text9": "TEP Stores",
+            "text9": "Tep Stores",
             "text10": "Private Labels",
             "text11": "Wholesale Sales"
         },
@@ -329,7 +329,7 @@ export default {
             },
             "blogHead": {
                 "text1": "Blog",
-                "text2": "We started as a small Chernivtsi company sending orders by mail through a catalog and became one of the most well-known textile brands in Ukraine. Today, TEP stores are starting to open in different countries, and we plan to increase this number. Learn more about our exciting history—from the very beginning to the present day."
+                "text2": "Our latest blog explores the innovative textile technologies, products and more. We highlight how advanced methods like Double Air fiber processing and ultrasonic bonding are revolutionizing product quality. We delve into the specifics of these technologies, showing how they enhance the durability, comfort, and visual appeal of our textiles. Whether you're interested in industry advancements or looking to understand the craftsmanship behind our products, this blog offers valuable insights."
             },
             "blogPlan": {
                 "text1": "Blog Plan:",
@@ -342,15 +342,15 @@ export default {
             "moreArticles": "More Articles"
         },    
         "cooperation": {
-            "text1": "Private Labels",
-            "text2": "Wholesale Sales",
-            "text3": "Who We Are",
-            "text4": "We are one of the largest home textile companies in Ukraine.",
-            "text5": "The company is located in a safe part of Ukraine.",
-            "text6": "We have our own production and certified, innovative equipment.",
-            "text7": "We have been operating since 1996 and have a highly qualified team of industry specialists.",
-            "text8": "We use modern technologies to ensure significant production volumes while maintaining high product quality.",
-            "text9": "We are certified OEKO-TEX Standard 100 – an independent system for testing textile products for harmful substances.",
+            "text1": "Private Label",
+            "text2": "Distribution",
+            "text3": "About Us",
+            "text4": "We are one of the largest home textile companies in Ukraine, located in a safe and secure region. Since 1996, we have been dedicated to producing high-quality home textiles with our own production facilities and certified, innovative equipment. Our highly qualified team of industry specialists leverages modern technologies to achieve significant production volumes without compromising on quality.",
+            "text5": "",
+            "text6": "",
+            "text7": "We are proud to hold the OEKO-TEX Standard 100 certification, which ensures that our textile products are independently inspected and free from harmful substances.",
+            "text8": "",
+            "text9": "",
             "privatelabels": {
                 "text1": "Creating Your Own Brand",
                 "text2": "About Collaboration",
@@ -422,20 +422,21 @@ export default {
             }
         },
         "stores": {// Generated with AI
+            "anyQuestionTitle": "Do you have any questions?",
             "map": {
-                "text1": "TEP Stores",
-                "text2": "We started as a small company in Chernivtsi, sending orders by mail through a catalog and became one of the most well-known textile brands in Ukraine. Today, TEП stores are starting to open in different countries, and we plan to increase this number. Learn more about our exciting history – from the very beginning to the present."
+                "text1": "Tep stores",
+                "text2": "TEP stores are your go-to destination for high-quality home textiles that elevate your sleep environment. Each store showcases a thoughtfully curated selection of quilts, pillows, towels, and bedcovers, all designed to provide the ultimate comfort and style. "
             },
             "storesInfo": {
-                "text1": "Here you can find a store with TEП products",
-                "text2": "We started as a small company in Chernivtsi, sending orders by mail through a catalog and became one of the most well-known textile brands in Ukraine. Today, TEП stores are starting to open in different countries, and we plan to increase this number. Learn more about our exciting history – from the very beginning to the present.",
+                "text1": "Here you can find a shop with TEP products",
+                "text2": "Tep exclusive shop offers a curated selection of premium home textile products designed to enhance your sleep experience. From luxurious quilts to comfortable pillows and stylish bedcovers, each item is crafted with quality and comfort in mind. Whether you're looking to refresh your bedroom or find the perfect gift, Tep provides a range of options that blend elegance with functionality, ensuring a restful and rejuvenating night's sleep. Explore the collection and transform your sleep space with Tep exceptional products.",
                 "text3": "City",
                 "text4": "Choose City",
                 "text5": "Address",
                 "text6": "Choose Address",
-                "text7": "The TEП store is located at",
+                "text7": "The TEP store is located at:",
                 "text8": "Ukraine",
-                "text9": "Working Hours",
+                "text9": "Work hours",
                 "stores": [
                     {
                         "id": "1",
@@ -510,36 +511,52 @@ export default {
                 "data": [
                     {
                         "id": "1",
-                        "title": "Filler Blending",
+                        "title": "Membrana Print quilts sewing technology",
                         "details": [
-                            "Filler blending is an excellent technology that allows for the production of various products tailored to consumer demands.",
+                            "Membrana Print quilts sewing technology utilizes advanced techniques to seamlessly integrate intricate patterns, breathability of materials of quilts, ensuring both durability and visual appeal.",
                             "Traditional fillers are a popular choice, but sometimes it’s best to combine different types of fibers. For example, aloe extract filler is made from synthetic fibers, but the natural extract has a number of advantages and features. Cotton fibers are also often combined with polyester silicone: synthetics provide strength and significantly better shape retention, while cotton adds volume."
                         ]
                     },
                     {
                         "id": "2",
-                        "title": "Technology Realized Through a Unique Fiber Layering Line",
+                        "title": "Membrana Print pillow sewing technology",
                         "details": [
-                            "Our feature is the cross-layering of fibers. Other manufacturers use direct layering, which does not allow the filler to bunch up and distributes it evenly across the area. This allows our products to be washable.",
+                            "Membrana Print pillow sewing technology utilizes advanced techniques to seamlessly integrate breathability of materials into pillows, ensuring both durability and visual appeal.",
                             "The mechanism works as follows: unprocessed fiber (natural, artificial, or blended) is mechanically 'combed' to make it soft and fluffy, then the machine evenly distributes the filler into what are known as sheets. These can vary in thickness. Other manufacturers often lay the filler in uncombed layers, so blankets with such filler quickly bunch up and become thinner in certain places."
                         ]
                     },
                     {
                         "id": "3",
-                        "title": "Nonwoven Fabric Production",
+                        "title": "Ultrasonic technology",
                         "details": [
-                            "Balak Home is the only manufacturer in Ukraine producing a wide range of polyester nonwoven fabrics (nonwoven synthetic material from polyester fibers). Its weight ranges from 65g/m2 to 1kg/m2.",
+                            "Ultrasonic technology in textile production involves the use of high-frequency sound waves to bond or cut materials without the need for needles, threads, or heat. This method allows for precise, seamless joins and cuts, enhancing the strength and durability of the finished products.",
                             "The mechanism works as follows: polyester fibers are loaded into the machine, combed to add softness and fluffiness, and then, under high temperatures, evenly laid out into a layer of nonwoven fabric and 'baked' to bond the fibers together. They can have different thicknesses and weights (density)."
                         ]
                     },
                     {
                         "id": "4",
-                        "title": "Ultrasound",
+                        "title": "Double Air/Quadra Air Fibers Technology",
                         "details": [
-                            "Ultrasonic welding is another technology used in our production. The essence is that patterns on the fabric are created without stitching threads, but with a mechanism that locally heats the fabric to a temperature that 'melts' the patterns.",
+                            "A treatment of primary siliconized fibers. This process utilizes high-tech equipment to interlace the fibers, creating a large volume of filler. The polyester base of the fibers ensures that products remain soft and maintain their shape over time.",
                             "This method serves both an aesthetic and practical function. For example, in velvet decorative pillows, this welding secures a thin layer of synthetic filler that provides the softness of the pillow’s outer cover. It is also much stronger than threads and does not create additional issues."
                         ]
-                    }
+                    },
+                    {
+                      "id": "5",
+                      "title": "Mattress Pad Sewing Technology",
+                      "details": [
+                          "Advanced sewing techniques in mattress pad production ensure durability, comfort, and precision, enhancing the overall quality and longevity of the final product.",
+                          "This method serves both an aesthetic and practical function. For example, in velvet decorative pillows, this welding secures a thin layer of synthetic filler that provides the softness of the pillow’s outer cover. It is also much stronger than threads and does not create additional issues."
+                      ]
+                    },
+                    {
+                      "id": "6",
+                      "title": "Bed linen sewing technology",
+                      "details": [
+                          "The sewing technology used in bed linen production combines precision and quality materials to create durable, comfortable, and aesthetically pleasing products.",
+                          "This method serves both an aesthetic and practical function. For example, in velvet decorative pillows, this welding secures a thin layer of synthetic filler that provides the softness of the pillow’s outer cover. It is also much stronger than threads and does not create additional issues."
+                      ]
+                    },
                 ],
                 "text1": "Technologies",
                 "text2": "Before reaching your home, Balak Home textile products undergo a long journey from selecting the best materials for sewing to packaging the finished products."
@@ -654,22 +671,22 @@ export default {
         "popularGoodsTitle": "Popular products"
     },
     "sales": {
-      "text1": "Sales",
+      "text1": "Sale",
       "text2": "More sale items"
     },
     "info_for_buyers": {// Generated with AI
-      "text1": "Information for Buyers",
-      "text2": "TEP is much more than a company selling textile products. It is a multifaceted brand characterized by the use of eco-friendly and modern materials such as cotton, a strong stance on human rights, comfortable working conditions, and democratic design of its products.",
+      "text1": "Information for customers",
+      "text2": "TEP is much more than a home textile retail company. It is a multifaceted brand characterized by the use of ecological and modern materials such as cotton, a strong position on human rights, comfortable working conditions and unique design of its products.",
       "services": "Services",
       "info_links": [
         "Contact us",
-        "Product returns",
-        "Questions and answers",
-        "Track order",
-        "Product care",
+        "Exchanges & Returns",
+        "FAQ",
+        "Order Tracking",
+        "Product Care",
         "Reviews",
-        "Terms of use",
-        "Privacy policy"
+        "Terms of  Use",
+        "Privacy Policy"
       ],
       "servicesLinks": [
         "Track order",
@@ -678,36 +695,36 @@ export default {
       ],
       "breadcrumbs": {
         "home": "Home",
-        "infoForBuyers": "Information for buyers",
+        "infoForBuyers": "Information",
         "contactUs": "Contact us",
         "leaveRequest": "Leave a request",
-        "productReturn": "Product returns",
-        "questionsAndAnswers": "Questions and answers",
-        "care": "Product care",
+        "productReturn": "Exchanges & Returns",
+        "questionsAndAnswers": "FAQ",
+        "care": "Product Care",
         "feedbacks": "Reviews",
         "leaveFeedback": "Leave a review"
       },
       "carePage": {
-        "text1": "Product care",
-        "text2": "Care",
-        "text3": "Sleep occupies about a third of a person's life. Your bed is a sanctuary of home tranquility, and to ensure this sanctuary is harmonious, provides quality rest, and enhances health rather than detracting from it, it's important to know how to properly maintain the hygiene of home textiles. With the vast variety of fabrics and fillers, it's easy to get confused. We have created this guide to help you navigate the topic of care and understand that it is not as complicated as it might seem at first glance!",
-        "text4": "Care instructions",
-        "text5": "Have questions?"
+        "text1": "Product Care",
+        "text2": "Product Care",
+        "text3": "To maintain the quality and longevity of your home textiles, it's essential to follow proper care instructions. Always check the label for specific washing and drying guidelines, as different fabrics require different treatments. Generally, washing in cold water with a gentle detergent will help preserve colours and prevent shrinking. Avoid using bleach or harsh chemicals, and opt for air drying or low heat settings in the dryer to protect the filers. Regularly fluff and shake out pillows, cushions, and quilts to maintain their shape and freshness. By taking these simple steps, you can ensure your home textiles remain soft, vibrant, and comfortable for years to come.",
+        "text4": "Care Instructions",
+        "text5": "Do you have any questions?"
       },
       "contactUsPage": {
         "text1": "Contact us",
-        "text2": "Phone",
-        "text3": "Want to hear a voice on the other end? We will help you with any issue.",
-        "text4": "Call",
-        "text5": "+38 (044) 391-00-00",
-        "text6": "Call charges according to your operator's rates",
+        "text2": "Give us a ring",
+        "text3": "Our Sleep Specialists are here to help you find the mattresses of your dreams. Give us a call at  +38 (044) 391-00-00",
+        "text4": "",
+        "text5": "",
+        "text6": "The cost of calls according to the tariffs of your operator",
         "text7": "Monday – Friday",
         "text8": "09:00 - 18:00",
         "text9": "Email",
-        "text10": "If you need assistance, send us an email at any time, and we will respond as soon as possible.",
-        "text11": "Or send us a letter to",
-        "text12": "info@tep.ua",
-        "text13": "Leave a request"
+        "text10": "If you need help, write us an email at any time of the day and we will answer at the first opportunity.",
+        "text11": "Or write us a letter at help@tep.ua",
+        "text12": "",
+        "text13": "Contact Us"
       },
       "feedbacksPage": {
         "title": "Reviews",
@@ -719,18 +736,18 @@ export default {
         "buttonTitle": "Go to reviews"
       },
       "productReturnPage": {
-        "text1": "Product returns",
+        "text1": "Exchanges & Returns",
         "text2": "Returns",
-        "text3": "Sometimes you may change your mind. You have 20 days to return the product. Keep the receipt that confirms the purchase.",
-        "text4": "Product return policy",
-        "text5": "Return form",
-        "text6": "Have questions?"
+        "text3": "Sometimes you can change your mind. You have 20 days to return the product. Keep the receipt that proves the purchase.",
+        "text4": "Return Policy",
+        "text5": "Return Request Form",
+        "text6": "Do you have any questions?"
       },
       "qaCategoryPage": "Product availability",
       "qaa_categories": [
         {
           "id": 1,
-          "topic": "Product availability",
+          "topic": "Product Availability",
           "data": [
             {
               "question": "The product I was interested in was available online but later was not found in the store. Why did this happen?",
@@ -783,11 +800,11 @@ export default {
         },
         {
           "id": 2,
-          "topic": "TEP stores"
+          "topic": "Tep Stores"
         },
         {
           "id": 3,
-          "topic": "Frequently asked questions",
+          "topic": "FAQ",
           "data": [
             {
               "question": "What blanket/pillow sizes are available? ",
@@ -958,7 +975,7 @@ export default {
         },
         {
           "id": 6,
-          "topic": "How to track an order"
+          "topic": "How to track your order"
         },
         {
           "id": 7,
@@ -1008,7 +1025,7 @@ export default {
         },
         {
           "id": 8,
-          "topic": "Returns and exchanges",
+          "topic": "Exchanges and Returns",
           "data": [
             {
               "question": "For what time can i return or exchange goods? ",
@@ -1045,8 +1062,8 @@ export default {
           ]
         }
       ],
-      "qaaCategoriesTitle": "Questions and answers",
-      "qaaCardText": "More"
+      "qaaCategoriesTitle": "FAQ",
+      "qaaCardText": "Learn More"
     },
     "inspiration": {
       "breadcrumbs": {
@@ -1297,31 +1314,32 @@ export default {
         "home": "Home",
         "services": "Services",
         "gifts": "Gift Cards",
-        "delivery": "Delivery Services"
+        "delivery": "Delivery"
       },
       "deliveryPage": {
-        "text1": "Delivery Services",
-        "text2": "About Services",
-        "text3": "Delivery within Ukraine is carried out by Nova Poshta and Ukrposhta transport companies.",
-        "text4": "Delivery charges are paid by the buyer according to the carrier's rates.",
-        "text5": "Goods are dispatched within 1-3 business days from the moment the order is placed.",
-        "text6": "Delivery takes 1-3 business days if you choose delivery to the carrier's branch, and up to 5 business days for courier delivery. We will do our best to deliver your order as quickly as possible.",
-        "text7": "If the total order amount is 3500 UAH, delivery to a Nova Poshta or Ukrposhta branch is free (provided the order is fully paid)."
+        "text1": "Delivery",
+        "text2": "About Delivery",
+        "text3": "Most of our products come in flat packaging or bags, designed for easy transport. However, if you prefer delivery, simply choose one of our convenient options.",
+        "text4": "",
+        "text5": "",
+        "text6": "",
+        "text7": ""
       },
       "giftsPage": {
         "text1": "Gift Cards",
         "text2": "Already have a gift card?",
-        "text3": "- The card can be loaded with any amount from 100 to 15,000 UAH.",
+        "text3": "- Any amount from 100 to 2000 UAH can be credited to the card",
         "text4": "- The card can be used until the entire amount is spent.",
-        "text5": "- The gift card is valid for 3 years.",
-        "text6": "- The card cannot replace a lost or stolen card.",
-        "text7": "- Funds for items paid with the gift card are refunded only to the TEP refund card.",
-        "text8": "- The gift card can only be used in a physical TEP store in Ukraine.",
-        "text9": "- The gift card is non-returnable."
+        "text5": "- The gift card can be used exclusively in online Tep store in Ukraine.",
+        "text6": "- The gift card is non-refundable.",
+        "text7": "",
+        "text8": "",
+        "text9": "",
+        "anyQuestionsTitle": "Still have some questions?",
       },
       "tracking": {
         "title": "Track Order",
-        "description": "Want to know where your ordered items are right now? The 'Track Order' service will help you! To track your order, enter your order number in the 'Order Number' field, which is indicated in the email (e.g., SO123456)",
+        "description": "Do you want to know where the goods you ordered are now? The \"Track order\" service will help you with this! To track your order, in the 'Order number' field, enter your order number specified in the letter (e.g. SO123456)",
         "leaveFeedback": "Leave Feedback"
       },
       "trackingForm": {
@@ -1330,31 +1348,31 @@ export default {
         "button": "Track"
       },
       "novaPost": {
-        "text1": "Delivery service costs:",
+        "text1": "Cost of delivery services:",
         "text2": "Orders up to 15 kg and certain sizes*:",
         "text3": "Delivery to your door",
-        "text4": "Regular delivery time is 1 to 5 days",
-        "text5": "Monday to Saturday from 8:00 AM to 5:00 PM",
-        "text6": "Delivery Zone #1 (Kyiv and Kyiv region) - 99 UAH",
-        "text7": "Delivery Zone #2 - 149 UAH",
-        "text8": "Delivery Zone #3 - 199 UAH",
-        "text9": "Delivery Zone #4 - 299 UAH",
+        "text4": "Usual delivery time is 1 to 5 days",
+        "text5": "From Monday to Saturday from 8:00 to 17:00",
+        "text6": "Delivery zone No. 1 (Kyiv and Kyiv region) - 99 UAH",
+        "text7": "Delivery Zone No. 2 - 149 UAH",
+        "text8": "Delivery Zone No. 3 - 199 UAH",
+        "text9": "Delivery Zone No. 4 - 299 UAH",
         "text10": "Orders from 15 to 30 kg and certain sizes*:",
         "text11": "Delivery to your door",
-        "text12": "Regular delivery time is 1 to 5 days",
-        "text13": "Monday to Saturday from 8:00 AM to 5:00 PM",
-        "text14": "Delivery Zone #1 (Kyiv and Kyiv region) - 149 UAH",
-        "text15": "Delivery Zone #2 - 299 UAH",
-        "text16": "Delivery Zone #3 - 399 UAH",
-        "text17": "Delivery Zone #4 - 499 UAH",
-        "text18": "Orders over 30 kg",
+        "text12": "Usual delivery time is 1 to 5 days",
+        "text13": "From Monday to Saturday from 8:00 to 17:00",
+        "text14": "Delivery Zone No. 1 (Kyiv and Kyiv region) - 149 UAH",
+        "text15": "Delivery Zone No. 2 - 299 UAH",
+        "text16": "Delivery Zone No. 3 - 399 UAH",
+        "text17": "Delivery Zone No. 4 - 499 UAH",
+        "text18": "Orders over 30kg",
         "text19": "Delivery to the chosen room**, at home or at work",
-        "text20": "Delivery date and time at your choice",
-        "text21": "Delivery is from Monday to Saturday from 8:00 AM to 5:00 PM",
-        "text22": "Price within Kyiv city 699 UAH",
-        "text23": "Price outside Kyiv 1599 UAH",
-        "text24": "Each additional ton is charged at the full delivery rate",
-        "text25": "Track Order"
+        "text20": "Delivery date and time of your choice",
+        "text21": "Delivery is made from Monday to Saturday from 8:00 a.m. to 5:00 p.m",
+        "text22": "The price within the city of Kyiv is UAH 699",
+        "text23": "The price outside Kyiv is UAH 1,599",
+        "text24": "Each additional ton is charged at full delivery price",
+        "text25": "Track the order"
       },
       "ukrPost": {
         "text1": "Delivery service costs:",
@@ -1364,11 +1382,11 @@ export default {
         "text5": "Ukrposhta Express Delivery:",
         "text6": "- to the branch - from 35 UAH.",
         "text7": "- address delivery by courier - from 65 UAH.",
-        "text8": "Track Order"
+        "text8": "Track the order"
       },
       "aboutGiftCards": {
-        "title": "About Cards",
-        "description": "We offer customers hundreds of products, so choosing the best one can be difficult. With a TEP gift card, you give a gift that the recipient can choose themselves. We offer customers hundreds of products, so choosing the best one can be difficult. With a TEP gift card, you give a gift that the recipient can choose themselves.",
+        "title": "About Gift Cards",
+        "description": "With hundreds of products to choose from, finding the perfect gift can be a challenge. A TEP gift card lets your loved one select exactly what they want, making it the ideal gift for any occasion",
         "cardsDescriptions": [
           "You can purchase a gift card from us as a gift for any holiday or special occasion.",
           "You can purchase a gift card from us as a gift for any holiday or special occasion.",
@@ -1380,9 +1398,9 @@ export default {
         "text2": "UAH"
       },
       "wantToBuy": {
-        "title": "Want to buy a gift card?",
-        "description": "It's very easy - visit a TEP store to purchase a gift card or order online!",
-        "button": "Order"
+        "title": "Do you want to buy a gift card?",
+        "description": "It's incredibly simple—just visit a TEP store to purchase a gift card or conveniently order one online!",
+        "button": "Shop Now"
       }
     },     
     "common": {// Generated with AI
@@ -1392,8 +1410,8 @@ export default {
         "placeholder": "What do you search?"
       },
       "anyQuestions": {
-        "title": "Have any questions?",
-        "description": "If you need to urgently let us know something, contact us in a convenient way.",
+        "title": "Do you have any questions?",
+        "description": "If you need to tell us something urgently, contact us in a convenient way.",
         "buttonText": "Contact us"
       },
       "authNotificationMessage": "You have successfully logged in to",
@@ -1413,13 +1431,13 @@ export default {
     },      
     "filters": {// Generated with AI
       "vacancyFilter": {
-        "text1": "Vacancy",
-        "text2": "Field of work",
-        "text3": "Employment type",
+        "text1": "Search",
+        "text2": "Industry",
+        "text3": "Type",
         "text4": "Region",
         "text5": "City",
         "text6": "Filter",
-        "text7": "found",
+        "text7": "results",
         "text8": "Job type",
         "text9": "Your region",
         "text10": "Your city"
@@ -1548,6 +1566,11 @@ export default {
       "credentials": "© Tep Ukraine 2024",
       "termsOfUse": "Terms of Conditions",
       "policyPrivacy": "Privacy Policy",
+      "goodsLabel": "Products",
+      "companyLabel": "Company",
+      "serviceLabel": "Services",
+      "infoLabel": "Help & Support",
+      "salesTitle": "Promos",
       "companyLinks": [
         "About Tep",
         "Partnerships",
@@ -1562,9 +1585,9 @@ export default {
         "Gift Cards"
       ],
       "infoLinks": [
-        "Questions & Answers",
-        "Information For Customers",
-        "Returns",
+        "FAQ",
+        "Customer Service",
+        "Exchanges & Returns",
         "Contact Us",
         "Reviews",
         "Product Care"
@@ -1607,7 +1630,9 @@ export default {
         "text12": "Send"
       },
       "cooperationRequestForm": {
-        "text1": "Submit request",
+        "subjectLabel": "Subject",
+        "subjectPlaceholder": "Write your subject",
+        "text1": "Fill out a form",
         "text2": "Name",
         "text3": "Taras Shevchenko",
         "text4": "Email",

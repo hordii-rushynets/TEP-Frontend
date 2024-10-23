@@ -7,10 +7,11 @@ import { ServicesUrl } from "route-urls";
 import { Button, Container, Section, Title } from "common/ui";
 
 import NovaLogo from "./static/nova.png";
+import NovaEnLogo from "./static/nova_en.png";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export function NovaPost() {
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
 
   return (
     <Section className={"mb-24 lg:mb-40"}>
@@ -18,7 +19,7 @@ export function NovaPost() {
         <div>
           <div className={"mb-14 max-w-[435px] lg:mb-[72px]"}>
             <Image
-              src={NovaLogo}
+              src={localization === "en" ? NovaEnLogo : NovaLogo}
               alt={"Nova post Logo"}
               className={" select-none"}
             />

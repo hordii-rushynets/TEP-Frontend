@@ -28,7 +28,7 @@ export default function ProductReturnPage() {
             {staticData.info_for_buyers.productReturnPage.text3}
             </p>
             <Link
-              href={MainUrl.getProductReturnPolicy()}
+              href={MainUrl.getPrivacyPolicy()}
               className={
                 "mb-10 inline-block text-sm font-semibold leading-normal underline-offset-2 hover:underline"
               }
@@ -36,8 +36,9 @@ export default function ProductReturnPage() {
               {staticData.info_for_buyers.productReturnPage.text4}
             </Link>
             <Disclosure>
-              <Link
-                href={MainUrl.getProductReturnForm()}
+              <a
+                href={"/static/return_form.pdf"}
+                download={"Акт_заява_на_повернення_товару_інтернет_магазин_теп_docx.pdf"}
                 className={
                   "group flex items-center justify-between gap-x-4 py-6 pl-1 transition-colors duration-300 hover:text-tep_blue-400"
                 }
@@ -51,7 +52,7 @@ export default function ProductReturnPage() {
                     "size-6 transform transition-transform group-hover:-translate-x-2"
                   }
                 />
-              </Link>
+              </a>
             </Disclosure>
           </div>
         </Container>

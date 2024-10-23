@@ -21,6 +21,7 @@ export function CooperationRequestForm() {
     fullname: z.string().default(""),
     email: z.string().email(staticData.forms.emailError).default(""),
     message: z.string().default(""),
+    subject: z.string().default("")
   });
   
   type Form = z.infer<typeof leaveRequestSchema>;
@@ -44,16 +45,16 @@ export function CooperationRequestForm() {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.cooperationequestForm.text1}</Title>
+        <Title className={"mb-[62px] text-3xl"}>{staticData.forms.cooperationRequestForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormTextInput<Form>
             fieldName={"fullname"}
-            label={staticData.forms.cooperationequestForm.text2}
-            placeholder={staticData.forms.cooperationequestForm.text3}
+            label={staticData.forms.cooperationRequestForm.text2}
+            placeholder={staticData.forms.cooperationRequestForm.text3}
           />
           <FormTextInput<Form>
             fieldName={"email"}
-            label={staticData.forms.cooperationequestForm.text4}
+            label={staticData.forms.cooperationRequestForm.text4}
             placeholder={"taras@gmail.com"}
           />
           <InputMask
@@ -63,14 +64,18 @@ export function CooperationRequestForm() {
             alwaysShowMask
             autoComplete={"off"}
           >
-            <TextInput label={staticData.forms.cooperationequestForm.text5} />
+            <TextInput label={staticData.forms.cooperationRequestForm.text5} />
           </InputMask>
-
+          <FormTextInput<Form>
+            fieldName={"subject"}
+            label={staticData.forms.cooperationRequestForm.subjectLabel}
+            placeholder={staticData.forms.cooperationRequestForm.subjectPlaceholder}
+          />
           <FormTextInput<Form>
             multiline
             fieldName={"message"}
-            label={staticData.forms.cooperationequestForm.text6}
-            placeholder={staticData.forms.cooperationequestForm.text7}
+            label={staticData.forms.cooperationRequestForm.text6}
+            placeholder={staticData.forms.cooperationRequestForm.text7}
           />
         </div>
         <Button
@@ -80,7 +85,7 @@ export function CooperationRequestForm() {
           fullWidth
           className={{ button: "sm:w-auto" }}
         >
-          {staticData.forms.cooperationequestForm.text8}
+          {staticData.forms.cooperationRequestForm.text8}
         </Button>
       </form>
     </FormProvider>

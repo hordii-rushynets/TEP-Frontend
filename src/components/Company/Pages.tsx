@@ -39,10 +39,6 @@ const pages = [
     image: BlogIMG,
     url: CompanyUrl.getBlog(),
   },
-  {
-    image: CatalogIMG,
-    url: MainUrl.getGoods(),
-  },
 ];
 
 export function Pages() {

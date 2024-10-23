@@ -79,6 +79,5 @@ yarn-error.log*
 /.editorconfig
 
 # Public folder generated during builds
-/public
 
 # Any other files you don't want to include in your repository

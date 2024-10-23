@@ -38,12 +38,12 @@ export function SimpleCard(props: SimpleCardProps) {
             "group-hover:scale-105 transition-transform transform duration-500",
         }}
       />
-      <div className={"flex flex-1 flex-col gap-y-4"}>
+      <div className={"flex flex-col gap-y-4"}>
         <Title size={"2xl"} className={cn("flex-1", cardClasses?.title)}>
           {title}
         </Title>
         {description && (
-          <p className={"line-clamp-3 hidden text-sm lg:[display:-webkit-box]"}>
+          <p className={"hidden text-sm lg:[display:-webkit-box]"}>
             {description}
           </p>
         )}

@@ -7,10 +7,11 @@ import { ServicesUrl } from "route-urls";
 import { Button, Container, Section, Title } from "common/ui";
 
 import UkrLogo from "./static/ukr.png";
+import UkrEnLogo from "./static/ukr_en.png";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export function UkrPost() {
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
 
   return (
     <Section className={"mb-24 lg:mb-40"}>
@@ -18,7 +19,7 @@ export function UkrPost() {
         <div>
           <div className={"mb-14 max-w-[435px] lg:mb-[72px]"}>
             <Image
-              src={UkrLogo}
+              src={localization === "en" ? UkrEnLogo : UkrLogo}
               alt={"Ukr post Logo"}
               className={" select-none"}
             />

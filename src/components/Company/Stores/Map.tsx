@@ -5,10 +5,11 @@ import Image from "next/image";
 import { Container, Section, Title } from "common/ui";
 
 import MapIMG from "./static/ukraine.svg";
+import EnMapIMG from "./static/ukraine_en.svg";
 import { useLocalization } from "contexts/LocalizationContext";
 
 export function Map() {
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
 
   return (
     <Section>
@@ -25,7 +26,7 @@ export function Map() {
           <div>
             <Image
               className={"mx-auto"}
-              src={MapIMG}
+              src={localization === "en" ? EnMapIMG : MapIMG}
               alt={"Map of Ukraine image"}
               sizes="100vw, 50vw, 33vw"
             />

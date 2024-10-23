@@ -51,7 +51,7 @@ export default function GiftsPage() {
         </Container>
       </Section>
       <WantToBuy />
-      <AnyQuestions buttonSize={"large"} />
+      <AnyQuestions title={staticData.services.giftsPage.anyQuestionsTitle} buttonSize={"large"} />
     </>
   );
 }
