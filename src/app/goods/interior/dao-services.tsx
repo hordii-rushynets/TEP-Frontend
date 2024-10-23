@@ -6,7 +6,7 @@ export class InteriorProductDAOService {
     }
 
     public async getInspirationProducts(): Promise<Response> {
-      const response = await fetch(`${this.apiUrl}/api/store/products/`)
+      const response = await fetch(`${this.apiUrl}/api/store/products/?limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`)
       return response;
     }
   }
