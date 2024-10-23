@@ -672,7 +672,11 @@ export default {
     },
     "sales": {
       "text1": "Sale",
-      "text2": "More sale items"
+      "text2": "More sale items",
+      "breadcrumbs": {
+        "main": "Home",
+        "sales": "Sale"
+      }
     },
     "info_for_buyers": {// Generated with AI
       "text1": "Information for customers",

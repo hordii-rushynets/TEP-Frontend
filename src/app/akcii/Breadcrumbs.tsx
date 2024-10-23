@@ -1,17 +1,21 @@
+"use client"
 import { MainUrl } from "route-urls";
 
 import { Breadcrumbs as BaseBreadcrumbs } from "common/ui";
+import { useLocalization } from "contexts/LocalizationContext";
 
 export function Breadcrumbs() {
+  const { staticData } = useLocalization();
+
   return (
     <BaseBreadcrumbs
       items={[
         {
-          name: "Головна",
+          name: staticData.sales.breadcrumbs.main,
           href: MainUrl.getHome(),
         },
         {
-          name: "Акції",
+          name: staticData.sales.breadcrumbs.sales,
           href: MainUrl.getSales(),
         },
       ]}

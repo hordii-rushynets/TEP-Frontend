@@ -668,7 +668,11 @@ export default {
     },
     "sales": {
       "text1": "Акции",
-      "text2": "Больше акционных товаров"
+      "text2": "Больше акционных товаров",
+      "breadcrumbs": {
+        "main": "Главная",
+        "sales": "Акции"
+      }
     },
     "info_for_buyers": {// Generated with AI 
         "text1": "Информация для покупателей",
