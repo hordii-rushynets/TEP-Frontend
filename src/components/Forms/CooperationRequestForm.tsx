@@ -11,17 +11,19 @@ import { z } from "zod";
 
 import { Button, FormTextInput, TextInput, Title } from "common/ui";
 import { useLocalization } from "contexts/LocalizationContext";
+import { VacancyService } from "app/company/vacancies/services";
 
 export function CooperationRequestForm() {
   const [phone, setPhone] = useState("");
   const router = useRouter();
   const { staticData } = useLocalization();
+  const vacancyService = new VacancyService();
 
   const leaveRequestSchema = z.object({
-    fullname: z.string().default(""),
+    name: z.string().min(1, staticData.forms.requiredError).default(""),
     email: z.string().email(staticData.forms.emailError).default(""),
-    message: z.string().default(""),
-    subject: z.string().default("")
+    message: z.string().min(1, staticData.forms.requiredError).default(""),
+    topic: z.string().min(1, staticData.forms.requiredError).default("")
   });
   
   type Form = z.infer<typeof leaveRequestSchema>;
@@ -32,14 +34,13 @@ export function CooperationRequestForm() {
   });
   function onSubmit(data: Form) {
     const fullData = { ...data, phone: phone.match(/\d/g)?.join("") };
-    fullData;
-
-    // TODO
-    // ...
-
-    form.reset();
-    setPhone("");
-    router.push(CompanyUrl.getCooperationSuccess());
+    vacancyService.postCooperationOffer(fullData).then(success => {
+      if (success) {
+        form.reset();
+        setPhone("");
+        router.push(CompanyUrl.getCooperationSuccess());
+      }
+    })
   }
 
   return (
@@ -48,7 +49,7 @@ export function CooperationRequestForm() {
         <Title className={"mb-[62px] text-3xl"}>{staticData.forms.cooperationRequestForm.text1}</Title>
         <div className={"mb-[72px] flex flex-col gap-y-6 md:mb-24"}>
           <FormTextInput<Form>
-            fieldName={"fullname"}
+            fieldName={"name"}
             label={staticData.forms.cooperationRequestForm.text2}
             placeholder={staticData.forms.cooperationRequestForm.text3}
           />
@@ -67,7 +68,7 @@ export function CooperationRequestForm() {
             <TextInput label={staticData.forms.cooperationRequestForm.text5} />
           </InputMask>
           <FormTextInput<Form>
-            fieldName={"subject"}
+            fieldName={"topic"}
             label={staticData.forms.cooperationRequestForm.subjectLabel}
             placeholder={staticData.forms.cooperationRequestForm.subjectPlaceholder}
           />

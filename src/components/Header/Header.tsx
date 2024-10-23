@@ -25,6 +25,7 @@ import { useAuth } from "contexts/AuthContext";
 
 // import { ServicesMenu } from "./ServicesMenu";
 import Logo from "./static/Logo.svg";
+import LogoEn from "./static/LogoEn.svg";
 import { useLocalization } from "contexts/LocalizationContext";
 import { ConversionsService } from "services/conversionsServices";
 import { useRouter } from "next/router";
@@ -44,7 +45,7 @@ export function Header() {
   }, [menuIsOpen, pathname]);
 
   const { isAuthenticated } = useAuth();
-  const { staticData } = useLocalization();
+  const { staticData, localization } = useLocalization();
 
   return (
     <header
@@ -59,7 +60,7 @@ export function Header() {
           }
         >
           <Link href={MainUrl.getHome()} className={"order-2 shrink-0"}>
-            <Image src={Logo} alt={"Logo"} />
+            <Image src={localization === "en" ? LogoEn : Logo} alt={"Logo"} />
           </Link>
           <div
             className={
@@ -132,7 +133,7 @@ export function Header() {
               }
             >
               <Link href={MainUrl.getHome()}>
-                <Image src={Logo} alt={"Logo"} />
+                <Image src={localization === "en" ? LogoEn : Logo} alt={"Logo"} />
               </Link>
               <ButtonBase onClick={() => setMenuIsOpen(false)}>
                 <FiX

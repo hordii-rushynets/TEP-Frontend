@@ -75,5 +75,21 @@ export class VacancyDAOService {
         throw error;
       }
     }
+
+    public async postCooperationOffer(body: Object): Promise<boolean> {
+      try {
+        const response = await fetch(`${this.apiUrl}/api/vacancy/cooperation/`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        return response.ok;
+      } catch (error) {
+        console.error('Failed to post cooperation offer:', error);
+        throw error;
+      }
+    }
   }
   

@@ -29,4 +29,7 @@ export class VacancyService {
         return await this.daoService.postVacancyOffer(body);
     }
 
+    public async postCooperationOffer(body: Object): Promise<boolean> {
+        return await this.daoService.postCooperationOffer(body);
+    }
 }

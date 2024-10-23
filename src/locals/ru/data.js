@@ -1578,6 +1578,7 @@ export default {
     },
     "forms": {
       "emailError": "Некорректный адрес электронной почты",
+      "requiredError": "Заполните это поле",
       "passwordLengthError": "Пароль должен содержать как минимум 8 символов",
       "ratingError": "Оцените товар от 1 до 5",
       "categoryError": "Выберите категорию",

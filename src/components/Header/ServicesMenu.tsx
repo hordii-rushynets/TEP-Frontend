@@ -8,13 +8,10 @@ import { HoverMenuCard } from "./HoverMenuCard";
 import { HoverMenuTip } from "./HoverMenuTip";
 
 import MainCompanyIMG from "./static/Logo.svg";
+import LogoEn from ".static/LogoEn.svg";
 import ServicesIMG from "./static/info.jpg";
 import { useLocalization } from "contexts/LocalizationContext";
 
-const baseInfo = {
-  slug: "/",
-  image: MainCompanyIMG,
-};
 export const servicesLinks = [
   {
     slug: "gifts",
@@ -31,7 +28,13 @@ export const servicesLinks = [
 ];
 
 export function ServicesMenu() {
-  const {staticData} = useLocalization();
+  const {staticData, localization} = useLocalization();
+
+  const baseInfo = {
+    slug: "/",
+    image: localization === "en" ? LogoEn : MainCompanyIMG,
+  };
+
   const [cardInfo, setCardInfo] = useState({
     slug: baseInfo.slug,
     image: baseInfo.image,

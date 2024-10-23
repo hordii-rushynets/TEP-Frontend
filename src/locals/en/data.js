@@ -1595,6 +1595,7 @@ export default {
     },
     "forms": {// Generated with AI
       "emailError": "Invalid email address",
+      "requiredError": "Fill in this field",
       "passwordLengthError": "Password must be at least 8 characters long",
       "ratingError": "Rate the product from 1 to 5",
       "categoryError": "Select a category",

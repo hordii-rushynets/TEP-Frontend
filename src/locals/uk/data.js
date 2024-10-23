@@ -1589,6 +1589,7 @@ export default {
     },
     "forms": {
       "emailError": "Не коректна адреса електронної пошти",
+      "requiredError": "Заповніть це поле",
       "passwordLengthError": "Пароль повинен містити хоча б 8 символів",
       "ratingError": "Оцініть товар від 1 до 5",
       "categoryError": "Оберіть категорію",

@@ -27,7 +27,7 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
   const { staticData } = useLocalization();
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/store/products/?category_slug=${product?.category.slug || ""}`)
+    fetch(`${apiUrl}/api/store/products/?category_slug=${product?.category.slug || ""}&limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`)
     .then(response => {
       if (response.ok) {
         return response.json();
