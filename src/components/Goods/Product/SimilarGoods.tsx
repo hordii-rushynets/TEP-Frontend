@@ -27,40 +27,42 @@ export function SimilarGoods({product}:SimilarGoodsProps) {
   const { staticData } = useLocalization();
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/store/products/?category_slug=${product?.category.slug || ""}&limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      else {
-        return
-      }
-    })
-    .then(data => {
-      if (data) {
-        let productsToShow : ProductToShow[] = data.map((product:any) => {
-          let productVariant = product.product_variants[0];
-          return {
-            id: product.id,
-            slug: product.slug,
-            title: product[`title_${staticData.backendPostfix}` || "title"],
-            category_slug: product.category.slug,
-            category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
-            image: productVariant.main_image || "",
-            price: productVariant.default_price,
-            isSale: productVariant.promotion,
-            salePrice: productVariant.promo_price,
-            number_of_views: product.number_of_views,
-            date: new Date(product.last_modified),
-            isFavourite: product.is_favorite
-          }
-        });
+    if (product?.category.slug && product?.category.slug !== "") {
+      fetch(`${apiUrl}/api/store/products/?category_slug=${product?.category.slug || ""}&limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        else {
+          return
+        }
+      })
+      .then(data => {
+        if (data) {
+          let productsToShow : ProductToShow[] = data.map((product:any) => {
+            let productVariant = product.product_variants[0];
+            return {
+              id: product.id,
+              slug: product.slug,
+              title: product[`title_${staticData.backendPostfix}` || "title"],
+              category_slug: product.category.slug,
+              category_title: product.category[`title_${staticData.backendPostfix}` || "title"],
+              image: productVariant.main_image || "",
+              price: productVariant.default_price,
+              isSale: productVariant.promotion,
+              salePrice: productVariant.promo_price,
+              number_of_views: product.number_of_views,
+              date: new Date(product.last_modified),
+              isFavourite: product.is_favorite
+            }
+          });
 
-        productsToShow = productsToShow.filter(productWithVar => productWithVar.slug !== product?.slug)
+          productsToShow = productsToShow.filter(productWithVar => productWithVar.slug !== product?.slug)
 
-        setProducts(productsToShow);
-      }
-    })
+          setProducts(productsToShow);
+        }
+      })
+    }
   }, [product]);
 
   return products.length !== 0 ? (
