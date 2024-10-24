@@ -19,7 +19,7 @@ export class SearchDAOService {
     }
 
     public async getTags(category: string): Promise<Response> {
-      const response = await fetch(`${this.apiUrl}/api/store/products/?category_slug=${category}`);
+      const response = await fetch(`${this.apiUrl}/api/store/products/?category_slug=${category}&limit=${process.env.NEXT_PUBLIC_PRODUCTS_LIMIT}`);
       return response;
     }
 

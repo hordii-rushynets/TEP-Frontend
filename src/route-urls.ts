@@ -2,7 +2,7 @@ export const MainUrl = {
   getHome: () => "/",
   getGoods: () => "/goods",
   getCompany: () => "/company",
-  getServices: () => "/services",
+  getServices: () => "/services/delivery",
   getInfoForBuyers: () => "/information-for-buyers",
   getNovelty: () => "/novelty",
   getInspiration: () => "/inspiration",
@@ -69,9 +69,9 @@ export const CompanyUrl = {
 };
 
 export const ServicesUrl = {
-  getGifts: () => `${MainUrl.getServices()}/gifts`,
-  getDelivery: () => `${MainUrl.getServices()}/delivery`,
-  getTracking: () => `${MainUrl.getServices()}/tracking`,
+  getGifts: () => `/services/gifts`,
+  getDelivery: () => `/services/delivery`,
+  getTracking: () => `/services/tracking`,
 };
 
 export const InfoUrl = {
